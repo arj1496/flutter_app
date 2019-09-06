@@ -45,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  String msg = 'Flutter RaisedButton example';
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -56,7 +56,15 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
-
+  _changeText() {
+    setState(() {
+      if (msg.startsWith('F')) {
+        msg = 'I have learned FlutterRaised example ';
+      } else {
+        msg = 'Flutter RaisedButton example';
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
