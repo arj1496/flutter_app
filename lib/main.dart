@@ -91,12 +91,24 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            TextFormField(
+              decoration: InputDecoration(
+                  labelText: 'Enter your username'
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            TextFormField(
+              decoration: InputDecoration(
+                  labelText: 'Enter your passcode'
+              ),
+            ),
+            RaisedButton(
+              child: Text("Rock & Roll"),
+              onPressed: _changeText,
+              color: Colors.black,
+              textColor: Colors.pink,
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              splashColor: Colors.grey,
+
             ),
           ],
         ),
