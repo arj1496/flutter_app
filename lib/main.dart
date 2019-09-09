@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/dhaval.dart';
 
 void main() => runApp(MyApp());
 
@@ -82,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
 
+
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: (){},
@@ -144,7 +146,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => dhaval()),
+          );
+
+
+        },
         child: Text("Dhaval Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
