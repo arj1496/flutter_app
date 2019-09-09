@@ -106,8 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    final RonakWork = Material(
-      color: Colors.indigo,
+    final ronakWork = Material(
+      color: Colors.blue,
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
 
@@ -222,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             nayanWork,
             uvWork,
-            RonakWork,
+            ronakWork,
             rupaliWork,
             akshataWork,
             dhavalWork,
