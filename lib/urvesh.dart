@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 
 class urvesh extends StatelessWidget {
 
-  final nayanWork = Material(
-    color: Colors.indigo,
-    /* borderRadius: BorderRadius.circular(30.0),*/
-    child: MaterialButton(
+  @override
+  Widget build(BuildContext context) {
 
-      minWidth: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: (){},
-      child: Text("Nayan Work",
-          textAlign: TextAlign.center,
-          style: style.copyWith(
-              color: Colors.white, fontWeight: FontWeight.bold)),
-    ),
-  );
+    return MaterialApp(
+      title: 'Urvesh Login Page Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple
+      ),
+      home: UrveshHome(title: 'Flutter Demo Home Page'),
+    );
+
+  }
+}
+
+class UrveshHome extends StatefulWidget{
+
+  final String title;
+
+  UrveshHome({Key key, this.title}) : super(key: key);
+
+  @override
+  State<UrveshHome> createState() => _UrveshHomePageState();
+
+}
+
+class _UrveshHomePageState extends State<UrveshHome>{
+
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Urvesh Route"),
+        title: Text(widget.title),
       ),
       body: Center(
         child: RaisedButton(
@@ -33,4 +48,5 @@ class urvesh extends StatelessWidget {
       ),
     );
   }
+
 }
