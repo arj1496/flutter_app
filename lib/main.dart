@@ -152,6 +152,37 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    final heenaWork = Material(
+      color: Colors.indigo,
+      /* borderRadius: BorderRadius.circular(30.0),*/
+      child: MaterialButton(
+
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){},
+        child: Text("Heena Work",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final surabhiWork = Material(
+      color: Colors.indigo,
+      /* borderRadius: BorderRadius.circular(30.0),*/
+      child: MaterialButton(
+
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){},
+        child: Text("Surabhi Work",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -172,7 +203,9 @@ class _MyHomePageState extends State<MyHomePage> {
             RonakWork,
             rupaliWork,
             akshataWork,
-            dhavalWork
+            dhavalWork,
+            heenaWork,
+            surabhiWork
 
 
           ],
