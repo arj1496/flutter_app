@@ -92,6 +92,66 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    final RonakWork = Material(
+      color: Colors.indigo,
+      /* borderRadius: BorderRadius.circular(30.0),*/
+      child: MaterialButton(
+
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){},
+        child: Text("Ronak Work",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final rupaliWork = Material(
+      color: Colors.indigo,
+      /* borderRadius: BorderRadius.circular(30.0),*/
+      child: MaterialButton(
+
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){},
+        child: Text("Rupali Work",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final akshataWork = Material(
+      color: Colors.indigo,
+      /* borderRadius: BorderRadius.circular(30.0),*/
+      child: MaterialButton(
+
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){},
+        child: Text("Akshata Work",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final dhavalWork = Material(
+      color: Colors.indigo,
+      /* borderRadius: BorderRadius.circular(30.0),*/
+      child: MaterialButton(
+
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){},
+        child: Text("Dhaval Work",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -109,7 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
             nayanWork,
             uvWork,
-
+            RonakWork,
+            rupaliWork,
+            akshataWork,
+            dhavalWork
 
 
           ],
