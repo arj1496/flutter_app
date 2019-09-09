@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,16 +47,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String msg = 'Flutter RaisedButton example';
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+
   _changeText() {
     setState(() {
       if (msg.startsWith('F')) {
@@ -99,39 +91,24 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(
-                  labelText: 'Enter your username'
-              ),
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                  labelText: 'Enter your passcode'
-              ),
-            ),
             RaisedButton(
-              child: Text("Rock & Roll"),
-              onPressed: _changeText,
-              color: Colors.black,
-              textColor: Colors.pink,
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-              splashColor: Colors.grey,
-
+                child: Text("Nayan Work..."),
+                onPressed: _changeText,
+                color: Colors.blue,
+                textColor: Colors.pink,
+                padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+                splashColor: Colors.blue,
             ),
-            RaisedButton(
-                child: Text('Login'),
-                onPressed: () {
-
-                }
+            SizedBox(
+              height: 10.0,
             ),
+
+
+
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
