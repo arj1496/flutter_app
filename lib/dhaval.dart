@@ -11,6 +11,7 @@ class dhaval extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () {
+            Navigator.pop(context);
             // Navigate back to first route when tapped.
           },
           child: Text('Go back!'),
