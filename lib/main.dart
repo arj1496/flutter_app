@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/dhaval.dart';
 import 'package:flutter_app/urvesh.dart';
 import 'package:flutter_app/nayan.dart';
+import 'package:flutter_app/Heena.dart';
 
 void main() => runApp(MyApp());
 
@@ -181,7 +182,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Heena()),
+          );
+        },
         child: Text("Heena Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
