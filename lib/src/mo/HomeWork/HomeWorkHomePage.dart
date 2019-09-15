@@ -8,15 +8,9 @@ class HomeWorkListPage extends StatelessWidget {
   List<HomeWork> _homeWorkList;
 
   HomeWorkListPage(){
-    HWService hwService = new HWService();
-    List<HomeWork> _list = hwService.getAllHomeWork();
-    print("#############  " + _list.length.toString());
-
 
     //_homeWorkList = hwList;
   }
-
-
   HomeWorkListPage.hwList(var hwList){
     _homeWorkList = hwList;
   }
@@ -24,13 +18,38 @@ class HomeWorkListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+/*
 
       appBar: AppBar(
         title: Text("Assignment 123"),
       ),
-      body: Center(
-        child: HWList(),
-       ),
+*/
+      body: HWList(),
+
+    );
+  }
+
+
+  Widget getCustomerListView_Sliver(){
+
+    return CustomScrollView(
+
+        slivers: <Widget>[
+          SliverAppBar(
+            floating: true,
+            expandedHeight: 200.0,
+            title: Text("The Sliver App Bar"),
+          ),
+          SliverList (
+            delegate: SliverChildListDelegate(
+              [
+                HWList(),
+              ],
+            ),
+          ),
+        ]
+
+
     );
   }
 
@@ -53,10 +72,7 @@ class HomeWorkListPage extends StatelessWidget {
   }
 
   Widget getHomeWorkRow(HomeWork hw){
-
     return Row();
-
-
   }
 
   Widget getHomeWorkTile(BuildContext context, int position) {
