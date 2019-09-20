@@ -67,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Colors.indigo,
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
-
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: (){},
