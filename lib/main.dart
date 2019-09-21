@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+<<<<<<< HEAD
+import 'package:flutter_app/AkshataHomePage.dart';
+=======
 import 'package:flutter_app/dhaval.dart';
 import 'package:flutter_app/urvesh.dart';
 import 'package:flutter_app/nayan.dart';
+import 'package:flutter_app/Heena.dart';
+>>>>>>> cede3ea20e6add0e914e006472812d59627afeac
 
 void main() => runApp(MyApp());
 
@@ -69,15 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Colors.indigo,
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
-
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => nayan()),
-          );
-        },
+        onPressed: (){},
         child: Text("Nayan Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -90,15 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
 
-
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => urvesh()),
-          );
-        },
+
         child: Text("Urvesh Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -106,8 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    final ronakWork = Material(
-      color: Colors.blue,
+    final RonakWork = Material(
+      color: Colors.indigo,
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
 
@@ -143,11 +136,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AkshataHomePage()),
+            );
+
+        },
         child: Text("Akshata Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
+
       ),
     );
 
@@ -158,15 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => dhaval()),
-          );
-
-
-        },
+        onPressed: (){},
         child: Text("Dhaval Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -181,7 +174,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Heena()),
+          );
+        },
         child: Text("Heena Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -222,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             nayanWork,
             uvWork,
-            ronakWork,
+            RonakWork,
             rupaliWork,
             akshataWork,
             dhavalWork,
