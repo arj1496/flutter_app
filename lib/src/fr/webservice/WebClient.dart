@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class WebClient{
 
-  String baseUrl = "192.168.0.110:8080/soms";
+  String baseUrl = "http://192.168.0.110:8080/soms";
 
   Future<dynamic> getData (HashMap<String, String> requestData, var url) async{
     HttpClient httpClient = new HttpClient();
@@ -30,16 +30,24 @@ class WebClient{
     HttpClientResponse response = await request.close();
     if(response.statusCode == 200){
       print("test");
-      // todo - you should check the response.statusCode
     }
+    // todo - you should check the response.statusCode
     String reply = await response.transform(utf8.decoder).join();
     httpClient.close();
     return reply;
   }
 
-  Future<dynamic> getData_ (HashMap<String, String> requestData, var url) async {
+  Future<Map<String, dynamic>> getData_ (HashMap<String, String> requestData, var url) async {
+    Map<String, String> headers = new Map<String, String>();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    print(sharedPreferences.getString("token"));
+    headers['authT'] = sharedPreferences.getString("token");
 
-   /* SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var response = await http.get(url + "rest/auth/login", headers: headers);*/
+    final finalurl = baseUrl + url + "?teacher_sync_time=0";
+    var response = await http.get(finalurl , headers: headers);
+    if(response.statusCode == 200){
+      Future<Map<String, dynamic>> jsonData = json.decode(response.body);
+      return jsonData;
+    }
   }
 }
