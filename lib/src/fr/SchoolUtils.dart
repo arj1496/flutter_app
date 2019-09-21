@@ -8,10 +8,12 @@ class SchoolUtils {
   factory SchoolUtils() {
     return _schoolUtils;
   }
+
   String baseUrl = "https://educloud.in";
 
   SchoolUtils._internal(){
-    // init code
+
+
   }
 }
 
