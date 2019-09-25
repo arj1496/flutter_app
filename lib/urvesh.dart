@@ -245,9 +245,11 @@ class _UrveshHomePageState extends State<UrveshHome>{
     HashMap map = new HashMap<String, String>() ;
     map['teacher_sync_time'] = 0.toString();
 
-    Future<Map<String, dynamic>> test = webClient.getData_(map, "/rest/sync/getSyncInfo");
+    Future<dynamic> test = webClient.getData_(map, "/rest/sync/getSyncInfo");
     test.then((value){
       print(value);
+      print(value['teachers'][0]['id']);
+      print(value['teachers'][0]['firstName']);
     });
   }
 
