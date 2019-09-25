@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class WebClient{
 
-  String baseUrl = "http://192.168.0.110:8080/soms";
+  String baseUrl = "http://192.168.43.124:8080/soms";
 
   Future<dynamic> getData (HashMap<String, String> requestData, var url) async{
     HttpClient httpClient = new HttpClient();
@@ -37,7 +38,7 @@ class WebClient{
     return reply;
   }
 
-  Future<Map<String, dynamic>> getData_ (HashMap<String, String> requestData, var url) async {
+  Future<dynamic> getData_ (HashMap<String, String> requestData, var url) async {
     Map<String, String> headers = new Map<String, String>();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     print(sharedPreferences.getString("token"));
@@ -46,8 +47,12 @@ class WebClient{
     final finalurl = baseUrl + url + "?teacher_sync_time=0";
     var response = await http.get(finalurl , headers: headers);
     if(response.statusCode == 200){
-      Future<Map<String, dynamic>> jsonData = json.decode(response.body);
-      return jsonData;
+      // List<String> streetsList = new List<String>.from(streetsFromJson);
+      print(response.body);
+      var str = response.body;
+      final data = json.decode(response.body);
+
+      return data;
     }
   }
 }
