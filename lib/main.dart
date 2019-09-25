@@ -77,7 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => nayan()),
+          );
+        },
         child: Text("Nayan Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -92,6 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => UrveshHome()),
+          );
+        },
 
         child: Text("Urvesh Work",
             textAlign: TextAlign.center,
@@ -139,6 +151,10 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: (){
 
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AkshataHomePage()),
+          );
 
         },
         child: Text("Akshata Work",
@@ -156,7 +172,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => dhaval()),
+          );
+
+
+        },
         child: Text("Dhaval Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
