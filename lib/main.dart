@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-<<<<<<< HEAD
+
 import 'package:flutter_app/AkshataHomePage.dart';
-=======
+
 import 'package:flutter_app/dhaval.dart';
+import 'package:flutter_app/src/MenuFile.dart';
 import 'package:flutter_app/urvesh.dart';
 import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/Heena.dart';
->>>>>>> cede3ea20e6add0e914e006472812d59627afeac
+
 
 void main() => runApp(MyApp());
 
@@ -140,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AkshataHomePage()),
+              MaterialPageRoute(builder: (context) => MenuFile()),
             );
 
         },
