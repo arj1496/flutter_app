@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:sqflite/sqflite.dart';
 
 import 'Teacher.dart';
@@ -9,32 +11,76 @@ class TeacherDAO{
 
   static final teacherTable = "teacher";
 
-  Future<Teacher> addTeacher(Teacher teacher) async {
-
+  Future<Database> getDataBaseHandler()  async {
     final dbHelper = DBProvider.single_instance;
     final db = await dbHelper.database;
+    return db;
+  }
 
-    Future<int> id = db.insert(teacherTable, teacher.toJson());
+  Teacher addTeacher(Teacher teacher) {
+    Database db = null;
+    getDataBaseHandler().then((dataBaseInstance){
+       db = dataBaseInstance;
+       Future<int> futureId = db.insert(
+         teacherTable,
+         teacher.toJson(),
+         conflictAlgorithm: ConflictAlgorithm.replace,
+       );
 
-    int _id = id.then((_teacherId){
-      print("Teacher Local Db Id :- " + _teacherId.toString());
-      return _teacherId;
-    }) as int;
+       int teacherId;
+       futureId.then<int>((id){
+         teacherId = id;
+         teacher.lid = teacherId;
+       });
 
-    teacher.lid = _id;
-    Future<List<Teacher>> getAllTeachers() async{
+       return teacher;
+    });
+  }
 
-      final dbHelper = await DBProvider.single_instance;
-      final db = await dbHelper.database;
 
-      var res = await db.rawQuery("SELECT * FROM teacher ");
-      List<Teacher> list =
-      res.isNotEmpty ? res.toList().map((c) => Teacher.fromJson(c)) : null;
+  Future<List<Teacher>> getAllTeacherData_() async{
+
+    getDataBaseHandler().then((dataBaseInstance){
+      return getTeacherDataFromLocalDB(dataBaseInstance);
+    }).then((maps){
+      var test =  List.generate(maps.length, (i) {
+        return Teacher.fromJson(maps[i]);
+      });
+      return test;
+    });
+
+    /*var res = await db.rawQuery("SELECT * FROM Teacher ");
+    List<Teacher> list =
+    res.isNotEmpty ? res.toList().map((c) => Teacher.fromJson(c)) : null;
+
+    return Future((){
       return list;
-
-    }
+    });*/
 
   }
+
+  Future<List<Map<String, dynamic>>> getTeacherDataFromLocalDB(Database db) {
+    Future<List<Map<String, dynamic>>> maps = db.rawQuery("SELECT * FROM Teacher ");
+    return maps;
+  }
+
+  getAllTeacherData() async{
+
+    print("getAllTeacherData Starts ");
+    Database db = await getDataBaseHandler();
+
+    //List<Map<String, dynamic>> maps = await db.query('Teacher');
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Teacher ");
+
+    var test =  List.generate(maps.length, (i) {
+      return Teacher.fromJson(maps[i]);
+    });
+    return test;
+  }
+
+
+
+
 
 
 }

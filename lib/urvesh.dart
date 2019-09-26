@@ -8,6 +8,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/fr/webservice/WebClient.dart';
+import 'package:flutter_app/src/mo/teacher/Teacher.dart';
+import 'package:flutter_app/src/mo/teacher/TeacherService.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,21 +21,23 @@ class UrveshHome extends StatefulWidget{
   _UrveshHomePageState createState() => _UrveshHomePageState();
 }
 
-class _UrveshHomePageState extends State<UrveshHome>{
+class _UrveshHomePageState extends State<UrveshHome> {
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
   SharedPreferences sharedPreferences;
 
   @override
-  initState(){
+  initState() {
     super.initState();
     checkLoginStatus();
   }
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    if(sharedPreferences.getString("token") == null) {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginPage()), (Route<dynamic> route) => false);
+    if (sharedPreferences.getString("token") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()), (
+          Route<dynamic> route) => false);
     }
   }
 
@@ -43,14 +47,16 @@ class _UrveshHomePageState extends State<UrveshHome>{
     //return _getFormScafold();
   }
 
-  Scaffold _getNormalScafold(){
-
+  Scaffold _getNormalScafold() {
     final logoutButon = Material(
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
 
-        minWidth: MediaQuery.of(context).size.width,
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           sharedPreferences.clear();
@@ -59,7 +65,6 @@ class _UrveshHomePageState extends State<UrveshHome>{
                   builder: (BuildContext context) => LoginPage()
               ), (Route<dynamic> route) => false
           );
-
         },
         child: Text("Logout",
             textAlign: TextAlign.center,
@@ -73,9 +78,12 @@ class _UrveshHomePageState extends State<UrveshHome>{
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
 
-        minWidth: MediaQuery.of(context).size.width,
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){
+        onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) => MyApp()
               ), (Route<dynamic> route) => false
@@ -93,12 +101,35 @@ class _UrveshHomePageState extends State<UrveshHome>{
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
 
-        minWidth: MediaQuery.of(context).size.width,
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){
-          getData();
+        onPressed: () {
+          getTeacherData();
         },
-        child: Text("Get Data",
+        child: Text("Get Teacher Data",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final saveTeacherBtn = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          addTeacher();
+        },
+        child: Text("Save Teacher",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
@@ -128,6 +159,8 @@ class _UrveshHomePageState extends State<UrveshHome>{
                   homePage,
                   SizedBox(height: 10.0,),
                   getDataBtn,
+                  SizedBox(height: 10.0,),
+                  saveTeacherBtn,
                 ],
               ),
             ),
@@ -135,14 +168,17 @@ class _UrveshHomePageState extends State<UrveshHome>{
       ),
     );
   }
-  
-  Scaffold _getFormScafold(){
+
+  Scaffold _getFormScafold() {
     final loginButon = Material(
       color: Colors.indigo,
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
 
-        minWidth: MediaQuery.of(context).size.width,
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
 
         /*onPressed: (){
@@ -175,7 +211,7 @@ class _UrveshHomePageState extends State<UrveshHome>{
             margin: new EdgeInsets.all(20.0),
             child: Center(
               child: new Form(
-                  child:  _getFormUI(loginButon)
+                  child: _getFormUI(loginButon)
               ),
             ),
           ),
@@ -208,20 +244,20 @@ class _UrveshHomePageState extends State<UrveshHome>{
         ),
         new SizedBox(height: 20.0),
         new TextFormField(
-            autofocus: false,
-            obscureText: true,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              hintText: 'Password',
-              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-              border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-            ),
-            ),
+          autofocus: false,
+          obscureText: true,
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            hintText: 'Password',
+            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+            border:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+          ),
+        ),
         new SizedBox(height: 15.0),
         new Padding(
-          padding: EdgeInsets.symmetric(vertical: 5.0),
-          child: loginButon
+            padding: EdgeInsets.symmetric(vertical: 5.0),
+            child: loginButon
         ),
         new FlatButton(
           child: Text(
@@ -242,17 +278,41 @@ class _UrveshHomePageState extends State<UrveshHome>{
   void getData() {
     WebClient webClient = new WebClient();
 
-    HashMap map = new HashMap<String, String>() ;
+    HashMap map = new HashMap<String, String>();
     map['teacher_sync_time'] = 0.toString();
 
     Future<dynamic> test = webClient.getData_(map, "/rest/sync/getSyncInfo");
-    test.then((value){
+    test.then((value) {
       print(value);
       print(value['teachers'][0]['id']);
       print(value['teachers'][0]['firstName']);
     });
   }
 
+  void addTeacher() {
+    Teacher teacher = new Teacher(
+      lid: 1,
+      id: 2,
+      firstName: "Ashwini",
+      lastName: "Rathod",
+      person: 3,
+      gender: "male",
+      email: "urvesh@urvesh.com",
+      standardIds: "11,12,13,14,15",
+      subjectIds: "16,17,18,19,20",
+      userId: 4,
+      role: "teacher"
+    );
 
+    TeacherServcie teacherServcie = new TeacherServcie();
+    teacherServcie.addTeacher(teacher);
+
+  }
+
+  List<Teacher> getTeacherData() {
+    TeacherServcie teacherServcie = new TeacherServcie();
+    var test = teacherServcie.getTeacherList();
+    print(test);
+  }
 
 }

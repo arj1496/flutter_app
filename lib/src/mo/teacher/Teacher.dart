@@ -32,8 +32,8 @@ class Teacher{
   factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
     lid: json["lid"],
     id: json["id"],
-    firstName: json["firstname"],
-    lastName: json["lastname"],
+    firstName: json["firstName"],
+    lastName: json["lastName"],
     person: json["person"],
     isWritable: json["isWritable"],
     gender: json["gender"],
@@ -46,9 +46,10 @@ class Teacher{
   );
 
   Map<String, dynamic> toJson() => {
+    "lid" : lid,
     "id": id,
-    "first_name": firstName,
-    "last_name": lastName,
+    "firstName": firstName,
+    "lastName": lastName,
    
   };
 

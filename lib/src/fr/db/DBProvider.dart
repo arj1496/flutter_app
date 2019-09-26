@@ -61,7 +61,7 @@ class  DBProvider {
   String cretaeTeacherTable() {
 
     return " CREATE TABLE Teacher ("
-        "lid INTEGER PRIMARY KEY,"
+        "lid INTEGER,"
         "id INTEGER PRIMARY KEY,"
         "firstName TEXT,"
         "lastName TEXT,"
