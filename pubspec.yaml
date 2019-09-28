@@ -22,9 +22,13 @@ dependencies:
     sdk: flutter
   shared_preferences: any
   cupertino_icons: ^0.1.2
-  #flutter_webview_plugin: 0.3.0+2
-  #webview_flutter: 0.2.0
-  #css_text: ^0.9.9
+  flutter_webview_plugin: 0.3.0+2
+  webview_flutter: 0.2.0
+  css_text: ^0.9.9
+  auto_size_text: ^2.1.0
+  expandable: ^3.0.0+1
+  flutter_linkify: ^2.1.0
+  url_launcher: ^5.1.4
   sqflite: any
   path_provider: any
 

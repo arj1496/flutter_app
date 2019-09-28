@@ -22,10 +22,13 @@ class AkshataHomePage extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              FirstScreen(),
-              SecondScreen(),
+              //FirstScreen(),
+              //SecondScreen(),
+
             ],
+
           ),
+
         ),
       ),
     );

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+
+});
+function add(num1, num2) {
+            var result = num1 + num2;
+            document.getElementById("result").innerHTML
+                = num1 + " + " + num2 + " = " + result;
+                window.postMessage(JSON.stringify(result));
+        }
+}
+</script>
+</head>
+<body>
+
+<input id="dd" style="width:160px;" placeholder="please input context to flutter"></input><br/><br/>
+<button id="button" style="background-color:#158461;height:30px;">send to flutter</button>
+</body>
+</html>

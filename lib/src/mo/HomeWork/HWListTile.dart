@@ -4,7 +4,6 @@ import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
 class HWListTile extends StatelessWidget {
 
   HomeWork _homeWork = null;
-
   HWListTile(HomeWork this._homeWork);
 
 
