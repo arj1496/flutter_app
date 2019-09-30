@@ -16,7 +16,7 @@ class Detailview extends StatelessWidget {
 
       appBar: AppBar(
         title: Text("Collapsable Demo"),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.yellow,
       ),
       body: SingleChildScrollView(
       child: Column(

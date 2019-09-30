@@ -10,17 +10,13 @@ class Placeview extends StatelessWidget {
   Widget build( BuildContext context ) {
     return new Container (
       padding: const EdgeInsets.only(left:16.0),
-      margin: const EdgeInsets.only(left:15.0,right:15.0),
 
-      decoration: new BoxDecoration(
 
-        border: new Border.all(color: Colors.blue, width: 1.0),
-        borderRadius: new BorderRadius.circular(10.0),
-      ),
+
       child: new Column (
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right:250.0,bottom: 10.0),
+            padding: const EdgeInsets.only(right:250.0,bottom: 10.0,top:15.0),
             child: new Text (label,
               style: new TextStyle(
                 fontSize: 20.0,
@@ -28,7 +24,7 @@ class Placeview extends StatelessWidget {
                 decoration: TextDecoration.underline,
                 decorationStyle: TextDecorationStyle.solid,
                 fontFamily: 'Roboto',
-                color: Colors.green,
+                color: Colors.black,
 
               ),
             ),

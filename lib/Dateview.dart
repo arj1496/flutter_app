@@ -6,16 +6,18 @@ class Dateview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom:5.0),
+      decoration: new BoxDecoration(
+
+        border: new Border.all(color: Colors.blue),
+        borderRadius: new BorderRadius.circular(8.0),
+      ),
       child: new Row(
-        children: <Widget>[Container(height:100.0,width: 110.0,
+        children: <Widget>[Container(width: 110.0,
 
           margin: const EdgeInsets.all(5.0),
           padding: const EdgeInsets.all(3.0),
-          decoration: new BoxDecoration(
 
-            border: new Border.all(color: Colors.blue, width: 1.0),
-            borderRadius: new BorderRadius.circular(10.0),
-          ),
 
           child: new Column (
             children: <Widget>[
@@ -25,8 +27,8 @@ class Dateview extends StatelessWidget {
                 style: new TextStyle(
                   fontSize: 15.0,
                   fontFamily: 'Roboto',
-                  color: Colors.green,
-
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Padding(
@@ -44,13 +46,10 @@ class Dateview extends StatelessWidget {
             ],
           ),
         ),
-        Container(height:100.0,width: 110.0,
+        Container(width: 110.0,
           margin: const EdgeInsets.all(5.0),
           padding: const EdgeInsets.all(3.0),
-          decoration: new BoxDecoration(
-            border: new Border.all(color: Colors.blue, width: 1.0),
-            borderRadius: new BorderRadius.circular(10.0),
-          ),
+
           child: new Column (
               children: <Widget>[
             new Text(
@@ -59,7 +58,8 @@ class Dateview extends StatelessWidget {
                 style: new TextStyle(
                   fontSize: 15.0,
                   fontFamily: 'Roboto',
-                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
                 Padding(
@@ -77,11 +77,8 @@ class Dateview extends StatelessWidget {
              ],
             ),
           ),
-          Container(height:100.0,width: 110.0,
-            decoration: new BoxDecoration(
-              border: new Border.all(color: Colors.blue, width: 1.0),
-              borderRadius: new BorderRadius.circular(10.0),
-            ),
+          Container(width: 110.0,
+
             child: new Column (
               children: <Widget>[
                 new Text(
@@ -90,7 +87,8 @@ class Dateview extends StatelessWidget {
                   style: new TextStyle(
                     fontSize: 15.0,
                     fontFamily: 'Roboto',
-                    color: Colors.green,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Padding(

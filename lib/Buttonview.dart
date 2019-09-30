@@ -13,10 +13,10 @@ class Buttonview extends StatelessWidget {
           onPressed: () => null,
           color:  Colors.white,
           splashColor: Colors.amberAccent,
-          shape: new RoundedRectangleBorder(
+         /* shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0),
               side: BorderSide(color: Colors.blue)
-          ),
+          ),*/
         ),
       ),
       SizedBox(
@@ -27,10 +27,10 @@ class Buttonview extends StatelessWidget {
           onPressed: () => null,
           color:  Colors.white,
           splashColor: Colors.amberAccent,
-          shape: new RoundedRectangleBorder(
+          /*shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30.0),
               side: BorderSide(color: Colors.blue)
-          ),
+          ),*/
         ),
       ),
       SizedBox(
@@ -40,10 +40,10 @@ class Buttonview extends StatelessWidget {
           onPressed: () => null,
           color:  Colors.white,
           splashColor: Colors.amberAccent,
-          shape: new RoundedRectangleBorder(
+         /* shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30.0),
               side: BorderSide(color: Colors.blue)
-          ),
+          ),*/
         ),
       )
     ],);
