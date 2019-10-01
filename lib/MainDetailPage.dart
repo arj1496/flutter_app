@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/DescriptionCustomView.dart';
+import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'PropertyFile.dart';
 
 class MainDetailPage extends StatelessWidget {
-
+ PropertyService propertyService = new PropertyService();
   final infoHeight = 364.0;
   AnimationController animationController;
   Animation<double> animation;
@@ -24,7 +26,7 @@ class MainDetailPage extends StatelessWidget {
     children: <Widget>[
       AspectRatio(
       aspectRatio: 1.2,
-      child: Image.asset('assets/images/webInterFace.png'),
+      child: Image.asset('assets/images/feedbackImage.png'),
     ),
     ],
     ),
@@ -46,8 +48,14 @@ class MainDetailPage extends StatelessWidget {
                     blurRadius: 10.0),
               ],
             ),
+            child: Padding(
+               padding: const EdgeInsets.only(left: 8, right: 8),
+                child: SingleChildScrollView(
+                 child:  DescriptionCustomView.init(propertyService.getData())),
+
     ),
     ),
+        ),
     ],
     );
 
