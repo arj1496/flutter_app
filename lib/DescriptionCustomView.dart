@@ -8,12 +8,6 @@ import 'PropertyFile.dart';
 
 class DescriptionCustomView extends StatelessWidget {
 
-  var description=
-      "n a project of mine I wrap Text instances around Containers. This particular code sample features two stacked Text objects."
-      "n a project of mine I wrap Text instances around Containers. This particular code sample features two stacked Text objects."
-      "\nhttps://www.google.com"
-      "\nhttps://www.gmail.com";
-  var label = "Description: ";
   var property = new PropertyFile();
   DescriptionCustomView.init(PropertyFile property){
     this.property = property;
@@ -21,8 +15,9 @@ class DescriptionCustomView extends StatelessWidget {
   @override
   Widget build( BuildContext context ) {
     return Padding(
-      padding: const EdgeInsets.only(top:1.0),
+      padding: const EdgeInsets.only(top:30.0),
       child: new Container (
+        margin: const EdgeInsets.only(top:5.0),
         color: Colors.white,
         child: new Column (
           children: <Widget>[

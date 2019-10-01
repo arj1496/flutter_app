@@ -6,12 +6,15 @@ import 'package:flutter_app/urvesh.dart';
 import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/Heena.dart';
 
+import 'DescriptionCustomView.dart';
 import 'DetailViewUV.dart';
+import 'PropertyService.dart';
 
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String msg = 'Flutter RaisedButton example';
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
+  static PropertyService propertyService = new PropertyService();
 
+  List<Widget> customWidget = [DescriptionCustomView.init(propertyService.getData())];
   _changeText() {
     setState(() {
       if (msg.startsWith('F')) {
@@ -91,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     final uvWork = Material(
+
       color: Colors.indigo,
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
@@ -101,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DetailViewUV()),
+            MaterialPageRoute(builder: (context) => DetailViewUV.init(customWidget)),
           );
         },
 
