@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 /**
  * label for title of cutom widget  like Description,place
  * icondata for fontawesome icon
@@ -5,8 +7,9 @@
  */
 class PropertyFile{
 
-  var _label;
-
+  String _label;
+  Icon _iconData;
+  String _data;
   get label => _label;
 
   set label( value ) {
@@ -19,8 +22,7 @@ class PropertyFile{
     _iconData = value;
   }
 
-  var _iconData;
-  var _data;
+
 
   get data => _data;
 
