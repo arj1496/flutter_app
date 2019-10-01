@@ -22,14 +22,16 @@ class MainDetailPage extends StatelessWidget {
   Widget build( BuildContext context ) {
     return Stack(
       children: <Widget>[
-    Column(
-    children: <Widget>[
-      AspectRatio(
-      aspectRatio: 1.2,
-      child: Image.asset('assets/images/feedbackImage.png'),
-    ),
-    ],
-    ),
+        Column(
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 1.2,
+              child: Column(
+
+              ),
+            ),
+          ],
+        ),
         Positioned(
           top: (MediaQuery.of(context).size.width / 1.2) - 24.0,
           bottom: 0,
@@ -49,23 +51,23 @@ class MainDetailPage extends StatelessWidget {
               ],
             ),
             child: Padding(
-               padding: const EdgeInsets.only(left: 8, right: 8),
-                child: SingleChildScrollView(
-                /* child:  DescriptionCustomView.init(propertyService.getData())),
-                 child:  DescriptionCustomView.init(propertyService.getData())),*/
-                  child: Column(
-                    children:  _getWidget(),
-                  ),
-    ),
-    ),
-    ),
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: SingleChildScrollView(
+                child: Column(
+                  children:  _getWidget(),
+                ),
+              ),
+            ),
+          ),
         ),
-    ],
+      ],
     );
-
   }
+
  List<Widget> _getWidget(){
-    List<Widget> list = [DescriptionCustomView.init(propertyService.getData()),DescriptionCustomView.init(propertyService.getData()),DescriptionCustomView.init(propertyService.getData())];
+    List<Widget> list = [
+      DescriptionCustomView.init(propertyService.getData())
+    ];
    return list;
  }
 }

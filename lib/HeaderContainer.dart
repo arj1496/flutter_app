@@ -26,7 +26,7 @@ class HeaderContainer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Exams",
+                    "Exam Detail",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontFamily: AppTheme.robotoFontName,
@@ -38,7 +38,7 @@ class HeaderContainer extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              /*SizedBox(
                 height: 38,
                 width: 38,
                 child: InkWell(
@@ -53,8 +53,8 @@ class HeaderContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              Padding(
+              ),*/
+              /*Padding(
                 padding: const EdgeInsets.only(
                   left: 8,
                   right: 8,
@@ -82,8 +82,8 @@ class HeaderContainer extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
+              ),*/
+              /*SizedBox(
                 height: 38,
                 width: 38,
                 child: InkWell(
@@ -98,7 +98,7 @@ class HeaderContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         )

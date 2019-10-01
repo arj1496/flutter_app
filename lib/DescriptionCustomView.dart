@@ -22,13 +22,12 @@ class DescriptionCustomView extends StatelessWidget {
           top: 16,
           bottom: 16
       ),
-      child: new Container (
-        margin: const EdgeInsets.only(top:5.0),
+      child: new Material (
+        //margin: const EdgeInsets.only(top:5.0),
         color: Colors.transparent,
         child: new Column (
           children: <Widget>[
             Row(
-
               children:<Widget>[IconButton(
                 icon: property.iconData,
               ),
