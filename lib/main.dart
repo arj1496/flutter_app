@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/HeaderContainer.dart';
 import 'package:flutter_app/dhaval.dart';
 import 'package:flutter_app/src/MenuFile.dart';
 import 'package:flutter_app/urvesh.dart';
@@ -63,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
   static PropertyService propertyService = new PropertyService();
 
-  List<Widget> customWidget = [DescriptionCustomView.init(propertyService.getData())];
+  List<Widget> customWidget = [HeaderContainer(), DescriptionCustomView.init(propertyService.getData())];
   _changeText() {
     setState(() {
       if (msg.startsWith('F')) {
