@@ -10,23 +10,26 @@ class PropertyFile{
   String _label;
   Icon _iconData;
   String _data;
-  get label => _label;
+   String get label => _label;
 
-  set label( value ) {
+   set label( String value ) {
     _label = value;
   }
 
-  get iconData => _iconData;
 
-  set iconData( value ) {
+
+  PropertyFile();
+
+  Icon get iconData => _iconData;
+
+  set iconData( Icon value ) {
     _iconData = value;
   }
 
+  String get data => _data;
 
-
-  get data => _data;
-
-  set data( value ) {
+  set data( String value ) {
     _data = value;
   }
+
 }
