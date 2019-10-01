@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> customWidget = [
     HeaderContainer(),
+    MainDetailPage()
   ];
   _changeText() {
     setState(() {
