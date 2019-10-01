@@ -57,15 +57,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-
   assets:
-    - images/mount-carmel-logo.png
-    #- webpage/demo.html
-    #- webpage/democss.html
-    #- webpage/democss.css
-    #- webpage/AjaxDemo.html
-    #- webpage/demo1.html
-    #- webpage/test.html
+  - assets/images/
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

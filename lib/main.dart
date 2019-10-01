@@ -6,6 +6,8 @@ import 'package:flutter_app/urvesh.dart';
 import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/Heena.dart';
 
+import 'DetailViewUV.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -99,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => UrveshHome()),
+            MaterialPageRoute(builder: (context) => DetailViewUV()),
           );
         },
 
