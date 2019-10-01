@@ -51,8 +51,12 @@ class MainDetailPage extends StatelessWidget {
             child: Padding(
                padding: const EdgeInsets.only(left: 8, right: 8),
                 child: SingleChildScrollView(
-                 child:  DescriptionCustomView.init(propertyService.getData())),
-
+                /* child:  DescriptionCustomView.init(propertyService.getData())),
+                 child:  DescriptionCustomView.init(propertyService.getData())),*/
+                  child: Column(
+                    children:  _getWidget(),
+                  ),
+    ),
     ),
     ),
         ),
@@ -60,4 +64,8 @@ class MainDetailPage extends StatelessWidget {
     );
 
   }
+ List<Widget> _getWidget(){
+    List<Widget> list = [DescriptionCustomView.init(propertyService.getData()),DescriptionCustomView.init(propertyService.getData()),DescriptionCustomView.init(propertyService.getData())];
+   return list;
+ }
 }
