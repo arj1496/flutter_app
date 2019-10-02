@@ -24,7 +24,7 @@ class HomeWorkListPage extends StatelessWidget {
         title: Text("Assignment 123"),
       ),
 */
-      body: HWList(),
+      body: HWList(),  // this is return a custom scroll view
 
     );
   }

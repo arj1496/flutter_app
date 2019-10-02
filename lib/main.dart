@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/HeaderContainer.dart';
 import 'package:flutter_app/ListViewUV.dart';
 import 'package:flutter_app/MainDetailPage.dart';
+import 'package:flutter_app/UrveshNew.dart';
 import 'package:flutter_app/dhaval.dart';
 import 'package:flutter_app/src/MenuFile.dart';
 import 'package:flutter_app/urvesh.dart';
@@ -65,11 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
   static PropertyService propertyService = new PropertyService();
-
-  List<Widget> customWidget = [
-    HeaderContainer(),
-    ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV()
-  ];
+  
   _changeText() {
     setState(() {
       if (msg.startsWith('F')) {
@@ -113,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DetailViewUV.init(customWidget)),
+            MaterialPageRoute(builder: (context) => UrveshNew()),
           );
         },
 
