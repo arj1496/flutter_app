@@ -14,6 +14,7 @@ import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/src/MenuFile.dart';
 
 
+import 'AttachmentFileView.dart';
 import 'DateWidget2.dart';
 import 'Datewidget3.dart';
 import 'DescriptionCustomView.dart';
@@ -21,6 +22,7 @@ import 'DescriptionOptionWithCard.dart';
 import 'Descrptionview.dart';
 import 'EventWidget.dart';
 import 'HeaderContainer.dart';
+import 'ListTileViewUV.dart';
 
 
 class DescriptionOption extends StatelessWidget {
@@ -34,9 +36,10 @@ class DescriptionOption extends StatelessWidget {
     CardDetail2Oct(detailWidget),
     //CardDetail2Oct(dateWidget),
     DateWidget(),
-    DateWidget2(),
-    Datewidget3(),
+
     AttachmentView(),
+    AttachmentFileView(),
+    AttachmentFileView(),
     //DescriptionCustomView.init(propertyService.getData()),
   //  MainDetailPage()
   ];

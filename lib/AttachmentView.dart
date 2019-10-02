@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 import 'PropertyFile.dart';
 
@@ -31,14 +29,13 @@ class AttachmentView extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(
-                  top: 0, bottom: 24),
+                  left: 24, right: 24, top: 0, bottom: 24),
               child: Stack(
                 overflow: Overflow.visible,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Container(
-
                       decoration: BoxDecoration(
                         color: HexColor("#D7E0F9"),
                         borderRadius: BorderRadius.only(
@@ -46,7 +43,12 @@ class AttachmentView extends StatelessWidget {
                             bottomLeft: Radius.circular(8.0),
                             bottomRight: Radius.circular(8.0),
                             topRight: Radius.circular(8.0)),
-
+                        // boxShadow: <BoxShadow>[
+                        //   BoxShadow(
+                        //       color: FintnessAppTheme.grey.withOpacity(0.2),
+                        //       offset: Offset(1.1, 1.1),
+                        //       blurRadius: 10.0),
+                        // ],
                       ),
                       child: Column(
                         children: <Widget>[
@@ -67,23 +69,7 @@ class AttachmentView extends StatelessWidget {
                             ),
 
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 68, bottom: 12, right: 16, top: 12),
-                            child: Text(
-                              '5',
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontFamily: AppTheme.robotoFontName,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                letterSpacing: 0.0,
-                                color: AppTheme.nearlyDarkBlue
-                                    .withOpacity(0.6),
-                              ),
-                            ),
 
-                          ),
                         ],
                       ),
                     ),
@@ -101,31 +87,8 @@ class AttachmentView extends StatelessWidget {
               ),
             ),
           ],
+        );
 
-
-    );
   }
 }
 
-class Vehicle {
-  final String title;
-  List<String> contents = [];
-  final IconData icon;
-
-  Vehicle(this.title, this.contents, this.icon);
-
-}
-
-List<Vehicle> vehicles = [
-  new Vehicle(
-    'Bike',
-    ['Vehicle no. 1', 'Vehicle no. 2', 'Vehicle no. 7', 'Vehicle no. 10'],
-    Icons.motorcycle,
-  ),
-  new Vehicle(
-    'Cars',
-    ['Vehicle no. 3', 'Vehicle no. 4', 'Vehicle no. 6'],
-    Icons.directions_car,
-  ),
-
-];

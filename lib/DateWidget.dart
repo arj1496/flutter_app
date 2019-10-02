@@ -153,7 +153,7 @@ class DateWidget extends StatelessWidget {
       Widget _getDateViewWidget() {
         return Padding (
           padding: const EdgeInsets.only(
-              left: 10 , right: 10 , top: 8 , bottom: 16 ) ,
+              left: 10 , right: 10 , top: 13 , bottom: 16 ) ,
           child: Row (
             children: <Widget>[
               Expanded (
@@ -176,7 +176,7 @@ class DateWidget extends StatelessWidget {
                       ),
                     ) ,
                     Padding (
-                      padding: const EdgeInsets.only( top: 4 ) ,
+                      padding: const EdgeInsets.only( top: 1,left:4 ) ,
                       child: Container (
                         height: 4 ,
                         width: 70 ,
@@ -206,9 +206,9 @@ class DateWidget extends StatelessWidget {
                       ) ,
                     ) ,
                     Padding (
-                      padding: const EdgeInsets.only( top: 6 ) ,
+                      padding: const EdgeInsets.only( top: 2 ,left:8) ,
                       child: Text (
-                        '2 Oct' ,
+                        '12 Oct' ,
                         textAlign: TextAlign.center ,
                         style: TextStyle (
                           fontFamily: AppTheme.robotoFontName ,
@@ -220,7 +220,7 @@ class DateWidget extends StatelessWidget {
                       ) ,
                     ) ,
                     Padding (
-                      padding: const EdgeInsets.only( top: 16,left:8 ) ,
+                      padding: const EdgeInsets.only( top: 5,left:8 ) ,
                       child: Text (
                         '8:00 AM' ,
                         textAlign: TextAlign.center ,
@@ -258,7 +258,7 @@ class DateWidget extends StatelessWidget {
                           ) ,
                         ) ,
                         Padding (
-                          padding: const EdgeInsets.only( top: 4 ) ,
+                          padding: const EdgeInsets.only( top: 1 ) ,
                           child: Container (
                             height: 4 ,
                             width: 70 ,
@@ -290,9 +290,9 @@ class DateWidget extends StatelessWidget {
                           ) ,
                         ) ,
                         Padding (
-                          padding: const EdgeInsets.only( top: 6 ) ,
+                          padding: const EdgeInsets.only( top: 1) ,
                           child: Text (
-                            '2 hours' ,
+                            '2 hrs' ,
                             textAlign: TextAlign.center ,
                             style: TextStyle (
                               fontFamily: AppTheme.robotoFontName ,
@@ -318,7 +318,7 @@ class DateWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start ,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(left:10.0),
+                          padding: const EdgeInsets.only(left:10.0,top:8),
                           child: Text (
                             'End Date' ,
                             style: TextStyle (
@@ -332,7 +332,7 @@ class DateWidget extends StatelessWidget {
                         ) ,
                         Padding (
                           padding: const EdgeInsets.only(
-                              right: 0 , top: 4 ) ,
+                              right: 0 , top: 1 ) ,
                           child: Container (
                             height: 4 ,
                             width: 70 ,
@@ -363,9 +363,9 @@ class DateWidget extends StatelessWidget {
                           ) ,
                         ) ,
                         Padding (
-                          padding: const EdgeInsets.only( top: 6 ) ,
+                          padding: const EdgeInsets.only( top: 2,left:5 ) ,
                           child: Text (
-                            '2 Oct 2019' ,
+                            '12 Oct ' ,
                             textAlign: TextAlign.center ,
                             style: TextStyle (
                               fontFamily: AppTheme.robotoFontName ,
@@ -377,7 +377,7 @@ class DateWidget extends StatelessWidget {
                           ) ,
                         ) ,
                         Padding (
-                          padding: const EdgeInsets.only( top: 16,left:8 ) ,
+                          padding: const EdgeInsets.only( top: 2,left:2 ) ,
                           child: Text (
                             '11:45 PM' ,
                             textAlign: TextAlign.center ,
