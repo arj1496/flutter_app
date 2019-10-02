@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/HeaderContainer.dart';
+import 'package:flutter_app/ListViewUV.dart';
 import 'package:flutter_app/MainDetailPage.dart';
 import 'package:flutter_app/dhaval.dart';
 import 'package:flutter_app/src/MenuFile.dart';
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> customWidget = [
     HeaderContainer(),
-    MainDetailPage()
+    ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV()
   ];
   _changeText() {
     setState(() {

@@ -6,7 +6,6 @@ class HeaderContainer extends StatelessWidget {
 
   @override
   Widget build( BuildContext context ) {
-
     return Column(
       children: <Widget>[
         SizedBox(
@@ -14,10 +13,10 @@ class HeaderContainer extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-            left: 16,
-            right: 16,
-            top: 16 - 8.0,
-             bottom: 12 - 8.0
+              left: 16,
+              right: 16,
+              top: 12,
+              bottom: 8
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +25,7 @@ class HeaderContainer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Exam Detail",
+                    "Events",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontFamily: AppTheme.robotoFontName,
