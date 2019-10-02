@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'AppTheme.dart';
 
 class HeaderContainer extends StatelessWidget {
+  var title;
+  HeaderContainer(){}
 
+  HeaderContainer.init(var title){
+    this.title = title;
+  }
   @override
   Widget build( BuildContext context ) {
     return Column(
