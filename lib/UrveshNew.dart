@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/DetailViewUV.dart';
+import 'package:flutter_app/ListTileViewUV.dart';
 import 'package:flutter_app/ListViewUV.dart';
 
 import 'HeaderContainer.dart';
@@ -38,7 +39,7 @@ class _UrveshNewState extends State<UrveshNew> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute( builder: (context) => DetailViewUV.init(customWidget)),
+                  MaterialPageRoute( builder: (context) => ListTileViewUV()),
                 );
               },
               child: Text('List View With ListTile and Builder'),

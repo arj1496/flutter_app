@@ -5,7 +5,7 @@ class HWService{
   List<HomeWork> getAllHomeWork(){
 
     List<HomeWork> hwList = new List();
-    for(var i = 0 ; i < 1000; i++){
+    for(var i = 0 ; i < 100; i++){
 
       HomeWork hw = new HomeWork();
 
