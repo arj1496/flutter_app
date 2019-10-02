@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AllDetailsview.dart';
+import 'package:flutter_app/AttachmentView.dart';
 import 'package:flutter_app/Buttonview.dart';
 import 'package:flutter_app/CardDetail2Oct.dart';
 import 'package:flutter_app/DateWidget.dart';
@@ -13,6 +14,8 @@ import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/src/MenuFile.dart';
 
 
+import 'DateWidget2.dart';
+import 'Datewidget3.dart';
 import 'DescriptionCustomView.dart';
 import 'DescriptionOptionWithCard.dart';
 import 'Descrptionview.dart';
@@ -31,6 +34,9 @@ class DescriptionOption extends StatelessWidget {
     CardDetail2Oct(detailWidget),
     //CardDetail2Oct(dateWidget),
     DateWidget(),
+    DateWidget2(),
+    Datewidget3(),
+    AttachmentView(),
     //DescriptionCustomView.init(propertyService.getData()),
   //  MainDetailPage()
   ];
