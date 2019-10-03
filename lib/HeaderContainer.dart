@@ -30,7 +30,7 @@ class HeaderContainer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Events",
+                    title,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontFamily: AppTheme.robotoFontName,

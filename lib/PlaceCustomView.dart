@@ -7,17 +7,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'PropertyFile.dart';
 
-class DescriptionCustomView extends StatelessWidget {
+class PlaceCustomView extends StatelessWidget {
 
   var property = new PropertyFile();
-  DescriptionCustomView.init(PropertyFile property){
+  PlaceCustomView.init(PropertyFile property){
     this.property = property;
   }
   @override
   Widget build( BuildContext context ) {
     return Padding(
       padding: EdgeInsets.only(
-        top:8,
+          top:8,
           left: 8,
           right: 8,
           bottom: 8

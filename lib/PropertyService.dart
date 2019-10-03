@@ -5,14 +5,26 @@ import 'PropertyFile.dart';
 
 class PropertyService{
 
+
    PropertyFile getData() {
-    PropertyFile prop = new PropertyFile();
-    prop.label = "Description : ";
-    prop.iconData = Icon(FontAwesomeIcons.bookOpen);
-    prop.data =  "project of mine I wrap Text instances around Containers. This particular code sample features two stacked Text objects."
-        "project of mine I wrap Text instances around Containers. This particular code sample features two stacked Text objects."
-        "\nhttps://www.google.com"
-        "\nhttps://www.gmail.com";
-    return prop;
+     PropertyFile property = new PropertyFile();
+     property.label="Description";
+     property.iconData = new Icon(FontAwesomeIcons.bookOpen);
+     property.data = "Learning a new UI engine is always tricky. Thankfully, the Flutter team has highlighted the basic widgets. For this code tutorial, we will focus on Row and Column"
+         "which lay out a list of child widgets in the horizontal and vertical direction respectively"
+         "Learning a new UI engine is always tricky. Thankfully, the Flutter team has highlighted the basic widgets. For this code tutorial, we will focus on Row and Column"
+         "which lay out a list of child widgets in the horizontal and vertical direction respectively"
+         "\nhttps://www.google.com";
+    return property;
   }
+
+  PropertyFile getPlaceData() {
+    PropertyFile property = new PropertyFile();
+    property.label="Place";
+    property.iconData = new Icon(FontAwesomeIcons.placeOfWorship);
+    property.data = "Vishva Arcade, Sinhagad Road, Narhe Gaon, Pune - 411041,"
+        " Navle Bridge Opposite Hotel Deccan Pavilion (Map)Computer Training Institutes , Computer Trai ...more";
+    return property;
+  }
+
 }

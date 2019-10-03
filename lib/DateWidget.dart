@@ -149,7 +149,7 @@ class DateWidget extends StatelessWidget {
   Widget _getDateViewWidget( ) {
     return Padding (
       padding: const EdgeInsets.only(
-          left: 10 , right: 10 , top: 13 , bottom: 16 ) ,
+          left: 10 , right: 10 , top: 8 , bottom: 8 ) ,
       child: Row (
         children: <Widget>[
           Expanded (

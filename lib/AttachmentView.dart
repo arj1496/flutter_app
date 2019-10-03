@@ -24,17 +24,16 @@ class AttachmentView extends StatelessWidget {
 
 
   Widget _getTileViewWidget() {
-
-    return   Column(
+    return Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(
-                  left: 10, right: 10, top: 0, bottom: 24),
+                  left: 10, right: 10, top: 0, bottom: 8),
               child: Stack(
                 overflow: Overflow.visible,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.only(top: 8),
                     child: Container(
                       decoration: BoxDecoration(
                         color: HexColor("#D7E0F9"),
@@ -43,7 +42,7 @@ class AttachmentView extends StatelessWidget {
                             bottomLeft: Radius.circular(8.0),
                             bottomRight: Radius.circular(8.0),
                             topRight: Radius.circular(8.0)),
-                              boxShadow: <BoxShadow>[
+                         boxShadow: <BoxShadow>[
                            BoxShadow(
                                color: AppTheme.grey.withOpacity(0.2),
                                offset: Offset(1.1, 1.1),
@@ -55,16 +54,21 @@ class AttachmentView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 68, bottom: 12, right: 16, top: 12),
-                            child: Text(
-                              'Prepare your stomach for lunch with one or two glass of water',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: AppTheme.robotoFontName,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                letterSpacing: 0.0,
-                                color: AppTheme.nearlyDarkBlue
-                                    .withOpacity(0.6),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right:165.0),
+                                child: Text(
+                                  'Attachment',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: AppTheme.robotoFontName,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    letterSpacing: 0.0,
+                                    color: AppTheme.nearlyDarkBlue
+                                        .withOpacity(0.6),
+                                  ),
+                                ),
                               ),
                             ),
 
@@ -75,7 +79,7 @@ class AttachmentView extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 12,
+                    top: 4,
                     left: 0,
                     child: SizedBox(
                       width: 50,

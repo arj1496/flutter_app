@@ -24,7 +24,7 @@ class CardDetail2Oct extends StatelessWidget {
       children: <Widget>[
 
            Padding(
-             padding: const EdgeInsets.only(bottom:10.0),
+             padding: const EdgeInsets.only(bottom:8.0),
              child: Column(
                   children: <Widget>[
                     Padding(

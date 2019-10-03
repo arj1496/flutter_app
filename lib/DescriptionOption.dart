@@ -8,6 +8,7 @@ import 'package:flutter_app/DateWidget.dart';
 import 'package:flutter_app/Dateview.dart';
 import 'package:flutter_app/DetailView2Oct.dart';
 import 'package:flutter_app/MainDetailPage.dart';
+import 'package:flutter_app/PlaceCustomView.dart';
 import 'package:flutter_app/Placeview.dart';
 import 'package:flutter_app/PropertyFile.dart';
 import 'package:flutter_app/PropertyService.dart';
@@ -34,14 +35,11 @@ class DescriptionOption extends StatelessWidget {
   List<Widget> customWidget = [
    HeaderContainer.init("Event Detail"),
     CardDetail2Oct(detailWidget),
-    //CardDetail2Oct(dateWidget),
     DateWidget(),
-
     AttachmentView(),
     AttachmentFileView(),
-    AttachmentFileView(),
-    //DescriptionCustomView.init(propertyService.getData()),
-  //  MainDetailPage()
+    DescriptionCustomView.init(propertyService.getData()),
+    PlaceCustomView.init(propertyService.getPlaceData()),
   ];
  // List<Widget> widgetList = [DescriptionCustomView()];
   @override
