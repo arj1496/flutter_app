@@ -22,49 +22,47 @@ class CardDetail2Oct extends StatelessWidget {
   Widget build( BuildContext context ) {
     return Stack(
       children: <Widget>[
-        Column(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1.2,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 24, right: 24
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppTheme.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8.0),
-                            bottomLeft: Radius.circular(8.0),
-                            bottomRight: Radius.circular(8.0),
-                            topRight: Radius.circular(50.0)
-                        ),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: AppTheme.grey.withOpacity(0.2),
-                              offset: Offset(1.1, 1.1),
-                              blurRadius: 10.0),
-                        ],
+
+           Padding(
+             padding: const EdgeInsets.only(bottom:10.0),
+             child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10
                       ),
-                       child: SingleChildScrollView(
-                          child: Column(
-                            children: _getWidget() ,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppTheme.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              bottomLeft: Radius.circular(8.0),
+                              bottomRight: Radius.circular(8.0),
+                              topRight: Radius.circular(50.0)
                           ),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: AppTheme.grey.withOpacity(0.2),
+                                offset: Offset(1.1, 1.1),
+                                blurRadius: 10.0),
+                          ],
                         ),
+                         child: SingleChildScrollView(
+                            child: Column(
+                              children: _getWidget() ,
+                            ),
+                          ),
 
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
 
-              ),
-            ),
+                ),
+           ),
+
           ],
-        ),
+        );
 
-      ],
-    );
   }
 
   List<Widget> _getWidget(){

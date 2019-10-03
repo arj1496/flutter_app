@@ -29,7 +29,7 @@ class AttachmentView extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(
-                  left: 24, right: 24, top: 0, bottom: 24),
+                  left: 10, right: 10, top: 0, bottom: 24),
               child: Stack(
                 overflow: Overflow.visible,
                 children: <Widget>[
@@ -43,12 +43,12 @@ class AttachmentView extends StatelessWidget {
                             bottomLeft: Radius.circular(8.0),
                             bottomRight: Radius.circular(8.0),
                             topRight: Radius.circular(8.0)),
-                        // boxShadow: <BoxShadow>[
-                        //   BoxShadow(
-                        //       color: FintnessAppTheme.grey.withOpacity(0.2),
-                        //       offset: Offset(1.1, 1.1),
-                        //       blurRadius: 10.0),
-                        // ],
+                              boxShadow: <BoxShadow>[
+                           BoxShadow(
+                               color: AppTheme.grey.withOpacity(0.2),
+                               offset: Offset(1.1, 1.1),
+                               blurRadius: 10.0),
+                         ],
                       ),
                       child: Column(
                         children: <Widget>[
