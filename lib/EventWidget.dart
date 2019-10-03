@@ -1,9 +1,13 @@
+/**
+ * This is the detail page of event this element is behave as a child of CardDetail2Oct.dart.
+ *
+ */
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 import 'PropertyFile.dart';
 
@@ -52,7 +56,11 @@ class EventWidget extends StatelessWidget {
                               height: 48,
                               width: 2,
                               decoration: BoxDecoration(
-                                color: AppTheme.darkText.withOpacity(0.5),
+                                gradient: LinearGradient ( colors: [
+                                  AppTheme.nearlyDarkBlue ,
+                                  HexColor ( "#6F56E8" )
+                                ],
+                                ),
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(4.0)),
                               ),
@@ -123,7 +131,11 @@ class EventWidget extends StatelessWidget {
                               height: 48,
                               width: 2,
                               decoration: BoxDecoration(
-                                color: AppTheme.darkText.withOpacity(0.5),
+                              gradient: LinearGradient ( colors: [
+                                                  AppTheme.nearlyDarkBlue ,
+                                            HexColor ( "#6F56E8" )
+                                                  ],
+                               ),
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(4.0)),
                               ),

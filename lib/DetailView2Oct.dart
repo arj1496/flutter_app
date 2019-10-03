@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
 
-import 'DescriptionCustomView.dart';
-import 'PropertyService.dart';
-
 class DetailView2Oct extends StatefulWidget {
   List<Widget> customWidget = new List();
   @override

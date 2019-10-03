@@ -1,4 +1,9 @@
-
+/**
+ * In title view icon and label is display before displaying the container of place and d
+ * descfription in event.
+ * In this the titletxt is label and subtxt is displayed as icon
+ *
+ */
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,7 +26,7 @@ class TitleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return   Container(
               child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 24),
+                padding: const EdgeInsets.only(left: 1, right: 24,top:4),
                 child: Row(
                   children: <Widget>[
                     SizedBox(
@@ -52,38 +57,7 @@ class TitleView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    /*InkWell(
-                      highlightColor: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              subTxt,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: AppTheme.robotoFontName,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16,
-                                letterSpacing: 0.5,
-                                color: AppTheme.nearlyDarkBlue,
-                              ),
-                            ),
-                            *//*SizedBox(
-                              height: 38,
-                              width: 26,
-                              child: Icon(
-                                Icons.arrow_forward,
-                                color: AppTheme.darkText,
-                                size: 18,
-                              ),
-                            ),*//*
-                          ],
-                        ),
-                      ),
-                    )*/
+
                   ],
                 ),
               ),

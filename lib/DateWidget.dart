@@ -29,7 +29,7 @@ class DateWidget extends StatelessWidget {
   Widget _getTileViewWidget( ) {
     return Padding (
       padding: const EdgeInsets.only(
-          left: 10 , right: 10
+          left: 10 , right: 10,bottom: 8
       ) ,
       child: Container (
         decoration: BoxDecoration (
@@ -305,89 +305,83 @@ class DateWidget extends StatelessWidget {
             ) ,
           ) ,
           Expanded (
-            child: Row (
-              mainAxisAlignment: MainAxisAlignment.end ,
-              crossAxisAlignment: CrossAxisAlignment.center ,
+            child: Column (
+              mainAxisAlignment: MainAxisAlignment.center ,
+              crossAxisAlignment: CrossAxisAlignment.start ,
               children: <Widget>[
-                Column (
-                  mainAxisAlignment: MainAxisAlignment.center ,
-                  crossAxisAlignment: CrossAxisAlignment.start ,
-                  children: <Widget>[
-                    Padding (
-                      padding: const EdgeInsets.only( left: 10.0 , top: 8 ) ,
-                      child: Text (
-                        'End Date' ,
-                        style: TextStyle (
-                          fontFamily: AppTheme.robotoFontName ,
-                          fontWeight: FontWeight.w600 ,
-                          fontSize: 12 ,
-                          color: AppTheme.white
-                              .withOpacity ( 0.5 ) ,
-                        ) ,
-                      ) ,
+                Padding (
+                  padding: const EdgeInsets.only( left: 7.0 ) ,
+                  child: Text (
+                    'End Date' ,
+                    textAlign: TextAlign.center ,
+                    style: TextStyle (
+                      fontFamily: AppTheme.robotoFontName ,
+                      fontWeight: FontWeight.w600 ,
+                      fontSize: 12 ,
+                      color: AppTheme.white
+                          .withOpacity ( 0.5 ) ,
                     ) ,
-                    Padding (
-                      padding: const EdgeInsets.only(
-                          right: 0 , top: 1 ) ,
-                      child: Container (
-                        height: 4 ,
-                        width: 70 ,
-                        decoration: BoxDecoration (
-                          /*color: HexColor('#F1B440')
-                                                                    .withOpacity(0.2),*/
-                          borderRadius: BorderRadius.all (
-                              Radius.circular ( 4.0 ) ) ,
-                        ) ,
-                        child: Row (
-                          children: <Widget>[
-                            Container (
-                              width: ((70 / 2.5)) ,
-                              height: 4 ,
-                              decoration: BoxDecoration (
-                                /* gradient:
-                                                                      LinearGradient(colors: [
-                                                                        HexColor('#F1B440')
-                                                                            .withOpacity(0.1),
-                                                                        HexColor('#F1B440'),
-                                                                      ]),*/
-                                borderRadius: BorderRadius.all (
-                                    Radius.circular ( 4.0 ) ) ,
-                              ) ,
-                            ) ,
-                          ] ,
-                        ) ,
-                      ) ,
-                    ) ,
-                    Padding (
-                      padding: const EdgeInsets.only( top: 2 , left: 5 ) ,
-                      child: Text (
-                        '12 Oct ' ,
-                        textAlign: TextAlign.center ,
-                        style: TextStyle (
-                          fontFamily: AppTheme.robotoFontName ,
-                          fontWeight: FontWeight.w500 ,
-                          fontSize: 16 ,
-                          //  letterSpacing: -0.2 ,
-                          color: AppTheme.white ,
-                        ) ,
-                      ) ,
-                    ) ,
-                    Padding (
-                      padding: const EdgeInsets.only( top: 2 , left: 2 ) ,
-                      child: Text (
-                        '11:45 PM' ,
-                        textAlign: TextAlign.center ,
-                        style: TextStyle (
-                          fontFamily: AppTheme.robotoFontName ,
-                          fontWeight: FontWeight.w600 ,
-                          fontSize: 12 ,
-                          color: AppTheme.white
-                              .withOpacity ( 0.5 ) ,
-                        ) ,
-                      ) ,
-                    ) ,
-                  ] ,
+                  ) ,
                 ) ,
+                Padding (
+                  padding: const EdgeInsets.only( top: 1 , left: 4 ) ,
+                  child: Container (
+                    height: 4 ,
+                    width: 70 ,
+                    decoration: BoxDecoration (
+                      /*color:
+                                                                    HexColor('#87A0E5').withOpacity(0.2),*/
+                      borderRadius: BorderRadius.all (
+                          Radius.circular ( 4.0 ) ) ,
+                    ) ,
+                    child: Row (
+                      children: <Widget>[
+                        Container (
+                          width: ((70 / 1.2)) , //* animation.value),
+                          height: 4 ,
+                          decoration: BoxDecoration (
+                            /*gradient: LinearGradient(colors: [
+                                                                            HexColor('#87A0E5'),
+                                                                            HexColor('#87A0E5')
+                                                                                .withOpacity(0.5),
+                                                                          ]),*/
+                            borderRadius: BorderRadius.all (
+                                Radius.circular ( 4.0 ) ) ,
+                          ) ,
+                        )
+                      ] ,
+                    ) ,
+                  ) ,
+                ) ,
+                Padding (
+                  padding: const EdgeInsets.only( top: 2 , left: 8 ) ,
+                  child: Text (
+                    '12 Oct' ,
+                    textAlign: TextAlign.center ,
+                    style: TextStyle (
+                      fontFamily: AppTheme.robotoFontName ,
+                      fontWeight: FontWeight.w500 ,
+                      fontSize: 16 ,
+                      //  letterSpacing: -0.2 ,
+                      color: AppTheme.white ,
+                    ) ,
+                  ) ,
+                ) ,
+                Padding (
+                  padding: const EdgeInsets.only( top: 5 , left: 8 ) ,
+                  child: Text (
+                    '8:00 AM' ,
+                    textAlign: TextAlign.center ,
+                    style: TextStyle (
+                      fontFamily: AppTheme.robotoFontName ,
+                      fontWeight: FontWeight.w600 ,
+                      fontSize: 12 ,
+                      color: AppTheme.white
+                          .withOpacity ( 0.5 ) ,
+                    ) ,
+                  ) ,
+                ) ,
+
               ] ,
             ) ,
           )

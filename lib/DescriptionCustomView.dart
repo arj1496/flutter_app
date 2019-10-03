@@ -1,8 +1,14 @@
+/**
+ * This is the generic container used for description and place in event.
+ * To diaplay label and data this container is used.
+ * In this property file is accepted in constructor from calling widgets.
+ * property contains label,icon and data properties.
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'PropertyFile.dart';
@@ -43,7 +49,7 @@ class DescriptionCustomView extends StatelessWidget {
         child: new Column (
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left:8.0,bottom:8.0,right:2.0),
+              padding: const EdgeInsets.all(8),
               child:
               Linkify(
                 onOpen:  (link) async {
