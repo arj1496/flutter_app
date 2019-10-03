@@ -42,24 +42,7 @@ class PlaceCustomView extends StatelessWidget {
 
         child: new Column (
           children: <Widget>[
-            Row(
-              children:<Widget>[IconButton(
-                icon: property.iconData,
-              ),
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0),
-                  child: new Text (
-                    property.label,
-                    style: new TextStyle(
-                      fontSize: 20.0,
-                      decorationStyle: TextDecorationStyle.solid,
-                      fontFamily: AppTheme.robotoFontName,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            
             Padding(
               padding: const EdgeInsets.only(left:8.0,bottom:8.0,right:2.0),
               child:
@@ -73,9 +56,11 @@ class PlaceCustomView extends StatelessWidget {
                 },
                 text:(property.data),
                 style: new TextStyle(
-                  fontSize: 15.0,
-                  fontFamily: AppTheme.robotoFontName,
-                  color: Colors.black45,
+                  fontFamily:AppTheme.robotoFontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  letterSpacing: -0.1,
+                  color: AppTheme.grey.withOpacity(0.5),
                 ),
               ),
             ),

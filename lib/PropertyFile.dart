@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 class PropertyFile{
 
   String _label;
-  Icon _iconData;
+  IconData _iconData;
   String _data;
    String get label => _label;
 
@@ -20,9 +20,9 @@ class PropertyFile{
 
   PropertyFile();
 
-  Icon get iconData => _iconData;
+  IconData get iconData => _iconData;
 
-  set iconData( Icon value ) {
+  set iconData( IconData value ) {
     _iconData = value;
   }
 

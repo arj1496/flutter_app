@@ -12,6 +12,7 @@ import 'package:flutter_app/PlaceCustomView.dart';
 import 'package:flutter_app/Placeview.dart';
 import 'package:flutter_app/PropertyFile.dart';
 import 'package:flutter_app/PropertyService.dart';
+import 'package:flutter_app/TitleViewDetail.dart';
 import 'package:flutter_app/src/MenuFile.dart';
 
 
@@ -36,10 +37,12 @@ class DescriptionOption extends StatelessWidget {
    HeaderContainer.init("Event Detail"),
     CardDetail2Oct(detailWidget),
     DateWidget(),
+    TitleViewDetail.init(propertyService.getPlaceData()),
+    PlaceCustomView.init(propertyService.getPlaceData()),
+    TitleViewDetail.init(propertyService.getData()),
+    DescriptionCustomView.init(propertyService.getData()),
     AttachmentView(),
     AttachmentFileView(),
-    DescriptionCustomView.init(propertyService.getData()),
-    PlaceCustomView.init(propertyService.getPlaceData()),
   ];
  // List<Widget> widgetList = [DescriptionCustomView()];
   @override
