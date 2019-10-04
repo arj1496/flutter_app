@@ -14,6 +14,7 @@ class AppTheme{
   static const Color darkerText = Color(0xFF17262A);
   static const Color grey = Color(0xFF3A5160);
   static const Color nearlyDarkBlue = Color(0xFF2633C5);
+  static const Color lightText = Color(0xFF4A6572);
 
   // font
   static const String robotoFontName = 'Roboto';

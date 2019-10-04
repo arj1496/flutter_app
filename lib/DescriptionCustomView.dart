@@ -23,7 +23,7 @@ class DescriptionCustomView extends StatelessWidget {
   Widget build( BuildContext context ) {
     return Padding(
       padding: EdgeInsets.only(
-        top:8,
+        top:1,
           left: 8,
           right: 8,
           bottom: 8

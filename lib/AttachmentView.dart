@@ -20,20 +20,17 @@ class AttachmentView extends StatelessWidget {
     return _getTileViewWidget();
 
   }
-
-
-
   Widget _getTileViewWidget() {
     return Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(
-                  left: 10, right: 10, top: 0, bottom: 8),
+                  left: 10, right: 10, top: 4, bottom: 10),
               child: Stack(
                 overflow: Overflow.visible,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: HexColor("#D7E0F9"),
@@ -53,12 +50,12 @@ class AttachmentView extends StatelessWidget {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 68, bottom: 12, right: 16, top: 12),
+                                left: 40, bottom: 12, right: 16, top: 12),
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.only(right:165.0),
                                 child: Text(
-                                  'Attachment',
+                                  'Attachments',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: AppTheme.robotoFontName,
@@ -79,7 +76,7 @@ class AttachmentView extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 4,
+                    top: 0,
                     left: 0,
                     child: SizedBox(
                       width: 50,

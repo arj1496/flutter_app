@@ -36,7 +36,7 @@ class TitleView extends StatelessWidget {
                         padding: const EdgeInsets.only(right:14.0),
                         child: IconButton(
                           icon: new Icon(subTxt),
-                          color: AppTheme.darkText.withOpacity(0.5),
+                          color: AppTheme.darkerText.withOpacity(0.5),
                           iconSize: 18,
                         ),
                       ),

@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_app/Attachment.dart';
 import 'package:flutter_app/EventService.dart';
-import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
 import 'package:flutter_app/src/mo/HomeWork/hwservice.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,29 +17,16 @@ class AttachmentFileView extends StatelessWidget {
   //Map _values = getValues();
   List<Attachment> attachmrntlist = eventService.getValues();
 
-
-
-  /*DateWidget.init(PropertyFile property){
-    this.property = property;
-  }*/
-
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-      color: AppTheme.background,
-      child: SingleChildScrollView(
-        child: ListView.builder(
+    return  ListView.builder(
             physics: NeverScrollableScrollPhysics(),
              shrinkWrap: true,
             itemCount: attachmrntlist.length,
             itemBuilder: (BuildContext ctxt, int Index){
               return _listTileViewUV(attachmrntlist[Index]);
             }
-        ),
 
-    ),
     );
 
   }
@@ -48,7 +34,7 @@ class AttachmentFileView extends StatelessWidget {
   Widget _listTileViewUV(data) {
 
     return Padding(
-      padding: const EdgeInsets.only(top:2.0,bottom:3,left:8,right:8),
+      padding: const EdgeInsets.only(top:1.0,bottom:3,left:8,right:8),
       child: Container(
           decoration: BoxDecoration(
           color: AppTheme.white,
@@ -164,7 +150,9 @@ class AttachmentFileView extends StatelessWidget {
                               ),
                             ),*/
                             IconButton(
-                              icon: new Icon(FontAwesomeIcons.download),
+                              icon: new Icon(FontAwesomeIcons.download,
+                                color: AppTheme.nearlyDarkBlue,
+                              ),
                             ),
 
                           ],

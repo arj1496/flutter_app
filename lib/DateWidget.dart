@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 import 'PropertyFile.dart';
@@ -149,7 +150,7 @@ class DateWidget extends StatelessWidget {
   Widget _getDateViewWidget( ) {
     return Padding (
       padding: const EdgeInsets.only(
-          left: 10 , right: 10 , top: 8 , bottom: 8 ) ,
+          left: 6 , right:  6, top: 8 , bottom: 8 ) ,
       child: Row (
         children: <Widget>[
           Expanded (
@@ -158,7 +159,7 @@ class DateWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start ,
               children: <Widget>[
                 Padding (
-                  padding: const EdgeInsets.only( left: 7.0 ) ,
+                  padding: const EdgeInsets.only (left: 7.0 ) ,
                   child: Text (
                     'Start Date' ,
                     textAlign: TextAlign.center ,
@@ -242,50 +243,69 @@ class DateWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center ,
                   crossAxisAlignment: CrossAxisAlignment.start ,
                   children: <Widget>[
-                    Text (
-                      'Duration' ,
-                      textAlign: TextAlign.center ,
-                      style: TextStyle (
-                        fontFamily: AppTheme.robotoFontName ,
-                        fontWeight: FontWeight.w600 ,
-                        fontSize: 12 ,
-                        color: AppTheme.white
-                            .withOpacity ( 0.5 ) ,
-                      ) ,
+                     Padding(
+                       padding: const EdgeInsets.only(left:5.0,bottom:4),
+                       child: SizedBox(
+                          width: 20,
+                          height: 25,
+                          child: IconButton(
+                              icon:new Icon(FontAwesomeIcons.clock),
+                            color: Colors.red,
+                          ),
+
+                        ),
+                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text (
+                        '2 hrs' ,
+                        textAlign: TextAlign.center ,
+                        style: TextStyle (
+                          fontFamily: AppTheme.robotoFontName ,
+                          fontWeight: FontWeight.w600 ,
+                          fontSize: 12 ,
+                          color: AppTheme.white
+                              .withOpacity ( 0.5 ) ,
+                        ) ,
+                      ),
                     ) ,
-                    Padding (
+                    /*Padding (
                       padding: const EdgeInsets.only( top: 1 ) ,
                       child: Container (
                         height: 4 ,
                         width: 70 ,
                         decoration: BoxDecoration (
-                          /*color: HexColor('#F56E98')
-                                                                    .withOpacity(0.2),*/
+                          *//*color: HexColor('#F56E98')
+                                                                    .withOpacity(0.2),*//*
                           borderRadius: BorderRadius.all (
                               Radius.circular ( 4.0 ) ) ,
                         ) ,
                         child: Row (
                           children: <Widget>[
                             Container (
-                              width: ((70 / 2)) , /* *
-                                                                        animationController.value),*/
+                              width: ((70 / 2)) , *//* *
+                                                                        animationController.value),*//*
                               height: 4 ,
                               decoration: BoxDecoration (
-                                /* gradient:
+                                *//* gradient:
                                                                       LinearGradient(colors: [
                                                                         HexColor('#F56E98')
                                                                             .withOpacity(0.1),
                                                                         HexColor('#F56E98'),
-                                                                      ]),*/
+                                                                      ]),*//*
                                 borderRadius: BorderRadius.all (
                                     Radius.circular ( 4.0 ) ) ,
                               ) ,
                             ) ,
+
                           ] ,
-                        ) ,
+                        ),
+
                       ) ,
-                    ) ,
-                    Padding (
+                    ) ,*/
+
+                   /* Padding (
                       padding: const EdgeInsets.only( top: 1 ) ,
                       child: Text (
                         '2 hrs' ,
@@ -298,7 +318,7 @@ class DateWidget extends StatelessWidget {
                           color: AppTheme.white ,
                         ) ,
                       ) ,
-                    ) ,
+                    ) ,*/
                   ] ,
                 ) ,
               ] ,
@@ -306,11 +326,11 @@ class DateWidget extends StatelessWidget {
           ) ,
           Expanded (
             child: Column (
-              mainAxisAlignment: MainAxisAlignment.center ,
+              mainAxisAlignment: MainAxisAlignment.start ,
               crossAxisAlignment: CrossAxisAlignment.start ,
               children: <Widget>[
                 Padding (
-                  padding: const EdgeInsets.only( left: 7.0 ) ,
+                  padding: const EdgeInsets.only( left: 28.0 ) ,
                   child: Text (
                     'End Date' ,
                     textAlign: TextAlign.center ,
@@ -324,7 +344,7 @@ class DateWidget extends StatelessWidget {
                   ) ,
                 ) ,
                 Padding (
-                  padding: const EdgeInsets.only( top: 1 , left: 4 ) ,
+                  padding: const EdgeInsets.only( top: 1 , left: 24 ) ,
                   child: Container (
                     height: 4 ,
                     width: 70 ,
@@ -354,7 +374,7 @@ class DateWidget extends StatelessWidget {
                   ) ,
                 ) ,
                 Padding (
-                  padding: const EdgeInsets.only( top: 2 , left: 8 ) ,
+                  padding: const EdgeInsets.only( top: 2 , left: 28 ) ,
                   child: Text (
                     '12 Oct' ,
                     textAlign: TextAlign.center ,
@@ -368,7 +388,7 @@ class DateWidget extends StatelessWidget {
                   ) ,
                 ) ,
                 Padding (
-                  padding: const EdgeInsets.only( top: 5 , left: 8 ) ,
+                  padding: const EdgeInsets.only( top: 5 , left: 28 ) ,
                   child: Text (
                     '8:00 AM' ,
                     textAlign: TextAlign.center ,

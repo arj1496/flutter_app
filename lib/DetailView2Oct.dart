@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/CustomAppbar.dart';
+import 'package:flutter_app/HeaderContainer.dart';
 
 class DetailView2Oct extends StatefulWidget {
   List<Widget> customWidget = new List();
@@ -34,7 +36,8 @@ class DetailViewUVState extends State<DetailView2Oct>{
 
   _getNormalScaffold() {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      appBar: CustomAppbar.init("Event"),
+      //backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Column(
           children:  _getWidget(),
