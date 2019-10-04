@@ -11,7 +11,7 @@ class Buttonview extends StatelessWidget {
         child: RaisedButton(
           child: Text("Prevous"),
           onPressed: () => null,
-          color:  Colors.white,
+          color:  Colors.grey,
           splashColor: Colors.amberAccent,
          /* shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0),
@@ -25,7 +25,7 @@ class Buttonview extends StatelessWidget {
 
           child: Text("Today"),
           onPressed: () => null,
-          color:  Colors.white,
+          color:  Colors.blueGrey,
           splashColor: Colors.amberAccent,
           /*shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30.0),
@@ -38,7 +38,7 @@ class Buttonview extends StatelessWidget {
         child: RaisedButton(
           child: Text("Next"),
           onPressed: () => null,
-          color:  Colors.white,
+          color:  Colors.grey,
           splashColor: Colors.amberAccent,
          /* shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30.0),

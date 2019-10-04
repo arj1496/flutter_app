@@ -23,9 +23,19 @@ class PropertyService{
     property.label="Place";
     property.iconData = FontAwesomeIcons.mapMarker;
     property.data = "Vishva Arcade, Sinhagad Road, Narhe Gaon, Pune - 411041,"
-        " Navle Bridge Opposite Hotel Deccan Pavilion (Map)Computer Training Institutes , Computer Trai ...more";
+        " Navle Bridge Opposite Hotel Deccan Pavilion (Map)Computer Training Institutes , Computer Trai ...more,"
+    "इनपुट साधने ऑनलाइन वापरून पहा,"
+    "ಕನ್ನಡ";
     return property;
   }
+
+   PropertyFile getExamData() {
+     PropertyFile property = new PropertyFile();
+     property.label="Syllabus";
+     property.iconData = FontAwesomeIcons.book;
+     property.data = "I retrieve a piece of text from an API. I want to allot a set amount of space to it (say a max Container with width: 300.0 and height: 100.0). Sometimes, the piece of text fits in this Container with font size 30.0";
+     return property;
+   }
 
 
 }

@@ -4,10 +4,12 @@ import 'AppTheme.dart';
 
 class HeaderContainer extends StatelessWidget {
   var title;
+  var subtitle;
   HeaderContainer(){}
 
-  HeaderContainer.init(var title){
+  HeaderContainer.init(var title,var subtitle){
     this.title = title;
+    this.subtitle = subtitle;
   }
   @override
   Widget build( BuildContext context ) {
@@ -18,10 +20,10 @@ class HeaderContainer extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-              left: 16,
-              right: 16,
-              top: 12,
-              bottom: 8
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,13 +53,30 @@ class HeaderContainer extends StatelessWidget {
                   BorderRadius.all(Radius.circular(32.0)),
                   onTap: () {},
                   child: Center(
-                    child: Icon(
-                      Icons.keyboard_arrow_left,
-                      // color: FintnessAppTheme.grey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        subtitle,
+
+                        style: TextStyle(
+                          fontFamily: AppTheme.robotoFontName,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 15,
+                          letterSpacing: -0.2,
+                          // color: FintnessAppTheme.darkerText
+                          //  color: FintnessAppTheme.darkerText,
+                        ),
+                        // color: FintnessAppTheme.grey,
+                      ),
                     ),
                   ),
                 ),
               ),*/
+              ],
+            ),
+           ),
+          ],
+       );
               /*Padding(
                 padding: const EdgeInsets.only(
                   left: 8,
@@ -86,7 +105,7 @@ class HeaderContainer extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),*/
+              ),
               /*SizedBox(
                 height: 38,
                 width: 38,
@@ -107,7 +126,8 @@ class HeaderContainer extends StatelessWidget {
           ),
         )
       ],
-    );
+    );*/
+
 
   }
 }

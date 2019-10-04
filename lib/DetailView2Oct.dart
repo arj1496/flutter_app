@@ -5,20 +5,24 @@ import 'package:flutter_app/HeaderContainer.dart';
 
 class DetailView2Oct extends StatefulWidget {
   List<Widget> customWidget = new List();
+  String title = null;
   @override
   State<StatefulWidget> createState() {
-    return DetailViewUVState(customWidget);
+    return DetailViewUVState(customWidget,title);
   }
-  DetailView2Oct.init(List<Widget> customWidget ){
+  DetailView2Oct.init(List<Widget> customWidget,String title ){
     this.customWidget = customWidget;
+    this.title = title;
   }
 }
 
 class DetailViewUVState extends State<DetailView2Oct>{
 
   List<Widget> customWidget = new List();
-  DetailViewUVState(List<Widget> customWidget){
+  String title = null;
+  DetailViewUVState(List<Widget> customWidget,title){
     this.customWidget = customWidget;
+    this.title = title;
   }
 
 
@@ -36,7 +40,7 @@ class DetailViewUVState extends State<DetailView2Oct>{
 
   _getNormalScaffold() {
     return Scaffold(
-      appBar: CustomAppbar.init("Event"),
+      appBar: CustomAppbar.init(title),
       //backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Column(
