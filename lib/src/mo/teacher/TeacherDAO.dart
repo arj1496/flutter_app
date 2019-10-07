@@ -37,6 +37,25 @@ class TeacherDAO{
     });
   }
 
+  // this method is used to save the List of Teachers
+  batchAddTeacher(List<Teacher> teacherList){
+    Database db = null;
+    getDataBaseHandler().then((dataBaseInstance) async{
+      db = dataBaseInstance;
+      Batch batch = db.batch();
+      for(var i = 0; i < teacherList.length; i++){
+        Teacher teacher = teacherList[i];
+        batch.insert(
+          teacherTable,
+          teacher.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace
+        );
+      }
+      await batch.commit(noResult: true);
+      print("Teacher Saved Successfully in to Local DB " + teacherList.length.toString());
+    });
+  }
+
 
   Future<List<Teacher>> getAllTeacherData_() async{
 

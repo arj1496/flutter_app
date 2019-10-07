@@ -315,10 +315,11 @@ class _UrveshHomePageState extends State<UrveshHome> {
           return teacher;
         });
         TeacherServcie teacherServcie = new TeacherServcie();
-        for(var i = 0; i < test.length; i++){
+        /*for(var i = 0; i < test.length; i++){
           Teacher teacher = test[i];
           teacherServcie.addTeacher(teacher);
-        }
+        }*/
+        teacherServcie.batchAddTeacher(test);
       }else{
         print('Teacher Sync is false');
       }
@@ -353,6 +354,9 @@ class _UrveshHomePageState extends State<UrveshHome> {
 
   void _getTecherFromServerAndSaveToLocalDB() {
     getData();
+    /*TeacherServcie teacherServcie = new TeacherServcie();
+    List<Teacher> _teacherList =  teacherServcie.getTeacherListDataFromServer();*/
   }
+
 
 }
