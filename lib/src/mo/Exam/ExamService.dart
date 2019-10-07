@@ -4,7 +4,7 @@ import 'package:flutter_app/HeaderContainer.dart';
 import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/src/mo/Exam/ButtonAccess.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
-import 'package:flutter_app/src/mo/Exam/ExamSecurityCheck.dart';
+
 
 import '../../../CardDetail2Oct.dart';
 import '../../../DescriptionCustomView.dart';
