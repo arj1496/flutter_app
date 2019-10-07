@@ -10,6 +10,8 @@ import 'package:flutter_app/ExamWidget.dart';
 import 'package:flutter_app/MainDetailPage.dart';
 import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/TitleViewDetail.dart';
+import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
+import 'package:flutter_app/src/mo/Exam/ExamPage.dart';
 import 'AttachmentFileView.dart';
 import 'DescriptionCustomView.dart';
 import 'EventWidget.dart';
@@ -24,9 +26,11 @@ class DescriptionOption extends StatelessWidget {
 
 
   static PropertyService propertyService = new PropertyService();
+  static ExamActivity examActivity = new ExamActivity();
   static List<Widget> detailWidget = [EventWidget(),];
   static List<Widget> exWidget = [ExamWidget(),];
   static List<Widget> exWidget2= [ExamWidget2(),];
+  static List<Widget> exWidget3= [ExamPage(),];
   List<Widget> eventWidget = [
   // HeaderContainer.init("Event Detail"),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
     CardDetail2Oct(detailWidget),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
@@ -55,7 +59,7 @@ class DescriptionOption extends StatelessWidget {
     HeaderContainer.init("Unit Test 1",""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
     CardDetail2Oct(exWidget2),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
     MarkWidget(),
-    HeaderContainer.init("Grade Boundry","Grade Level 1"), // It display date in blue container
+    HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"), // It display date in blue container
     TypeView(),
     TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
     DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
@@ -65,6 +69,22 @@ class DescriptionOption extends StatelessWidget {
     // AttachmentView(),                                       // It dispay container in water mark
     // AttachmentFileView(),                                    // This display all atachment in listview.
   ];
+ /* List<Widget> examWidget3 = [
+    HeaderContainer.init("Unit Test 1",""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
+    CardDetail2Oct(exWidget3),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+    MarkWidget(),
+    HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"), // It display date in blue container
+    TypeView(),
+    TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
+    DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
+    TitleViewDetail.init(propertyService.getData()),
+    DescriptionCustomView.init(propertyService.getData()),
+    ButtonUI(),
+    // AttachmentView(),                                       // It dispay container in water mark
+    // AttachmentFileView(),                                    // This display all atachment in listview.
+  ];*/
+
+  List<Widget> examWidget3 = examActivity.getAccessibleWidget();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,6 +150,19 @@ class DescriptionOption extends StatelessWidget {
                   context,
                   //DetailView2Oct is a main page with scaffold which render all details widgets.
                   MaterialPageRoute(builder: (context) => DetailView2Oct.init(examWidget2," ")),
+                );
+
+              },
+
+            ),
+
+            RaisedButton(
+              child: Text("Exam Page SecurityDemo"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  //DetailView2Oct is a main page with scaffold which render all details widgets.
+                  MaterialPageRoute(builder: (context) => DetailView2Oct.init(examWidget3," ")),
                 );
 
               },

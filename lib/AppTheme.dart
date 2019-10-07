@@ -18,6 +18,7 @@ class AppTheme{
 
   // font
   static const String robotoFontName = 'Roboto';
+  static const String workSansFontName = 'WorkSans-Regular';
 
 }
 

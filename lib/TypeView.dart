@@ -25,7 +25,7 @@ class TypeView extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(
-              left: 10, right: 10, top: 4, bottom: 10),
+              left:2, right: 20, top: 4, bottom: 10),
           child: Stack(
             overflow: Overflow.visible,
             children: <Widget>[
@@ -50,12 +50,12 @@ class TypeView extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 10, bottom: 12, right: 16, top: 12),
+                            left: 1, bottom: 12, right: 16, top: 12),
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.only(right:165.0),
                             child: Text(
-                              'Type',
+                              'Type :',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontFamily: AppTheme.robotoFontName,
@@ -66,15 +66,32 @@ class TypeView extends StatelessWidget {
                                     .withOpacity(0.6),
                               ),
                             ),
+
                           ),
+
                         ),
 
                       ),
-
+                      Padding(
+                        padding: const EdgeInsets.only(top:1.0,left:50,bottom: 8.0),
+                        child: Text(
+                          'Terminal(A) Terminal(A)Terminal(A) Terminal(A)Terminal(A) Terminal(A)Terminal(A) Terminal(A) ',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: AppTheme.robotoFontName,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            letterSpacing: 0.0,
+                            color: AppTheme.nearlyBlack
+                                .withOpacity(0.6),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
+
               Positioned(
                 top: 0,
                 left: 0,

@@ -62,12 +62,13 @@ class DescriptionCustomView extends StatelessWidget {
                   }
                 },
                 text:(property.data),
+                textDirection: TextDirection.ltr,
                 style: new TextStyle(
-                  fontFamily:AppTheme.robotoFontName,
+                  fontFamily:AppTheme.workSansFontName,
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                   letterSpacing: -0.1,
-                  color: AppTheme.grey.withOpacity(0.5),
+                  color: Colors.black54,
                 ),
               ),
             ),

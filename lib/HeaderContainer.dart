@@ -30,7 +30,7 @@ class HeaderContainer extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left:8.0,right:8.0,top:8.0),
                   child: Text(
                     title,
                     textAlign: TextAlign.left,
@@ -44,6 +44,9 @@ class HeaderContainer extends StatelessWidget {
                   ),
                 ),
               ),
+
+                //  color: FintnessAppTheme.darkerText,
+
               /*SizedBox(
                 height: 38,
                 width: 38,
@@ -74,7 +77,23 @@ class HeaderContainer extends StatelessWidget {
               ),*/
               ],
             ),
+
            ),
+        Padding(
+          padding: const EdgeInsets.only(bottom:8.0,left:10.0),
+          child: Text(
+            subtitle ,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontFamily: AppTheme.robotoFontName,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                letterSpacing: 1.2,
+                color: AppTheme.nearlyBlue
+              //  color: FintnessAppTheme.darkerText,
+            ),
+          ),
+        ),
           ],
        );
               /*Padding(
