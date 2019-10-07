@@ -66,11 +66,11 @@ class  DBProvider {
         "firstName TEXT,"
         "lastName TEXT,"
         "person INTEGER,"
-        "isWritable INTEGER"
-        "gender TEXT"
-        "email TEXT"
-        "standardIds TEXT"
-        "userId TEXT"
+        "isWritable INTEGER,"
+        "gender TEXT,"
+        "email TEXT,"
+        "standardIds TEXT,"
+        "userId INTEGER,"
         "role TEXT"
         ")" ;
   }

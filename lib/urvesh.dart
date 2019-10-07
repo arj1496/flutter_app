@@ -108,8 +108,9 @@ class _UrveshHomePageState extends State<UrveshHome> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           getTeacherData();
+          //getData();
         },
-        child: Text("Get Teacher Data",
+        child: Text("Get Teacher Data from LocalDB",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
@@ -129,7 +130,27 @@ class _UrveshHomePageState extends State<UrveshHome> {
         onPressed: () {
           addTeacher();
         },
-        child: Text("Save Teacher",
+        child: Text("Save Teacher to LocalDB",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final saveTeacherBtn_ = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getTecherFromServerAndSaveToLocalDB();
+        },
+        child: Text("Save Teacher to LocalDB get from WebService",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
@@ -146,21 +167,23 @@ class _UrveshHomePageState extends State<UrveshHome> {
               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
               child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  /*SizedBox(
                     height: 155.0,
                     child: Image.asset(
                       "images/mount-carmel-logo.png",
                       fit: BoxFit.contain,
                     ),
-                  ),
-                  SizedBox(height: 10.0,),
+                  ),*/
+                  SizedBox(height: 5.0,),
                   logoutButon,
-                  SizedBox(height: 10.0,),
+                  SizedBox(height: 5.0,),
                   homePage,
-                  SizedBox(height: 10.0,),
+                  SizedBox(height: 5.0,),
                   getDataBtn,
-                  SizedBox(height: 10.0,),
+                  SizedBox(height: 5.0,),
                   saveTeacherBtn,
+                  SizedBox(height: 5.0,),
+                  saveTeacherBtn_
                 ],
               ),
             ),
@@ -281,19 +304,32 @@ class _UrveshHomePageState extends State<UrveshHome> {
     HashMap map = new HashMap<String, String>();
     map['teacher_sync_time'] = 0.toString();
 
-    Future<dynamic> test = webClient.getData_(map, "/rest/sync/getSyncInfo");
+    Future<dynamic> test = webClient.getData_(map, "rest/sync/getSyncInfo");
     test.then((value) {
-      print(value);
-      print(value['teachers'][0]['id']);
-      print(value['teachers'][0]['firstName']);
+      if(value['isTeacherSync']){
+        print(value);
+
+        List<dynamic> teachers = value['teachers'];
+        List<Teacher> test = List.generate(teachers.length, (i){
+          Teacher teacher = Teacher.fromJson(teachers[i]);
+          return teacher;
+        });
+        TeacherServcie teacherServcie = new TeacherServcie();
+        for(var i = 0; i < test.length; i++){
+          Teacher teacher = test[i];
+          teacherServcie.addTeacher(teacher);
+        }
+      }else{
+        print('Teacher Sync is false');
+      }
     });
   }
 
   void addTeacher() {
     Teacher teacher = new Teacher(
       lid: 1,
-      id: 2,
-      firstName: "Ashwini",
+      id: 1,
+      firstName: "Urvesh",
       lastName: "Rathod",
       person: 3,
       gender: "male",
@@ -313,6 +349,10 @@ class _UrveshHomePageState extends State<UrveshHome> {
     TeacherServcie teacherServcie = new TeacherServcie();
     var test = teacherServcie.getTeacherList();
     print(test);
+  }
+
+  void _getTecherFromServerAndSaveToLocalDB() {
+    getData();
   }
 
 }

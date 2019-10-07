@@ -28,18 +28,23 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
     return Container(
       color: AppTheme.background,
       child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: AppTheme.background,
+          title: Text("Events"),
+        ),
         backgroundColor: Colors.transparent,
         body: ListView.builder(
             itemCount: list.length,
             itemBuilder: (BuildContext ctxt, int Index){
-              return _listTileViewUV();
+              return _listTileViewUV(list[Index]);
             }
         ),
       ),
     );
   }
 
-  Widget _listTileViewUV() {
+  Widget _listTileViewUV(data) {
     return Padding(
       padding: const EdgeInsets.only(
           left: 10, right: 10, top: 3, bottom: 3
@@ -98,7 +103,8 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                                 left: 4, bottom: 3
                             ),
                             child: Text(
-                              'Gandhi Jayanti Gandhi Jayanti',
+                              //'Gandhi Jayanti Gandhi Jayanti',
+                              data.title,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: AppTheme.robotoFontName,
@@ -142,7 +148,8 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Fastival',
+                          //'Fastival',
+                          data.className,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppTheme.robotoFontName,
@@ -235,8 +242,7 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                                   fontFamily: AppTheme.robotoFontName,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,
-                                  color: AppTheme.grey
-                                      .withOpacity(0.5),
+                                  color: AppTheme.grey.withOpacity(0.5),
                                 ),
                               ),
                             ),
@@ -245,8 +251,6 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                       ],
                     ),
                   )
-
-
                 ],
               ),
             )

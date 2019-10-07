@@ -9,7 +9,7 @@ import 'package:flutter_app/src/fr/db/DBProvider.dart' ;
 
 class TeacherDAO{
 
-  static final teacherTable = "teacher";
+  static final teacherTable = "Teacher";
 
   Future<Database> getDataBaseHandler()  async {
     final dbHelper = DBProvider.single_instance;
@@ -75,6 +75,7 @@ class TeacherDAO{
     var test =  List.generate(maps.length, (i) {
       return Teacher.fromJson(maps[i]);
     });
+    print("Teacher List size : ${test.length}");
     return test;
   }
 

@@ -5,7 +5,7 @@ class Teacher{
   String firstName;
   String lastName;
   int person ;
-  bool isWritable;
+  int isWritable;
   String gender;
   String email;
   String standardIds;
@@ -30,27 +30,33 @@ class Teacher{
 
 
   factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
-    lid: json["lid"],
-    id: json["id"],
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    person: json["person"],
-    isWritable: json["isWritable"],
-    gender: json["gender"],
-    email: json["email"],
-    standardIds: json["standardIds"],
-    subjectIds: json["subjectIds"],
-    userId: json["userId"],
-    role: json["role"],
-
+    lid : json["lid"],
+    id : json["id"],
+    firstName : json["firstName"],
+    lastName : json["lastName"],
+    person : json["person"],
+    isWritable : json["isWritable"] == true ? 1 : 0,
+    gender : json["gender"],
+    email : json["email"],
+    standardIds : json["standardIds"],
+    subjectIds : json["subjectIds"],
+    userId : json["userId"],
+    role : json["role"],
   );
 
   Map<String, dynamic> toJson() => {
     "lid" : lid,
-    "id": id,
-    "firstName": firstName,
-    "lastName": lastName,
-   
+    "id" : id,
+    "firstName" : firstName,
+    "lastName" : lastName,
+    "person" : person,
+    "isWritable" : isWritable,
+    "gender" : gender,
+    "email" : email,
+    "standardIds" : standardIds,
+    "userId" : userId,
+    "role" : role
+
   };
 
 

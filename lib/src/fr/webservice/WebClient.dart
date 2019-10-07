@@ -8,11 +8,11 @@ import 'package:http/http.dart' as http;
 
 class WebClient{
 
-  String baseUrl = "http://192.168.43.124:8080/soms";
+  //String baseUrl = "http://192.168.0.116:8080/soms";
 
   Future<dynamic> getData (HashMap<String, String> requestData, var url) async{
     HttpClient httpClient = new HttpClient();
-    final finalurl = baseUrl + url;
+    final finalurl = SchoolUtils().baseUrl + url;
     //var uri1 = Uri.https(baseUrl, url, requestData);
 
    // var uri2 = Uri.http(host: "", scheme: "http", path : finalurl, queryParameters: requestData);
@@ -44,14 +44,11 @@ class WebClient{
     print(sharedPreferences.getString("token"));
     headers['authT'] = sharedPreferences.getString("token");
 
-    final finalurl = baseUrl + url + "?teacher_sync_time=0";
+    final finalurl = SchoolUtils().baseUrl + url + "?teacher_sync_time=0";
     var response = await http.get(finalurl , headers: headers);
     if(response.statusCode == 200){
-      // List<String> streetsList = new List<String>.from(streetsFromJson);
-      print(response.body);
       var str = response.body;
       final data = json.decode(response.body);
-
       return data;
     }
   }

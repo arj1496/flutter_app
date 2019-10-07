@@ -6,6 +6,8 @@ import 'package:flutter_app/MainDetailPage.dart';
 import 'package:flutter_app/UrveshNew.dart';
 import 'package:flutter_app/dhaval.dart';
 import 'package:flutter_app/src/MenuFile.dart';
+import 'package:flutter_app/src/fr/Login.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/urvesh.dart';
 import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/Heena.dart';
@@ -38,9 +40,73 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.yellow,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: InitApp(),
     );
   }
 }
+
+class InitApp extends StatefulWidget {
+  @override
+  _InitAppState createState() => _InitAppState();
+}
+
+class _InitAppState extends State<InitApp> {
+
+  @override
+  void initState() {
+    SchoolUtils schoolUtils = new SchoolUtils();
+    /*schoolUtils.initApp().then((value){
+      if(value == 1){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
+    });*/
+
+    Future<int> future = schoolUtils.initApp();
+    future.then((value) => handleValue(value));
+  }
+
+  handleValue(value) {
+    if(value == 1){
+      /*Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );*/
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()
+          ), (Route<dynamic> route) => false
+      );
+    }else{
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => UrveshNew()),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Scaffold(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text("Educloud"),
+        ),
+        body: Center(
+          child: Text(
+              "Mock 5 Second waiting it should wait for till the app is Initiating."
+          ),
+        ),
+      ),
+    );
+  }
+
+
+}
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -66,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
   static PropertyService propertyService = new PropertyService();
-  
+
   _changeText() {
     setState(() {
       if (msg.startsWith('F')) {
@@ -166,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
           );
 
         },
-        child: Text("Akshata Work",
+        child: Text("AksHeaderContainerhata Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),

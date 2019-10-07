@@ -11,7 +11,7 @@ class TeacherServcie{
   Teacher addTeacher(Teacher teacher){
 
     Teacher _teacher = teacherDAO.addTeacher(teacher);
-      print("Teacher Local Db Id :- " + _teacher.lid.toString());
+    print("Teacher Server Db Id :- " + _teacher.id.toString());
   }
 
   List<Teacher> getTeacherList_() {

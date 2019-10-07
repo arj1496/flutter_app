@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
 
 import 'DescriptionCustomView.dart';
+import 'ListTileViewUV.dart';
 import 'PropertyService.dart';
 
 class DetailViewUV extends StatefulWidget {
@@ -40,8 +41,9 @@ class DetailViewUVState extends State<DetailViewUV>{
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Column(
-          children:  _getWidget(),
+          children: _getWidget(),
         ),
+
       ),
     );
   }
@@ -49,6 +51,23 @@ class DetailViewUVState extends State<DetailViewUV>{
   List<Widget> _getWidget(){
     return this.customWidget;
   }
+
+  /*Widget _getListViewWithBuilder() {
+    return Container(
+      color: AppTheme.background,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: ListView.builder(
+            controller: ScrollController(),
+            itemCount: list.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (BuildContext ctxt, int Index){
+              return _listTileViewUV();
+            }
+        ),
+      ),
+    );
+  }*/
 
   Widget _getHeaderColumn(){
     return Column(

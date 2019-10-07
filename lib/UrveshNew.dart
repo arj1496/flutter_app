@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/AddFormUI.dart';
 import 'package:flutter_app/DetailViewUV.dart';
 import 'package:flutter_app/ListTileViewUV.dart';
 import 'package:flutter_app/ListViewUV.dart';
+import 'package:flutter_app/urvesh.dart';
 
+import 'AppTheme.dart';
 import 'HeaderContainer.dart';
 
 class UrveshNew extends StatefulWidget {
@@ -13,7 +16,7 @@ class UrveshNew extends StatefulWidget {
 class _UrveshNewState extends State<UrveshNew> {
 
   List<Widget> customWidget = [
-    HeaderContainer(),
+    HeaderContainer.init("Events", "test"),
     ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV(),ListViewUV()
   ];
 
@@ -21,11 +24,21 @@ class _UrveshNewState extends State<UrveshNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Urvesh New Home Page"),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute( builder: (context) => UrveshHome()),
+                );
+              },
+              child: Text('Login'),
+            ),
             RaisedButton(
               onPressed: () {
                 Navigator.push(
@@ -46,8 +59,17 @@ class _UrveshNewState extends State<UrveshNew> {
             ),
           ],
         ),
-
       ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddFormUI()));
+          },
+          backgroundColor: AppTheme.background,
+          child: Icon(
+            Icons.add,
+            size: 32,
+          ),
+        )
     );
   }
 }
