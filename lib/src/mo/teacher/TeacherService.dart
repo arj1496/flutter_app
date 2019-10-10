@@ -30,7 +30,7 @@ class TeacherServcie{
     return teachersList;
   }
 
-  getTeacherList() async{
+  Future<List<Teacher>> getTeacherList() async{
     List<Teacher> teacherListFromFuture = await teacherDAO.getAllTeacherData();
     return teacherListFromFuture;
   }
