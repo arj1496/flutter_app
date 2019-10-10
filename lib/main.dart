@@ -232,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
           );
 
         },
-        child: Text("AksHeaderContainerhata Work",
+        child: Text("Akshata Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),

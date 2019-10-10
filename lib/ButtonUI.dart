@@ -14,11 +14,15 @@ import 'package:url_launcher/url_launcher.dart';
 import 'PropertyFile.dart';
 
 class ButtonUI extends StatelessWidget {
-  CategoryType categoryType = CategoryType.ui;
+
+  String button1,button2,button3;
+
   var property = new PropertyFile();
- /* ButtonUI.init(PropertyFile property){
-    this.property = property;
-  }*/
+  ButtonUI.init(String button1,String button2,String button3){
+    this.button1 = button1;
+    this.button2 = button2;
+    this.button3 = button3;
+  }
   @override
   Widget build( BuildContext context ) {
 
@@ -50,17 +54,15 @@ class ButtonUI extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Row(
             children: <Widget>[
-              getButtonUI(CategoryType.ui, categoryType == CategoryType.ui),
+              getButtonUI(button1, true),
               SizedBox(
                 width: 16,
               ),
-              getButtonUI(
-                  CategoryType.coding, categoryType == CategoryType.coding),
+              getButtonUI(button2, false),
               SizedBox(
                 width: 16,
               ),
-              getButtonUI(
-                  CategoryType.basic, categoryType == CategoryType.basic),
+              getButtonUI(button3, false),
             ],
           ),
         ),
@@ -72,15 +74,15 @@ class ButtonUI extends StatelessWidget {
     );
   }
 
-  Widget getButtonUI(CategoryType categoryTypeData, bool isSelected) {
-    var txt = '';
+  Widget getButtonUI(String text, bool isSelected) {
+   /* var txt = '';
     if (CategoryType.ui == categoryTypeData) {
       txt = 'RESULTS';
     } else if (CategoryType.coding == categoryTypeData) {
       txt = 'DELETE';
     } else if (CategoryType.basic == categoryTypeData) {
       txt = 'CLOSE';
-    }
+    }*/
     return Expanded(
       child: Container(
         decoration: new BoxDecoration(
@@ -100,7 +102,7 @@ class ButtonUI extends StatelessWidget {
               EdgeInsets.only(top: 12, bottom: 12, left: 18, right: 18),
               child: Center(
                 child: Text(
-                  txt,
+                  text,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
@@ -120,8 +122,3 @@ class ButtonUI extends StatelessWidget {
   }
 }
 
-enum CategoryType {
-  ui,
-  coding,
-  basic,
-}

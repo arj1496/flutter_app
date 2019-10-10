@@ -36,7 +36,7 @@ class DescriptionOption extends StatelessWidget {
     CardDetail2Oct(detailWidget),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
     DateWidget(),                     // It display date in blue container
     TitleViewDetail.init(propertyService.getPlaceData()),  // It display title of place and description in listview.
-    DescriptionCustomView.init(propertyService.getPlaceData()),  // Alll place data is displayed in container
+    DescriptionCustomView.init(propertyService.getPlaceData()),  // All place data is displayed in container
     TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
     AttachmentView(),                                       // It dispay container in water mark
@@ -51,7 +51,7 @@ class DescriptionOption extends StatelessWidget {
     DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
     TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
-    ButtonUI(),
+    ButtonUI.init('RESULTS','DELETE','CLOSE'),
    // AttachmentView(),                                       // It dispay container in water mark
    // AttachmentFileView(),                                    // This display all atachment in listview.
   ];
@@ -65,7 +65,7 @@ class DescriptionOption extends StatelessWidget {
     DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
     TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
-    ButtonUI(),
+    ButtonUI.init('RESULTS','DELETE','CLOSE'),
     // AttachmentView(),                                       // It dispay container in water mark
     // AttachmentFileView(),                                    // This display all atachment in listview.
   ];
