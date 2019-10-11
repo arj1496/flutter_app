@@ -12,7 +12,7 @@ import 'package:flutter_app/AppTheme.dart';
 
 
 import '../../../PropertyFile.dart';
-
+// exam generic 
 class ExamWidget extends StatelessWidget {
 
   var property = new PropertyFile();
