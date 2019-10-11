@@ -35,6 +35,7 @@ class  DBProvider {
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
       await db.execute(cretaeTeacherTable());
+      await db.execute(createEventTable());
     });
   }
 
@@ -78,7 +79,7 @@ class  DBProvider {
   String cretaeStudentTable() {
 
     return " CREATE TABLE Student ("
-        "lid INTEGER PRIMARY KEY,"
+        "lid INTEGER ,"
         "id INTEGER PRIMARY KEY,"
         "firstName TEXT,"
         "lastName TEXT,"
@@ -87,9 +88,35 @@ class  DBProvider {
         "gender TEXT,"
         "email TEXT,"
         "standardIds TEXT,"
-        "userId TEXT,"
+        "userId TEXT "
         ")" ;
   }
+  String createEventTable(){
+    return "CREATE TABLE Event ( "
+    " lid INTEGER , "
+    " id INTEGER PRIMARY KEY, "
+    " name  TEXT, "
+    " description TEXT,"
+    " place TEXT,"
+    " startDate INTEGER, "
+    " endDate INTEGER,"
+    " status INTEGER, "
+    " type TEXT, "
+    " owner TEXT, "
+    " person INTEGER, "
+    " allDay INTEGER,"
+    " isWritable INTEGER,"
+    " attachment TEXT,"
+    "attechmentJson TEXT "
+    ")";
+     /*
+  List<Participant> eventParticipant = new List<Participant>();
+  //Map<Integer, Set<Long>> personalParticipant = new Map<Integer, Set<Long>>(1);
+  List<Attachment> attachments;
+      */
+
+  }
+
 
 
 

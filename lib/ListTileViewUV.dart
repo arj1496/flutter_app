@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/Event/Event.dart';
+import 'package:flutter_app/src/mo/Event/EventService.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
 import 'package:flutter_app/src/mo/HomeWork/hwservice.dart';
 
 import 'AppTheme.dart';
+import 'src/mo/Event/EventActivity.dart';
 
 class ListTileViewUV extends StatefulWidget {
   @override
@@ -12,35 +15,82 @@ class ListTileViewUV extends StatefulWidget {
 class _ListTileViewUVState extends State<ListTileViewUV> {
 
   List<HomeWork> list = null;
-
-  @override
-  void initState() {
+  List<Event> eventList = null;
+  /*@override
+  void initState()   {
     HWService hwService = new HWService();
     list = hwService.getAllHomeWork();
-  }
+    EventActivity eventActivity = new EventActivity();
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    return _getListViewWithBuilder();
+    EventActivity eventActivity = new EventActivity();
+    Future<List<Event>> eventList1 = eventActivity.getAllEvent();
+    var futureBuilder = new FutureBuilder(
+        future: eventList1,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return _getListViewWithBuilder(context, snapshot);
+        }
+    );
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: AppTheme.background,
+        title: Text("Events"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: synEvents,
+          ),
+          IconButton(
+            icon: Icon(Icons.get_app),
+            onPressed: getEvent,
+          ),
+        ],
+      ),
+      body: futureBuilder,
+    );
+    //return _getListViewWithBuilder();
   }
 
-  Widget _getListViewWithBuilder() {
+  Widget _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    eventList = snapshot.data;
     return Container(
       color: AppTheme.background,
-      child: Scaffold(
-        appBar: AppBar(
+      child: ListView.builder(
+          itemCount: eventList.length,
+          // itemCount: eventList.length,
+          itemBuilder: (BuildContext ctxt, int Index){
+            return _listTileViewUV(eventList[Index]);
+          }
+      ),
+      /*child: Scaffold(
+        *//*appBar: AppBar(
           elevation: 0.0,
           backgroundColor: AppTheme.background,
           title: Text("Events"),
-        ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: synEvents,
+            ),
+            IconButton(
+              icon: Icon(Icons.get_app),
+              onPressed: getEvent,
+            ),
+          ],
+        ),*//*
         backgroundColor: Colors.transparent,
         body: ListView.builder(
-            itemCount: list.length,
+           itemCount: list.length,
+           // itemCount: eventList.length,
             itemBuilder: (BuildContext ctxt, int Index){
-              return _listTileViewUV(list[Index]);
+              return _listTileViewUV(evList[Index]);
+              //return _listTileViewUV(eventList[Index]);
             }
         ),
-      ),
+      ),*/
     );
   }
 
@@ -104,7 +154,7 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                             ),
                             child: Text(
                               //'Gandhi Jayanti Gandhi Jayanti',
-                              data.title,
+                              data.name,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: AppTheme.robotoFontName,
@@ -149,7 +199,7 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                       children: <Widget>[
                         Text(
                           //'Fastival',
-                          data.className,
+                          data.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppTheme.robotoFontName,
@@ -224,7 +274,8 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
                             Text(
-                              '02 Oct 2019',
+                              //'02 Oct 2019',
+                              data.startDate.toString(),
                               style: TextStyle(
                                 fontFamily: AppTheme.robotoFontName,
                                 fontWeight: FontWeight.w500,
@@ -258,5 +309,23 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
         ),
       ),
     );
+  }
+
+  synEvents() async{
+    EventService eventService = new EventService();
+    /*eventService.getEventListDataFromServer().then((value){
+      setState(() {
+        eventList = value;
+      });
+    });*/
+    List<Event> evList =  await eventService.getEventListDataFromServer();
+    setState(() {
+      eventList = evList;
+    });
+  }
+  getEvent(){
+    EventService eventService = new EventService();
+    Future<List<Event>> eventList = eventService.getEventList();
+    print(eventList);
   }
 }
