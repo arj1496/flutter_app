@@ -41,8 +41,7 @@ class ExamAddUIState extends State<SubjectDropdownWidget>{
           return InputDecorator(
             decoration: InputDecoration(
                 icon: Icon(Icons.subject),
-                labelText:subjectOf
-
+                prefixText:subjectOf
             ),
             child: DropdownButtonHideUnderline(
                 child: Padding(

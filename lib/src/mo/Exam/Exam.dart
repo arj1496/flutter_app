@@ -1,10 +1,11 @@
 class Exam
 {
-   double id;
+   int id;
    String name;
    int standardId;
+   String standardName;
    String subjectName;
-   double examDate;
+   String examDate;
    double totalMark;
    String examType;
    String owner;

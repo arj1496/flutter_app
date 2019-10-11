@@ -1,23 +1,18 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_app/MarkTextfield.dart';
 import 'package:flutter_app/MultilineTextfield.dart';
 import 'package:flutter_app/TypeDropdownWidget.dart';
-import 'package:intl/intl.dart';
-
 import '../../../ButtonUI.dart';
 import '../../../DatePickerDemo.dart';
 import '../../../StandardDropdownWidget.dart';
 import '../../../SubjectDropdownWidget.dart';
 
 class ExamAddPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return ExamAddUIState.init();
   }
-
 }
 
 class ExamAddUIState extends State<ExamAddPage>{
@@ -35,8 +30,11 @@ class ExamAddUIState extends State<ExamAddPage>{
         //body: _getContainerBody(),
         body: SingleChildScrollView(
         child: Form(
-          child: Column(
-             children:  getWidgetList(),
+          child: Padding(
+            padding:  EdgeInsets.only(left:8.0,right:8),
+            child: Column(
+               children:  getWidgetList(),
+            ),
           ),
         ),
     ),);

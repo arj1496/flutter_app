@@ -1,3 +1,4 @@
+// Service to get exam data as per access rights.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/ButtonUI.dart';
 import 'package:flutter_app/HeaderContainer.dart';
@@ -73,5 +74,33 @@ class ExamService{
     }*/
 
     return widgetList;
+  }
+
+  List<Exam> getAllExam(){
+
+    List<Exam> examList = new List();
+    for(var i = 1 ; i < 100; i++){
+
+      Exam exam = new Exam();
+      exam.id = i;
+      exam.name = 'Matematics' + i.toString();
+      exam.standardId = i ;
+      exam.standardName = "Class  " + i.toString();
+      exam.subjectName = 'computer science and enggineering - ' + i.toString();
+      exam.examDate = '2 oct 2019';
+      exam.totalMark = 20;
+      exam.examType ='Term ' + i.toString();
+      exam.owner = 'Ramlingam ';
+      exam.description = 'class-1 exam';
+      exam.status = 'published';
+      exam.syllabus = 'chapter 1';
+
+      examList.add(exam);
+
+    }
+
+    return examList;
+
+
   }
 }

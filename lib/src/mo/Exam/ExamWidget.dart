@@ -11,7 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
 
 
-import 'PropertyFile.dart';
+import '../../../PropertyFile.dart';
 
 class ExamWidget extends StatelessWidget {
 

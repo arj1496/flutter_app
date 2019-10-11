@@ -11,12 +11,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
 
 import '../../../PropertyFile.dart';
-
-
-
-
-
-
 class ExamPage extends StatelessWidget {
 
   var property = new PropertyFile();

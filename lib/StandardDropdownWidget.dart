@@ -1,7 +1,6 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app/AppTheme.dart';
-import 'package:intl/intl.dart';
+
 
 // Generic standard drop down list
 
@@ -32,7 +31,7 @@ class ExamAddUIState extends State<StandardDropdownWidget>{
           return InputDecorator(
             decoration: InputDecoration(
                 icon: icon,
-                labelText:classOf
+                prefixText:classOf
             ),
             child: DropdownButtonHideUnderline(
                 child: Padding(

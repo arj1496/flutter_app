@@ -1,40 +1,37 @@
+
 import 'package:flutter/material.dart';
 
-class TypeDropdownWidget extends StatefulWidget {
-  List<String> _type = <String>['Unit Test 1', 'FA Exam', 'Term Exam', 'Class Test', 'Terminal(A)','test-1','test-2','test-3','test-4',];
+
+// Generic standard drop down list
+
+class StandardSearchWidget extends StatefulWidget {
+  List<String> _standard = <String>['Class-1', 'Class-2', 'Class-3', 'Class-4', 'Class-5','Class-6', 'Class-7', 'Class-8', 'Class-9', 'Class-10'];
   @override
   State<StatefulWidget> createState() {
-    return ExamAddUIState.init(_type);
+    return ExamAddUIState.init(_standard);
   }
 }
 
-class ExamAddUIState extends State<TypeDropdownWidget>{
-  String typeOf = "Select Type";
-  List<String> _type;
+class ExamAddUIState extends State<StandardSearchWidget>{
+  List<String> _standard;
   TextEditingController labelText = new TextEditingController();
-
-  ExamAddUIState.init(List<String> _type){
-    this._type= _type;
-
+  String classOf = "Select Class";
+  ExamAddUIState.init(List<String> _standard){
+    this._standard= _standard;
   }
   @override
   Widget build(BuildContext context) {
-    return  _getDropDownFormField(Icon(Icons.class_), 'Select Class', 'Class',_type);
-
+    return _getDropDownFormField(Icon(Icons.class_),_standard);
   }
 
-  _getDropDownFormField(Icon icon, String hintText, String labelText,List<String> _type) {
-
+  _getDropDownFormField(Icon icon,List<String> _standard) {
     String _color = '';
     return FormField(
-
         builder: (FormFieldState state){
-
           return InputDecorator(
             decoration: InputDecoration(
-                icon: Icon(Icons.merge_type),
-
-                prefixText:typeOf
+                icon: icon,
+                prefixText:classOf
             ),
             child: DropdownButtonHideUnderline(
                 child: Padding(
@@ -43,11 +40,11 @@ class ExamAddUIState extends State<TypeDropdownWidget>{
                     isDense: true,
                     onChanged: (String newValue){
                       setState(() {
-                        typeOf = newValue;
+                        classOf = newValue;
                         state.didChange(newValue);
                       });
                     },
-                    items: _type.map((String value) {
+                    items: _standard.map((String value) {
                       return new DropdownMenuItem(
                         value: value,
                         child: new Text(value),
