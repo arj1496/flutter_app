@@ -328,13 +328,13 @@ class _UrveshHomePageState extends State<UrveshHome> {
 
   void addTeacher() {
     Teacher teacher = new Teacher(
-      lid: 1,
-      id: 1,
-      firstName: "Urvesh",
-      lastName: "Rathod",
+      lid: null,
+      id: null,
+      firstName: "TEst",
+      lastName: "Teacher",
       person: 3,
-      gender: "male",
-      email: "urvesh@urvesh.com",
+      gender: "M",
+      email: "urveshTEst@urvesh.com",
       standardIds: "11,12,13,14,15",
       subjectIds: "16,17,18,19,20",
       userId: 4,
@@ -346,16 +346,16 @@ class _UrveshHomePageState extends State<UrveshHome> {
 
   }
 
-  List<Teacher> getTeacherData() {
+  Future<List<Teacher>> getTeacherData() async{
     TeacherServcie teacherServcie = new TeacherServcie();
-    var test = teacherServcie.getTeacherList();
+    var test = await teacherServcie.getTeacherList();
     print(test);
   }
 
   void _getTecherFromServerAndSaveToLocalDB() {
     getData();
-    /*TeacherServcie teacherServcie = new TeacherServcie();
-    List<Teacher> _teacherList =  teacherServcie.getTeacherListDataFromServer();*/
+   // TeacherServcie teacherServcie = new TeacherServcie();
+    // List<Teacher> _teacherList =  teacherServcie.getTeacherListDataFromServer();
   }
 
 
