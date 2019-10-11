@@ -35,30 +35,25 @@ class TeacherServcie{
     return teacherListFromFuture;
   }
 
-  List<Teacher> getTeacherListDataFromServer() {
+  Future<List<Teacher>> getTeacherListDataFromServer() async {
     TeacherWebService _teacherWebService = new TeacherWebService();
 
     HashMap map = new HashMap<String, String>();
     map['teacher_sync_time'] = 0.toString();
 
-    Future<dynamic> teacherFromServerFuture = _teacherWebService.getData_(map, "rest/sync/getSyncInfo");
-    List<dynamic> techersDynamic = teacherFromServerFuture.then((value) {
-      if(value['isTeacherSync']){
-        print(value);
-        List<dynamic> teachers = value['teachers'];
-        return teachers;
-      }
-      return null;
-    }) as List;
-
-    List<Teacher> teacherList = List.generate(techersDynamic.length, (i){
-      Teacher teacher = Teacher.fromJson(techersDynamic[i]);
-      return teacher;
-    });
-    TeacherServcie teacherServcie = new TeacherServcie();
-    for(var i = 0; i < teacherList.length; i++){
-      Teacher teacher = teacherList[i];
-      teacherServcie.addTeacher(teacher);
+    Map<String, dynamic> teacherDataFromServer = await _teacherWebService.getData_(map, "rest/sync/getSyncInfo");
+    List<Teacher> teacherList = null;
+    if(teacherDataFromServer['isTeacherSync']){
+      print(teacherDataFromServer);
+      List<dynamic> teachersDynamic = teacherDataFromServer['teachers'];
+      teacherList = List.generate(teachersDynamic.length, (i){
+        Teacher teacher = Teacher.fromJson(teachersDynamic[i]);
+        return teacher;
+      });
+      TeacherServcie teacherServcie = new TeacherServcie();
+      await teacherServcie.batchAddTeacher(teacherList);
+    }else{
+      print('Teacher Sync is false');
     }
     return teacherList;
   }

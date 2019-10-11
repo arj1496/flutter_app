@@ -315,10 +315,6 @@ class _UrveshHomePageState extends State<UrveshHome> {
           return teacher;
         });
         TeacherServcie teacherServcie = new TeacherServcie();
-        /*for(var i = 0; i < test.length; i++){
-          Teacher teacher = test[i];
-          teacherServcie.addTeacher(teacher);
-        }*/
         teacherServcie.batchAddTeacher(test);
       }else{
         print('Teacher Sync is false');
@@ -348,14 +344,15 @@ class _UrveshHomePageState extends State<UrveshHome> {
 
   Future<List<Teacher>> getTeacherData() async{
     TeacherServcie teacherServcie = new TeacherServcie();
-    var test = await teacherServcie.getTeacherList();
+    List<Teacher> test = await teacherServcie.getTeacherList();
     print(test);
   }
 
-  void _getTecherFromServerAndSaveToLocalDB() {
-    getData();
-   // TeacherServcie teacherServcie = new TeacherServcie();
-    // List<Teacher> _teacherList =  teacherServcie.getTeacherListDataFromServer();
+  Future<List<Teacher>> _getTecherFromServerAndSaveToLocalDB() async {
+    //getData();
+    TeacherServcie teacherServcie = new TeacherServcie();
+    List<Teacher> _teacherList =  await teacherServcie.getTeacherListDataFromServer();
+    print(_teacherList);
   }
 
 

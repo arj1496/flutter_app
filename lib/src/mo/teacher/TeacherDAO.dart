@@ -52,7 +52,7 @@ class TeacherDAO{
         );
       }
       await batch.commit(noResult: true);
-      print("Teacher Saved Successfully in to Local DB " + teacherList.length.toString());
+      print("Teacher Saved Successfully in to Local DB : " + teacherList.length.toString());
     });
   }
 
