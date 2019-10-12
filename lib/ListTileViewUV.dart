@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/AllDetailsview.dart';
+import 'package:flutter_app/Buttonview.dart';
+import 'package:flutter_app/CardDetail2Oct.dart';
+import 'package:flutter_app/DateWidget.dart';
+import 'package:flutter_app/DescriptionCustomView.dart';
+import 'package:flutter_app/Descrptionview.dart';
+import 'package:flutter_app/DetailView2Oct.dart';
+import 'package:flutter_app/Detailview.dart';
+import 'package:flutter_app/EventWidget.dart';
+import 'package:flutter_app/Placeview.dart';
+import 'package:flutter_app/PropertyFile.dart';
+import 'package:flutter_app/PropertyService.dart';
+import 'package:flutter_app/TitleViewDetail.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/Event/Event.dart';
 import 'package:flutter_app/src/mo/Event/EventService.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
 import 'package:flutter_app/src/mo/HomeWork/hwservice.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'AppTheme.dart';
+import 'Dateview.dart';
 import 'src/mo/Event/EventActivity.dart';
 
 class ListTileViewUV extends StatefulWidget {
   @override
   _ListTileViewUVState createState() => _ListTileViewUVState();
+  SchoolUtils schoolUtils = new SchoolUtils();
 }
 
 class _ListTileViewUVState extends State<ListTileViewUV> {
@@ -59,10 +76,10 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
     return Container(
       color: AppTheme.background,
       child: ListView.builder(
-          itemCount: eventList.length,
-          // itemCount: eventList.length,
+          itemCount: eventList != null ? eventList.length : 0,
           itemBuilder: (BuildContext ctxt, int Index){
-            return _listTileViewUV(eventList[Index]);
+
+            return eventList != null && eventList.length > 0  ?  _listTileViewUV(eventList[Index]) : _listNotFound();
           }
       ),
       /*child: Scaffold(
@@ -94,14 +111,12 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
     );
   }
 
-  Widget _listTileViewUV(data) {
+  Widget _listNotFound(){
     return Padding(
       padding: const EdgeInsets.only(
           left: 10, right: 10, top: 3, bottom: 3
       ),
-      // This is the Main Table Container
       child: Container(
-        // given Box Shadow to the Container
         decoration: BoxDecoration(
           color: AppTheme.white,
           borderRadius: BorderRadius.only(
@@ -139,6 +154,289 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                             letterSpacing: -0.1,
                             color: AppTheme.darkText),
                       ),*/
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, bottom: 3
+                            ),
+                            child: Text(
+                              'Event Not Found',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTheme.robotoFontName,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: AppTheme.nearlyDarkBlue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _listTileViewUV(data) {
+    return GestureDetector(
+      onTap: (){
+        showEventDetail(data);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(
+            left: 10, right: 10, top: 3, bottom: 3
+        ),
+        // This is the Main Table Container
+        child: Container(
+          // given Box Shadow to the Container
+          decoration: BoxDecoration(
+            color: AppTheme.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0),
+                topRight: Radius.circular(8.0)
+            ),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: AppTheme.grey.withOpacity(0.2),
+                  offset: Offset(1.1, 1.1),
+                  blurRadius: 10.0
+              ),
+            ],
+          ),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding:
+                const EdgeInsets.only(top: 5, left: 5, right: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4, bottom: 1,top: 5),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 4, bottom: 3
+                              ),
+                              child: Text(
+                                //'Gandhi Jayanti Gandhi Jayanti',
+                                data.name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: AppTheme.robotoFontName,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: AppTheme.nearlyDarkBlue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              // this Padding is Used to render the Horizontal line Starts
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 5, right: 5, top: 8, bottom: 8
+                ),
+                child: Container(
+                  height: 2,
+                  decoration: BoxDecoration(
+                    color: AppTheme.background,
+                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                ),
+              ),
+              // this Padding is Used to render the Horizontal line Ends
+
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 10, right: 10, top: 3, bottom: 8
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            //'Fastival',
+                            data.type,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: AppTheme.robotoFontName,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              letterSpacing: -0.2,
+                              color: AppTheme.darkText,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: Text(
+                              'Type',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTheme.robotoFontName,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                color: AppTheme.grey.withOpacity(0.5),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                '1.30 Hrs',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: AppTheme.robotoFontName,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  letterSpacing: -0.2,
+                                  color: AppTheme.darkText,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: Text(
+                                  'Duration',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: AppTheme.robotoFontName,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: AppTheme.grey
+                                        .withOpacity(0.5),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+
+                            children: <Widget>[
+                              Text(
+                                //'02 Oct 2019',
+                                getDateFromDataLong(data.startDate),
+                                //data.startDate.toString(),
+
+                                style: TextStyle(
+                                  fontFamily: AppTheme.robotoFontName,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  letterSpacing: -0.2,
+                                  color: AppTheme.darkText,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: Text(
+                                  'Date',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: AppTheme.robotoFontName,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: AppTheme.grey.withOpacity(0.5),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 10, right: 10, top: 3, bottom: 3
+      ),
+      // This is the Main Table Container
+      child: Container(
+        // given Box Shadow to the Container
+        decoration: BoxDecoration(
+          color: AppTheme.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+              bottomRight: Radius.circular(8.0),
+              topRight: Radius.circular(8.0)
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: AppTheme.grey.withOpacity(0.2),
+                offset: Offset(1.1, 1.1),
+                blurRadius: 10.0
+            ),
+          ],
+        ),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.only(top: 5, left: 5, right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, bottom: 1,top: 5),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -199,7 +497,7 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                       children: <Widget>[
                         Text(
                           //'Fastival',
-                          data.name,
+                          data.type,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppTheme.robotoFontName,
@@ -272,10 +570,13 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
+
                           children: <Widget>[
                             Text(
                               //'02 Oct 2019',
-                              data.startDate.toString(),
+                              getDateFromDataLong(data.startDate),
+                              //data.startDate.toString(),
+
                               style: TextStyle(
                                 fontFamily: AppTheme.robotoFontName,
                                 fontWeight: FontWeight.w500,
@@ -309,8 +610,12 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
         ),
       ),
     );
-  }
 
+  }
+  String getDateFromDataLong(int dateLong){
+      SchoolUtils schoolUtils = new SchoolUtils();
+      return schoolUtils.getDateStringFromLongWithSchoolTimeZone(dateLong);
+  }
   synEvents() async{
     EventService eventService = new EventService();
     /*eventService.getEventListDataFromServer().then((value){
@@ -327,5 +632,42 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
     EventService eventService = new EventService();
     Future<List<Event>> eventList = eventService.getEventList();
     print(eventList);
+  }
+
+  showEventDetail(data) {
+    print("Just Clike : ${data.name} : ${data.id}" );
+    SchoolUtils schoolUtils = new SchoolUtils();
+    var property = new PropertyFile();
+    property.eventName = data.name;
+    property.eventType = data.type;
+    property.eventCreated = data.owner;
+    property.label ="Place1";
+    property.iconData = FontAwesomeIcons.mapMarker;
+    property.data = data.place;
+    property.startDate = schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.startDate);
+    property.endDate = schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.endDate);
+    property.startTime = schoolUtils.getTimeStringFromLongWithTimeZone(data.startDate);
+    property.endTime = schoolUtils.getTimeStringFromLongWithTimeZone(data.endDate);
+    property.durication = schoolUtils.getDurationBetweenTwoTimestamp(data.startDate, data.endDate);
+    var property1 = new PropertyFile();
+    property1.label ="Description";
+    property1.iconData = FontAwesomeIcons.bookOpen;
+    property1.data = data.description;
+
+    List<Widget> detailWidget = [ EventWidget.init(property)];
+    PropertyService propertyService = new PropertyService();
+    List<Widget> eventWidget = [
+      CardDetail2Oct(detailWidget),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+      DateWidget.init(property),                     // It display date in blue container
+      TitleViewDetail.init(property),  // It display title of place and description in listview.
+      DescriptionCustomView.init(property),  // All place data is displayed in container
+      TitleViewDetail.init(property1),
+      DescriptionCustomView.init(property1),
+      //AttachmentView(),                                       // It dispay container in water mark
+      //AttachmentFileView(),                                    // This display all atachment in listview.
+    ];
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => DetailView2Oct.init(eventWidget,"Event"))
+    );
   }
 }

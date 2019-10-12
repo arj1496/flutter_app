@@ -21,6 +21,7 @@ class EventWidget extends StatelessWidget {
   EventWidget(){
 
   }
+
   @override
   Widget build( BuildContext context ) {
     return _getTileViewWidget();
@@ -100,7 +101,8 @@ class EventWidget extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.only(bottom:8.0,right:2.0,left:12),
                                         child: Text(
-                                          'Gandhi Jayanti ',
+                                          /*'Gandhi Jayanti ',*/
+                                          property.eventName,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily:
@@ -182,7 +184,8 @@ class EventWidget extends StatelessWidget {
                                         const EdgeInsets.only(
                                             left: 4, bottom: 3),
                                         child: Text(
-                                          'Festival',
+                                         // 'Festival',
+                                          property.eventType,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily: AppTheme.robotoFontName,
@@ -255,7 +258,8 @@ class EventWidget extends StatelessWidget {
                     const EdgeInsets.only(
                         bottom: 3),
                     child: Text(
-                      'A T John',
+                      //'A T John',
+                      property.eventCreated,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily:

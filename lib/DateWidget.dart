@@ -9,7 +9,9 @@ import 'PropertyFile.dart';
 class DateWidget extends StatelessWidget {
 
   var property = new PropertyFile( );
-
+  DateWidget.init(PropertyFile property){
+    this.property = property;
+  }
 
   DateWidget( ) {
 
@@ -205,7 +207,8 @@ class DateWidget extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 2 , left: 8 ) ,
                   child: Text (
-                    '12 Oct' ,
+                    //'12 Oct' ,
+                    property.startDate,
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,
@@ -219,7 +222,8 @@ class DateWidget extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 5 , left: 8 ) ,
                   child: Text (
-                    '8:00 AM' ,
+                    //'8:00 AM' ,
+                    property.startTime,
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,
@@ -259,7 +263,8 @@ class DateWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text (
-                        '2 hrs' ,
+                        //'2 hrs' ,
+                        property.durication,
                         textAlign: TextAlign.center ,
                         style: TextStyle (
                           fontFamily: AppTheme.robotoFontName ,
@@ -376,7 +381,8 @@ class DateWidget extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 2 , left: 28 ) ,
                   child: Text (
-                    '12 Oct' ,
+                    //'12 Oct' ,
+                    property.endDate,
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,
@@ -390,7 +396,8 @@ class DateWidget extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 5 , left: 28 ) ,
                   child: Text (
-                    '8:00 AM' ,
+                    //'8:00 AM' ,
+                    property.endTime,
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,
