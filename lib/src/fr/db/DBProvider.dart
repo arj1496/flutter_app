@@ -37,6 +37,11 @@ class  DBProvider {
       await db.execute(createTeacherTable());
       await db.execute(createEventTable());
       await db.execute(createSharedPreferenceTable());
+      await db.execute(createPersonTable());
+      await db.execute(createStandardTable());
+      await db.execute(createStudentTable());
+      await db.execute(createSubjectTable());
+
     });
   }
 
@@ -116,6 +121,52 @@ class  DBProvider {
   List<Attachment> attachments;
       */
 
+  }
+
+  String createStandardTable() {
+    return "CREATE TABLE Standard( "
+        " lid INTEGER ,"
+    " id INTEGER PRIMARY KEY,"
+    " name TEXT ,"
+    " startDate Integer, "
+    " endDate Integer, "
+    " startTime TEXT, "
+    " endTime TEXT, "
+    " teacherIds INTEGER, "
+    " divisionIds Integer, "
+    " divisionName TEXT, "
+    ")";
+  }
+
+  String createPersonTable() {
+    return "CREATE TABLE Person( "
+        " lid INTEGER ,"
+        " id INTEGER PRIMARY KEY,"
+        " name TEXT ,"
+        " standardName TEXT ,"
+        " gender TEXT ,"
+        " relation TEXT ,"
+        " parentOf TEXT ,"
+        " isSelected Integer, "
+        " email TEXT ,"
+        " mobileNumber TEXT, "
+        " role TEXT, "
+        " firstName TEXT ,"
+        " lastName TEXT, "
+        ")";
+  }
+
+  String createSubjectTable() {
+    return "CREATE TABLE Subject( "
+        " lid INTEGER ,"
+        " id INTEGER PRIMARY KEY,"
+        " name TEXT ,"
+        " standard INTEGER ,"
+        " isAccess Integer, "
+        " color Integer, "
+        " isOptional Integer, "
+        " optionalStudentIds TEXT ,"
+        ")";
   }
 
   String createSharedPreferenceTable(){
