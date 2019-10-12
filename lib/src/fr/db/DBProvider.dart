@@ -34,8 +34,9 @@ class  DBProvider {
     String path = join(documentsDirectory.path, "TestDB.db");
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
-      await db.execute(cretaeTeacherTable());
+      await db.execute(createTeacherTable());
       await db.execute(createEventTable());
+      await db.execute(createSharedPreferenceTable());
     });
   }
 
@@ -53,13 +54,13 @@ class  DBProvider {
   Future _onCreate(Database db, int version) async {
 
     await db.execute(
-        cretaeStudentTable()
-            + cretaeStudentTable()
+        createStudentTable()
+            + createStudentTable()
     );
 
   }
 
-  String cretaeTeacherTable() {
+  String createTeacherTable() {
 
     return " CREATE TABLE Teacher ("
         "lid INTEGER,"
@@ -76,7 +77,7 @@ class  DBProvider {
         ")" ;
   }
 
-  String cretaeStudentTable() {
+  String createStudentTable() {
 
     return " CREATE TABLE Student ("
         "lid INTEGER ,"
@@ -117,6 +118,11 @@ class  DBProvider {
 
   }
 
+  String createSharedPreferenceTable(){
+    return "CREATE TABLE SharedPreference ("
+        " key TEXT, "
+        " value TEXT )";
+  }
 
 
 
