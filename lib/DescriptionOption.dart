@@ -6,7 +6,7 @@ import 'package:flutter_app/CardDetail2Oct.dart';
 import 'package:flutter_app/DateWidget.dart';
 import 'package:flutter_app/DemoCard.dart';
 import 'package:flutter_app/DetailView2Oct.dart';
-import 'package:flutter_app/ExamWidget.dart';
+import 'package:flutter_app/src/mo/Exam/ExamWidget.dart';
 import 'package:flutter_app/MainDetailPage.dart';
 import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/TitleViewDetail.dart';
