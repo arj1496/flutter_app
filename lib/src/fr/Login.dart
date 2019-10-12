@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/nayan.dart';
+import 'package:flutter_app/src/fr/LoginService.dart';
 import 'SchoolUtils.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/urvesh.dart';
@@ -145,6 +146,25 @@ class _LoginPageState extends State<LoginPage> {
     headers['schoolname'] = schoolCode;
     headers['authtype'] = "mup";
 
+    LoginService loginService = new LoginService();
+    Map<String, dynamic> jsonData = await loginService.doLoginWithUserPassword(headers);
+    if(jsonData['status']){
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => UrveshHome()),
+              (Route<dynamic> route) => false
+      );
+    }
+  }
+
+
+  _signIn_(String email, password, schoolCode) async{
+
+    Map<String, String> headers = new Map<String, String>();
+    headers['userid'] = email;
+    headers['password'] = password;
+    headers['schoolname'] = schoolCode;
+    headers['authtype'] = "mup";
+
     String url = SchoolUtils().baseUrl;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var response = await http.get(url + "rest/auth/login", headers: headers);
@@ -153,11 +173,10 @@ class _LoginPageState extends State<LoginPage> {
       print(response.body);
       jsonData = json.decode(response.body);
       print(jsonData);
-      setState(() {
+      /*setState(() {
         _isLoading = false;
-      });
+      });*/
       if(jsonData['status']){
-        var authT = jsonData['authT'];
         sharedPreferences.setString("token", jsonData['authT']);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => UrveshHome()),
@@ -165,9 +184,9 @@ class _LoginPageState extends State<LoginPage> {
         );
       }else{
         var error = jsonData['errorMessage'];
-        setState(() {
+        /*setState(() {
           _isLoading = false;
-        });
+        });*/
         print(error);
       }
     }

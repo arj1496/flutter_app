@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/src/fr/Login.dart';
+import 'package:flutter_app/src/fr/LoginService.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
+import 'package:flutter_app/src/fr/SharedPreference.dart';
 import 'package:flutter_app/src/fr/webservice/WebClient.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherService.dart';
@@ -157,6 +159,26 @@ class _UrveshHomePageState extends State<UrveshHome> {
       ),
     );
 
+    final sharedPrefrenceBtn = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getSharedPreDataFromLocalDB();
+        },
+        child: Text("get Shared Data from LocalDB ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Urvesh Page"),
@@ -183,7 +205,9 @@ class _UrveshHomePageState extends State<UrveshHome> {
                   SizedBox(height: 5.0,),
                   saveTeacherBtn,
                   SizedBox(height: 5.0,),
-                  saveTeacherBtn_
+                  saveTeacherBtn_,
+                  SizedBox(height: 5.0,),
+                  sharedPrefrenceBtn
                 ],
               ),
             ),
@@ -355,5 +379,10 @@ class _UrveshHomePageState extends State<UrveshHome> {
     print(_teacherList);
   }
 
+  Future<List<SharedPreference>> _getSharedPreDataFromLocalDB() async {
+    LoginService loginService = new LoginService();
+    List<SharedPreference> _sharedPreferenceList =  await loginService.getSharedPrefrerenceData();
+    print(_sharedPreferenceList);
+  }
 
 }
