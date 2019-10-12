@@ -1,7 +1,7 @@
 
 class SharedPreference{
   String key;
-  dynamic value;
+  String value;
 
   SharedPreference({
     this.key,

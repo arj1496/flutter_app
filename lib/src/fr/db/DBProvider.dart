@@ -134,7 +134,7 @@ class  DBProvider {
     " endTime TEXT, "
     " teacherIds INTEGER, "
     " divisionIds Integer, "
-    " divisionName TEXT, "
+    " divisionName TEXT "
     ")";
   }
 
@@ -152,7 +152,7 @@ class  DBProvider {
         " mobileNumber TEXT, "
         " role TEXT, "
         " firstName TEXT ,"
-        " lastName TEXT, "
+        " lastName TEXT "
         ")";
   }
 
@@ -165,7 +165,7 @@ class  DBProvider {
         " isAccess Integer, "
         " color Integer, "
         " isOptional Integer, "
-        " optionalStudentIds TEXT ,"
+        " optionalStudentIds TEXT"
         ")";
   }
 

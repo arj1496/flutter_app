@@ -373,16 +373,18 @@ class _UrveshHomePageState extends State<UrveshHome> {
   }
 
   Future<List<Teacher>> _getTecherFromServerAndSaveToLocalDB() async {
-    //getData();
     TeacherServcie teacherServcie = new TeacherServcie();
     List<Teacher> _teacherList =  await teacherServcie.getTeacherListDataFromServer();
     print(_teacherList);
+    return _teacherList;
+
   }
 
   Future<List<SharedPreference>> _getSharedPreDataFromLocalDB() async {
     LoginService loginService = new LoginService();
     List<SharedPreference> _sharedPreferenceList =  await loginService.getSharedPrefrerenceData();
     print(_sharedPreferenceList);
+    return _sharedPreferenceList;
   }
 
 }
