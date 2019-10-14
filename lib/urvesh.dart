@@ -10,6 +10,8 @@ import 'dart:convert';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/fr/SharedPreference.dart';
 import 'package:flutter_app/src/fr/webservice/WebClient.dart';
+import 'package:flutter_app/src/mo/Student/Student.dart';
+import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherService.dart';
 import 'package:http/http.dart' as http;
@@ -176,6 +178,46 @@ class _UrveshHomePageState extends State<UrveshHome> {
       ),
     );
 
+    final studentsFromServer = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getStudentDataFromServer();
+        },
+        child: Text("get Student Data From Server ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final studentDataFromLocalDB = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getStudentDataFromLocalDB();
+        },
+        child: Text("get Student Data from LocalDB ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Urvesh Page"),
@@ -204,118 +246,16 @@ class _UrveshHomePageState extends State<UrveshHome> {
                   SizedBox(height: 5.0,),
                   saveTeacherBtn_,
                   SizedBox(height: 5.0,),
-                  sharedPrefrenceBtn
+                  sharedPrefrenceBtn,
+                  SizedBox(height: 5.0,),
+                  studentsFromServer,
+                  SizedBox(height: 5.0,),
+                  studentDataFromLocalDB
                 ],
               ),
             ),
           )
       ),
-    );
-  }
-
-  Scaffold _getFormScafold() {
-    final loginButon = Material(
-      color: Colors.indigo,
-      /* borderRadius: BorderRadius.circular(30.0),*/
-      child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-
-        /*onPressed: (){
-          schoolCodeText = schoolCodeController.text;
-          emailText = emailController.text;
-          passeordText = passwordController.text;
-          return showDialog(
-              context: context,
-              builder: (context){
-                return AlertDialog(
-                  content: Text(
-                      schoolCodeText + "\n" +
-                          emailText + "\n" +
-                          passeordText
-                  ),
-                );
-              }
-          );
-        },*/
-        child: Text("Login",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-    return new Scaffold(
-      body: new Center(
-        child: new SingleChildScrollView(
-          child: new Container(
-            margin: new EdgeInsets.all(20.0),
-            child: Center(
-              child: new Form(
-                  child: _getFormUI(loginButon)
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-
-  Widget _getFormUI(Material loginButon) {
-    return new Column(
-      children: <Widget>[
-        SizedBox(
-          height: 155.0,
-          child: Image.asset(
-            "images/mount-carmel-logo.png",
-            fit: BoxFit.contain,
-          ),
-        ),
-        SizedBox(height: 10.0),
-        new TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          autofocus: false,
-          decoration: InputDecoration(
-            hintText: 'Email',
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-          ),
-        ),
-        new SizedBox(height: 20.0),
-        new TextFormField(
-          autofocus: false,
-          obscureText: true,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            hintText: 'Password',
-            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-            border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-          ),
-        ),
-        new SizedBox(height: 15.0),
-        new Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
-            child: loginButon
-        ),
-        new FlatButton(
-          child: Text(
-            'Forgot password?',
-            style: TextStyle(color: Colors.deepPurple),
-          ),
-          /*onPressed: _showForgotPasswordDialog,*/
-        ),
-        new FlatButton(
-          /*onPressed: _sendToRegisterPage,*/
-          child: Text('Not a member? Sign up now',
-              style: TextStyle(color: Colors.deepPurple)),
-        ),
-      ],
     );
   }
 
@@ -385,6 +325,18 @@ class _UrveshHomePageState extends State<UrveshHome> {
      print(data);
     });
     return _sharedPreferenceList;
+  }
+
+  _getStudentDataFromServer() async {
+    StudentService studentService = new StudentService();
+    List<Student> studentList = await studentService.getStudentListDataFromServer();
+    print(studentList);
+  }
+
+  _getStudentDataFromLocalDB() async {
+    StudentService studentService = new StudentService();
+    List<Student> studentList = await studentService.getStudentListFromLocalDB();
+    print(studentList);
   }
 
 }

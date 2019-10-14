@@ -30,4 +30,18 @@ class StudentDao{
     });
   }
 
+  getAllStudentDataFromLocalDB() async{
+
+    print("getAllStudentDataFromLocalDB Starts ");
+    Database db = await getDataBaseHandler();
+
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM " + studentTable);
+
+    var test =  List.generate(maps.length, (i) {
+      return Student.fromJson(maps[i]);
+    });
+    print("Student List size : ${test.length}");
+    return test;
+  }
+
 }
