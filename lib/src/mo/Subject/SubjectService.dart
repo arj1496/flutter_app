@@ -27,7 +27,7 @@ class SubjectService{
     return subjectList;
   }
 
-  Future<List<Subject>> getSubjectList() async{
+  Future<List<Subject>> getSubjectListFromLocalDB() async{
     List<Subject> subjectListFromFuture = await subjectDao.getAllSubjectData();
     return subjectListFromFuture;
   }
@@ -39,8 +39,8 @@ class SubjectService{
     map['subject_sync_time'] = 0.toString();
 
     Map<String, dynamic> subjectDataFromServer = await _subjectWebService.getData_(map, "rest/sync/getSyncInfo");
-    List<Subject> subjectList = null;
-    if(subjectDataFromServer['issubjectSync']){
+    List<Subject> subjectList;
+    if(subjectDataFromServer['isSubjectSync']){
       print(subjectDataFromServer);
       List<dynamic> subjectsDynamic = subjectDataFromServer['subjects'];
       subjectList = List.generate(subjectsDynamic.length, (i){

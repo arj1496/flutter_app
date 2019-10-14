@@ -33,7 +33,7 @@ class StandardService{
     map['standard_sync_time'] = 0.toString();
 
     Map<String, dynamic> standardDataFromServer = await _standardWebService.getData_(map, "rest/sync/getSyncInfo");
-    List<Standard> standardList = null;
+    List<Standard> standardList;
     if(standardDataFromServer['isStandardSync']){
       print(standardDataFromServer);
       List<dynamic> standardsDynamic = standardDataFromServer['standards'];
