@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 class SharedPreference{
   String key;
   String value;
@@ -14,8 +16,8 @@ class SharedPreference{
   );
 
   factory SharedPreference.fromJson_(String k, v) => SharedPreference(
-      key : k.toString(),
-      value: v.toString()
+      key : json.encode(k),
+      value: json.encode(v)
   );
 
   Map<String, dynamic> toJson() => {

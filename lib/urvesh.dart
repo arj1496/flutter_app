@@ -380,7 +380,10 @@ class _UrveshHomePageState extends State<UrveshHome> {
   Future<List<SharedPreference>> _getSharedPreDataFromLocalDB() async {
     LoginService loginService = new LoginService();
     List<SharedPreference> _sharedPreferenceList =  await loginService.getSharedPrefrerenceData();
-    print(_sharedPreferenceList);
+    _sharedPreferenceList.forEach((sharedPreferenceObject){
+     var data = json.decode(sharedPreferenceObject.value);
+     print(data);
+    });
     return _sharedPreferenceList;
   }
 

@@ -10,7 +10,7 @@ class SchoolUtils {
   }
 
   //String baseUrl = "https://educloud.in";
-  String baseUrl = "http://192.168.0.100:8080/soms/";
+  String baseUrl = "http://192.168.43.14:8080/soms/";
 
   SchoolUtils._internal(){
 

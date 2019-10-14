@@ -88,7 +88,6 @@ class TeacherDAO{
     print("getAllTeacherData Starts ");
     Database db = await getDataBaseHandler();
 
-    //List<Map<String, dynamic>> maps = await db.query('Teacher');
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Teacher ");
 
     var test =  List.generate(maps.length, (i) {
