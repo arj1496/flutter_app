@@ -37,12 +37,11 @@ class LoginDAO{
 
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM SharedPreference ");
 
-    var test =  List.generate(maps.length, (i) {
+    var sharedPreferenceData =  List.generate(maps.length, (i) {
       return SharedPreference.fromJson(maps[i]);
     });
-    print("getAllSharedPreferenceData List size : ${test.length}");
-    //print("getAllSharedPreferenceData Starts ");
-    return test;
+    print("getAllSharedPreferenceData List size : ${sharedPreferenceData.length}");
+    return sharedPreferenceData;
   }
 
 }

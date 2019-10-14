@@ -102,20 +102,18 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           getTeacherData();
-          //getData();
         },
         child: Text("Get Teacher Data from LocalDB",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+                color: Colors.white,
+                fontWeight: FontWeight.bold
+            )
+        ),
       ),
     );
 
@@ -126,8 +124,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
 
         minWidth: MediaQuery
             .of(context)
-            .size
-            .width,
+            .size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           addTeacher();
