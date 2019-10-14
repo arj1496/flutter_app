@@ -1,7 +1,7 @@
 class Standard{
   int serialVersionUID = 1;
-  int lid;       // server id
-  int id;         //local id
+  int lid;       // local id
+  int id;         //server id
   String name;
   int startDate;
   int endDate;
