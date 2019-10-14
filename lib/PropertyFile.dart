@@ -18,6 +18,12 @@ class PropertyFile{
   String _endDate;
   String _endTime;
   String _durication;
+  String _placeLabel;
+  IconData _placeIconData;
+  String _palceData;
+  String _descriptionLabel;
+  IconData _descriptionIconData;
+  String _descriptionData;
 
    String get label => _label;
    set label( String value ) {
@@ -71,9 +77,37 @@ class PropertyFile{
   }
 
   String get durication => _durication;
-
   set durication( String value ) {
     _durication = value;
   }
 
+  String get placeLabel => _placeLabel;
+  set placeLabel( String value ) {
+    _placeLabel = value;
+  }
+
+  IconData get placeIconData => _placeIconData;
+  set placeIconData( IconData value ) {
+    _placeIconData = value;
+  }
+
+  String get palceData => _palceData;
+  set palceData( String value ) {
+    _palceData = value;
+  }
+
+  String get descriptionLabel => _descriptionLabel;
+  set descriptionLabel( String value ) {
+    _descriptionLabel = value;
+  }
+
+  IconData get descriptionIconData => _descriptionIconData;
+  set descriptionIconData( IconData value ) {
+    _descriptionIconData = value;
+  }
+
+  String get descriptionData => _descriptionData;
+  set descriptionData( String value ) {
+    _descriptionData = value;
+  }
 }

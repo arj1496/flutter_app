@@ -30,7 +30,8 @@ class DescriptionCustomView extends StatelessWidget {
       ),
       child: new Container (
         width:800,
-
+        height: 150,
+        alignment: Alignment.topLeft,
         decoration: BoxDecoration(
           color: AppTheme.white,
           borderRadius: BorderRadius.only(

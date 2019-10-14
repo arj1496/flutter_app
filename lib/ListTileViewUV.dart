@@ -60,10 +60,10 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
             icon: Icon(Icons.refresh),
             onPressed: synEvents,
           ),
-          IconButton(
+         /* IconButton(
             icon: Icon(Icons.get_app),
             onPressed: getEvent,
-          ),
+          ),*/
         ],
       ),
       body: futureBuilder,
@@ -325,7 +325,7 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                '1.30 Hrs',
+                                getDurationFromLong(data.startDate,data.endDate),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: AppTheme.robotoFontName,
@@ -403,214 +403,6 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
         ),
       ),
     );
-    return Padding(
-      padding: const EdgeInsets.only(
-          left: 10, right: 10, top: 3, bottom: 3
-      ),
-      // This is the Main Table Container
-      child: Container(
-        // given Box Shadow to the Container
-        decoration: BoxDecoration(
-          color: AppTheme.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8.0),
-              bottomLeft: Radius.circular(8.0),
-              bottomRight: Radius.circular(8.0),
-              topRight: Radius.circular(8.0)
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: AppTheme.grey.withOpacity(0.2),
-                offset: Offset(1.1, 1.1),
-                blurRadius: 10.0
-            ),
-          ],
-        ),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding:
-              const EdgeInsets.only(top: 5, left: 5, right: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4, bottom: 1,top: 5),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 4, bottom: 3
-                            ),
-                            child: Text(
-                              //'Gandhi Jayanti Gandhi Jayanti',
-                              data.name,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: AppTheme.robotoFontName,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: AppTheme.nearlyDarkBlue,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            // this Padding is Used to render the Horizontal line Starts
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 5, right: 5, top: 8, bottom: 8
-              ),
-              child: Container(
-                height: 2,
-                decoration: BoxDecoration(
-                  color: AppTheme.background,
-                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                ),
-              ),
-            ),
-            // this Padding is Used to render the Horizontal line Ends
-
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 10, right: 10, top: 3, bottom: 8
-              ),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          //'Fastival',
-                          data.type,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: AppTheme.robotoFontName,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            letterSpacing: -0.2,
-                            color: AppTheme.darkText,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: Text(
-                            'Type',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: AppTheme.robotoFontName,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12,
-                              color: AppTheme.grey.withOpacity(0.5),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '1.30 Hrs',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: AppTheme.robotoFontName,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                letterSpacing: -0.2,
-                                color: AppTheme.darkText,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6),
-                              child: Text(
-                                'Duration',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: AppTheme.robotoFontName,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: AppTheme.grey
-                                      .withOpacity(0.5),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-
-                          children: <Widget>[
-                            Text(
-                              //'02 Oct 2019',
-                              getDateFromDataLong(data.startDate),
-                              //data.startDate.toString(),
-
-                              style: TextStyle(
-                                fontFamily: AppTheme.robotoFontName,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                letterSpacing: -0.2,
-                                color: AppTheme.darkText,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6),
-                              child: Text(
-                                'Date',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: AppTheme.robotoFontName,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: AppTheme.grey.withOpacity(0.5),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-
   }
   String getDateFromDataLong(int dateLong){
       SchoolUtils schoolUtils = new SchoolUtils();
@@ -631,43 +423,39 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
   getEvent(){
     EventService eventService = new EventService();
     Future<List<Event>> eventList = eventService.getEventList();
-    print(eventList);
   }
 
   showEventDetail(data) {
-    print("Just Clike : ${data.name} : ${data.id}" );
-    SchoolUtils schoolUtils = new SchoolUtils();
-    var property = new PropertyFile();
-    property.eventName = data.name;
-    property.eventType = data.type;
-    property.eventCreated = data.owner;
-    property.label ="Place1";
-    property.iconData = FontAwesomeIcons.mapMarker;
-    property.data = data.place;
-    property.startDate = schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.startDate);
-    property.endDate = schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.endDate);
-    property.startTime = schoolUtils.getTimeStringFromLongWithTimeZone(data.startDate);
-    property.endTime = schoolUtils.getTimeStringFromLongWithTimeZone(data.endDate);
-    property.durication = schoolUtils.getDurationBetweenTwoTimestamp(data.startDate, data.endDate);
-    var property1 = new PropertyFile();
-    property1.label ="Description";
-    property1.iconData = FontAwesomeIcons.bookOpen;
-    property1.data = data.description;
+    EventActivity  eventActivity = EventActivity();
+    var property =  eventActivity.showEventDetail(data);
+    var palceProperty = PropertyFile();
+    palceProperty.label = property.placeLabel;
+    palceProperty.iconData = property.placeIconData;
+    palceProperty.data = property.palceData;
+
+    var descriptionProperty = PropertyFile();
+    descriptionProperty.label = property.descriptionLabel;
+    descriptionProperty.iconData = property.descriptionIconData;
+    descriptionProperty.data = property.descriptionData;
 
     List<Widget> detailWidget = [ EventWidget.init(property)];
-    PropertyService propertyService = new PropertyService();
     List<Widget> eventWidget = [
       CardDetail2Oct(detailWidget),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
       DateWidget.init(property),                     // It display date in blue container
-      TitleViewDetail.init(property),  // It display title of place and description in listview.
-      DescriptionCustomView.init(property),  // All place data is displayed in container
-      TitleViewDetail.init(property1),
-      DescriptionCustomView.init(property1),
+      TitleViewDetail.init(palceProperty),  // It display title of place and description in listview.
+      DescriptionCustomView.init(palceProperty),  // All place data is displayed in container
+      TitleViewDetail.init(descriptionProperty),
+      DescriptionCustomView.init(descriptionProperty),
       //AttachmentView(),                                       // It dispay container in water mark
       //AttachmentFileView(),                                    // This display all atachment in listview.
     ];
     Navigator.push(context,
       MaterialPageRoute(builder: (context) => DetailView2Oct.init(eventWidget,"Event"))
     );
+  }
+
+  String getDurationFromLong(startDate, endDate) {
+    EventActivity eventActivity = new EventActivity();
+     return eventActivity.getDurationFromLong(startDate,endDate);
   }
 }
