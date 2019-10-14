@@ -89,14 +89,26 @@ class  DBProvider {
         "id INTEGER PRIMARY KEY,"
         "firstName TEXT,"
         "lastName TEXT,"
+        "studentId TEXT,"
+        "schoolName TEXT,"
+        "gender TEXT,"
+        "rollNo TEXT,"
         "person INTEGER,"
         "isWritable INTEGER,"
-        "gender TEXT,"
         "email TEXT,"
+        "mobileNumber TEXT,"
         "standardIds TEXT,"
+        "cardId TEXT,"
+        "iscardActive TEXT,"
+        "birthDate INTEGER"
         "userId TEXT "
         ")" ;
+
+
+
+
   }
+
   String createEventTable(){
     return "CREATE TABLE Event ( "
     " lid INTEGER , "
@@ -124,18 +136,19 @@ class  DBProvider {
   }
 
   String createStandardTable() {
+
     return "CREATE TABLE Standard( "
-        " lid INTEGER ,"
-    " id INTEGER PRIMARY KEY,"
-    " name TEXT ,"
-    " startDate Integer, "
-    " endDate Integer, "
-    " startTime TEXT, "
-    " endTime TEXT, "
-    " teacherIds INTEGER, "
-    " divisionIds Integer, "
-    " divisionName TEXT "
-    ")";
+      " lid INTEGER ,"
+      " id INTEGER PRIMARY KEY,"
+      " name TEXT ,"
+      " startDate Integer, "
+      " endDate Integer, "
+      " startTime TEXT, "
+      " endTime TEXT, "
+      " teacherIds INTEGER, "
+      " divisionId Integer, "
+      " divisionName TEXT "
+      " )";
   }
 
   String createPersonTable() {

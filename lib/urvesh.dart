@@ -10,6 +10,8 @@ import 'dart:convert';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/fr/SharedPreference.dart';
 import 'package:flutter_app/src/fr/webservice/WebClient.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Standard/StandardService.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
@@ -218,6 +220,47 @@ class _UrveshHomePageState extends State<UrveshHome> {
       ),
     );
 
+
+    final standardsFromServer = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getStandardDataFromServer();
+        },
+        child: Text("get Standard Data From Server ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final standardDataFromLocalDB = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getStandardDataFromLocalDB();
+        },
+        child: Text("get Standard Data from LocalDB ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Urvesh Page"),
@@ -250,7 +293,11 @@ class _UrveshHomePageState extends State<UrveshHome> {
                   SizedBox(height: 5.0,),
                   studentsFromServer,
                   SizedBox(height: 5.0,),
-                  studentDataFromLocalDB
+                  studentDataFromLocalDB,
+                  SizedBox(height: 5.0,),
+                  standardsFromServer,
+                  SizedBox(height: 5.0,),
+                  standardDataFromLocalDB
                 ],
               ),
             ),
@@ -337,6 +384,18 @@ class _UrveshHomePageState extends State<UrveshHome> {
     StudentService studentService = new StudentService();
     List<Student> studentList = await studentService.getStudentListFromLocalDB();
     print(studentList);
+  }
+
+  _getStandardDataFromServer() async {
+    StandardService standardService = new StandardService();
+    List<Standard> standardList = await standardService.getStandardListDataFromServer();
+    print(standardList);
+  }
+
+  _getStandardDataFromLocalDB() async {
+    StandardService standardService = new StandardService();
+    List<Standard> standardList = await standardService.getStandardListFromLocalDB();
+    print(standardList);
   }
 
 }

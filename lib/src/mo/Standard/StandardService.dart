@@ -26,11 +26,6 @@ class StandardService{
     return standardsList;
   }
 
-  Future<List<Standard>> getStandardList() async{
-    List<Standard> standardListFromFuture = await standardDao.getAllStandardData();
-    return standardListFromFuture;
-  }
-
   Future<List<Standard>> getStandardListDataFromServer() async {
     StandardWebService _standardWebService = new StandardWebService();
 
@@ -51,5 +46,10 @@ class StandardService{
       print('Standards Sync is false');
     }
     return standardList;
+  }
+
+  Future<List<Standard>> getStandardListFromLocalDB() async{
+    List<Standard> standardListFromFuture = await standardDao.getAllStandardData();
+    return standardListFromFuture;
   }
 }

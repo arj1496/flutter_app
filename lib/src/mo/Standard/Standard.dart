@@ -1,5 +1,4 @@
 class Standard{
-  int serialVersionUID = 1;
   int lid;       // local id
   int id;         //server id
   String name;
@@ -23,7 +22,6 @@ class Standard{
 
 
   Standard({
-    this.serialVersionUID,
     this.id,
     this.name,
     this.startDate,
@@ -44,11 +42,10 @@ class Standard{
     this.isSlelected
 });
   factory Standard.fromJson(Map<String, dynamic> json) => Standard(
-    serialVersionUID : json["serialVersionUID"],
     id: json["id"],
     name :json["name"],
-    startDate: json["startDate"],
-    endDate: json["endDate"],
+    startDate: json["startDate"] != null ? int.parse(json["startDate"].toString()) : null,
+    endDate: json["endDate"] != null ? int.parse(json["endDate"].toString()) : null,
     startTime: json["startTime"],
     endTime: json["endTime"],
     cordTeacher: json["cordTeacher"],
@@ -66,24 +63,23 @@ class Standard{
   );
 
   Map<String, dynamic> toJson() => {
-    "serialVersionUID" : serialVersionUID,
     "id" : id,
     "name" : name,
     "startDate" : startDate,
     "endDate" : endDate,
     "startTime" : startTime,
     "endTime" : endTime,
-    "cordTeacher" : cordTeacher,
+    //"cordTeacher" : cordTeacher,
     "divisionId" : divisionId,
     "divisionName" : divisionName,
-    "startHour" : startHour,
-    "startMinut" : startMinut,
-    "eHour" : eHour,
-    "eMinute" : eMinute,
-    "sTime" : sTime,
-     "eTime" : eTime,
-     "sFormate" : sFormate,
-     "eFormate": eFormate,
-    "isSlelected"  : isSlelected
+    //"startHour" : startHour,
+    //"startMinut" : startMinut,
+    //"eHour" : eHour,
+    //"eMinute" : eMinute,
+    //"sTime" : sTime,
+     //"eTime" : eTime,
+     //"//sFormate" : sFormate,
+     //"eFormate": eFormate,
+    //"isSlelected"  : isSlelected
   };
 }
