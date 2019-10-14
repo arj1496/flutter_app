@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 
 class Subject{
@@ -23,15 +25,15 @@ class Subject{
   });
 
 
-  factory Subject.fromJson(Map<String, dynamic> json) => Subject(
+  factory Subject.fromJson(Map<String, dynamic> jsonObject) => Subject(
 
-      id : json["id"],
-      name : json["name"],
-      standard : json["standard"],
-      isAccess : json["isAccess"],
-      color : json["color"],
-      isOptional : json["isOptional"],
-      optionalStudentIds : json["optionalStudentIds"]
+      id : jsonObject["id"],
+      name : jsonObject["name"],
+      standard : jsonObject["standard"],
+      isAccess : jsonObject["isAccess"],
+      color : jsonObject["color"],
+      isOptional : jsonObject["isOptional"] == true ? 1 : 0,
+      optionalStudentIds : jsonObject["optionalStudentIds"]
 
   );
 
