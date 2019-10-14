@@ -50,8 +50,7 @@ class TeacherServcie{
         Teacher teacher = Teacher.fromJson(teachersDynamic[i]);
         return teacher;
       });
-      TeacherServcie teacherServcie = new TeacherServcie();
-      await teacherServcie.batchAddTeacher(teacherList);
+      await batchAddTeacher(teacherList);
     }else{
       print('Teacher Sync is false');
     }

@@ -1,6 +1,7 @@
 class Standard{
   int serialVersionUID = 1;
-  int id;
+  int lid;       // server id
+  int id;         //local id
   String name;
   int startDate;
   int endDate;
@@ -19,6 +20,7 @@ class Standard{
   String sFormate;
   String eFormate;
   bool isSlelected = false;
+
 
   Standard({
     this.serialVersionUID,
