@@ -11,6 +11,8 @@ import 'package:flutter_app/Heena.dart';
 import 'DescriptionCustomView.dart';
 import 'DetailViewUV.dart';
 import 'PropertyService.dart';
+import 'src/mo/Student/StudentHomepage.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -222,10 +224,10 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: (){
 
-          Navigator.push(
+       /*   Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => MenuFile()),
-          );
+          );*/
 
         },
         child: Text("Akshata Work",
@@ -279,15 +281,19 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    final surabhiWork = Material(
+    final bhagyashriWork = Material(
       color: Colors.indigo,
       /* borderRadius: BorderRadius.circular(30.0),*/
       child: MaterialButton(
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
-        child: Text("Surabhi Work",
+        onPressed: (){
+          Navigator.push(
+              context, new MaterialPageRoute(
+              builder: (context) => new StudentHomePage()));
+        },
+        child: Text("Bhagyashri Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
@@ -317,7 +323,7 @@ class _MyHomePageState extends State<MyHomePage> {
             akshataWork,
             dhavalWork,
             heenaWork,
-            surabhiWork
+            bhagyashriWork
 
 
           ],
@@ -328,3 +334,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
