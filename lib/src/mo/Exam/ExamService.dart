@@ -5,6 +5,8 @@ import 'package:flutter_app/HeaderContainer.dart';
 import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/src/mo/Exam/ButtonAccess.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
+import 'package:flutter_app/src/mo/Exam/ExamDao.dart';
+import 'package:flutter_app/src/mo/Exam/ExamWebService.dart';
 
 
 import '../../../CardDetail2Oct.dart';
@@ -16,9 +18,24 @@ import 'ExamActivity.dart';
 import 'ExamPage.dart';
 
 class ExamService{
+  ExamWebService examWebService = new ExamWebService();
+  ExamDao examDao = new ExamDao();
 
   getExam(){
     Exam exam = new Exam();
+    exam.id = 1;
+    exam.name = 'Matematics' ;
+    exam.standardId = 12;
+    exam.standardName = "Class  ";
+    exam.subjectId = 2 ;
+    exam.subjectName = 'computer science and enggineering - ' ;
+    exam.examDate = 1571155865;
+    exam.totalMark = 20;
+    exam.examType ='Term ' ;
+    exam.owner = 'Ramlingam';
+    exam.description = 'class-1 exam';
+    exam.status = 'DRAFT';
+    exam.syllabus = 'chapter 1';
     return exam;
   }
   getSecurity(){
@@ -80,27 +97,41 @@ class ExamService{
 
     List<Exam> examList = new List();
     for(var i = 1 ; i < 100; i++){
-
       Exam exam = new Exam();
-      exam.id = i;
-      exam.name = 'Matematics' + i.toString();
-      exam.standardId = i ;
-      exam.standardName = "Class  " + i.toString();
-      exam.subjectName = 'computer science and enggineering - ' + i.toString();
-      exam.examDate = '2 oct 2019';
-      exam.totalMark = 20;
-      exam.examType ='Term ' + i.toString();
-      exam.owner = 'Ramlingam ';
-      exam.description = 'class-1 exam';
-      exam.status = 'published';
-      exam.syllabus = 'chapter 1';
+        exam.id = i;
+        exam.name = 'Matematics' + i.toString();
+        exam.standardId = i ;
+        exam.standardName = "Class  " + i.toString();
+        exam.subjectName = 'computer science and enggineering - ' + i.toString();
+        exam.examDate = 1571155865;
+        exam.totalMark = 20;
+        exam.examType ='Term ' + i.toString();
+        exam.owner = 'Ramlingam';
+        exam.description = 'class-1 exam';
+        exam.status = 'DRAFT';
+        exam.syllabus = 'chapter 1';
+        examList.add(exam);
+      }
+    return examList;
+  }
 
-      examList.add(exam);
 
+    addOrUpdateExam(Exam exam) async{
+      Map<String, dynamic> examData = await examWebService.addOrUpdateExam(exam);
+
+      if(examData['status']){
+        Exam exam = Exam.fromJson(examData['exam']);
+        await examDao.addExam(exam);
+        return exam;
+      }else{
+        print('Exam Add False');
+      }
+      return exam;
     }
 
-    return examList;
+    List<Exam> getDbExam(){
+      List<Exam> examList = examDao.getAllExamData();
+      return examList;
+    }
 
-
-  }
 }

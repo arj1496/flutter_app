@@ -6,6 +6,7 @@ import 'package:flutter_app/CardDetail2Oct.dart';
 import 'package:flutter_app/DateWidget.dart';
 import 'package:flutter_app/DemoCard.dart';
 import 'package:flutter_app/DetailView2Oct.dart';
+import 'package:flutter_app/src/ButtonUI2.dart';
 import 'package:flutter_app/src/mo/Exam/ExamWidget.dart';
 import 'package:flutter_app/MainDetailPage.dart';
 import 'package:flutter_app/PropertyService.dart';
@@ -66,6 +67,7 @@ class DescriptionOption extends StatelessWidget {
     TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
     ButtonUI.init('RESULTS','DELETE','CLOSE'),
+    ButtonUI2.init('RESULTS','DELETE','CLOSE'),
     // AttachmentView(),                                       // It dispay container in water mark
     // AttachmentFileView(),                                    // This display all atachment in listview.
   ];

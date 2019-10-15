@@ -7,6 +7,7 @@ import '../../../ButtonUI.dart';
 import '../../../DatePickerDemo.dart';
 import '../../../StandardDropdownWidget.dart';
 import '../../../SubjectDropdownWidget.dart';
+import '../../ButtonUI2.dart';
 
 class ExamAddPage extends StatefulWidget {
   @override
@@ -47,7 +48,8 @@ class ExamAddUIState extends State<ExamAddPage>{
       MarkTextfield.init(Icon(Icons.adjust), 'TotalMark'),
       MultilineTextfield.init(Icon(Icons.description),'Description'),
       MultilineTextfield.init(Icon(Icons.library_books,),'Syllabus'),
-      DatePickerDemo(), ButtonUI.init('DRAFT','PUBLISH','CLOSE'),];
+      DatePickerDemo(),
+      ButtonUI2.init('DRAFT','PUBLISH','CLOSE'),];
 
     return widgetList;
   }

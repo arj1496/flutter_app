@@ -41,6 +41,7 @@ class  DBProvider {
       await db.execute(createStandardTable());
       await db.execute(createStudentTable());
       await db.execute(createSubjectTable());
+      await db.execute(createExamTable());
 
     });
   }
@@ -181,6 +182,27 @@ class  DBProvider {
         " optionalStudentIds TEXT"
         ")";
   }
+
+  String createExamTable(){
+    return "CREATE TABLE Exam( "
+        " lid INTEGER ,"
+        " id INTEGER PRIMARY KEY,"
+        " name TEXT ,"
+        " standard INTEGER ,"
+        " subject INTEGER, "
+        " examDate INTEGER, "
+        " totalMark INTEGER, "
+        " examType TEXT, "
+        " owner TEXT, "
+        " description TEXT, "
+        " status TEXT, "
+        " syllabus TEXT, "
+        " erDataJson TEXT"
+        ")";
+
+
+  }
+
 
   String createSharedPreferenceTable(){
     return "CREATE TABLE SharedPreference ("

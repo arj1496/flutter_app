@@ -1,14 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 
+import 'Exam.dart';
+
 
 // This contains only comminaction logic between ui and service .
 class ExamActivity{
-
+  ExamService examService = new ExamService( );
   getAccessibleWidget() {
-    ExamService examService = new ExamService( );
+
     List<Widget> widgetList = examService.getAccessibleWidget ( );
     return widgetList;
+  }
+
+   Exam addExamToServer(Exam exam){
+    print("in examactivity");
+    Exam examObject = examService.addOrUpdateExam(exam);
+    return examObject;
+  }
+
+  List<Exam> getDbExam(){
+
+    List<Exam> examList = examService.getDbExam();
+    return examList;
   }
 }
 

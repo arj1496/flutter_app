@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
+import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
+import 'package:flutter_app/src/mo/Exam/ExamService.dart';
+
+import 'AppTheme.dart';
 
 class ExamAddPage2 extends StatefulWidget {
   @override
@@ -10,7 +15,9 @@ class YourPageState extends State<ExamAddPage2> {
   List<String> _standard = <String>['Class-1', 'Class-2', 'Class-3', 'Class-4', 'Class-5','Class-6', 'Class-7', 'Class-8', 'Class-9', 'Class-10'];
   TextEditingController controller = new TextEditingController();
   String filter = "Select Class";
-
+  static ExamService examService = new ExamService();
+  Exam exam = examService.getExam();
+  ExamActivity examActivity = new ExamActivity();
   @override
   void initState() {
     super.initState();
@@ -48,7 +55,7 @@ class YourPageState extends State<ExamAddPage2> {
                     suffixIcon: new IconButton(
                       icon: new Icon(Icons.close),
                       onPressed: () {
-
+                      // Exam examObject = examActivity.addExamToServer(exam);
                         controller.clear();
                         FocusScope.of(context).requestFocus(new FocusNode());
                       },
@@ -62,7 +69,36 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Padding(
                   padding: new EdgeInsets.only(top: 8.0),
                   child: _buildListView()),
-            )
+            ),
+            MaterialButton(
+              minWidth: 200.0,
+              height: 35,
+
+              child: new Text("Add exam",
+                  style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
+              onPressed: (){
+                Exam examObject = examActivity.addExamToServer(exam);
+
+//          setState(() {
+//            _isNeedHelp = true;
+//          });
+              },
+            ),
+
+            MaterialButton(
+              minWidth: 200.0,
+              height: 35,
+
+              child: new Text("get exam",
+                  style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
+              onPressed: (){
+                List<Exam> examObject = examActivity.getDbExam();
+                print(examObject.length);
+//          setState(() {
+//            _isNeedHelp = true;
+//          });
+              },
+            ),
           ],
         ));
   }
