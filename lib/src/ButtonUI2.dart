@@ -101,7 +101,9 @@ class ButtonUI2 extends StatelessWidget {
 
           child: new Text(text,
               style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
-          onPressed: () {
+          onPressed: (){
+              justClick(text);
+
 //          setState(() {
 //            _isNeedHelp = true;
 //          });
@@ -110,6 +112,10 @@ class ButtonUI2 extends StatelessWidget {
       ),
     ),
     );
+  }
+
+  justClick(String text){
+    print(text);
   }
 }
 
