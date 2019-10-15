@@ -78,9 +78,9 @@ class Student{
     'person' : person,
     'email' : email,
     'mobileNumber' : mobileNumber,
-    'parentIds' : parentIds,
+    //'parentIds' : parentIds,
     'isWritable' : isWritable,
-    'userId' : userId,
+    //'userId' : userId,
     'cardId' : cardId,
     'iscardActive' : iscardActive,
     'birthDate' : birthDate

@@ -77,7 +77,7 @@ class SubjectDao {
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Subject ");
 
     var test =  List.generate(maps.length, (i) {
-      return Subject.fromJson(maps[i]);
+      return Subject.fromJsonFromLocalDB(maps[i]);
     });
     print("Subject List size : ${test.length}");
     return test;

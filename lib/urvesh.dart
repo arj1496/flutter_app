@@ -310,17 +310,9 @@ class _UrveshHomePageState extends State<UrveshHome> {
       body: Center(
           child: Container(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
               child: Column(
                 children: <Widget>[
-                  /*SizedBox(
-                    height: 155.0,
-                    child: Image.asset(
-                      "images/mount-carmel-logo.png",
-                      fit: BoxFit.contain,
-                    ),
-                  ),*/
-                  SizedBox(height: 5.0,),
                   logoutButon,
                   SizedBox(height: 5.0,),
                   homePage,

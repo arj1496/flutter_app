@@ -25,8 +25,8 @@ class StudentDao{
             conflictAlgorithm: ConflictAlgorithm.replace
         );
       }
-      List<Student> savedStudentList = await batch.commit(noResult: true);
-      print("Teacher Saved Successfully in to Local DB : " + savedStudentList.length.toString());
+      await batch.commit(noResult: true);
+      print("Teacher Saved Successfully in to Local DB : " + studentList.length.toString());
     });
   }
 
