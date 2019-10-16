@@ -1,6 +1,7 @@
 
 
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/StandardMapping/StandardMapping.dart';
 
 class Student{
 
@@ -12,6 +13,7 @@ class Student{
   String schoolName;
   String gender;
   Standard standard;
+  List<StandardMapping> standardMappings;
   String rollNo;
   int person;
   String email;
@@ -32,6 +34,7 @@ class Student{
     this.schoolName,
     this.gender,
     this.standard,
+    this.standardMappings,
     this.rollNo,
     this.person,
     this.email,
@@ -53,6 +56,7 @@ class Student{
       schoolName : json['schoolName'],
       gender : json['gender'],
       standard : json['standard'],
+      standardMappings : new List<StandardMapping>.from(json['standardMappings']),
       rollNo : json['rollNo'],
       person : json['person'],
       email : json['email'],
@@ -74,6 +78,7 @@ class Student{
     'schoolName' : schoolName,
     'gender' : gender,
     //'standard' : standard,
+    'standardMappings' : standardMappings,
     'rollNo' : rollNo,
     'person' : person,
     'email' : email,
