@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/DetailView2Oct.dart';
+import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 import '../../../AppTheme.dart';
 import 'Exam.dart';
@@ -11,36 +13,62 @@ class ExamListPage extends StatefulWidget {
 
 class _ListTileViewUVState extends State<ExamListPage> {
 
-  List<Exam> list = null;
 
+  ExamService examService = new ExamService();
   @override
   void initState() {
-    ExamService examService = new ExamService();
-    list = examService.getAllExam();
+
   }
 
+  Future<List<Exam>> getData() async{
+    ExamActivity examActivity = new ExamActivity();
+    List<Exam> examList = await examActivity.getDbExam();
+    return examList;
+  }
   @override
   Widget build(BuildContext context) {
-    return _getListViewWithBuilder();
+    ExamActivity examActivity = new ExamActivity();
+    Future<List<Exam>> examListFuture = examActivity.getDbExam();
+
+    var futureBuilder = new FutureBuilder(
+        future: examListFuture,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return _getListViewWithBuilder(context, snapshot);
+        }
+    );
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: AppTheme.background,
+        title: Text("Exam"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+           // onPressed: synEvents,
+          ),
+          /* IconButton(
+            icon: Icon(Icons.get_app),
+            onPressed: getEvent,
+          ),*/
+        ],
+      ),
+      body: futureBuilder,
+    );
+    //return _getListViewWithBuilder();
   }
 
-  Widget _getListViewWithBuilder() {
+  Widget _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    List<Exam> examList = snapshot.data;
+
     return Container(
       color: AppTheme.background,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: AppTheme.background,
-          title: Text("Exams"),
-        ),
-
-        body: ListView.builder(
-            itemCount: list.length,
+      child:ListView.builder(
+            itemCount: examList.length,
             itemBuilder: (BuildContext ctxt, int Index){
-              return _listTileViewUV(list[Index]);
+              return examList != null && examList.length > 0  ?  _listTileViewUV(examList[Index]) : _listNotFound();
             }
         ),
-      ),
+
     );
   }
 
@@ -50,6 +78,15 @@ class _ListTileViewUVState extends State<ExamListPage> {
           left: 10, right: 10, top: 3, bottom: 3
       ),
       // This is the Main Table Container
+      child: GestureDetector(
+        onTap: () {
+           Navigator.push(
+           context,
+      //DetailView2Oct is a main page with scaffold which render all details widgets.
+             MaterialPageRoute(builder: (context) => DetailView2Oct.init(examService.getWidget()," ")),
+           );
+      },
+
       child: Container(
         // given Box Shadow to the Container
         decoration: BoxDecoration(
@@ -93,7 +130,6 @@ class _ListTileViewUVState extends State<ExamListPage> {
                     Text(
                       //'Gandhi Jayanti Gandhi Jayanti',
                       data.name,
-
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: AppTheme.robotoFontName,
@@ -163,7 +199,7 @@ class _ListTileViewUVState extends State<ExamListPage> {
                         Text(
 
                           //'Fastival',
-                          data.subjectName,
+                          data.subjectName != null ? data.subjectName : 'Hindi',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppTheme.robotoFontName,
@@ -199,7 +235,7 @@ class _ListTileViewUVState extends State<ExamListPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              data.examType,
+                              data.examType != null ? data.examType : 'Term 1',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: AppTheme.robotoFontName,
@@ -238,7 +274,7 @@ class _ListTileViewUVState extends State<ExamListPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
                             Text(
-                              data.examDate,
+                              data.examDate.toString(),
                               style: TextStyle(
                                 fontFamily: AppTheme.robotoFontName,
                                 fontWeight: FontWeight.w500,
@@ -268,6 +304,87 @@ class _ListTileViewUVState extends State<ExamListPage> {
                 ],
               ),
             )
+          ],
+        ),
+      ),
+    ),
+    );
+  }
+
+  Widget _listNotFound(){
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 10, right: 10, top: 3, bottom: 3
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+              bottomRight: Radius.circular(8.0),
+              topRight: Radius.circular(8.0)
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: AppTheme.grey.withOpacity(0.2),
+                offset: Offset(1.1, 1.1),
+                blurRadius: 10.0
+            ),
+          ],
+        ),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.only(top: 5, left: 5, right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, bottom: 1,top: 5),
+                    /*child: Text(
+                        'Title',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: AppTheme.robotoFontName,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            letterSpacing: -0.1,
+                            color: AppTheme.darkText),
+                      ),*/
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, bottom: 3
+                            ),
+                            child: Text(
+                              'Event Not Found',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTheme.robotoFontName,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: AppTheme.nearlyDarkBlue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

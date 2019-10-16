@@ -188,8 +188,8 @@ class  DBProvider {
         " lid INTEGER ,"
         " id INTEGER PRIMARY KEY,"
         " name TEXT ,"
-        " standard INTEGER ,"
-        " subject INTEGER, "
+        " standardId INTEGER ,"
+        " subjectId INTEGER, "
         " examDate INTEGER, "
         " totalMark INTEGER, "
         " examType TEXT, "
@@ -199,8 +199,6 @@ class  DBProvider {
         " syllabus TEXT, "
         " erDataJson TEXT"
         ")";
-
-
   }
 
 

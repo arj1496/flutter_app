@@ -438,9 +438,9 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
     descriptionProperty.iconData = property.descriptionIconData;
     descriptionProperty.data = property.descriptionData;
 
-    List<Widget> detailWidget = [ EventWidget.init(property)];
+
     List<Widget> eventWidget = [
-      CardDetail2Oct(detailWidget),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+      CardDetail2Oct(EventWidget.init(property)),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
       DateWidget.init(property),                     // It display date in blue container
       TitleViewDetail.init(palceProperty),  // It display title of place and description in listview.
       DescriptionCustomView.init(palceProperty),  // All place data is displayed in container

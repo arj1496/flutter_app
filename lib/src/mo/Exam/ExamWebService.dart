@@ -14,27 +14,22 @@ import 'Exam.dart';
 
 class ExamWebService{
   UrlUtils urlUtils = new UrlUtils();
-  Future<dynamic> addOrUpdateExam (Exam exam) async {
-    print("in webservice");
-     String authToken = await urlUtils.getAuthToken();
 
-      Map<String, String> headers = new Map<String, String>();
-      headers['authT'] = authToken;
+  Future<Map<String, dynamic>> addOrUpdateExam (Exam exam) async {
+    print("in webservice");
+    String authToken = await urlUtils.getAuthToken();
+
+    Map<String, String> headers = new Map<String, String>();
+    headers['authT'] = authToken;
 
     Map<String, String> examMap = getExamFrom(exam);
-
-
-
     final finalurl =  urlUtils.getExamAddUrl();
-        Response response = await post(finalurl, headers: headers, body: examMap);
-        if(response.statusCode == 200){
-          var str = response.body;
-          print(str);
-          final data = json.decode(response.body);
-          return data;
-        }
-        int statusCode = response.statusCode;
-        print(statusCode);
+    Response response = await post(finalurl, headers: headers, body: examMap);
+    var data;
+    if(response.statusCode == 200){
+      data = json.decode(response.body);
+    }
+    return data;
   }
 
   Map<String, String> getExamFrom(Exam exam) {
@@ -43,7 +38,6 @@ class ExamWebService{
     if (exam.name != null) {
       examObjectmap["name"] = exam.name;
     }
-
     /*if (exam.examType != null) {
       examObjectmap["examTypeId"] = exam.examType;
     }*/

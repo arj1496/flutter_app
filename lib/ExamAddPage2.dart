@@ -54,8 +54,8 @@ class YourPageState extends State<ExamAddPage2> {
                     //labelText: filter,
                     suffixIcon: new IconButton(
                       icon: new Icon(Icons.close),
-                      onPressed: () {
-                      // Exam examObject = examActivity.addExamToServer(exam);
+                      onPressed: () async{
+                      Exam examObject = await examActivity.addExamToServer(exam);
                         controller.clear();
                         FocusScope.of(context).requestFocus(new FocusNode());
                       },
@@ -76,8 +76,8 @@ class YourPageState extends State<ExamAddPage2> {
 
               child: new Text("Add exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
-              onPressed: (){
-                Exam examObject = examActivity.addExamToServer(exam);
+              onPressed: () async{
+                Exam examObject = await examActivity.addExamToServer(exam);
 
 //          setState(() {
 //            _isNeedHelp = true;
@@ -92,8 +92,8 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Text("get exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
               onPressed: (){
-                List<Exam> examObject = examActivity.getDbExam();
-                print(examObject.length);
+               // List<Exam> examObject = examActivity.getDbExam();
+               // print(examObject.length);
 //          setState(() {
 //            _isNeedHelp = true;
 //          });

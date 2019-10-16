@@ -1,60 +1,105 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
+import 'package:flutter_app/src/mo/Subject/Subject.dart';
+import 'package:flutter_app/src/mo/Subject/SubjectActivity.dart';
 
 
 // Generic standard drop down list
 
 class StandardDropdownWidget extends StatefulWidget {
-  List<String> _standard = <String>['Class-1', 'Class-2', 'Class-3', 'Class-4', 'Class-5','Class-6', 'Class-7', 'Class-8', 'Class-9', 'Class-10'];
+
+
   @override
   State<StatefulWidget> createState() {
-    return ExamAddUIState.init(_standard);
+    return StandardDropDown.init();
   }
 }
+Future<List<Standard>> getStandards() async{
+  StandardActivity standardActivity = new StandardActivity();
+  List<Standard> _standard = await standardActivity.getStandardListFromLocalDB();
+  return _standard;
+}
+class StandardDropDown extends State<StandardDropdownWidget> {
 
-class ExamAddUIState extends State<StandardDropdownWidget>{
-  List<String> _standard;
-  TextEditingController labelText = new TextEditingController();
+  TextEditingController labelText = new TextEditingController( );
   String classOf = "Select Class";
-  ExamAddUIState.init(List<String> _standard){
-    this._standard= _standard;
+
+  static int selectedStandardId;
+  static List<Subject> _subject;
+  StandardDropDown.init( ){
+
+  }
+  StandardDropDown( ){
+
   }
   @override
-  Widget build(BuildContext context) {
-    return _getDropDownFormField(Icon(Icons.class_),_standard);
+  Widget build( BuildContext context ) {
+    return FutureBuilder (
+        future: getStandards() ,
+        builder: ( context , projectSnap ) {
+           return Container(
+             child: Column(
+               children: <Widget>[
+                _getDropDownFormField (  Icon ( Icons.subject ) , projectSnap ),
+               ],
+             ),
+           );
+
+        });
+
   }
 
-  _getDropDownFormField(Icon icon,List<String> _standard) {
-    String _color = '';
-    return FormField(
-        builder: (FormFieldState state){
-          return InputDecorator(
-            decoration: InputDecoration(
-                icon: icon,
-                prefixText:classOf
-            ),
-            child: DropdownButtonHideUnderline(
-                child: Padding(
-                  padding:  EdgeInsets.only(right:8.0,left:8.0),
-                  child: DropdownButton(
-                    isDense: true,
-                    onChanged: (String newValue){
-                      setState(() {
-                        classOf = newValue;
-                        state.didChange(newValue);
-                      });
-                    },
-                    items: _standard.map((String value) {
-                      return new DropdownMenuItem(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                  ),
-                )
-            ),
+  _getDropDownFormField( Icon icon,AsyncSnapshot snapshot) {
+    List<Standard> standardList = new List();
+    if(snapshot.data != null){
+      standardList = snapshot.data;
+    }
+    return FormField (
+              builder: ( FormFieldState state ) {
+                return InputDecorator (
+                  decoration: InputDecoration (
+                      icon: icon ,
+                      prefixText: classOf
+                  ) ,
+                  child: DropdownButtonHideUnderline (
+                      child: Padding (
+                        padding: EdgeInsets.only ( right: 8.0 , left: 8.0 ) ,
+                        child: DropdownButton (
+                          isDense: true ,
+                          onChanged: ( dynamic newValue ) {
+                            setState ( ( ) {
+                              selectedStandardId = newValue.id;
+                              classOf = newValue.name;
+                              state.didChange ( newValue );
+                            } );
+                          } ,
+                          items: standardList.map ( ( Standard standard ) {
+                            return new DropdownMenuItem(
+                              value: standard,
+                              child: new Text( standard.name ) ,
+
+                            );
+                          } ).toList ( ) ,
+                        ) ,
+                      )
+                  ) ,
+                );
+              }
           );
+
         }
-    );
+
+  getSelectedStandard() async {
+    return selectedStandardId;
   }
+
+  getSelectedSubject() async {
+    SubjectActivity subjectActivity = new SubjectActivity();
+    _subject = await subjectActivity.getSubjectListFromLocalDB();
+    return _subject;
+
+  }
+
 }

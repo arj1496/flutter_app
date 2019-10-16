@@ -13,16 +13,15 @@ class ExamActivity{
     return widgetList;
   }
 
-   Exam addExamToServer(Exam exam){
+   Future<Exam> addExamToServer(Exam exam) async{
     print("in examactivity");
-    Exam examObject = examService.addOrUpdateExam(exam);
+    Exam examObject = await examService.addOrUpdateExam(exam);
     return examObject;
   }
 
-  List<Exam> getDbExam(){
-
-    List<Exam> examList = examService.getDbExam();
-    return examList;
+  Future<List<Exam>> getDbExam() async{
+    List<Exam> examListFromFuture = await examService.getDbExam();
+    return examListFromFuture;
   }
 }
 

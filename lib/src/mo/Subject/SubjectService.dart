@@ -55,7 +55,10 @@ class SubjectService{
   }
 
 
-
+  Future<List<Subject>> getSubjectByStandardId(int standardId) async{
+    List<Subject> subjectListFromFuture = await subjectDao.getSubjectByStandardId(standardId);
+    return subjectListFromFuture;
+  }
 
 
 }

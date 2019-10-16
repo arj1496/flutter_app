@@ -11,9 +11,11 @@ import 'package:flutter_app/src/mo/Exam/ExamWebService.dart';
 
 import '../../../CardDetail2Oct.dart';
 import '../../../DescriptionCustomView.dart';
+import '../../../ExamWidget2.dart';
 import '../../../MarkWidget.dart';
 import '../../../TitleViewDetail.dart';
 import '../../../TypeView.dart';
+import '../../ButtonUI2.dart';
 import 'ExamActivity.dart';
 import 'ExamPage.dart';
 
@@ -62,7 +64,7 @@ class ExamService{
     }
     if(examSecurityCheck.detail){
        List<Widget> exWidget3= [ExamPage(),];
-       widgetList.add(CardDetail2Oct(exWidget3));
+       widgetList.add(CardDetail2Oct(ExamPage()));
     }
     if(examSecurityCheck.markHeader){
       widgetList.add(MarkWidget());
@@ -116,7 +118,7 @@ class ExamService{
   }
 
 
-    addOrUpdateExam(Exam exam) async{
+    Future<Exam> addOrUpdateExam(Exam exam) async{
       Map<String, dynamic> examData = await examWebService.addOrUpdateExam(exam);
 
       if(examData['status']){
@@ -126,12 +128,32 @@ class ExamService{
       }else{
         print('Exam Add False');
       }
-      return exam;
+      return null;
     }
 
-    List<Exam> getDbExam(){
-      List<Exam> examList = examDao.getAllExamData();
-      return examList;
+  Future<List<Exam>> getDbExam() async{
+    List<Exam> examListFromFuture = await examDao.getDbExam();
+    return examListFromFuture;
+  }
+
+
+  List<Widget> getWidget(){
+    PropertyService propertyService = new PropertyService();
+      List<Widget> examWidget = [
+        HeaderContainer.init("Unit Test 1",""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
+        CardDetail2Oct(ExamWidget2()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+        MarkWidget(),
+        HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"), // It display date in blue container
+        TypeView(),
+        TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
+        DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
+        TitleViewDetail.init(propertyService.getData()),
+        DescriptionCustomView.init(propertyService.getData()),
+        ButtonUI2.init('RESULTS','DELETE','CLOSE'),
+        // AttachmentView(),                                       // It dispay container in water mark
+        // AttachmentFileView(),                                    // This display all atachment in listview.
+      ];
+       return examWidget;
     }
 
 }

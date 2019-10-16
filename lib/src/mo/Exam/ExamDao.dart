@@ -25,13 +25,14 @@ class ExamDao{
       futureId.then<int> ( ( id ) {
         examId = id;
         exam.lid = examId;
+        print("Exam Add sucessfully");
       } );
 
       return exam;
     } );
   }
 
-  getAllExamData() async{
+  getDbExam() async{
 
     print("getAllExamData Starts ");
     Database db = await getDataBaseHandler();
@@ -44,5 +45,7 @@ class ExamDao{
     print("Exam List size : ${test.length}");
     return test;
   }
+
+
 
 }

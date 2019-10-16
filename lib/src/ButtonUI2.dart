@@ -8,10 +8,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../PropertyFile.dart';
+import 'mo/Exam/Exam.dart';
+import 'mo/Exam/ExamActivity.dart';
+import 'mo/Exam/ExamService.dart';
 
 
 class ButtonUI2 extends StatelessWidget {
@@ -76,14 +76,6 @@ class ButtonUI2 extends StatelessWidget {
   }
 
   Widget getButtonUI(String text, bool isSelected) {
-    /* var txt = '';
-    if (CategoryType.ui == categoryTypeData) {
-      txt = 'RESULTS';
-    } else if (CategoryType.coding == categoryTypeData) {
-      txt = 'DELETE';
-    } else if (CategoryType.basic == categoryTypeData) {
-      txt = 'CLOSE';
-    }*/
     return Expanded(
             child: Padding(
             padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
@@ -92,13 +84,11 @@ class ButtonUI2 extends StatelessWidget {
             borderRadius: new BorderRadius.circular(24.0),
             side: BorderSide(color: AppTheme.nearlyBlue)
         ),
-        elevation: 16.0,
-
+        //elevation: 16.0,
         clipBehavior: Clip.antiAlias, // Add This
         child: MaterialButton(
           minWidth: 200.0,
           height: 35,
-
           child: new Text(text,
               style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
           onPressed: (){
@@ -114,8 +104,16 @@ class ButtonUI2 extends StatelessWidget {
     );
   }
 
-  justClick(String text){
-    print(text);
+  justClick(String text) async {
+     ExamService examService = new ExamService();
+    Exam exam = examService.getExam();
+    ExamActivity examActivity = new ExamActivity();
+   if(text == "DRAFT"){
+     Exam examObject = await examActivity.addExamToServer(exam);
+   }else if(text == "PUBLISH"){
+     exam.status = "PUBLISH";
+      Exam examObject = await examActivity.addExamToServer(exam);
+   }
   }
 }
 

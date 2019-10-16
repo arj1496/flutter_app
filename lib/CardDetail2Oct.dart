@@ -13,17 +13,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'EventWidget.dart';
+import 'ExamWidget2.dart';
 import 'PropertyFile.dart';
 
 class CardDetail2Oct extends StatelessWidget {
 
-  List<Widget> cutomWidgetList = new List();
+  Widget cutomWidget;
   var property = new PropertyFile();
   CardDetail2Oct.init(PropertyFile property){
     this.property = property;
   }
-  CardDetail2Oct(List<Widget> cutomWidgetList){
-    this.cutomWidgetList = cutomWidgetList;
+  CardDetail2Oct(Widget cutomWidget){
+    this.cutomWidget = cutomWidget;
   }
   @override
   Widget build( BuildContext context ) {
@@ -55,9 +56,7 @@ class CardDetail2Oct extends StatelessWidget {
                           ],
                         ),
                          child: SingleChildScrollView(
-                            child: Column(
-                              children: _getWidget() ,
-                            ),
+                            child: _getWidget(),
                           ),
 
                         ),
@@ -72,8 +71,8 @@ class CardDetail2Oct extends StatelessWidget {
 
   }
 
-  List<Widget> _getWidget(){
-    return this.cutomWidgetList;
+   Widget _getWidget(){
+    return this.cutomWidget;
   }
 
 

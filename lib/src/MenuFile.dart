@@ -31,6 +31,7 @@ import '../Detailview.dart';
 import '../ExamAddPage2.dart';
 import '../ExamAddPage2.dart';
 import '../ExamAddPage2.dart';
+import '../MultipleDropDown.dart';
 import 'CollapseviewDemo.dart';
 import 'mo/Exam/Exam.dart';
 import 'mo/Exam/ExamListPage2.dart';
@@ -193,6 +194,16 @@ class MenuFile extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CustomListviewExam()),
+                );
+              },
+
+            ),
+            RaisedButton(
+              child: Text("Multiple dropdown"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MultipleDropDown()),
                 );
               },
 

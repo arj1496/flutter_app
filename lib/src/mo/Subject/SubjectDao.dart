@@ -82,4 +82,19 @@ class SubjectDao {
     print("Subject List size : ${test.length}");
     return test;
   }
+
+  getSubjectByStandardId(int standardId) async{
+
+
+    Database db = await getDataBaseHandler();
+
+    //List<Map<String, dynamic>> maps = await db.query('Subject');
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Subject where standard=${standardId}");
+
+    var test =  List.generate(maps.length, (i) {
+      return Subject.fromJsonFromLocalDB(maps[i]);
+    });
+    print("Subject List size : ${test.length}");
+    return test;
+  }
 }
