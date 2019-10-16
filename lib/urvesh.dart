@@ -307,7 +307,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       appBar: AppBar(
         title: Text("Urvesh Page"),
       ),
-      body: Center(
+      body: SingleChildScrollView(
           child: Container(
             child: Padding(
               padding: EdgeInsets.fromLTRB(10, 2, 10, 2),

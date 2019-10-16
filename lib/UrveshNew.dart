@@ -27,7 +27,8 @@ class _UrveshNewState extends State<UrveshNew> {
         elevation: 0,
         title: Text("Urvesh New Home Page"),
       ),
-      body: Center(
+      body: SingleChildScrollView(
+
         child: Column(
           children: <Widget>[
             RaisedButton(
