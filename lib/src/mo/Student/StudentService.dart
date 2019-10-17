@@ -51,9 +51,9 @@ class StudentService{
       Student student = new Student();
       student.lid = i;
       student.id = i;
-      student.firstName = 'firstName ' + i.toString();
-      student.lastName = 'lastName ' + i.toString();
-      student.studentId = 'studentId ' + i.toString();
+      student.firstName = 'Bhagyashri' + i.toString();
+      student.lastName = 'Kadam ' + i.toString();
+      student.studentId = '201820181234567890 ' + i.toString();
       student.schoolName = 'schoolName' + i.toString();
       student.gender = 'Male';
       Standard standard = new Standard();
