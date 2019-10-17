@@ -26,7 +26,7 @@ class StudentDao{
         );
       }
       await batch.commit(noResult: true);
-      print("Teacher Saved Successfully in to Local DB : " + studentList.length.toString());
+      print("Students Saved Successfully in to Local DB : " + studentList.length.toString());
     });
   }
 
