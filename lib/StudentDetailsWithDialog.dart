@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
@@ -18,7 +19,6 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
   List<Student> studentList = null;
   bool _isUpdateBtn = true;
   bool _isEditBtn = true;
-  var index = null;
 
   @override
   Widget build(BuildContext context) {
@@ -66,27 +66,34 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
   }
 
   Future<String> createAlertDialogBox(BuildContext context, Student student) {
-    TextEditingController textEditingController = new TextEditingController();
+
     String studentName = student.firstName + ' ' + student.lastName;
     return showDialog(
         context: context,
         builder: (context){
           return AlertDialog(
             title: Text("Parent details of ${studentName}"),
-            /*content: TextField(
-              controller: textEditingController,
-            ),*/
+            content: Container(
+              child: getEditForm(student),
+            ),
             actions: <Widget>[
               MaterialButton(
                   child: Text("Edit"),
                   onPressed: (){
-                    Navigator.of(context).pop(textEditingController.text.toString());
+                    Navigator.of(context).pop();
                   }
               ),
               MaterialButton(
                   child: Text("Update"),
                   onPressed: (){
-                    Navigator.of(context).pop(textEditingController.text.toString());
+                    Navigator.of(context).pop();
+                  }
+              ),
+
+              MaterialButton(
+                  child: Text("Close"),
+                  onPressed: (){
+                    Navigator.of(context).pop();
                   }
               ),
             ],
@@ -336,6 +343,112 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget getEditForm(Student student) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(1.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+              alignment: Alignment.topLeft,
+              child: Text("Father details",
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold
+                  )
+              )
+          ),
+          TextField(
+            autocorrect: true,
+            decoration: InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: 'Father First Name',
+                labelText: 'Enter father firstName'
+            ),
+          ),
+          TextField(
+            autocorrect: true,
+            decoration: InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: 'Father Last Name',
+                labelText: 'Enter father lastName'
+            ),
+          ),
+          TextField(
+            autocorrect: true,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+                icon: Icon(Icons.alternate_email),
+                hintText: 'Father Email Id',
+                labelText: 'Enter father emailId'
+            ),
+          ),
+          TextField(
+            autocorrect: true,
+            keyboardType: TextInputType.phone,
+            inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(12),
+            ],
+            decoration: InputDecoration(
+                icon: Icon(Icons.phone),
+                hintText: 'Phone Number',
+                labelText: 'Enter Father phoneNumber'
+            ),
+          ),
+          SizedBox(height: 5,),
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text(
+                "Mother details",
+                style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold
+                )
+            ),
+          ),
+          TextField(
+            autocorrect: true,
+            decoration: InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: 'Mother First Name',
+                labelText: 'Enter mother firstName'
+            ),
+          ),
+          TextField(
+            autocorrect: true,
+            decoration: InputDecoration(
+              icon: Icon(Icons.person),
+              hintText: 'Mother Last Name',
+              labelText: 'Enter mother lastName',
+            ),
+          ),
+          TextField(
+            autocorrect: true,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+                icon: Icon(Icons.alternate_email),
+                hintText: 'Mother Email Id',
+                labelText: 'Enter mother emailId'
+            ),
+          ),
+          TextField(
+            autocorrect: true,
+            keyboardType: TextInputType.phone,
+            inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(12),
+            ],
+            decoration: InputDecoration(
+                icon: Icon(Icons.phone),
+                hintText: 'Mother Phone Number',
+                labelText: 'Enter mother phoneNumber'
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
