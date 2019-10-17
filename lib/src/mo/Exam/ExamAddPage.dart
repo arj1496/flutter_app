@@ -3,6 +3,7 @@ import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_app/MarkTextfield.dart';
 import 'package:flutter_app/MultilineTextfield.dart';
 import 'package:flutter_app/TypeDropdownWidget.dart';
+import 'package:flutter_app/src/mo/Exam/DropDwonProvider.dart';
 import '../../../ButtonUI.dart';
 import '../../../DatePickerDemo.dart';
 import '../../../StandardDropdownWidget.dart';
@@ -42,8 +43,10 @@ class ExamAddUIState extends State<ExamAddPage>{
   }
 
   getWidgetList(){
-    List<Widget> widgetList = [ StandardDropdownWidget(),
-      SubjectDropdownWidget(),
+    List<Widget> widgetList = [
+      //StandardDropdownWidget(),
+      //SubjectDropdownWidget(),
+      DropDownProvider(),
       TypeDropdownWidget(),
       MarkTextfield.init(Icon(Icons.adjust), 'TotalMark'),
       MultilineTextfield.init(Icon(Icons.description),'Description'),

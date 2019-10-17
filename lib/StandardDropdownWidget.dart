@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectActivity.dart';
+import 'package:provider/provider.dart';
 
 
 // Generic standard drop down list
@@ -19,8 +21,10 @@ class StandardDropdownWidget extends StatefulWidget {
 Future<List<Standard>> getStandards() async{
   StandardActivity standardActivity = new StandardActivity();
   List<Standard> _standard = await standardActivity.getStandardListFromLocalDB();
+
   return _standard;
 }
+
 class StandardDropDown extends State<StandardDropdownWidget> {
 
   TextEditingController labelText = new TextEditingController( );
@@ -36,7 +40,17 @@ class StandardDropDown extends State<StandardDropdownWidget> {
   }
   @override
   Widget build( BuildContext context ) {
-    return FutureBuilder (
+    //getStandards1();
+    /*return Container(
+      child:  Consumer<StandardSelectModel>(
+        //context, todos, child) => TaskList(tasks: todos.allTasks,
+        builder: (context,_standardList,child){
+          List<Standard> stdList = _standardList.allStandard;
+          return _getDropDownFormField(  Icon ( Icons.subject ) ,stdList);
+        },
+      ),
+    );*/
+  return FutureBuilder (
         future: getStandards() ,
         builder: ( context , projectSnap ) {
            return Container(
@@ -50,9 +64,9 @@ class StandardDropDown extends State<StandardDropdownWidget> {
         });
 
   }
-
+//standardList
   _getDropDownFormField( Icon icon,AsyncSnapshot snapshot) {
-    List<Standard> standardList = new List();
+   List<Standard> standardList = new List();
     if(snapshot.data != null){
       standardList = snapshot.data;
     }
@@ -74,6 +88,9 @@ class StandardDropDown extends State<StandardDropdownWidget> {
                               classOf = newValue.name;
                               state.didChange ( newValue );
                             } );
+                           // changeStandard();
+                            Provider.of<StandardSelectModel>(context, listen: false).changeStandard(newValue);
+                           // Navigator.pop(context);
                           } ,
                           items: standardList.map ( ( Standard standard ) {
                             return new DropdownMenuItem(
@@ -99,6 +116,14 @@ class StandardDropDown extends State<StandardDropdownWidget> {
     SubjectActivity subjectActivity = new SubjectActivity();
     _subject = await subjectActivity.getSubjectListFromLocalDB();
     return _subject;
+
+  }
+
+  getStandards1(){
+   /* StandardActivity standardActivity = new StandardActivity();
+    List<Standard> _standard = await standardActivity.getStandardListFromLocalDB();*/
+    Provider.of<StandardSelectModel>(context, listen: false).getStandardList("test");
+    Navigator.pop(context);
 
   }
 
