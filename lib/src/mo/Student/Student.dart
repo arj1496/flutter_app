@@ -1,5 +1,8 @@
 
 
+import 'dart:convert';
+
+import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/StandardMapping/StandardMapping.dart';
 
@@ -13,7 +16,6 @@ class Student{
   String schoolName;
   String gender;
   Standard standard;
-  List<StandardMapping> standardMappings;
   String rollNo;
   int person;
   String email;
@@ -25,6 +27,9 @@ class Student{
   int iscardActive = 0; // 0 = inactive, 1 = active
   int birthDate;
 
+  List<StandardMapping> standardMappings;
+  List<Parent> parentList;
+
   Student({
     this.lid,
     this.id,
@@ -34,7 +39,6 @@ class Student{
     this.schoolName,
     this.gender,
     this.standard,
-    this.standardMappings,
     this.rollNo,
     this.person,
     this.email,
@@ -44,29 +48,32 @@ class Student{
     this.userId,
     this.cardId,
     this.iscardActive,
-    this.birthDate
+    this.birthDate,
+    this.standardMappings,
+    this.parentList
   });
 
-  factory Student.fromJson(Map<String, dynamic> json) => Student(
-      lid : json['lid'],
-      id : json['id'],
-      firstName : json['firstName'],
-      lastName : json['lastName'],
-      studentId : json['studentId'],
-      schoolName : json['schoolName'],
-      gender : json['gender'],
-      standard : json['standard'],
-      standardMappings : new List<StandardMapping>.from(json['standardMappings']),
-      rollNo : json['rollNo'],
-      person : json['person'],
-      email : json['email'],
-      mobileNumber : json['mobileNumber'],
-      parentIds : json['parentIds'],
-      isWritable : json['isWritable'] == true ? 1 : 0,
-      userId : json['userId'],
-      cardId : json['cardId'],
-      iscardActive : json['iscardActive'],
-      birthDate : json['birthDate']
+  factory Student.fromJson(Map<String, dynamic> jsonObject) => Student(
+    lid : jsonObject['lid'],
+    id : jsonObject['id'],
+    firstName : jsonObject['firstName'],
+    lastName : jsonObject['lastName'],
+    studentId : jsonObject['studentId'],
+    schoolName : jsonObject['schoolName'],
+    gender : jsonObject['gender'],
+    standard : jsonObject['standard'],
+    rollNo : jsonObject['rollNo'],
+    person : jsonObject['person'],
+    email : jsonObject['email'],
+    mobileNumber : jsonObject['mobileNumber'],
+    parentIds : jsonObject['parentIds'],
+    isWritable : jsonObject['isWritable'] == true ? 1 : 0,
+    userId : jsonObject['userId'],
+    cardId : jsonObject['cardId'],
+    iscardActive : jsonObject['iscardActive'],
+    birthDate : jsonObject['birthDate'],
+    standardMappings : StandardMapping.getStandardMappingsList(jsonObject['standardMappings']),
+    parentList: Parent.getParentList(jsonObject['parents']),
   );
 
   Map<String, dynamic> toJson() => {
@@ -78,17 +85,17 @@ class Student{
     'schoolName' : schoolName,
     'gender' : gender,
     //'standard' : standard,
-    'standardMappings' : standardMappings,
     'rollNo' : rollNo,
     'person' : person,
     'email' : email,
     'mobileNumber' : mobileNumber,
-    //'parentIds' : parentIds,
+    'parentIds' : parentIds,
     'isWritable' : isWritable,
     //'userId' : userId,
     'cardId' : cardId,
     'iscardActive' : iscardActive,
     'birthDate' : birthDate
   };
+
 
 }
