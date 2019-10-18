@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 
@@ -26,15 +28,30 @@ class StandardMapping{
     this.isVisible
   });
 
-  factory StandardMapping.fromJson(Map<String, dynamic> json) => StandardMapping(
-    id: json['id'],
-    student: json['student'],
-    standard: json['standard'],
-    schoolDsId: json['schoolDsId'],
-    gradeId: json['gradeId'],
-    studentStatus: json['studentStatus'],
-    rollNo: json['rollNo'],
-    isVisible: json['isVisible']
+  factory StandardMapping.fromJson(Map<String, dynamic> jsonObject) => StandardMapping(
+    id: jsonObject['id'],
+    student: jsonObject['student'] != null ? Student.fromJson(jsonObject['student']) : null,
+    standard: Standard.fromJson(jsonObject['standard']),
+    schoolDsId: jsonObject['schoolDs'],
+    gradeId: jsonObject['gradeId'],
+    studentStatus: jsonObject['studentStatus'],
+    rollNo: jsonObject['rollNo'],
+    isVisible: jsonObject['isVisible']
   );
+
+  static getStandardMappingsList(jsonString) {
+    if(jsonString != null){
+      List<dynamic> test =  jsonDecode(jsonString);//json.decode(jsonString);
+      List<StandardMapping> smList = List.generate(test.length, (i){
+        StandardMapping standardMapping =  StandardMapping.fromJson(test[i]);
+        return standardMapping;
+      });
+      print(smList);
+      return smList;
+    }
+    return null;
+  }
+
+
 
 }

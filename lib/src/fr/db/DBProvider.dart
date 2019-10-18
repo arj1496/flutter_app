@@ -100,6 +100,7 @@ class  DBProvider {
         "mobileNumber TEXT,"
         "standardIds TEXT,"
         "cardId TEXT,"
+        "parentIds TEXT,"
         "iscardActive TEXT,"
         "birthDate INTEGER"
         "userId TEXT "

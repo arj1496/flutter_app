@@ -16,4 +16,9 @@ class Parent{
 
   };
 
+  static List<Parent> getParentList(json) {
+
+    return null;
+  }
+
 }

@@ -27,7 +27,7 @@ class ExamService{
     Exam exam = new Exam();
     exam.id = 1;
     exam.name = 'Matematics' ;
-    exam.standardId = 12;
+    exam.standardId = 1;
     exam.standardName = "Class  ";
     exam.subjectId = 2 ;
     exam.subjectName = 'computer science and enggineering - ' ;
@@ -136,6 +136,15 @@ class ExamService{
     return examListFromFuture;
   }
 
+  Future<List<Exam>> getJoinDbExam() async{
+    List<Exam> examListFromFuture = await examDao.getJoinDbExam();
+    return examListFromFuture;
+  }
+
+  Future<List<Exam>> getSubJoinDbExam() async{
+    List<Exam> examListFromFuture = await examDao.getSubJoinDbExam();
+    return examListFromFuture;
+  }
 
   List<Widget> getWidget(){
     PropertyService propertyService = new PropertyService();

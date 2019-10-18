@@ -1,3 +1,6 @@
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Subject/Subject.dart';
+
 class Exam
 {
    int lid;
@@ -5,6 +8,8 @@ class Exam
    String name;
    int standardId;
    String standardName;
+   Standard standard;
+   Subject subject;
    int subjectId;
    String subjectName;
    int examDate;
@@ -22,6 +27,8 @@ class Exam
       this.standardId,
       this.standardName,
       this.subjectName,
+    this.standard,
+    this.subject,
        this.subjectId,
       this.examDate,
       this.totalMark,
@@ -36,9 +43,12 @@ class Exam
    factory Exam.fromJson(Map<String, dynamic> json) => Exam(
        id: json["id"],
        name :json["name"],
-       standardId: json["standardId"],
+       standardId: Standard.fromJson(json["standard"]).id,
+     standard:Standard.fromJson(json["standard"]),
+
      //  standardName: json["standardName"],
-        subjectId: json["subjectId"],
+        subjectId:Subject.fromJson(json["subject"]).id,
+       subject : Subject.fromJson(json["subject"]),
        examDate: json["examDate"],
        totalMark: json["totalMark"],
        examType: json["examType"],
