@@ -10,11 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class StudentDetailWithDialog extends StatefulWidget {
-  final VoidCallback _onSignIn;
-
-  StudentDetailWithDialog({@required onSignIn})
-      : assert(onSignIn != null),
-        _onSignIn = onSignIn;
 
   @override
   _StudentDetailWithDialogState createState() =>
