@@ -25,7 +25,7 @@ class ParentService{
       print(parentDataFromServer);
       List<dynamic> parentsDynamic = parentDataFromServer['parents'];
       parentList = List.generate(parentsDynamic.length, (i){
-        Parent parent = Parent.fromJson(parentsDynamic[i]);
+        Parent parent = Parent.fromJsonServer(parentsDynamic[i]);
         return parent;
       });
       await batchAddParents(parentList);
@@ -38,6 +38,18 @@ class ParentService{
   Future<List<Parent>> getParentListFromLocalDB() async{
     List<Parent> parentListFromFuture = await parentDAO.getAllParentDataFromLocalDB();
     return parentListFromFuture;
+  }
+
+  syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
+    List<dynamic> parentsDynamic = syncDataResponse['parents'];
+    if(parentsDynamic != null && parentsDynamic.length > 0){
+      List<Parent> parentList = List.generate(parentsDynamic.length, (i){
+        Parent parent = Parent.fromJsonServer(parentsDynamic[i]);
+        return parent;
+      });
+      await batchAddParents(parentList);
+    }
+
   }
 
 

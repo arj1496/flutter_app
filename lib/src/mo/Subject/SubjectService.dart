@@ -44,7 +44,7 @@ class SubjectService{
       print(subjectDataFromServer);
       List<dynamic> subjectsDynamic = subjectDataFromServer['subjects'];
       subjectList = List.generate(subjectsDynamic.length, (i){
-        Subject subject = Subject.fromJson(subjectsDynamic[i]);
+        Subject subject = Subject.fromJsonServer(subjectsDynamic[i]);
         return subject;
       });
       await batchAddSubject(subjectList);
@@ -58,6 +58,17 @@ class SubjectService{
   Future<List<Subject>> getSubjectByStandardId(int standardId) async{
     List<Subject> subjectListFromFuture = await subjectDao.getSubjectByStandardId(standardId);
     return subjectListFromFuture;
+  }
+
+  syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
+    List<dynamic> subjectsDynamic = syncDataResponse['subjects'];
+    if(subjectsDynamic != null && subjectsDynamic.length > 0){
+      List<Subject> subjectList = List.generate(subjectsDynamic.length, (i){
+        Subject subject = Subject.fromJsonServer(subjectsDynamic[i]);
+        return subject;
+      });
+      await batchAddSubject(subjectList);
+    }
   }
 
 

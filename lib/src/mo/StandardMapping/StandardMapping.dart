@@ -31,7 +31,7 @@ class StandardMapping {
   factory StandardMapping.fromJson(Map<String, dynamic> jsonObject) => StandardMapping(
     id: jsonObject['id'],
     student: jsonObject['student'] != null ? Student.fromJson_local(jsonObject['student']) : null,
-    standard: Standard.fromJson(jsonObject['standard']),
+    standard: Standard.fromJsonLocal(jsonObject['standard']),
     schoolDsId: jsonObject['schoolDs'],
     gradeId: jsonObject['gradeId'],
     studentStatus: jsonObject['studentStatus'],

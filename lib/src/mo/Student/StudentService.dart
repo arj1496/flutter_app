@@ -82,4 +82,16 @@ class StudentService{
     return students;
   }
 
+  syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
+    List<dynamic> studentsDynamic = syncDataResponse['students'];
+    if(studentsDynamic != null && studentsDynamic.length > 0){
+      List<Student> studentList = List.generate(studentsDynamic.length, (i){
+        Student student = Student.fromJson_server(studentsDynamic[i]);
+        return student;
+      });
+      await batchAddStudents(studentList);
+    }
+
+  }
+
 }

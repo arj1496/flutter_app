@@ -22,7 +22,19 @@ class Parent {
       this.personId,
       this.isWritable});
 
-  factory Parent.fromJson(Map<String, dynamic> jsonObject) => Parent(
+  factory Parent.fromJsonServer(Map<String, dynamic> jsonObject) => Parent(
+    id: jsonObject['id'],
+    firstName: jsonObject['firstName'],
+    lastName: jsonObject['lastName'],
+    gender: jsonObject['gender'],
+    email: jsonObject['email'],
+    mobileNumber: jsonObject['mobileNumber'],
+    relation: jsonObject['relation'],
+    personId: jsonObject['personId'],
+    isWritable: jsonObject['isWritable'] == true ? 1 : 0,
+  );
+
+  factory Parent.fromJsonLocal(Map<String, dynamic> jsonObject) => Parent(
     id: jsonObject['id'],
     firstName: jsonObject['firstName'],
     lastName: jsonObject['lastName'],
@@ -46,16 +58,4 @@ class Parent {
     'isWritable': isWritable
   };
 
-  static List<Parent> getParentList(jsonString) {
-    if (jsonString != null) {
-      List<dynamic> jsonDecodeObject = jsonDecode(jsonString); //json.decode(jsonString);
-      List<Parent> smList = List.generate(jsonDecodeObject.length, (i) {
-        Parent parent = Parent.fromJson(jsonDecodeObject[i]);
-        return parent;
-      });
-      print(smList);
-      return smList;
-    }
-    return null;
-  }
 }

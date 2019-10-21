@@ -57,7 +57,7 @@ class StandardDao{
       return getStandardDataFromLocalDB(dataBaseInstance);
     }).then((maps){
       var test =  List.generate(maps.length, (i) {
-        return Standard.fromJson(maps[i]);
+        return Standard.fromJsonLocal(maps[i]);
       });
       return test;
     });
@@ -77,7 +77,7 @@ class StandardDao{
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Standard ");
 
     var test =  List.generate(maps.length, (i) {
-      return Standard.fromJson(maps[i]);
+      return Standard.fromJsonLocal(maps[i]);
     });
     print("Standard List size : ${test.length}");
     return test;

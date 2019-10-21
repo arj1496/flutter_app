@@ -76,29 +76,51 @@ class SyncService{
 
   }
 
-  void processForResult(Map<String, dynamic> syncDataResponse) {
+  void processForResult(Map<String, dynamic> syncDataResponse) async {
 
-    if(syncDataResponse.containsKey('isStandardSync') && syncDataResponse['isStandardSync']){
-      print("isStandardSync");
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    int todayDate = DateTime.now().millisecondsSinceEpoch;
+    print(todayDate);
+
+    if(syncDataResponse.containsKey('isStandardSync')){
+      if(syncDataResponse['isStandardSync']){
+        print("isStandardSync");
+        await standardService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("standard_sync_time", todayDate.toString());
+      }
     }
 
-    if(syncDataResponse.containsKey('isSubjectSync') && syncDataResponse['isSubjectSync']){
-      print("isSubjectSync");
+    if(syncDataResponse.containsKey('isSubjectSync')){
+      if(syncDataResponse['isSubjectSync']){
+        print("isSubjectSync");
+        await subjectService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("subject_sync_time", todayDate.toString());
+      }
     }
 
-    if(syncDataResponse.containsKey('isTeacherSync') && syncDataResponse['isTeacherSync']){
-      print("isTeacherSync");
+    if(syncDataResponse.containsKey('isTeacherSync')){
+      if(syncDataResponse['isTeacherSync']){
+        print("isTeacherSync");
+        await teacherService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("teacher_sync_time", todayDate.toString());
+      }
     }
 
-    if(syncDataResponse.containsKey('isStudentSync') && syncDataResponse['isStudentSync']){
-      print("isStudentSync");
+    if(syncDataResponse.containsKey('isStudentSync')){
+      if(syncDataResponse['isStudentSync']){
+        print("isStudentSync");
+        await studentService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("student_sync_time", todayDate.toString());
+      }
     }
 
-    if(syncDataResponse.containsKey('isParentSync') && syncDataResponse['isParentSync']){
-      print("isParentSync");
+    if(syncDataResponse.containsKey('isParentSync')){
+      if(syncDataResponse['isParentSync']){
+        print("isParentSync");
+        await parentService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("parent_sync_time", todayDate.toString());
+      }
     }
-
-
   }
 
 

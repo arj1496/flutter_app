@@ -67,8 +67,6 @@ class Student {
         cardId: jsonObject['cardId'],
         isCardActive: jsonObject['isCardActive'],
         birthDate: jsonObject['birthDate'],
-        standardMappings: StandardMapping.getStandardMappingsList(jsonObject['standardMappings']),
-        parentList: jsonObject['xyz'],
       );
 
   factory Student.fromJson_local(Map<String, dynamic> jsonObject) => Student(

@@ -22,19 +22,18 @@ class Subject{
   });
 
 
-  factory Subject.fromJson(Map<String, dynamic> jsonObject) => Subject(
+  factory Subject.fromJsonServer(Map<String, dynamic> jsonObject) => Subject(
 
       id : jsonObject["id"],
       name : jsonObject["name"],
-      standard : Standard.fromJson(jsonObject["standard"]),
+      standard : Standard.fromJsonLocal(jsonObject["standard"]),
       isAccess : jsonObject["isAccess"],
       color : jsonObject["color"],
       isOptional : jsonObject["isOptional"] == true ? 1 : 0,
       optionalStudentIds : jsonObject["optionalStudentIds"]
-
   );
 
-  factory Subject.fromJsonFromLocalDB(Map<String, dynamic> jsonObject) => Subject(
+  factory Subject.fromJsonLocal(Map<String, dynamic> jsonObject) => Subject(
 
       id : jsonObject["id"],
       name : jsonObject["name"],

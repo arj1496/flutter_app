@@ -56,46 +56,37 @@ class TeacherDAO{
     });
   }
 
-
-  Future<List<Teacher>> getAllTeacherData_() async{
-
-    getDataBaseHandler().then((dataBaseInstance){
-      return getTeacherDataFromLocalDB(dataBaseInstance);
-    }).then((maps){
-      var test =  List.generate(maps.length, (i) {
-        return Teacher.fromJson(maps[i]);
-      });
-      return test;
-    });
-
-    /*var res = await db.rawQuery("SELECT * FROM Teacher ");
-    List<Teacher> list =
-    res.isNotEmpty ? res.toList().map((c) => Teacher.fromJson(c)) : null;
-
-    return Future((){
-      return list;
-    });*/
-
-  }
-
   Future<List<Map<String, dynamic>>> getTeacherDataFromLocalDB(Database db) {
     Future<List<Map<String, dynamic>>> maps = db.rawQuery("SELECT * FROM Teacher ");
     return maps;
   }
 
   getAllTeacherData() async{
-
     print("getAllTeacherData Starts ");
     Database db = await getDataBaseHandler();
-
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Teacher ");
-
     var test =  List.generate(maps.length, (i) {
-      return Teacher.fromJson(maps[i]);
+      return Teacher.fromJsonLocal(maps[i]);
     });
     print("Teacher List size : ${test.length}");
     return test;
   }
+
+  void deleteTeacher(int teacherId) async{
+    Database db = await getDataBaseHandler();
+    db.delete(teacherTable, where: 'id = ?', whereArgs: [teacherId]);
+  }
+
+  void batchDeleteTeacher(List<int> teacherIds) async{
+    Database db = await getDataBaseHandler();
+    Batch batch = db.batch();
+    for(var i = 0; i < teacherIds.length; i++){
+      batch.delete(teacherTable, where: 'id = ?', whereArgs: [teacherIds[i]]);
+    }
+    await batch.commit(noResult: true);
+    print("Teacher Deleted Successfully in to Local DB : " + teacherIds.toString());
+  }
+
 
 
 

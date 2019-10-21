@@ -35,7 +35,7 @@ class ParentDAO {
         "SELECT * FROM  ${parentTable} p ");
 
     var parentList = List.generate(maps.length, ( i ) {
-      return Parent.fromJson(maps[i]);
+      return Parent.fromJsonLocal(maps[i]);
     });
     print("Parent List size : ${parentList.length}");
     return parentList;

@@ -37,7 +37,7 @@ class StudentDao{
     String seletedField =  's.id as studId, s.firstName as studFirstName, s.lastName as studLastName';
 
     List<Map<String, dynamic>> maps = await db.rawQuery(
-        "SELECT ${seletedField} FROM  ${studentTable} s left join Person p on s.person = p.id");
+        "SELECT ${seletedField} FROM  ${studentTable} s");
 
     var test = List.generate(maps.length, ( i ) {
       return Student.fromJson_local(maps[i]);

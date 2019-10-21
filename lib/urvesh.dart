@@ -410,35 +410,11 @@ class _UrveshHomePageState extends State<UrveshHome> {
     );
   }
 
-  void getData() {
-    WebClient webClient = new WebClient();
-
-    HashMap map = new HashMap<String, String>();
-    map['teacher_sync_time'] = 0.toString();
-
-    Future<dynamic> test = webClient.getData_(map, "rest/sync/getSyncInfo");
-    test.then((value) {
-      if(value['isTeacherSync']){
-        print(value);
-
-        List<dynamic> teachers = value['teachers'];
-        List<Teacher> test = List.generate(teachers.length, (i){
-          Teacher teacher = Teacher.fromJson(teachers[i]);
-          return teacher;
-        });
-        TeacherServcie teacherServcie = new TeacherServcie();
-        teacherServcie.batchAddTeacher(test);
-      }else{
-        print('Teacher Sync is false');
-      }
-    });
-  }
-
   void addTeacher() {
     Teacher teacher = new Teacher(
       lid: null,
       id: null,
-      firstName: "TEst",
+      firstName: "Test",
       lastName: "Teacher",
       person: 3,
       gender: "M",
@@ -456,8 +432,11 @@ class _UrveshHomePageState extends State<UrveshHome> {
 
   Future<List<Teacher>> getTeacherData() async{
     TeacherServcie teacherServcie = new TeacherServcie();
-    List<Teacher> test = await teacherServcie.getTeacherList();
-    print(test);
+    List<Teacher> teacherList = await teacherServcie.getTeacherList();
+    print(teacherList);
+    for(int i = 0; i < teacherList.length; i++){
+      print('id : ${teacherList[i].id} | name :  ${teacherList[i].firstName} ${teacherList[i].lastName}');
+    }
   }
 
   Future<List<Teacher>> _getTecherFromServerAndSaveToLocalDB() async {
@@ -499,7 +478,10 @@ class _UrveshHomePageState extends State<UrveshHome> {
   _getStandardDataFromLocalDB() async {
     StandardService standardService = new StandardService();
     List<Standard> standardList = await standardService.getStandardListFromLocalDB();
-    print(standardList);
+    print(standardList.length);
+    for(int i = 0; i < standardList.length; i++){
+      print('id : ${standardList[i].id} name :  ${standardList[i].name}');
+    }
   }
 
   _getSubjectDataFromServer() async {
@@ -511,7 +493,10 @@ class _UrveshHomePageState extends State<UrveshHome> {
   _getSubjectDataFromLocalDB() async {
     SubjectService subjectService = new SubjectService();
     List<Subject> subjectList = await subjectService.getSubjectListFromLocalDB();
-    print(subjectList);
+    print(subjectList.length);
+    for(int i = 0; i < subjectList.length; i++){
+      print('id : ${subjectList[i].id} name :  ${subjectList[i].name}');
+    }
   }
 
   _getParentDataFromServer() async {

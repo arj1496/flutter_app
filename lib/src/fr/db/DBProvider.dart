@@ -42,6 +42,8 @@ class  DBProvider {
       await db.execute(createStudentTable());
       await db.execute(createSubjectTable());
       await db.execute(createExamTable());
+      await db.execute(createParentTable());
+
 
     });
   }
@@ -94,14 +96,14 @@ class  DBProvider {
         "schoolName TEXT,"
         "gender TEXT,"
         "rollNo TEXT,"
-        "person INTEGER,"
+        "personId INTEGER,"
         "isWritable INTEGER,"
         "email TEXT,"
         "mobileNumber TEXT,"
         "standardIds TEXT,"
         "cardId TEXT,"
         "parentIds TEXT,"
-        "iscardActive TEXT,"
+        "isCardActive TEXT,"
         "birthDate INTEGER"
         "userId TEXT "
         ")" ;
@@ -209,8 +211,18 @@ class  DBProvider {
         " value TEXT )";
   }
 
-
-
+  String createParentTable(){
+    return "CREATE TABLE Parent ( "
+        "id INTEGER PRIMARY KEY, "
+        "firstName TEXT NOT NULL,"
+        "lastName TEXT,"
+        "gender TEXT,"
+        "email TEXT,"
+        "mobileNumber TEXT,"
+        "relation TEXT,"
+        "personId INTEGER ,"
+        "isWritable INTEGER )";
+  }
 
 
 }
