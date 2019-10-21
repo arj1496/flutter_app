@@ -354,7 +354,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
             .width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          _getParameterizedSyncdata();
+          _getParameterizedSyncData();
         },
         child: Text("Sync parameterized data from server ",
             textAlign: TextAlign.center,
@@ -511,7 +511,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
     print(parentList);
   }
 
-  void _getParameterizedSyncdata() async {
+  void _getParameterizedSyncData() async {
     SyncService syncService = new SyncService();
     await syncService.regularLightSync();
   }
