@@ -1,9 +1,8 @@
-import "StudentDetailsWithDialog.dart";
 
 class StudentActivity{
 
   saveStudentDetail(student, callBack){
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 15), () {
       callBack();
     });
   }

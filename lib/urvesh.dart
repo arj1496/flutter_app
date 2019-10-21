@@ -1,24 +1,24 @@
+import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/src/fr/Login.dart';
 import 'package:flutter_app/src/fr/LoginService.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/fr/SharedPreference.dart';
 import 'package:flutter_app/src/fr/webservice/WebClient.dart';
+import 'package:flutter_app/src/mo/Parent/Parent.dart';
+import 'package:flutter_app/src/mo/Parent/ParentService.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardService.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
+import 'package:flutter_app/src/mo/Synchronization/SyncService.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherService.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
@@ -303,6 +303,66 @@ class _UrveshHomePageState extends State<UrveshHome> {
       ),
     );
 
+    final parentFromServer = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getParentDataFromServer();
+        },
+        child: Text("get Parent Data From Server ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final parentDataFromLocalDB = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getParentDataFromLocalDB();
+        },
+        child: Text("get Parent Data from LocalDB ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final syncData = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getParameterizedSyncdata();
+        },
+        child: Text("Sync parameterized data from server ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Urvesh Page"),
@@ -320,22 +380,28 @@ class _UrveshHomePageState extends State<UrveshHome> {
                   getDataBtn,
                   SizedBox(height: 5.0,),
                   saveTeacherBtn,
-                  SizedBox(height: 5.0,),
-                  saveTeacherBtn_,
+                  //SizedBox(height: 5.0,),
+                  //saveTeacherBtn_,
                   SizedBox(height: 5.0,),
                   sharedPrefrenceBtn,
-                  SizedBox(height: 5.0,),
-                  studentsFromServer,
+                  //SizedBox(height: 5.0,),
+                  //studentsFromServer,
                   SizedBox(height: 5.0,),
                   studentDataFromLocalDB,
-                  SizedBox(height: 5.0,),
-                  standardsFromServer,
+                  //SizedBox(height: 5.0,),
+                  //standardsFromServer,
                   SizedBox(height: 5.0,),
                   standardDataFromLocalDB,
+                  //SizedBox(height: 5.0,),
+                  //subjectFromServer,
                   SizedBox(height: 5.0,),
-                  subjectFromServer,
+                  subjectDataFromLocalDB,
+                  //SizedBox(height: 5.0,),
+                  //parentFromServer,
                   SizedBox(height: 5.0,),
-                  subjectDataFromLocalDB
+                  parentDataFromLocalDB,
+                  SizedBox(height: 5.0,),
+                  syncData
                 ],
               ),
             ),
@@ -446,6 +512,23 @@ class _UrveshHomePageState extends State<UrveshHome> {
     SubjectService subjectService = new SubjectService();
     List<Subject> subjectList = await subjectService.getSubjectListFromLocalDB();
     print(subjectList);
+  }
+
+  _getParentDataFromServer() async {
+    ParentService parentService = new ParentService();
+    List<Parent> parentList = await parentService.getParentListDataFromServer();
+    print(parentList);
+  }
+
+  _getParentDataFromLocalDB() async {
+    ParentService parentService = new ParentService();
+    List<Parent> parentList = await parentService.getParentListFromLocalDB();
+    print(parentList);
+  }
+
+  void _getParameterizedSyncdata() async {
+    SyncService syncService = new SyncService();
+    await syncService.regularLightSync();
   }
 
 }

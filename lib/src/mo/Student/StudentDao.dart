@@ -13,11 +13,11 @@ class StudentDao{
   }
 
   // this method is used to save the List of Teachers
-  batchAddStudents(List<Student> studentList){
-    getDataBaseHandler().then((dataBaseInstance) async{
+  batchAddStudents( List<Student> studentList ) {
+    getDataBaseHandler().then(( dataBaseInstance ) async {
       Database db = dataBaseInstance;
       Batch batch = db.batch();
-      for(var i = 0; i < studentList.length; i++){
+      for (var i = 0; i < studentList.length; i++) {
         Student student = studentList[i];
         batch.insert(
             studentTable,
@@ -30,15 +30,17 @@ class StudentDao{
     });
   }
 
-  getAllStudentDataFromLocalDB() async{
-
+  getAllStudentDataFromLocalDB( ) async {
     print("getAllStudentDataFromLocalDB Starts ");
     Database db = await getDataBaseHandler();
 
-    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM " + studentTable);
+    String seletedField =  's.id as studId, s.firstName as studFirstName, s.lastName as studLastName';
 
-    var test =  List.generate(maps.length, (i) {
-      return Student.fromJson(maps[i]);
+    List<Map<String, dynamic>> maps = await db.rawQuery(
+        "SELECT ${seletedField} FROM  ${studentTable} s left join Person p on s.person = p.id");
+
+    var test = List.generate(maps.length, ( i ) {
+      return Student.fromJson_local(maps[i]);
     });
     print("Student List size : ${test.length}");
     return test;

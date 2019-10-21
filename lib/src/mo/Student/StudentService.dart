@@ -2,6 +2,7 @@
 
 import 'dart:collection';
 
+import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentDao.dart';
@@ -28,7 +29,7 @@ class StudentService{
       print(studentDataFromServer);
       List<dynamic> studentsDynamic = studentDataFromServer['students'];
       studentList = List.generate(studentsDynamic.length, (i){
-        Student student = Student.fromJson(studentsDynamic[i]);
+        Student student = Student.fromJson_server(studentsDynamic[i]);
         return student;
       });
       await batchAddStudents(studentList);
@@ -39,6 +40,11 @@ class StudentService{
   }
 
   Future<List<Student>> getStudentListFromLocalDB() async{
+    List<Student> studentListFromFuture = await _studentDao.getAllStudentDataFromLocalDB();
+    return studentListFromFuture;
+  }
+
+  Future<List<Student>> getStudentListFromLocalDB_(int classId, int subjectId) async{
     List<Student> studentListFromFuture = await _studentDao.getAllStudentDataFromLocalDB();
     return studentListFromFuture;
   }
@@ -61,15 +67,16 @@ class StudentService{
       standard.name = 'Class 1';
       student.standard = standard;
       student.rollNo = i.toString();
-      student.person = i;
+      student.personId = i;
       student.email = 'urvesh@urvesh.com';
       student.mobileNumber = '1234567890';
       student.parentIds = '';
       student.isWritable = 1;
       student.userId = i;
       student.cardId = 'card' + i.toString();
-      student.iscardActive = 1;
+      student.isCardActive = 1;
       student.birthDate = i;
+
       students.add(student);
     }
     return students;
