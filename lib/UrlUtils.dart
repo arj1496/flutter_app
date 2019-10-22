@@ -15,5 +15,14 @@ class UrlUtils{
   String getExamAddUrl(){
     String url = SchoolUtils().baseUrl + "rest/exam/addOrUpdateExam";
     return url;
-}
+  }
+  String getEventAddUrl(){
+    String url = SchoolUtils().baseUrl + "rest/event/addOrUpdate";
+    return url;
+  }
+
+  String getNewsFeedUrl(){
+    String url = SchoolUtils().baseUrl + "rest/webviewpage/getwebview";
+    return url;
+  }
 }
