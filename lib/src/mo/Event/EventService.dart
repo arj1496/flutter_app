@@ -8,6 +8,7 @@ import 'Event.dart';
 class EventService{
 
   EventDAO eventDAO = new EventDAO();
+  EventWebService _eventWebService = new EventWebService();
   Event addTeacher(Event event){
     Event _event = eventDAO.addEvent(event);
   }
@@ -41,5 +42,18 @@ class EventService{
       print('Event Sync is false');
     }
     return eventList;
+  }
+
+   addOrUpdateEvent(event) async{
+    Map<String, dynamic> eventData = await _eventWebService.addOrUpdateEvent(event);
+
+    if(eventData['status']){
+      Event event = Event.fromJson(eventData['event']);
+      await eventDAO.addEvent(event);
+      return event;
+    }else{
+      print('Event Add False');
+    }
+    return event;
   }
 }
