@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/AllDetailsview.dart';
-import 'package:flutter_app/Buttonview.dart';
 import 'package:flutter_app/CardDetail2Oct.dart';
 import 'package:flutter_app/DateWidget.dart';
 import 'package:flutter_app/DescriptionCustomView.dart';
-import 'package:flutter_app/Descrptionview.dart';
 import 'package:flutter_app/DetailView2Oct.dart';
-import 'package:flutter_app/Detailview.dart';
 import 'package:flutter_app/EventWidget.dart';
-import 'package:flutter_app/Placeview.dart';
 import 'package:flutter_app/PropertyFile.dart';
-import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/TitleViewDetail.dart';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
+import 'package:flutter_app/src/mo/Event/AddEventForm.dart';
 import 'package:flutter_app/src/mo/Event/Event.dart';
 import 'package:flutter_app/src/mo/Event/EventService.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
-import 'package:flutter_app/src/mo/HomeWork/hwservice.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'AppTheme.dart';
-import 'Dateview.dart';
 import 'src/mo/Event/EventActivity.dart';
 
 class ListTileViewUV extends StatefulWidget {
@@ -67,6 +59,17 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
         ],
       ),
       body: futureBuilder,
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            /*Navigator.push(context, MaterialPageRoute(builder: (context)=> AddFormUI()));*/
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd()));
+          },
+          backgroundColor: AppTheme.background,
+          child: Icon(
+            Icons.add,
+            size: 32,
+          ),
+        )
     );
     //return _getListViewWithBuilder();
   }
