@@ -23,7 +23,6 @@ dependencies:
   shared_preferences: any
   cupertino_icons: ^0.1.2
   flutter_webview_plugin: 0.3.0+2
-  webview_flutter: 0.2.0
   css_text: ^0.9.9
   expandable: ^3.0.0+1
   flutter_linkify: ^2.1.0
@@ -35,7 +34,11 @@ dependencies:
   file_picker: ^1.4.2
   datetime_picker_formfield: ^0.4.3
   date_format: any
+  autocomplete_textfield: any
+  reflectable: any
   provider: ^2.0.1+1
+  webview_flutter: ^0.3.15+1
+  flutter_speed_dial: ^1.2.3
 
 dev_dependencies:
   flutter_test:
