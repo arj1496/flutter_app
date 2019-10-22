@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Event/EventActivity.dart';
-import 'package:flutter_app/src/mo/Event/EventPojo.dart';
 import 'package:flutter_app/src/mo/Event/EventType.dart';
 
 class EventTypeAutoComplte extends StatefulWidget {
