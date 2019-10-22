@@ -55,7 +55,7 @@ class YourPageState extends State<ExamAddPage2> {
                     suffixIcon: new IconButton(
                       icon: new Icon(Icons.close),
                       onPressed: () async{
-                      Exam examObject = await examActivity.addExamToServer(exam);
+                      int examObject = await examActivity.addExamToServer(exam);
                         controller.clear();
                         FocusScope.of(context).requestFocus(new FocusNode());
                       },
@@ -77,7 +77,7 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Text("Add exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
               onPressed: () async{
-                Exam examObject = await examActivity.addExamToServer(exam);
+                int examObject = await examActivity.addExamToServer(exam);
 
 //          setState(() {
 //            _isNeedHelp = true;
@@ -91,9 +91,24 @@ class YourPageState extends State<ExamAddPage2> {
 
               child: new Text("get exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
-              onPressed: (){
-               // List<Exam> examObject = examActivity.getDbExam();
-               // print(examObject.length);
+              onPressed: ()async {
+                List<Exam> examObject = await examService.getJoinDbExam();
+                print(examObject.length);
+//          setState(() {
+//            _isNeedHelp = true;
+//          });
+              },
+            ),
+
+            MaterialButton(
+              minWidth: 200.0,
+              height: 35,
+
+              child: new Text("sub join demo",
+                  style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
+              onPressed: ()async {
+                List<Exam> examObject = await examService.getSubJoinDbExam();
+                print(examObject.length);
 //          setState(() {
 //            _isNeedHelp = true;
 //          });

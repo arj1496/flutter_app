@@ -9,21 +9,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
 import '../PropertyFile.dart';
+import 'mo/CommanCode/GenericModel.dart';
 import 'mo/Exam/Exam.dart';
 import 'mo/Exam/ExamActivity.dart';
 import 'mo/Exam/ExamService.dart';
 
+class ButtonUI2 extends StatefulWidget {
 
-class ButtonUI2 extends StatelessWidget {
-
+  GlobalKey<FormState> formKey;
+  GenericModel genericModel;
   String button1,button2,button3;
-
-  var property = new PropertyFile();
-  ButtonUI2.init(String button1,String button2,String button3){
+  ButtonUI2.init(formKey, _eventPojo,String button1,String button2,String button3) {
+    this.formKey = formKey;
+    this.genericModel = _eventPojo;
     this.button1 = button1;
     this.button2 = button2;
     this.button3 = button3;
   }
+
+  ButtonUI2(this.formKey, this.genericModel);
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return ButtonUIState();
+  }
+
+
+}
+class ButtonUIState extends  State<ButtonUI2> {
+  var property = new PropertyFile();
+
   @override
   Widget build( BuildContext context ) {
 
@@ -55,15 +71,15 @@ class ButtonUI2 extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Row(
             children: <Widget>[
-              getButtonUI(button1, true),
+              getButtonUI(widget.button1, true),
               SizedBox(
                 width: 16,
               ),
-              getButtonUI(button2, false),
+              getButtonUI(widget.button2, false),
               SizedBox(
                 width: 16,
               ),
-              getButtonUI(button3, false),
+              getButtonUI(widget.button3, false),
             ],
           ),
         ),
@@ -109,10 +125,22 @@ class ButtonUI2 extends StatelessWidget {
     Exam exam = examService.getExam();
     ExamActivity examActivity = new ExamActivity();
    if(text == "DRAFT"){
-     Exam examObject = await examActivity.addExamToServer(exam);
+     if(widget.formKey.currentState.validate()){
+       widget.formKey.currentState.save();
+     }
+     widget.genericModel.status = "DRAFT";
+     int examObject = await examActivity.addExamToServer_(widget.formKey, widget.genericModel);
+     if(examObject != null){
+       final snackBar = SnackBar(content: Text('Exam added sucessfully!'));
+       Scaffold.of(context).showSnackBar(snackBar);
+     }
    }else if(text == "PUBLISH"){
-     exam.status = "PUBLISH";
-      Exam examObject = await examActivity.addExamToServer(exam);
+     widget.genericModel.status = "PUBLISH";
+     int examObject = await examActivity.addExamToServer_(widget.formKey, widget.genericModel);
+     if(examObject != null){
+       final snackBar = SnackBar(content: Text('Exam added sucessfully!'));
+       Scaffold.of(context).showSnackBar(snackBar);
+     }
    }
   }
 }

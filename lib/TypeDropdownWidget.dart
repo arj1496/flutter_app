@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 
 class TypeDropdownWidget extends StatefulWidget {
   List<String> _type = <String>['Unit Test 1', 'FA Exam', 'Term Exam', 'Class Test', 'Terminal(A)','test-1','test-2','test-3','test-4',];
+  GlobalKey<FormState> formKey;
+  GenericModel genericModel;
+  TypeDropdownWidget.init(formKey, _eventPojo) {
+    this.formKey = formKey;
+    this.genericModel = _eventPojo;
+  }
+
+  TypeDropdownWidget(this.formKey, this.genericModel);
+
   @override
   State<StatefulWidget> createState() {
-    return ExamAddUIState.init(_type);
+    // TODO: implement createState
+    return  ExamAddUIState.init(_type);
   }
 }
 
@@ -45,6 +56,8 @@ class ExamAddUIState extends State<TypeDropdownWidget>{
                       setState(() {
                         typeOf = newValue;
                         state.didChange(newValue);
+                        widget.formKey.currentState.save();
+                        widget.genericModel.examType = typeOf;
                       });
                     },
                     items: _type.map((String value) {

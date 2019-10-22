@@ -31,7 +31,7 @@ class _ListTileViewUVState extends State<ExamListPage> {
     Future<List<Exam>> examListFuture = examActivity.getDbExam();
 
     var futureBuilder = new FutureBuilder(
-        future: examListFuture,
+        future: getData(),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           return _getListViewWithBuilder(context, snapshot);
         }

@@ -7,30 +7,32 @@ import 'Exam.dart';
 
 class ExamDao{
   static final examTable = "Exam";
-
+  String selectedField = "e.id as examId,e.name as examName,e.totalMark,e.examType,e.examDate,e.owner, "
+      "s.id as standardId,s.name as standardName, "
+      "sub.id as subjectId,sub.name as subjectName " ;
   Future<Database> getDataBaseHandler( ) async {
     final dbHelper = DBProvider.single_instance;
     final db = await dbHelper.database;
     return db;
   }
 
-  Exam addExam( Exam exam ) {
+  int addExam( Exam exam ) {
     Database db = null;
-    getDataBaseHandler ( ).then ( ( dataBaseInstance ) {
+    getDataBaseHandler ( ).then ( ( dataBaseInstance ) async{
       db = dataBaseInstance;
-      Future<int> futureId = db.insert (
+      int futureId = await db.insert (
         examTable ,
         exam.toJson ( ) ,
         conflictAlgorithm: ConflictAlgorithm.replace ,
       );
-      int examId;
+     /* int examId;
       futureId.then<int> ( ( id ) {
         examId = id;
         exam.lid = examId;
         print("Exam Add sucessfully");
-      } );
+      } );*/
 
-      return exam;
+      return futureId;
     } );
   }
 
@@ -57,9 +59,8 @@ class ExamDao{
     /*List<Map<String, dynamic>> maps = await db.rawQuery("SELECT Exam.id,Exam.name,Exam.examDate,Standard.id,Standard.name "
         "FROM Exam left join Standard on Exam.standardId = Standard.id");*/
 
-    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT e.id as examId,e.name as examName,"
-        "s.id as standardId,s.name as standardName "
-        "FROM Exam e left join Standard s on e.standardId = s.id");
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT  ${selectedField}  from Exam e join Standard s on e.standardId = s.id "
+         "left join Subject sub on e.subjectId = sub.id");
 
     String str = json.encode(maps);
     print("str: ${str} ");
@@ -88,5 +89,23 @@ class ExamDao{
     });
     print("Exam List size in join : ${test.length}");
     return test;
+  }
+
+  batchAddExam(List<Exam> examList){
+    Database db = null;
+    getDataBaseHandler().then((dataBaseInstance) async{
+      db = dataBaseInstance;
+      Batch batch = db.batch();
+      for(var i = 0; i < examList.length; i++){
+        Exam exam = examList[i];
+        batch.insert(
+            examTable,
+            exam.toJson(),
+            conflictAlgorithm: ConflictAlgorithm.replace
+        );
+      }
+      await batch.commit(noResult: true);
+      print("Exam Saved Successfully in to Local DB : " + examList.length.toString());
+    });
   }
 }

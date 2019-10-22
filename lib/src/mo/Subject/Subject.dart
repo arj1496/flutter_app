@@ -5,6 +5,7 @@ class Subject{
   int lid = 1;     //local database id
   int id;           // server id
   String name;
+  int standardId;
   Standard standard;
   int isAccess = 1;
   int color;
@@ -14,6 +15,7 @@ class Subject{
   Subject( {
     this.id,
     this.name,
+    this.standardId,
     this.standard,
     this.isAccess,
     this.color,
@@ -26,7 +28,8 @@ class Subject{
 
       id : jsonObject["id"],
       name : jsonObject["name"],
-      standard : Standard.fromJsonLocal(jsonObject["standard"]),
+      standardId: jsonObject["standard"]["id"],
+      standard : Standard.fromJsonServer(jsonObject["standard"]),
       isAccess : jsonObject["isAccess"],
       color : jsonObject["color"],
       isOptional : jsonObject["isOptional"] == true ? 1 : 0,
@@ -37,7 +40,21 @@ class Subject{
 
       id : jsonObject["id"],
       name : jsonObject["name"],
-      standard : Standard(id: jsonObject["standard"]),
+      standardId: jsonObject["standard"],
+      standard : Standard(id: jsonObject["standard"]),      //Standard.fromJsonServer(jsonObject["standard"]),
+      isAccess : jsonObject["isAccess"],
+      color : jsonObject["color"],
+      isOptional : jsonObject["isOptional"] == true ? 1 : 0,
+      optionalStudentIds : jsonObject["optionalStudentIds"]
+
+  );
+
+  factory Subject.fromJsonLocal_(Map<String, dynamic> jsonObject) => Subject(
+
+      id : jsonObject["id"],
+      name : jsonObject["name"],
+     // standardId: jsonObject["standard"],
+      standard : Standard(id: jsonObject["standard"]),      //Standard.fromJsonServer(jsonObject["standard"]),
       isAccess : jsonObject["isAccess"],
       color : jsonObject["color"],
       isOptional : jsonObject["isOptional"] == true ? 1 : 0,

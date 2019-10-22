@@ -1,35 +1,31 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:intl/intl.dart';
 
 class DatePickerDemo extends StatefulWidget {
-  List<String> _standard = <String>['Class-1', 'Class-2', 'Class-3', 'Class-4', 'Class-5','Class-6', 'Class-7', 'Class-8', 'Class-9', 'Class-10'];
-  List<String> _subject = <String>['Marathi', 'Hindi', 'English', 'Science', 'Maths','History','geography','Geometry','Civics','Marathi', 'Hindi', 'English', 'Science', 'Maths','History'];
-  List<String> _type = <String>['Unit Test 1', 'FA Exam', 'Term Exam', 'Class Test', 'Terminal(A)','test-1','test-2','test-3','test-4',];
+
   @override
   State<StatefulWidget> createState() {
-    return ExamAddUIState.init(_standard,_subject,_type);
+    return ExamAddUIState.init();
   }
-
+  GlobalKey<FormState> formKey;
+  GenericModel genericModel;
+  DatePickerDemo.init(formKey, _eventPojo) {
+    this.formKey = formKey;
+    this.genericModel = _eventPojo;
+  }
 }
 
 class ExamAddUIState extends State<DatePickerDemo>{
 
   DateTime _todayDate = new DateTime.now();
   TimeOfDay  _pickedTime = TimeOfDay.now();
-  List<String> _standard;
-  List<String> _subject;
-  List<String> _type;
   TextEditingController labelText = new TextEditingController();
-  String classOf = "Select Classes";
-  String subjectOf = "Select Subject";
-  String typeOf = "Select Type";
-  String valuesOf = "Select Type";
-  ExamAddUIState.init(List<String> _standard,List<String> _subject,List<String> _type){
-    this._standard= _standard;
-    this._subject= _subject;
-    this._type = _type;
+
+  ExamAddUIState.init(){
+
   }
   @override
   Widget build(BuildContext context) {
@@ -188,6 +184,8 @@ class ExamAddUIState extends State<DatePickerDemo>{
       print('date Selected : ${_todayDate.toString()} ');
       setState(() {
         _todayDate = dateTime;
+        widget.formKey.currentState.save();
+        widget.genericModel.date = dateTime.millisecondsSinceEpoch;
       });
     }
   }
@@ -203,6 +201,9 @@ class ExamAddUIState extends State<DatePickerDemo>{
       print('time Selected : ${_pickedTime.toString()} ');
       setState(() {
         _pickedTime = time;
+        print("_pickedTime = ${time}");
+        widget.formKey.currentState.save();
+        widget.genericModel.time = time.minute;
       });
     }
   }

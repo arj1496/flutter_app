@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
@@ -17,6 +18,15 @@ class StandardDropdownWidget extends StatefulWidget {
   State<StatefulWidget> createState() {
     return StandardDropDown.init();
   }
+
+  GlobalKey<FormState> formKey;
+  GenericModel genericModel;
+  StandardDropdownWidget.init(formKey, _eventPojo) {
+    this.formKey = formKey;
+    this.genericModel = _eventPojo;
+  }
+
+  StandardDropdownWidget(this.formKey, this.genericModel);
 }
 Future<List<Standard>> getStandards() async{
   StandardActivity standardActivity = new StandardActivity();
@@ -56,7 +66,7 @@ class StandardDropDown extends State<StandardDropdownWidget> {
            return Container(
              child: Column(
                children: <Widget>[
-                _getDropDownFormField (  Icon ( Icons.subject ) , projectSnap ),
+                _getDropDownFormField (  Icon ( Icons.class_ ) , projectSnap ),
                ],
              ),
            );
@@ -87,7 +97,10 @@ class StandardDropDown extends State<StandardDropdownWidget> {
                               selectedStandardId = newValue.id;
                               classOf = newValue.name;
                               state.didChange ( newValue );
+                              widget.formKey.currentState.save();
+                              widget.genericModel.classId = newValue.id;
                             } );
+
                            // changeStandard();
                             Provider.of<StandardSelectModel>(context, listen: false).changeStandard(newValue);
                            // Navigator.pop(context);

@@ -1,4 +1,6 @@
 // Service to get exam data as per access rights.
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/ButtonUI.dart';
 import 'package:flutter_app/HeaderContainer.dart';
@@ -118,13 +120,13 @@ class ExamService{
   }
 
 
-    Future<Exam> addOrUpdateExam(Exam exam) async{
+    Future<int> addOrUpdateExam(Exam exam) async{
       Map<String, dynamic> examData = await examWebService.addOrUpdateExam(exam);
 
       if(examData['status']){
         Exam exam = Exam.fromJson(examData['exam']);
         await examDao.addExam(exam);
-        return exam;
+        return exam.id;
       }else{
         print('Exam Add False');
       }
@@ -158,11 +160,38 @@ class ExamService{
         DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
         TitleViewDetail.init(propertyService.getData()),
         DescriptionCustomView.init(propertyService.getData()),
-        ButtonUI2.init('RESULTS','DELETE','CLOSE'),
+        //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
         // AttachmentView(),                                       // It dispay container in water mark
         // AttachmentFileView(),                                    // This display all atachment in listview.
       ];
        return examWidget;
     }
+
+  Future<List<Exam>> getExamListDataFromServer() async {
+    ExamWebService _examWebService = new ExamWebService();
+
+    HashMap map = new HashMap<String, String>();
+    map['exam_sync_time'] = 0.toString();
+
+    Map<String, dynamic> examDataFromServer = await _examWebService.getData_(map, "rest/sync/getSyncInfo");
+    List<Exam> examList = null;
+    if(examDataFromServer['isExamSync']){
+      print(examDataFromServer);
+      List<dynamic> examsDynamic = examDataFromServer['exams'];
+      examList = List.generate(examsDynamic.length, (i){
+        Exam exam = Exam.fromJson(examsDynamic[i]);
+        return exam;
+      });
+      ExamService examService = new ExamService();
+      await batchAddExam(examList);
+    }else{
+      print('Exam Sync is false');
+    }
+    return examList;
+  }
+
+  batchAddExam(List<Exam> examList){
+    examDao.batchAddExam(examList);
+  }
 
 }

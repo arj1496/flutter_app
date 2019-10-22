@@ -47,8 +47,8 @@ class Exam
      standard:Standard.fromJsonLocal(json["standard"]),
 
      //  standardName: json["standardName"],
-        subjectId:Subject.fromJsonLocal(json["subject"]).id,
-       subject : Subject.fromJsonLocal(json["subject"]),
+        subjectId: json["subject"]['id'],
+       subject : Subject.fromJsonServer(json["subject"]),
        examDate: json["examDate"],
        totalMark: json["totalMark"],
        examType: json["examType"],

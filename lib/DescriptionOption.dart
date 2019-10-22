@@ -65,7 +65,7 @@ class DescriptionOption extends StatelessWidget {
     TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
     ButtonUI.init('RESULTS','DELETE','CLOSE'),
-    ButtonUI2.init('RESULTS','DELETE','CLOSE'),
+    //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
     // AttachmentView(),                                       // It dispay container in water mark
     // AttachmentFileView(),                                    // This display all atachment in listview.
   ];

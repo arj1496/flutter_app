@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/StandardDropdownWidget.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
@@ -9,6 +10,14 @@ import '../../../SubjectDropdownWidget.dart';
 class DropDownProvider extends StatefulWidget  {
   @override
   _DropDownProviderState createState() => _DropDownProviderState();
+  GlobalKey<FormState> formKey;
+  GenericModel genericModel;
+  DropDownProvider.init(formKey, _eventPojo) {
+    this.formKey = formKey;
+    this.genericModel = _eventPojo;
+  }
+
+  DropDownProvider(this.formKey, this.genericModel);
 
 }
 
@@ -24,8 +33,8 @@ class _DropDownProviderState extends State<DropDownProvider>  with SingleTickerP
       child: Container(
         child: Column(
           children: <Widget>[
-            StandardDropdownWidget(),
-            SubjectDropdownWidget(),
+            StandardDropdownWidget(widget.formKey, widget.genericModel),
+            SubjectDropdownWidget(widget.formKey, widget.genericModel),
           ],
         ),
       ),

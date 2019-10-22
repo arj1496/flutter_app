@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/StandardDropdownWidget.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardService.dart';
@@ -18,6 +19,14 @@ class SubjectDropdownWidget extends StatefulWidget {
   State<StatefulWidget> createState() {
     return ExamAddUIState.init();
   }
+  GlobalKey<FormState> formKey;
+  GenericModel genericModel;
+  SubjectDropdownWidget.init(formKey, _eventPojo) {
+    this.formKey = formKey;
+    this.genericModel = _eventPojo;
+  }
+
+  SubjectDropdownWidget(this.formKey, this.genericModel);
 }
 class SubjectDropdownWidget1 extends StatelessWidget {
   TextEditingController labelText = new TextEditingController( );
@@ -52,7 +61,7 @@ class SubjectDropdownWidget1 extends StatelessWidget {
                   child: DropdownButton (
                     isDense: true ,
 
-                    onChanged: ( String newValue ) {
+                    onChanged: ( dynamic newValue ) {
                     /*  setState ( ( ) {
                         subjectOf = newValue;
                         state.didChange ( newValue );
@@ -139,16 +148,18 @@ class ExamAddUIState extends State<SubjectDropdownWidget> {
                         child: DropdownButton (
                           isDense: true ,
 
-                          onChanged: ( String newValue ) {
+                          onChanged: ( dynamic newValue ) {
                             setState ( ( ) {
-                              subjectOf = newValue;
+                              subjectOf = newValue.name;
                               state.didChange ( newValue );
+                              widget.formKey.currentState.save();
+                              widget.genericModel.subjectId = newValue.id;
                             } );
                           } ,
 
                           items: subjectList.map ( ( Subject subject ) {
                             return new DropdownMenuItem(
-                              value: subject.name ,
+                              value: subject ,
                               child: new Text( subject.name ) ,
                             );
                           }).toList (),

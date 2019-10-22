@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:core' as prefix0;
 import 'dart:core';
-import 'dart:io';
 import 'package:flutter_app/UrlUtils.dart';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:http/http.dart';
@@ -14,6 +13,21 @@ import 'Exam.dart';
 
 class ExamWebService{
   UrlUtils urlUtils = new UrlUtils();
+
+  Future<dynamic> getData_ (HashMap<String, String> requestData, var url) async {
+    Map<String, String> headers = new Map<String, String>();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    print(sharedPreferences.getString("token"));
+    headers['authT'] = sharedPreferences.getString("token");
+
+    final finalurl = SchoolUtils().baseUrl + url + "?exam_sync_time=0";
+    var response = await http.get(finalurl , headers: headers);
+    if(response.statusCode == 200){
+      var str = response.body;
+      final data = json.decode(response.body);
+      return data;
+    }
+  }
 
   Future<Map<String, dynamic>> addOrUpdateExam (Exam exam) async {
     print("in webservice");
@@ -28,6 +42,7 @@ class ExamWebService{
     var data;
     if(response.statusCode == 200){
       data = json.decode(response.body);
+      print(data);
     }
     return data;
   }
@@ -38,14 +53,15 @@ class ExamWebService{
     if (exam.name != null) {
       examObjectmap["name"] = exam.name;
     }
-    /*if (exam.examType != null) {
-      examObjectmap["examTypeId"] = exam.examType;
-    }*/
+    if (exam.examType != null) {
+      examObjectmap["examTypeId"] = 1.toString();
+    }
     if (exam.syllabus != null) {
       examObjectmap["syllabus"] = exam.syllabus;
     }
     if(exam.totalMark != null) {
       examObjectmap["totalMark"] = exam.totalMark.toString();
+
     }
     if(exam.standardId != null) {
       examObjectmap["standard"] = exam.standardId.toString ( );

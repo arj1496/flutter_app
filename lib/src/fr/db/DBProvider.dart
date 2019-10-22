@@ -43,7 +43,7 @@ class  DBProvider {
       await db.execute(createSubjectTable());
       await db.execute(createExamTable());
       await db.execute(createParentTable());
-
+      await db.execute(createDumpTable());
 
     });
   }
@@ -204,7 +204,6 @@ class  DBProvider {
         ")";
   }
 
-
   String createSharedPreferenceTable(){
     return "CREATE TABLE SharedPreference ("
         " key TEXT, "
@@ -224,5 +223,14 @@ class  DBProvider {
         "isWritable INTEGER )";
   }
 
-
+  String createDumpTable(){
+    return "CREATE TABLE Dump( "
+        " id INTEGER PRIMARY KEY,"
+        " timeStamp INTEGER ,"
+        " key TEXT ,"
+        " entity TEXT , "
+        " entityId INTEGER, "
+        " dump TEXT"
+        ")";
+  }
 }

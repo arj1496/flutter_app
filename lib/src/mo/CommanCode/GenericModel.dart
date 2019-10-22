@@ -5,9 +5,13 @@ class  GenericModel{
   int subjectId;
   String description;
   String place;
-  String date;
-  String time;
+  int date;
+  int time;
   String eventType;
+  String syllabus;
+  String examType;
+  int totalMarks;
+  String status;    // exam status
    /*setTitle(String title){
      this.title = title;
    }
@@ -32,12 +36,13 @@ class  GenericModel{
 
 }
 
+/*
 class EventModel implements GenericModel{
   @override
   int classId;
 
   @override
-  String date;
+  int date;
 
   @override
   String description;
@@ -49,7 +54,7 @@ class EventModel implements GenericModel{
   int subjectId;
 
   @override
-  String time;
+  int time;
 
   @override
   String title;
@@ -57,5 +62,12 @@ class EventModel implements GenericModel{
   @override
   String eventType;
 
+  @override
+  String examType;
+
+  @override
+  String syllabus;
+
 }
+*/
 

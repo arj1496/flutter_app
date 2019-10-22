@@ -139,6 +139,7 @@ class AddFormUIState extends State<AddFormUI>{
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       child: TextField(
         onTap: (){
+          FocusScope.of(context).requestFocus(new FocusNode());
           _selectDate(context);
         },
         style: TextStyle(
