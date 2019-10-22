@@ -1,0 +1,70 @@
+<html>
+<head>
+    <script  type="text/javascript">
+    function hello(){
+           // alert("hi");
+           document.getElementById("result").innerHTML = "Hello...1";
+           document.getElementById("title").innerHTML = "I am doing Good...2";
+
+           var x = 'hello111..';
+            try {
+                flutter_fn.postMessage(x);
+            } catch (err) {
+
+            }
+
+    }
+     function hello1(){
+
+           document.getElementById("result").innerHTML = "Hello All....!";
+           document.getElementById("title").innerHTML = "This Senecod JavaScript Function call From Web View..";
+
+           var x = 'This 2nd JavaScript Function call From Web View';
+            try {
+                flutter_fn.postMessage(x);
+            } catch (err) {
+
+            }
+
+    }
+
+    function changeText(){
+
+        document.getElementById("title").innerHTML = "Function call from Dart";
+    }
+
+    function changeText1(){
+
+        document.getElementById("title").innerHTML = "2nd Function call from Dart";
+    }
+
+
+</script>
+
+</head>
+
+
+<body>
+
+<body>
+
+<div>
+    <h1>
+        Hello Flutter 9
+    </h1>
+</div>
+<div id="list_div">
+    <input  type="button" onclick="hello();"  id="but_1" name="but_1" value="Call Flutter2" />
+</div>
+<div id="list_div">
+    <input  type="button" onclick="hello1();"  id="but_2" name="but_2" value="Call Flutter3" />
+</div>
+<div>
+    <label id="title">Welcome to Flutter WebView Demo</label>
+</div>
+<p id="result"> Hi </p>
+</body>
+
+</body>
+
+</html>
