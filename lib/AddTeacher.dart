@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/DatePickerDemo.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 
 import 'ButtonUI.dart';
 
@@ -12,12 +13,13 @@ class AddTeacher extends StatefulWidget{
 }
 class AddTeacherState extends State<AddTeacher>{
   var formKey= GlobalKey<FormState>();
+  GenericModel genericModel = new GenericModel();
   bool male = false;
   var message =  "Non-Acadmic";
   var val =false;
   var inviteVal=true;
   var sendInvite="Invite";
-  DatePickerDemo datePickerDemo= new DatePickerDemo();
+ //DatePickerDemo datePickerDemo= new DatePickerDemo();
   int groupValue;
 
   TextEditingController firstNameController = TextEditingController();
@@ -37,13 +39,15 @@ class AddTeacherState extends State<AddTeacher>{
         Padding(
         padding:EdgeInsets.all(10.0),
            child: TextFormField(
-             controller: firstNameController,
+             onSaved: (val) =>  genericModel.place = val ,
+             autovalidate: true,
              validator:(value){
                if(value.isEmpty)
                  {
                    return 'Enter Name';
                  }
              },
+
              decoration: InputDecoration(
                  labelText: 'First Name',
                  hintText: 'Prof  S.Jadhav6 ',
@@ -73,8 +77,8 @@ class AddTeacherState extends State<AddTeacher>{
 
       ),
         Padding(
-          padding: EdgeInsets.all(10.0),
-          child: DatePickerDemo(),
+          padding: EdgeInsets.only(left:10.0,right:10.0),
+          child: Text("date Picker"),
         ),
 
        Padding(
@@ -136,10 +140,7 @@ class AddTeacherState extends State<AddTeacher>{
           activeColor: Colors.lightBlue,
           secondary: const Icon(Icons.person),
         ),
-        Padding(
-          padding:EdgeInsets.all(10.0),
-          child:DropdownButton<String>(),
-        ),
+
         Padding(
           padding: EdgeInsets.all(10.0),
           child: Row(

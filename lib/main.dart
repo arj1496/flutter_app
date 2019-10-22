@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/TeacherModule.dart';
 import 'package:flutter_app/UrveshNew.dart';
 import 'package:flutter_app/dhaval.dart';
 import 'package:flutter_app/src/MenuFile.dart';
@@ -306,8 +307,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
-        child: Text("Rupali Worke",
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherModule()));
+        },
+        child: Text("jyoit Work",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),

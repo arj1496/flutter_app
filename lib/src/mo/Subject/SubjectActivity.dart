@@ -1,3 +1,5 @@
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+
 import 'Subject.dart';
 import 'SubjectService.dart';
 
@@ -9,7 +11,20 @@ class SubjectActivity{
     List<Subject> subjectListFromFuture = await subjectService.getSubjectListFromLocalDB();
     return subjectListFromFuture;
   }
-
+  getHardCodedSubjectList(){
+    List<Subject> subbList = new List<Subject>();
+    for(int i=1; i<= 6; i++){
+      Subject subject = new Subject();
+      subject.id = i;
+      subject.name = "Subject ${i.toString()}";
+      Standard standard = new Standard();
+      standard.id = i;
+      standard.name = "Class ${i.toString()}";
+      subject.standard = standard;
+      subbList.add(subject);
+    }
+    return subbList;
+  }
   Future<List<Subject>> getSubjectByStandardId(int standardId) async{
     List<Subject> subjectListFromFuture = await subjectService.getSubjectByStandardId(standardId);
     return subjectListFromFuture;

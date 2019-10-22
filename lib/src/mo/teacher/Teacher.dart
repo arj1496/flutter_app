@@ -8,6 +8,7 @@ class Teacher{
   int isWritable;
   String gender;
   String email;
+  String mobile;
   String standardIds;
   String subjectIds;
   int userId;
@@ -22,6 +23,7 @@ class Teacher{
     this.isWritable,
     this.gender,
     this.email,
+    this.mobile,
     this.standardIds,
     this.subjectIds,
     this.userId,
@@ -38,6 +40,7 @@ class Teacher{
     isWritable : json["isWritable"] == true ? 1 : 0,
     gender : json["gender"],
     email : json["email"],
+    mobile: json["mobile"],
     standardIds : json["standardIds"],
     subjectIds : json["subjectIds"],
     userId : json["userId"],
