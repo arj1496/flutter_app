@@ -8,9 +8,7 @@ class CollapseviewDemo extends StatelessWidget {
   Widget build(BuildContext context) {
     _buildExpandableContent(Vehicle vehicle) {
       List<Widget> columnContent = [];
-
       for (String content in vehicle.contents)
-
       columnContent.add(
           new ListTile(
             title: new Text(content, style: new TextStyle(fontSize: 18.0),),

@@ -11,7 +11,15 @@ class  GenericModel{
   String syllabus;
   String examType;
   int totalMarks;
-  String status;    // exam status
+  String status;
+  String firstName;
+  String lastName;
+  String email;
+  int contactNo;
+  String gender;
+  String invitation;
+  
+  // exam status
    /*setTitle(String title){
      this.title = title;
    }

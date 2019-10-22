@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AllDetailsview.dart';
 import 'package:flutter_app/Buttonview.dart';
 import 'package:flutter_app/Dateview.dart';
-import 'package:flutter_app/DemoList.dart';
+//import 'package:flutter_app/DemoList.dart';
 import 'package:flutter_app/DetailViewUV.dart';
 import 'package:flutter_app/ExamAddPage2.dart';
 import 'package:flutter_app/ExamAddPage2.dart';
@@ -170,12 +170,12 @@ class MenuFile extends StatelessWidget {
             ),
             RaisedButton(
               child: Text("Exam Add page 2"),
-              onPressed: () {
+             /* onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DemoList()),
                 );
-              },
+              },*/
 
             ),
             RaisedButton(
