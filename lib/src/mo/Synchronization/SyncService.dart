@@ -1,4 +1,5 @@
 
+import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
 import 'package:flutter_app/src/mo/Standard/StandardService.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
@@ -15,6 +16,7 @@ class SyncService{
   TeacherServcie teacherService = new TeacherServcie();
   StudentService studentService = new StudentService();
   ParentService parentService = new ParentService();
+  ExamService examService = new ExamService();
 
   List<String> getSyncParameters(){
 
@@ -24,6 +26,7 @@ class SyncService{
     parameters.add("teacher_sync_time");
     parameters.add("student_sync_time");
     parameters.add("parent_sync_time");
+    parameters.add("exam_sync_time");
 
     return parameters;
   }
@@ -119,6 +122,14 @@ class SyncService{
         print("isParentSync");
         await parentService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("parent_sync_time", todayDate.toString());
+      }
+    }
+
+    if(syncDataResponse.containsKey('isExamSync')){
+      if(syncDataResponse['isExamSync']){
+        print("isExamSync");
+        await examService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("exam_sync_time", todayDate.toString());
       }
     }
   }
