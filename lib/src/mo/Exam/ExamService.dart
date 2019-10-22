@@ -194,4 +194,16 @@ class ExamService{
     examDao.batchAddExam(examList);
   }
 
+  syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
+    List<dynamic> examsDynamic = syncDataResponse['exams'];
+    if(examsDynamic != null && examsDynamic.length > 0){
+      List<Exam> examList = List.generate(examsDynamic.length, (i){
+        Exam exam = Exam.fromJson(examsDynamic[i]);
+        return exam;
+      });
+      await batchAddExam(examList);
+    }
+
+  }
+
 }
