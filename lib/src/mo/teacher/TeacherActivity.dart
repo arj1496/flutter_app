@@ -10,12 +10,13 @@ class TeacherActivity{
       Teacher teacher = new Teacher();
       teacher.lid = i;
       teacher.id =  i;
-      teacher.firstName = "firstName" + i.toString();
-      teacher.lastName = "lastName" + i.toString();
+      teacher.firstName = "FirstName" + i.toString();
+      teacher.lastName = "LastName" + i.toString();
       teacher.person = i;
       teacher.isWritable =  0;
       teacher.gender = "gender" + i.toString();
       teacher.email = "email" + i.toString();
+      teacher.mobile = "9834234545" + i.toString();
       teacher.standardIds = "standardIds" + i.toString();
       teacher.subjectIds = "subjectIds" + i.toString();
       teacher.userId = i;
