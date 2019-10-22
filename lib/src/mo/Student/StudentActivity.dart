@@ -1,7 +1,11 @@
-import 'package:flutter_app/src/mo/Student/StudentService.dart';
-
-
 
 class StudentActivity{
-  StudentService studentService = new StudentService();
+
+  saveStudentDetail(student, callBack){
+    Future.delayed(Duration(seconds: 15), () {
+      callBack();
+    });
+  }
+
+
 }

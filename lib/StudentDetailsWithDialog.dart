@@ -1,24 +1,36 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/AppTheme.dart';
-import 'package:flutter_app/main.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
+import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class StudentDetailWithDialog extends StatefulWidget {
+
   @override
-  _StudentDetailWithDialogState createState() => _StudentDetailWithDialogState();
+  _StudentDetailWithDialogState createState() =>
+      _StudentDetailWithDialogState();
 }
 
 class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
+  // maintains validators and state of form fields
+  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+
   List<Student> studentList = null;
   bool _isUpdateBtn = true;
   bool _isEditBtn = true;
+
+  String _fatherFirstName;
+  String _fatherLastName;
+
+  // manage state of modal progress HUD widget
+  bool _isInAsyncCall = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,47 +71,50 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           itemBuilder: (BuildContext ctxt, int Index) {
             return studentList != null && studentList.length > 0
                 ? _listTileViewStudents2(studentList[Index])
-            //? StudentModelBox(studentList[Index])
                 : _listNotFound();
           }),
     );
   }
 
   Future<String> createAlertDialogBox(BuildContext context, Student student) {
-
+    setState(() {
+      _isEditBtn = true;
+    });
     String studentName = student.firstName + ' ' + student.lastName;
     return showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
             title: Text("Parent details of ${studentName}"),
             content: Container(
-              child: getEditForm(student),
+              child: //getEditForm(student),
+                  getDisplayForm(),
             ),
             actions: <Widget>[
-              MaterialButton(
-                  child: Text("Edit"),
-                  onPressed: (){
-                    Navigator.of(context).pop();
-                  }
-              ),
-              MaterialButton(
-                  child: Text("Update"),
-                  onPressed: (){
-                    Navigator.of(context).pop();
-                  }
-              ),
-
+              _isEditBtn
+                  ? MaterialButton(
+                      child: Text("Edit"),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => getStudentEditForm(
+                                object: student,
+                                onCustCallBack: (){
+                                  print('hey done');
+                                }
+                              )),
+                        );
+                        
+                      }) : null,
               MaterialButton(
                   child: Text("Close"),
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.of(context).pop();
-                  }
-              ),
+                  }),
             ],
           );
-        }
-    );
+        });
   }
 
   _listTileViewStudents2(Student student) {
@@ -109,7 +124,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
       },
       child: Padding(
         padding:
-        const EdgeInsets.only(left: 5.0, right: 5.0, top: 3, bottom: 3),
+            const EdgeInsets.only(left: 5.0, right: 5.0, top: 3, bottom: 3),
         // This is the Main Table Container
         child: Container(
           // given Box Shadow to the Container
@@ -128,7 +143,6 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
             ],
           ),
           child: _listtile(student),
-
         ),
       ),
     );
@@ -214,7 +228,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
         ),
         Padding(
           padding:
-          const EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 8),
+              const EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 8),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -282,71 +296,198 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
         onTap: () {},
         child: _details(student),
       ),
-      // trailing: _expansionIcon(),
     );
   }
-
-  Widget _expansionDetail() {
-
-    return Column(
-      children: <Widget>[
-        Container(
-            child: _isEditBtn ? RaisedButton(
-              onPressed: () {
-                print("Click");
-              },
-              color: Colors.red,
-              child: Text("Edit"),
-            ) : Container()
+  
+  Widget getEditForm(Student student) {
+    String studentName = student.firstName + ' ' + student.lastName;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Parent details of ${studentName}",
+          style: TextStyle(
+            fontSize: 17.0,
+          ),
+          textAlign: TextAlign.start,
         ),
-        Container(
-            child: _isUpdateBtn ? RaisedButton(
-              onPressed: () {
-                print("Click");
-              },
-              color: Colors.blue,
-              child: Text("Update"),
-            ): Container()
-        ) ,
-
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 90.0, right: 80.0),
-            child: Row(
+      ),
+      body: ModalProgressHUD(
+        inAsyncCall: _isInAsyncCall,
+        color: Colors.white,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Form(
+            key: this._loginFormKey,
+            child: Column(
               children: <Widget>[
-                Expanded(
-                  child: RaisedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isUpdateBtn = false;
-                        _isEditBtn = true;
-                      });
-
-                    },
-
-                    child: Text("Edit"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 0.0, left: 10.0),
+                  child: Container(
+                      alignment: Alignment.topLeft,
+                      child: Text("Father details",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Father First Name',
+                        labelText: 'Enter father firstName'),
+                        onSaved: (value) => _fatherFirstName = value,
                   ),
                 ),
-                Expanded(
-                  child: RaisedButton(
-                    onPressed: (){
-                      setState(() {
-                        _isEditBtn = false;
-                        _isUpdateBtn = true;
-                      });
-                    },
-                    child: Text("Update"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Father Last Name',
+                        labelText: 'Enter father lastName'),
+                        onSaved: (value) => _fatherLastName = value,
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.alternate_email),
+                        hintText: 'Father Email Id',
+                        labelText: 'Enter father emailId'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(12),
+                    ],
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.phone),
+                        hintText: 'Phone Number',
+                        labelText: 'Enter Father phoneNumber'),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0, left: 10.0),
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Text("Mother details",
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Mother First Name',
+                        labelText: 'Enter mother firstName'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'Mother Last Name',
+                      labelText: 'Enter mother lastName',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.alternate_email),
+                        hintText: 'Mother Email Id',
+                        labelText: 'Enter mother emailId'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(12),
+                    ],
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.phone),
+                        hintText: 'Mother Phone Number',
+                        labelText: 'Enter mother phoneNumber'),
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40.0, left: 50.0, right: 40.0, bottom: 30.0),
+                        child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            color: Colors.lightBlueAccent,
+                            child: Text(
+                              "Update",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              //_submit();
+                            }),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40.0, left: 50.0, right: 40.0, bottom: 30.0),
+                        child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            color: Colors.lightBlueAccent,
+                            child: Text(
+                              "Close",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
         ),
-      ],
+      ),
     );
-  }
+  } //getEditForm
 
-  Widget getEditForm(Student student) {
+  Widget getDisplayForm() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(1.0),
       child: Column(
@@ -357,111 +498,222 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontSize: 15.0,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold))),
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "First Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Dilip",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
                   )
-              )
-          ),
-          TextField(
-            autocorrect: true,
-            decoration: InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: 'Father First Name',
-                labelText: 'Enter father firstName'
+                ],
+              ),
             ),
           ),
-          TextField(
-            autocorrect: true,
-            decoration: InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: 'Father Last Name',
-                labelText: 'Enter father lastName'
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Last Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Kadam",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          TextField(
-            autocorrect: true,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-                icon: Icon(Icons.alternate_email),
-                hintText: 'Father Email Id',
-                labelText: 'Enter father emailId'
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Email: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "dilip123@gmail.com",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          TextField(
-            autocorrect: true,
-            keyboardType: TextInputType.phone,
-            inputFormatters: <TextInputFormatter>[
-              LengthLimitingTextInputFormatter(12),
-            ],
-            decoration: InputDecoration(
-                icon: Icon(Icons.phone),
-                hintText: 'Phone Number',
-                labelText: 'Enter Father phoneNumber'
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Contact: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "9405186233",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           Container(
             alignment: Alignment.topLeft,
-            child: Text(
-                "Mother details",
+            child: Text("Mother details",
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 15.0,
-                    fontWeight: FontWeight.bold
-                )
+                    fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "First Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Kalpana",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          TextField(
-            autocorrect: true,
-            decoration: InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: 'Mother First Name',
-                labelText: 'Enter mother firstName'
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Last Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Kadam",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          TextField(
-            autocorrect: true,
-            decoration: InputDecoration(
-              icon: Icon(Icons.person),
-              hintText: 'Mother Last Name',
-              labelText: 'Enter mother lastName',
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Email: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "k123@gmail.com",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          TextField(
-            autocorrect: true,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-                icon: Icon(Icons.alternate_email),
-                hintText: 'Mother Email Id',
-                labelText: 'Enter mother emailId'
-            ),
-          ),
-          TextField(
-            autocorrect: true,
-            keyboardType: TextInputType.phone,
-            inputFormatters: <TextInputFormatter>[
-              LengthLimitingTextInputFormatter(12),
-            ],
-            decoration: InputDecoration(
-                icon: Icon(Icons.phone),
-                hintText: 'Mother Phone Number',
-                labelText: 'Enter mother phoneNumber'
+          Container(
+            padding:
+                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Contact: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "9422481016",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
-  }
-}
-
-Widget _expansionIcon() {
-  return Padding(
-    padding: EdgeInsets.only(top: 0.0),
-    child: Container(
-      width: 10.0,
-      alignment: Alignment.center,
-      child: Icon(Icons.expand_more),
-    ),
-  );
+  } //getDisplayForm
 }
 
 Widget _listNotFound() {
@@ -524,118 +776,257 @@ Widget _listNotFound() {
   );
 }
 
-class ExpansionModel extends StatefulWidget {
-  final TextEditingController controller = new TextEditingController();
+
+class getStudentEditForm extends StatefulWidget {
+
+  VoidCallback onCustCallBack;
+  Student student;
+
+  getStudentEditForm({Student object, @required onCustCallBack}) :
+        assert (onCustCallBack != null),
+        student = object,
+        onCustCallBack = onCustCallBack;
+
   @override
-  _ExpansionModelState createState() => _ExpansionModelState();
+  _getStudentEditFormState createState() => _getStudentEditFormState();
 }
 
-class _ExpansionModelState extends State<ExpansionModel> {
-  bool _isEditBtn = true;
-  bool _isUpdateBtn = false;
+class _getStudentEditFormState extends State<getStudentEditForm> {
 
-  final _formKey = GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
+  // maintains validators and state of form fields
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  // manage state of modal progress HUD widget
+  bool _isInAsyncCall = false;
+
+  String _fatherFirstName;
+  String _fatherLastName;
+
+  bool _isUpdate = false;
+
+  void _submit() {
+    if (this._formKey.currentState.validate()) {
+      this._formKey.currentState.save();
+
+      setState(() {
+        _isInAsyncCall = true;
+      });
+
+      // call activity
+
+      StudentActivity studentActivity = new StudentActivity();
+      studentActivity.saveStudentDetail(widget.student, (){
+        setState(() {
+          _isUpdate = true;
+          _isInAsyncCall = false;
+        });
+        if (_isUpdate) {
+          widget.onCustCallBack();
+        }
+      });
+
+
+
+      /*Future.delayed(Duration(seconds: 5), () {
+        setState(() {
+          _isUpdate = true;
+          _isInAsyncCall = false;
+        });
+
+        if (_isUpdate) {
+          widget.onCustCallBack(student);
+        }
+      });*/
+
+    }
   }
+
   @override
   Widget build(BuildContext context) {
-    return _expansionDetail();
-  }
-
-  Widget _expansionDetail() {
-
-    return Column(
-      children: <Widget>[
-        //1. Container for Parent Label (Static View of Details
-        Container(
-          //If _isUpdate == true then show this Container.
-          // this Container contain 2 ExpansionTile
-          // One for Father and other for Mother.
-          // Each Expansiontile Contain Label.
-          child: _isEditBtn ? Column(
-            children: <Widget>[
-              //A. Father ExpansionTile
-              ExpansionTile(
-                title: Text("Father Detail"),
-                children: <Widget>[
-                  //Father First Name
-                  Text("First Name: Dilip"),
-                  //Father Last Name
-                  Text("Last Name: Kadam"),
-                  //Email
-                  Text("Email: dilipkadam@gmail.com"),
-                  // Conatact
-                  Text("Contact: ")
-                ],
-              ),
-              //B. Mother ExapansionTile
-              ExpansionTile(
-                title: Text("Mother Detail"),
-                children: <Widget>[
-                  //Mother First Name
-                  //Mother Last Name
-                  //Email
-                  // Conatact
-                ],
-              ),
-              RaisedButton(
-                onPressed: (){
-                  setState(() {
-                    _isEditBtn = false;
-                    _isUpdateBtn = true;
-                  });
-                },
-                child: Text("Edit"),
-              ),
-            ],
-          ): null,
+    String studentName = widget.student.firstName + ' ' + widget.student.lastName;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Parent details of ${studentName}",
+          style: TextStyle(
+            fontSize: 17.0,
+          ),
+          textAlign: TextAlign.start,
         ),
-
-        //2. Coantainer for Parent Edit (Form)
-        Container(
-          // this Container contain one form
-          // Form Contain Two ExpansionTile.
-          child: _isUpdateBtn ? Column(
-            children: <Widget>[
-              //A. For Father
-              //First Name
-              TextFormField(
-                controller: widget.controller,
-              ),
-              //Last Name
-              TextFormField(),
-              //Email Name
-              TextFormField(),
-              //Conatct Name
-              TextFormField(),
-
-              //B. For Mother
-              //First Name
-              TextFormField(),
-              //Last Name
-              TextFormField(),
-              //Email Name
-              TextFormField(),
-              //Conatct Name
-              TextFormField(),
-              RaisedButton(
-                child: Text("Update"),
-                onPressed: (){
-                  setState(() {
-                    _isEditBtn = true;
-                    _isUpdateBtn = false;
-                  });
-                },
-              )
-            ],
-          ):null,
-
-        )
-
-      ],
+      ),
+      body: ModalProgressHUD(
+        inAsyncCall: _isInAsyncCall,
+        color: Colors.white,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Form(
+            key: this._formKey,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 0.0, left: 10.0),
+                  child: Container(
+                      alignment: Alignment.topLeft,
+                      child: Text("Father details",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Father First Name',
+                        labelText: 'Enter father firstName'),
+                        onSaved: (value) => _fatherFirstName = value,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Father Last Name',
+                        labelText: 'Enter father lastName'),
+                        onSaved: (value) => _fatherLastName = value,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.alternate_email),
+                        hintText: 'Father Email Id',
+                        labelText: 'Enter father emailId'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(12),
+                    ],
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.phone),
+                        hintText: 'Phone Number',
+                        labelText: 'Enter Father phoneNumber'),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0, left: 10.0),
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Text("Mother details",
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Mother First Name',
+                        labelText: 'Enter mother firstName'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'Mother Last Name',
+                      labelText: 'Enter mother lastName',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.alternate_email),
+                        hintText: 'Mother Email Id',
+                        labelText: 'Enter mother emailId'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: TextFormField(
+                    autocorrect: true,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(12),
+                    ],
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.phone),
+                        hintText: 'Mother Phone Number',
+                        labelText: 'Enter mother phoneNumber'),
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40.0, left: 50.0, right: 40.0, bottom: 30.0),
+                        child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            color: Colors.lightBlueAccent,
+                            child: Text(
+                              "Update",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              _submit();
+                            }),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40.0, left: 50.0, right: 40.0, bottom: 30.0),
+                        child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            color: Colors.lightBlueAccent,
+                            child: Text(
+                              "Close",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -41,14 +41,14 @@ class Exam
 });
 
    factory Exam.fromJson(Map<String, dynamic> json) => Exam(
-       id: json["id"],
-       name :json["name"],
-       standardId: Standard.fromJson(json["standard"]).id,
-     standard:Standard.fromJson(json["standard"]),
+     id: json["id"],
+     name :json["name"],
+     standardId: Standard.fromJsonLocal(json["standard"]).id,
+     standard:Standard.fromJsonLocal(json["standard"]),
 
      //  standardName: json["standardName"],
-        subjectId:Subject.fromJson(json["subject"]).id,
-       subject : Subject.fromJson(json["subject"]),
+        subjectId:Subject.fromJsonLocal(json["subject"]).id,
+       subject : Subject.fromJsonLocal(json["subject"]),
        examDate: json["examDate"],
        totalMark: json["totalMark"],
        examType: json["examType"],

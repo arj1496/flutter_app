@@ -57,7 +57,7 @@ class SubjectDao {
       return getSubjectDataFromLocalDB ( dataBaseInstance );
     } ).then ( ( maps ) {
       var test = List.generate ( maps.length , ( i ) {
-        return Subject.fromJson ( maps[i] );
+        return Subject.fromJsonLocal( maps[i] );
       } );
       return test;
     } );
@@ -77,7 +77,7 @@ class SubjectDao {
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Subject ");
 
     var test =  List.generate(maps.length, (i) {
-      return Subject.fromJsonFromLocalDB(maps[i]);
+      return Subject.fromJsonLocal(maps[i]);
     });
     print("Subject List size : ${test.length}");
     return test;
@@ -92,7 +92,7 @@ class SubjectDao {
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Subject where standard=${standardId}");
 
     var test =  List.generate(maps.length, (i) {
-      return Subject.fromJsonFromLocalDB(maps[i]);
+      return Subject.fromJsonLocal(maps[i]);
     });
     print("Subject List size : ${test.length}");
     return test;

@@ -38,7 +38,7 @@ class StandardService{
       print(standardDataFromServer);
       List<dynamic> standardsDynamic = standardDataFromServer['standards'];
       standardList = List.generate(standardsDynamic.length, (i){
-        Standard standard = Standard.fromJson(standardsDynamic[i]);
+        Standard standard = Standard.fromJsonServer(standardsDynamic[i]);
         return standard;
       });
       await batchAddStandard(standardList);
@@ -52,4 +52,17 @@ class StandardService{
     List<Standard> standardListFromFuture = await standardDao.getAllStandardData();
     return standardListFromFuture;
   }
+
+  syncCallBackHandle(Map<String, dynamic> syncDataResponse) async{
+    List<dynamic> standardsDynamic = syncDataResponse['standards'];
+    if(standardsDynamic != null && standardsDynamic.length > 0) {
+      List<Standard> standardList = List.generate(standardsDynamic.length, (i){
+        Standard standard = Standard.fromJsonServer(standardsDynamic[i]);
+        return standard;
+      });
+      await batchAddStandard(standardList);
+    }
+
+  }
+
 }

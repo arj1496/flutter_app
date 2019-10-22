@@ -29,7 +29,22 @@ class Teacher{
   });
 
 
-  factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
+  factory Teacher.fromJsonServer(Map<String, dynamic> json) => Teacher(
+    lid : json["lid"],
+    id : json["id"],
+    firstName : json["firstName"],
+    lastName : json["lastName"],
+    person : json["person"],
+    isWritable : json["isWritable"] == true ? 1 : 0,
+    gender : json["gender"],
+    email : json["email"],
+    standardIds : json["standardIds"],
+    subjectIds : json["subjectIds"],
+    userId : json["userId"],
+    role : json["role"],
+  );
+
+  factory Teacher.fromJsonLocal(Map<String, dynamic> json) => Teacher(
     lid : json["lid"],
     id : json["id"],
     firstName : json["firstName"],

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 
-class StandardMapping{
+class StandardMapping {
 
   int lid;
   int id;
@@ -16,7 +16,7 @@ class StandardMapping{
   String rollNo;
   int isVisible;
 
-  StandardMapping({
+  StandardMapping( {
     this.lid,
     this.id,
     this.student,
@@ -26,12 +26,12 @@ class StandardMapping{
     this.studentStatus,
     this.rollNo,
     this.isVisible
-  });
+  } );
 
   factory StandardMapping.fromJson(Map<String, dynamic> jsonObject) => StandardMapping(
     id: jsonObject['id'],
-    student: jsonObject['student'] != null ? Student.fromJson(jsonObject['student']) : null,
-    standard: Standard.fromJson(jsonObject['standard']),
+    student: jsonObject['student'] != null ? Student.fromJson_local(jsonObject['student']) : null,
+    standard: Standard.fromJsonLocal(jsonObject['standard']),
     schoolDsId: jsonObject['schoolDs'],
     gradeId: jsonObject['gradeId'],
     studentStatus: jsonObject['studentStatus'],

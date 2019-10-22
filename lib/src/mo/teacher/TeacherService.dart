@@ -47,7 +47,7 @@ class TeacherServcie{
       print(teacherDataFromServer);
       List<dynamic> teachersDynamic = teacherDataFromServer['teachers'];
       teacherList = List.generate(teachersDynamic.length, (i){
-        Teacher teacher = Teacher.fromJson(teachersDynamic[i]);
+        Teacher teacher = Teacher.fromJsonServer(teachersDynamic[i]);
         return teacher;
       });
       await batchAddTeacher(teacherList);
@@ -55,6 +55,33 @@ class TeacherServcie{
       print('Teacher Sync is false');
     }
     return teacherList;
+  }
+
+  syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
+    List<dynamic> addTeachersDynamic = syncDataResponse['teachers'];
+    if(addTeachersDynamic != null && addTeachersDynamic.length > 0){
+      List<Teacher> addTeacherList = List.generate(addTeachersDynamic.length, (i){
+        Teacher teacher = Teacher.fromJsonServer(addTeachersDynamic[i]);
+        return teacher;
+      });
+      await batchAddTeacher(addTeacherList);
+    }
+    List<dynamic> deleteTeachersDynamic = syncDataResponse['deletedTeachers'];
+    if(deleteTeachersDynamic != null && deleteTeachersDynamic.length > 0){
+      List<int> teacherIds = new List();
+      for(int i = 0; i < deleteTeachersDynamic.length; i++){
+        teacherIds.add(deleteTeachersDynamic[i]['entityId']);
+      }
+      await batchDeleteTeacher(teacherIds);
+    }
+  }
+
+  deleteTeacher(Teacher teacher){
+    teacherDAO.deleteTeacher(teacher.id);
+  }
+
+  batchDeleteTeacher(List<int> teacherIds){
+    teacherDAO.batchDeleteTeacher(teacherIds);
   }
 
 
