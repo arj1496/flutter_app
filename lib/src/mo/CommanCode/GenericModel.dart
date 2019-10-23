@@ -18,7 +18,8 @@ class  GenericModel{
   int contactNo;
   String gender;
   String invitation;
-  
+  String birthDate;
+  String academicType;
   // exam status
    /*setTitle(String title){
      this.title = title;

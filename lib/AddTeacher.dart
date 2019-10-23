@@ -19,14 +19,13 @@ class AddTeacherState extends State<AddTeacher>{
   var val =false;
   var inviteVal=true;
   var sendInvite="Invite";
+  final FocusNode _firstInputFocusNode = new FocusNode();
+  final FocusNode _lastInputFocusNode = new FocusNode();
+  final FocusNode _emailInputFocusNode = new FocusNode();
+  final FocusNode _mobileInputFocusNode = new FocusNode();
+  final FocusNode _genderInputFocusNode = new FocusNode();
  //DatePickerDemo datePickerDemo= new DatePickerDemo();
   int groupValue;
-
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController contactController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -39,7 +38,12 @@ class AddTeacherState extends State<AddTeacher>{
         Padding(
         padding:EdgeInsets.all(10.0),
            child: TextFormField(
-             onSaved: (val) =>  genericModel.place = val ,
+             focusNode: _firstInputFocusNode,
+             textInputAction: TextInputAction.next,
+            // decoration: InputDecoration(hintText: "First Text Field"),
+             onEditingComplete: () =>
+                 FocusScope.of(context).requestFocus(_lastInputFocusNode),
+             onSaved: (val) =>  genericModel.firstName = val ,
              autovalidate: true,
              validator:(value){
                if(value.isEmpty)
@@ -47,20 +51,23 @@ class AddTeacherState extends State<AddTeacher>{
                    return 'Enter Name';
                  }
              },
-
              decoration: InputDecoration(
                  labelText: 'First Name',
                  hintText: 'Prof  S.Jadhav6 ',
                  icon: Icon(Icons.person),
-                 border:OutlineInputBorder(
-                   borderRadius: BorderRadius.circular(5.0),)
              ),
            )
           ),
             Padding(
               padding: EdgeInsets.all(10.0),
             child:TextFormField(
-              controller: lastNameController,
+              textInputAction: TextInputAction.next,
+              focusNode: _lastInputFocusNode,
+             // decoration: InputDecoration(hintText: "Second Text Field"),
+              onEditingComplete: () =>
+                  FocusScope.of(context).requestFocus(_emailInputFocusNode),
+
+              onSaved: (val) =>  genericModel.lastName = val ,
               validator: (value){
                 if(value.isEmpty){
                   return 'please Enter value';
@@ -70,8 +77,6 @@ class AddTeacherState extends State<AddTeacher>{
                   icon: Icon(Icons.person),
                   labelText: 'Last name',
                   hintText: 'Prof  S.Jadhav6 ',
-                  border:OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),)
               ),
             )
 
@@ -83,33 +88,44 @@ class AddTeacherState extends State<AddTeacher>{
 
        Padding(
          padding: EdgeInsets.all(10.0),
-         child:  TextField(
+         child:  TextFormField(
+           textInputAction: TextInputAction.next,
+           focusNode: _emailInputFocusNode,
+           // decoration: InputDecoration(hintText: "Second Text Field"),
+           onEditingComplete: () =>
+               FocusScope.of(context).requestFocus(_mobileInputFocusNode),
 
-           controller: emailController,
            keyboardType: TextInputType.emailAddress,
            decoration: InputDecoration(
                icon:Icon(Icons.email),
              labelText: 'Email-id',
-               border: OutlineInputBorder(
-                   borderRadius: BorderRadius.circular(5.0))
            ),
+           onSaved: (val) =>  genericModel.email = val ,
 
          ),
 
        ),
         Padding(
           padding: EdgeInsets.all(10.0),
-          child:  TextField(
+          child:  TextFormField(
+            textInputAction: TextInputAction.next,
+            focusNode: _mobileInputFocusNode,
+            // decoration: InputDecoration(hintText: "Second Text Field"),
+            onEditingComplete: () =>
+                FocusScope.of(context).requestFocus(_genderInputFocusNode),
 
+
+            onSaved: (val) {
+              String test = val;
+              return genericModel.contactNo = int.parse(test);
+            },
             keyboardType: TextInputType.numberWithOptions(decimal: true),
            // textInputAction: TextInputAction.next,
 
             decoration: InputDecoration(
               icon: Icon(Icons.contacts),
                 labelText: 'Contact No.',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0)
-                )
+
             ),
           ),
         ),
@@ -125,18 +141,33 @@ class AddTeacherState extends State<AddTeacher>{
                   width: 10.0,
                 ),
                 Text("Male"),
-                new Radio(value: 1, groupValue: groupValue, onChanged: (int e)=>selectGender(e),activeColor: Colors.lightBlue,),
+                new Radio(
+                  value: 1,
+                  groupValue: groupValue,
+                  onChanged: (int e)=>selectGender(e),
+                  activeColor: Colors.lightBlue,
+                ),
                 Text("Female"),
-                new Radio(value: 2, groupValue: groupValue, onChanged: (int e)=>selectGender(e),activeColor: Colors.lightBlue,),
+                new Radio(value: 2,
+                  groupValue: groupValue,
+                  onChanged: (int e)=>selectGender(e),
+                  activeColor: Colors.lightBlue,
+                ),
               ],
             )
         ),
        SwitchListTile(title: Text(message),
-          value:val, onChanged:(bool value){selectAcadmic(value);},
+          value:val,
+         onChanged:(bool value){selectAcadmic(value);
+         genericModel.academicType=message;
+          },
           secondary: const Icon(Icons.person),
         ),
         SwitchListTile(title: Text(sendInvite),
-          value:inviteVal, onChanged:(bool val){invite(val);},
+          value:inviteVal,
+          onChanged:(bool val){invite(val);
+          genericModel.invitation=sendInvite;
+          },
           activeColor: Colors.lightBlue,
           secondary: const Icon(Icons.person),
         ),
@@ -149,9 +180,16 @@ class AddTeacherState extends State<AddTeacher>{
                 child:
               RaisedButton(
                 onPressed: (){
-
-                setState(() {
+                  setState(() {
                   if(formKey.currentState.validate()){
+                    formKey.currentState.save();
+                    print("First Name : ${genericModel.firstName}");
+                    print("Last Name : ${genericModel.lastName}");
+                    print("Email : ${genericModel.email}");
+                    print("Contact No : ${genericModel.contactNo}");
+                    print("Invitation: ${genericModel.invitation}");
+                    print("Acamdic type : ${genericModel.academicType}");
+
                   }
 
                 });
@@ -168,7 +206,6 @@ class AddTeacherState extends State<AddTeacher>{
                   RaisedButton(
                     onPressed: (){
                       setState(() {
-                        cancleForm();
                       });
                     },
                     child: Text("Cancle", style: TextStyle(fontSize: 20)),
@@ -186,15 +223,13 @@ class AddTeacherState extends State<AddTeacher>{
     );
 
   }
-  void cancleForm(){
-    firstNameController.text='';
-  }
   void selectAcadmic(bool select){
     setState(() {
       if(select){
         message ="Acadmic";
         val= select;
         print(message);
+
       }
       else{
         message="Non-Acadmic";
