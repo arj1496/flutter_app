@@ -8,6 +8,7 @@ import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'addStudent.dart';
 
 class StudentDetailWithDialog extends StatefulWidget {
 
@@ -49,7 +50,13 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => AddStudent()),
+              );
+            },
           ),
           IconButton(
             icon: Icon(Icons.more_vert),
