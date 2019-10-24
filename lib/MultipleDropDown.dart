@@ -1,76 +1,38 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_app/StandardDropdownWidget.dart';
+import 'package:flutter_app/SubjectDropdownWidget.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Subject/Subject.dart';
+import 'package:flutter_app/src/mo/Subject/SubjectActivity.dart';
+import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
+
 
 
 
 class MultipleDropDown extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  TextEditingController labelText = new TextEditingController( );
+  String classOf = "Select Class";
+  String subjectOf = "Select Class";
+  static int selectedStandardId;
+  static List<Standard> _standard;
 
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  String _selectedRegion;
-  String _selectedSecond;
+  static List<Subject> _subject;
+  static SubjectService subjectService = new SubjectService( );
 
   @override
   Widget build( BuildContext context ) {
-    return Scaffold (
-      appBar: AppBar (
-        title: Text ( widget.title ) ,
-      ) ,
-      body: Center (
-        child: Column (
-          mainAxisAlignment: MainAxisAlignment.center ,
-          children: <Widget>[
-            Text ( 'Something before' ) ,
-            DropdownButton<String> (
-              value: _selectedRegion ,
-              items: ['Arizona' , 'California']
-                  .map ( ( region ) =>
-                  DropdownMenuItem<String> (
-                      child: Text ( region ) , value: region ) )
-                  .toList ( ) ,
-              onChanged: ( newValue ) {
-                setState ( ( ) {
-                  _selectedRegion = newValue;
-                } );
-              } ,
-            ) ,
-            _addSecondDropdown ( ) ,
-            Text ( 'Something after' ) ,
-          ] ,
-        ) ,
+    return Container (
+      padding: EdgeInsets.symmetric ( horizontal: 50 , vertical: 30 ) ,
+      child: Column (
+        children: <Widget>[
+         /* StandardDropdownWidget(),
+          SubjectDropdownWidget(),*/
+        ] ,
       ) ,
     );
   }
-
-  Widget _addSecondDropdown( ) {
-    return _selectedRegion != null
-        ? DropdownButton<String> (
-        value: _selectedSecond ,
-        items: ['First' , 'Second']
-            .map ( ( region ) =>
-            DropdownMenuItem<String> (
-                child: Text ( region ) , value: region ) )
-            .toList ( ) ,
-        onChanged: ( newValue ) {
-          setState ( ( ) {
-            _selectedSecond = newValue;
-          } );
-        } )
-        : Container ( ); // Return an empty Container instead.
-  }
 }
+
+

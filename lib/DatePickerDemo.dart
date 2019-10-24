@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:intl/intl.dart';
 
 class DatePickerDemo extends StatefulWidget {
@@ -12,9 +15,11 @@ class DatePickerDemo extends StatefulWidget {
   }
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
-  DatePickerDemo.init(formKey, _eventPojo) {
+  Exam exam = new Exam();
+  DatePickerDemo.init(formKey, _eventPojo,exam) {
     this.formKey = formKey;
     this.genericModel = _eventPojo;
+    this.exam = exam;
   }
 }
 
@@ -123,11 +128,12 @@ class ExamAddUIState extends State<DatePickerDemo>{
     var myFormat = DateFormat('d-MM-yyyy');
     return Padding(
       padding:  EdgeInsets.only(top: 0, bottom: 0),
-      child: TextField(
+      child: TextFormField(
         onTap: (){
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDate(context);
         },
+       // initialValue: 'DateTime.fromMillisecondsSinceEpoch(widget.exam.examDate)',
         style: TextStyle(
           fontWeight: FontWeight.w100,
           fontSize: 16,
@@ -150,7 +156,8 @@ class ExamAddUIState extends State<DatePickerDemo>{
 
     return Padding(
       padding:  EdgeInsets.only(top: 0, bottom: 40),
-      child: TextField(
+      child: TextFormField(
+
         onTap: (){
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectTime(context);

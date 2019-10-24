@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/PropertyService.dart';
+import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../AppTheme.dart';
+import '../../../ButtonUI.dart';
+import '../../../CardDetail2Oct.dart';
+import '../../../DescriptionCustomView.dart';
+import '../../../DetailView2Oct.dart';
+import '../../../ExamWidget2.dart';
+import '../../../HeaderContainer.dart';
+import '../../../MarkWidget.dart';
+import '../../../TitleViewDetail.dart';
+import '../../../TypeView.dart';
 import 'Exam.dart';
-
-
 
 
 class CustomListviewExam extends StatefulWidget {
@@ -14,41 +23,92 @@ class CustomListviewExam extends StatefulWidget {
 
 class _ListTileViewUVState extends State<CustomListviewExam> {
 
-  List<Exam> list;
 
+  ExamService examService = new ExamService();
   @override
   void initState() {
-    ExamService examService = new ExamService();
-    list = examService.getAllExam();
+
   }
 
+  Future<List<Exam>> getData() async{
+    ExamActivity examActivity = new ExamActivity();
+    List<Exam> examList = await examActivity.getJoinDbExam();
+    return examList;
+  }
   @override
   Widget build(BuildContext context) {
-    return _getListViewWithBuilder();
+    ExamActivity examActivity = new ExamActivity();
+    Future<List<Exam>> examListFuture = examActivity.getJoinDbExam();
+
+    var futureBuilder = new FutureBuilder(
+        future: getData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return _getListViewWithBuilder(context, snapshot);
+        }
+    );
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: AppTheme.background,
+        title: Text("Exam"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            // onPressed: synEvents,
+          ),
+          /* IconButton(
+            icon: Icon(Icons.get_app),
+            onPressed: getEvent,
+          ),*/
+        ],
+      ),
+      body: futureBuilder,
+    );
+    //return _getListViewWithBuilder();
   }
 
-  Widget _getListViewWithBuilder() {
-    return Container(
-      color: AppTheme.background,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: AppTheme.background,
-          title: Text("Exams"),
-        ),
+  Widget _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    List<Exam> examList = snapshot.data;
 
-        body: ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (BuildContext ctxt, int Index){
-              return _listTileViewUV(list[Index]);
-            }
-        ),
+    return  Container(
+      color: AppTheme.background,
+      child: ListView.builder(
+          itemCount: examList.length,
+
+          itemBuilder: (BuildContext ctxt, int Index){
+            return examList != null && examList.length > 0  ?  _listTileViewUV(examList[Index]) : _listNotFound();
+          }
+
       ),
     );
   }
 
   Widget _listTileViewUV(data) {
-    return Padding(
+    return  GestureDetector(
+        onTap: (){
+
+      PropertyService propertyService = new PropertyService();
+      List<Widget> examWidget2 = [
+        HeaderContainer.init(data.name,""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
+        CardDetail2Oct(ExamWidget2(data)),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+        MarkWidget(data),
+        //TypeView(),
+        TitleViewDetail.init("Syllabus",FontAwesomeIcons.book),  // It display title of place and description in listview.
+        DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
+        TitleViewDetail.init("Description",FontAwesomeIcons.bookOpen),
+        DescriptionCustomView.init(propertyService.getData()),
+        ButtonUI.init('EDIT','CLOSE',data),
+        //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
+        // AttachmentView(),                                       // It dispay container in water mark
+        // AttachmentFileView(),                                    // This display all atachment in listview.
+      ];
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DetailView2Oct.init(examWidget2," "),
+        ),
+      );
+    },
+     child: Padding(
       padding: const EdgeInsets.only(
           left: 10, right: 10, top: 3, bottom: 3
       ),
@@ -128,7 +188,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                     CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        '120',
+                                        data.totalMark.toString(),
                                         textAlign: TextAlign.right,
                                         style: TextStyle(
                                           fontFamily:
@@ -211,12 +271,11 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-
                                     Padding(
                                       padding: const EdgeInsets.all(0.0),
                                       child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                         children: <Widget>[
@@ -224,9 +283,10 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 1, bottom: 2),
-                                            child: Text(
-                                              'Unit test -1',
-                                              textAlign: TextAlign.center,
+                                            child:new  Text(
+                                              data.name,
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontFamily:
                                                 AppTheme.robotoFontName,
@@ -251,7 +311,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                                     left: 2, bottom: 3),
                                                 child:
                                                 Text(
-                                                  'Marathi',
+                                                  'Science',
                                                   overflow: TextOverflow.ellipsis,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -289,7 +349,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                             padding: const EdgeInsets.only(
                                                 left: 1, bottom: 2),
                                             child: Text(
-                                              'Class -1',
+                                              'Class-1',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontFamily:
@@ -313,7 +373,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                                 const EdgeInsets.only(
                                                     left: 1, bottom: 3),
                                                 child: Text(
-                                                  'Term-A',
+                                                  'Term A',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontFamily:
@@ -348,7 +408,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    '2-Oct',
+                                   data.examDate.toString(),
                                     style: TextStyle(
                                       fontFamily: AppTheme.robotoFontName,
                                       fontWeight: FontWeight.w500,
@@ -360,7 +420,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 6),
                                     child: Text(
-                                      'Ramlingam',
+                                      data.owner,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: AppTheme.robotoFontName,
@@ -387,7 +447,87 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
           ],
         ),
       ),
-    );
+    ),);
 
+  }
+
+  Widget _listNotFound(){
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 10, right: 10, top: 3, bottom: 3
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+              bottomRight: Radius.circular(8.0),
+              topRight: Radius.circular(8.0)
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: AppTheme.grey.withOpacity(0.2),
+                offset: Offset(1.1, 1.1),
+                blurRadius: 10.0
+            ),
+          ],
+        ),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.only(top: 5, left: 5, right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, bottom: 1,top: 5),
+                    /*child: Text(
+                        'Title',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: AppTheme.robotoFontName,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            letterSpacing: -0.1,
+                            color: AppTheme.darkText),
+                      ),*/
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, bottom: 3
+                            ),
+                            child: Text(
+                              'Event Not Found',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTheme.robotoFontName,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: AppTheme.nearlyDarkBlue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

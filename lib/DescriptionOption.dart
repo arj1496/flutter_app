@@ -34,9 +34,9 @@ class DescriptionOption extends StatelessWidget {
   // HeaderContainer.init("Event Detail"),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
     CardDetail2Oct(EventWidget()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
     DateWidget(),                     // It display date in blue container
-    TitleViewDetail.init(propertyService.getPlaceData()),  // It display title of place and description in listview.
+    //TitleViewDetail.init(propertyService.getPlaceData()),  // It display title of place and description in listview.
     DescriptionCustomView.init(propertyService.getPlaceData()),  // All place data is displayed in container
-    TitleViewDetail.init(propertyService.getData()),
+   // TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
     AttachmentView(),                                       // It dispay container in water mark
     AttachmentFileView(),                                    // This display all atachment in listview.
@@ -46,25 +46,25 @@ class DescriptionOption extends StatelessWidget {
     HeaderContainer.init("Unit Test 1",""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
     CardDetail2Oct(ExamWidget()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
    // DateWidget(),                     // It display date in blue container
-    TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
+    //TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
     DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
-    TitleViewDetail.init(propertyService.getData()),
+   // TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
-    ButtonUI.init('RESULTS','DELETE','CLOSE'),
+  //  ButtonUI.init('RESULTS','CLOSE'),
    // AttachmentView(),                                       // It dispay container in water mark
    // AttachmentFileView(),                                    // This display all atachment in listview.
   ];
   List<Widget> examWidget2 = [
     HeaderContainer.init("Unit Test 1",""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
-    CardDetail2Oct(ExamWidget2()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
-    MarkWidget(),
+    //CardDetail2Oct(ExamWidget2(data)),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+   // MarkWidget(),
     HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"), // It display date in blue container
     TypeView(),
-    TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
+   // TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
     DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
-    TitleViewDetail.init(propertyService.getData()),
+   // TitleViewDetail.init(propertyService.getData()),
     DescriptionCustomView.init(propertyService.getData()),
-    ButtonUI.init('RESULTS','DELETE','CLOSE'),
+    //ButtonUI.init('RESULTS','DELETE','CLOSE'),
     //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
     // AttachmentView(),                                       // It dispay container in water mark
     // AttachmentFileView(),                                    // This display all atachment in listview.

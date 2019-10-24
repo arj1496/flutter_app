@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/StandardDropdownWidget.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardService.dart';
@@ -21,18 +22,27 @@ class SubjectDropdownWidget extends StatefulWidget {
   }
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
-  SubjectDropdownWidget.init(formKey, _eventPojo) {
+  Exam exam = new Exam();
+  SubjectDropdownWidget.init(formKey, _eventPojo,exam) {
     this.formKey = formKey;
     this.genericModel = _eventPojo;
+    this.exam = exam;
   }
 
-  SubjectDropdownWidget(this.formKey, this.genericModel);
+  SubjectDropdownWidget(this.formKey, this.genericModel,exam);
 }
 class SubjectDropdownWidget1 extends StatelessWidget {
   TextEditingController labelText = new TextEditingController( );
+  Exam exam = new Exam();
   String subjectOf = "Select Subject";
+  SubjectDropdownWidget1.init(Exam exam  ){
+    this.exam = exam;
+  }
   @override
   Widget build(BuildContext context) {
+    if(exam != null){
+      subjectOf = exam.subjectName;
+    }
     return   Container(
       child:  Consumer<StandardSelectModel>(
         //context, todos, child) => TaskList(tasks: todos.allTasks,

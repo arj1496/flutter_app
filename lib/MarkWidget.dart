@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
@@ -9,10 +10,10 @@ import 'PropertyFile.dart';
 class MarkWidget extends StatelessWidget {
 
   var property = new PropertyFile( );
+  Exam exam = new Exam();
 
-
-  MarkWidget( ) {
-
+  MarkWidget( Exam exam) {
+   this.exam = exam;
   }
 
   @override
@@ -113,7 +114,7 @@ class MarkWidget extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 2 , left: 8 ) ,
                   child: Text (
-                    '24' ,
+                   exam.totalMark.toString() ,
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,
@@ -220,7 +221,7 @@ class MarkWidget extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 2 , left: 28 ) ,
                   child: Text (
-                    '12 Oct' ,
+                    exam.examDate.toString() ,
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,

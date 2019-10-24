@@ -9,6 +9,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
 
 
 import 'PropertyFile.dart';
@@ -19,9 +20,9 @@ class ExamWidget2 extends StatelessWidget {
 /*  ExamWidget.init(PropertyFile property){
     this.property = property;
   }*/
-
-  ExamWidget2(){
-
+  Exam exam = new Exam();
+  ExamWidget2(Exam exam){
+   this.exam = exam;
   }
   @override
   Widget build( BuildContext context ) {
@@ -336,7 +337,7 @@ class ExamWidget2 extends StatelessWidget {
                     const EdgeInsets.only(
                         bottom: 3),
                     child: Text(
-                      'A T John',
+                      exam.owner,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily:

@@ -20,6 +20,9 @@ class Exam
    String status;
    String syllabus;
    String erDataJson;
+   String eDate;
+
+
 
   Exam({
       this.id,
@@ -37,7 +40,8 @@ class Exam
       this.description,
       this.status,
       this.syllabus,
-      this.erDataJson
+      this.erDataJson,
+      this.eDate
 });
 
    factory Exam.fromJson(Map<String, dynamic> json) => Exam(
@@ -57,6 +61,27 @@ class Exam
        status: json["status"],
        syllabus: json["syllabus"],
        erDataJson: json["erDataJson"],
+   );
+
+
+   factory Exam.fromJsonLocal(Map<String, dynamic> json) => Exam(
+     id: json["examId"],
+     name :json["examName"],
+     standardId: (json["standardId"]),
+     //standard:Standard.fromJsonLocal(json["standard"]),
+     standardName: json["standardName"],
+     subjectId: json["subjectId"],
+     subjectName : json["subjectName"],
+     examDate: json["examDate"],
+     totalMark: json["totalMark"],
+     examType: json["examType"],
+     owner: json["owner"],
+     description: json["description"],
+     status: json["status"],
+     syllabus: json["syllabus"],
+     erDataJson: json["erDataJson"],
+
+
    );
 
    Map<String, dynamic> toJson() => {

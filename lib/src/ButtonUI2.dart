@@ -19,12 +19,14 @@ class ButtonUI2 extends StatefulWidget {
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
   String button1,button2,button3;
-  ButtonUI2.init(formKey, _eventPojo,String button1,String button2,String button3) {
+  Exam exam = new Exam();
+  ButtonUI2.init(formKey, _eventPojo,String button1,String button2,String button3,exam) {
     this.formKey = formKey;
     this.genericModel = _eventPojo;
     this.button1 = button1;
     this.button2 = button2;
     this.button3 = button3;
+    this.exam = exam;
   }
 
   ButtonUI2(this.formKey, this.genericModel);
@@ -122,13 +124,16 @@ class ButtonUIState extends  State<ButtonUI2> {
 
   justClick(String text) async {
      ExamService examService = new ExamService();
-    Exam exam = examService.getExam();
+
     ExamActivity examActivity = new ExamActivity();
    if(text == "DRAFT"){
      if(widget.formKey.currentState.validate()){
        widget.formKey.currentState.save();
      }
      widget.genericModel.status = "DRAFT";
+     if(widget.exam != null) {
+       widget.genericModel.examId = widget.exam.id;
+     }
      int examObject = await examActivity.addExamToServer_(widget.formKey, widget.genericModel);
      if(examObject != null){
        final snackBar = SnackBar(content: Text('Exam added sucessfully!'));
@@ -136,6 +141,9 @@ class ButtonUIState extends  State<ButtonUI2> {
      }
    }else if(text == "PUBLISH"){
      widget.genericModel.status = "PUBLISH";
+     if(widget.exam != null) {
+       widget.genericModel.examId = widget.exam.id;
+     }
      int examObject = await examActivity.addExamToServer_(widget.formKey, widget.genericModel);
      if(examObject != null){
        final snackBar = SnackBar(content: Text('Exam added sucessfully!'));

@@ -10,11 +10,8 @@ class PropertyService{
      PropertyFile property = new PropertyFile();
      property.label="Description";
      property.iconData = FontAwesomeIcons.bookOpen;
-     property.data = "Learning a new UI engine is always tricky. Thankfully, the Flutter team has highlighted the basic widgets. For this code tutorial, we will focus on Row and Column"
-         "which lay out a list of child widgets in the horizontal and vertical direction respectively"
-         "Learning a new UI engine is always tricky. Thankfully, the Flutter team has highlighted the basic widgets. For this code tutorial, we will focus on Row and Column"
-         "which lay out a list of child widgets in the horizontal and vertical direction respectively"
-         "\nhttps://www.google.com";
+     property.data = "Learning a new UI engine is always tricky. Thankfully, the Flutter team has highlighted the basic widgets. For this code tutorial, we will focus on Row and Column";
+
     return property;
   }
 
@@ -23,9 +20,7 @@ class PropertyService{
     property.label="Place";
     property.iconData = FontAwesomeIcons.mapMarker;
     property.data = "Vishva Arcade, Sinhagad Road, Narhe Gaon, Pune - 411041,"
-        " Navle Bridge Opposite Hotel Deccan Pavilion (Map)Computer Training Institutes , Computer Trai ...more,"
-    "इनपुट साधने ऑनलाइन वापरून पहा,"
-    "ಕನ್ನಡ";
+    "इनपुट साधने ऑनलाइन वापरून पहा,";
     return property;
   }
 
@@ -37,5 +32,14 @@ class PropertyService{
      return property;
    }
 
+   PropertyFile getSyllabusData() {
+     PropertyFile property = new PropertyFile();
+     property.label="Place";
+     property.iconData = FontAwesomeIcons.mapMarker;
+     property.data = "GMT: Wednesday, October 23, 2019 4:08:04.578 PM"
+    " Your time zone: Wednesday, October 23, 2019 4:08:04.578 PM GMT+00:00"
+     "Relative: 7 minutes ago,";
 
+     return property;
+   }
 }

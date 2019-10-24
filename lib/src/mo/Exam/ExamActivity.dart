@@ -38,7 +38,7 @@ class ExamActivity{
 
   getExamFromGeneric(GenericModel genericModel){
     Exam exam = new Exam();
-
+    exam.id = genericModel.examId;
     exam.name = genericModel.title;
     exam.standardId = genericModel.classId ;
     exam.standardName = "Science";

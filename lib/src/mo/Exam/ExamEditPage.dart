@@ -10,12 +10,16 @@ import 'ExamActivity.dart';
 
 
 
-class ExamAddPage extends StatefulWidget {
+class ExamEditPage extends StatefulWidget {
   @override
   _ExamAddState createState() => _ExamAddState();
+  Exam exam = new Exam();
+  ExamEditPage(Exam exam){
+    this.exam = exam;
+  }
 }
 
-class _ExamAddState extends State<ExamAddPage> {
+class _ExamAddState extends State<ExamEditPage> {
   //EventPojo eventPojo = new EventPojo();
   GenericModel genericModel = new GenericModel();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
@@ -26,16 +30,16 @@ class _ExamAddState extends State<ExamAddPage> {
     return Container(
       color: AppTheme.background,
       child: Scaffold(
-        backgroundColor: AppTheme.background,
-        appBar: AppBar(
-          elevation: 0.0,
           backgroundColor: AppTheme.background,
-          title: Text("Add Exam form"),
-        ),
-        //body: _getContainerBody(),
-        body:SingleChildScrollView(
-          child: _getSafeAreaBody(),
-        )
+          appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: AppTheme.background,
+            title: Text("Add Exam form"),
+          ),
+          //body: _getContainerBody(),
+          body:SingleChildScrollView(
+            child: _getSafeAreaBody(),
+          )
 
       ),
     );
@@ -59,25 +63,27 @@ class _ExamAddState extends State<ExamAddPage> {
 
   getWidgetList(){
     List<Widget> widgetList = [
-    _getClassDropdownwidget(_formKey,genericModel),
+      _getClassDropdownwidget(_formKey,genericModel,widget.exam),
       _getExamTypeDropdownwidget(_formKey,genericModel),
-    _getTextFormTextField(Icon(Icons.title), 'Enter Exam Title', 'Title','title'),
-      _getTextFormTextField(Icon(Icons.adjust), 'Enter Totalmark', 'Mark','Mark'),
-    _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Description', 'Description','description'),
-    _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Syllabus', 'Syllabus','Syllabus'),
-    _getDateAndTime(_formKey, genericModel,null),
-    submitButton(_formKey, genericModel,null),
-      ];
+      _getTextFormTextField(Icon(Icons.title), 'Enter Exam Title', 'Title','title',widget.exam.name),
+      _getTextFormTextField(Icon(Icons.adjust), 'Enter Totalmark', 'Mark','Mark',widget.exam.totalMark.toString()),
+      _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Description', 'Description','description',widget.exam.description),
+      _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Syllabus', 'Syllabus','Syllabus',widget.exam.syllabus),
+      _getDateAndTime(_formKey, genericModel,widget.exam),
+      submitButton(_formKey, genericModel,widget.exam),
+    ];
     return widgetList;
   }
 
-  _getTextFormTextField(Icon icon , hintText, labelText,paramenter) {
+  _getTextFormTextField(Icon icon , hintText, labelText,paramenter,initialvalue) {
     return TextFormField(
       onSaved: (val) => paramenter == 'title'
           ? genericModel.title = val : paramenter == 'description'
           ? genericModel.description = val :  paramenter == 'marks' ? genericModel.totalMarks = val as int : null,
       autovalidate: true,
+      initialValue: initialvalue,
       decoration: InputDecoration(
+
           icon: icon,
           hintText: hintText,
           labelText: labelText
@@ -101,7 +107,7 @@ class _ExamAddState extends State<ExamAddPage> {
     );
   }
 
-  _getMultilineTextFormTextField(Icon icon , hintText, labelText,paramenter) {
+  _getMultilineTextFormTextField(Icon icon , hintText, labelText,paramenter,String initialValue) {
     return TextFormField(
       onSaved: (val) => paramenter == 'title'
           ? genericModel.title = val : paramenter == 'description'
@@ -109,6 +115,7 @@ class _ExamAddState extends State<ExamAddPage> {
       autovalidate: true,
       maxLines: null,
       keyboardType:  TextInputType.multiline,
+      initialValue: initialValue,
       decoration: InputDecoration(
           icon: icon,
           hintText: hintText,
@@ -168,11 +175,11 @@ class _ExamAddState extends State<ExamAddPage> {
     return TypeDropdownWidget(_formKey,genericModel);
   }
 
-  _getClassDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel) {
-    return DropDownProvider(_formKey,genericModel,null);
+  _getClassDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {
+    return DropDownProvider(_formKey,genericModel,exam);
   }
 
-  _getDateAndTime(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam ) {
+  _getDateAndTime(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {
     return DatePickerDemo.init(_formKey,genericModel,exam);
   }
 }

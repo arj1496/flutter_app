@@ -38,13 +38,13 @@ class ExamDao{
 
   getDbExam() async{
 
-    print("getAllExamData Starts ");
+    print("getDbExam Starts ");
     Database db = await getDataBaseHandler();
 
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Exam ");
 
     var test =  List.generate(maps.length, (i) {
-      return Exam.fromJson(maps[i]);
+      return Exam.fromJsonLocal(maps[i]);
     });
     print("Exam List size : ${test.length}");
     return test;
@@ -59,13 +59,13 @@ class ExamDao{
     /*List<Map<String, dynamic>> maps = await db.rawQuery("SELECT Exam.id,Exam.name,Exam.examDate,Standard.id,Standard.name "
         "FROM Exam left join Standard on Exam.standardId = Standard.id");*/
 
-    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT  ${selectedField}  from Exam e join Standard s on e.standardId = s.id "
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT  ${selectedField}  from Exam e left join Standard s on e.standardId = s.id "
          "left join Subject sub on e.subjectId = sub.id");
 
     String str = json.encode(maps);
     print("str: ${str} ");
    var test =  List.generate(maps.length, (i) {
-      return Exam.fromJson(maps[i]);
+      return Exam.fromJsonLocal(maps[i]);
     });
     print("Exam List size in join : ${test.length}");
     return test;

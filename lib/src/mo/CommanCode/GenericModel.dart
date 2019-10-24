@@ -1,5 +1,6 @@
 class  GenericModel{
   //1.Title
+  int examId;
   String title;
   int classId;
   int subjectId;

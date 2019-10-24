@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
@@ -16,17 +17,19 @@ class StandardDropdownWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return StandardDropDown.init();
+    return StandardDropDown.init(exam);
   }
 
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
-  StandardDropdownWidget.init(formKey, _eventPojo) {
+  Exam exam = new Exam();
+  StandardDropdownWidget.init(formKey, _eventPojo,exam) {
     this.formKey = formKey;
     this.genericModel = _eventPojo;
+    this.exam = exam;
   }
 
-  StandardDropdownWidget(this.formKey, this.genericModel);
+  StandardDropdownWidget(this.formKey, this.genericModel,exam);
 }
 Future<List<Standard>> getStandards() async{
   StandardActivity standardActivity = new StandardActivity();
@@ -39,11 +42,14 @@ class StandardDropDown extends State<StandardDropdownWidget> {
 
   TextEditingController labelText = new TextEditingController( );
   String classOf = "Select Class";
-
   static int selectedStandardId;
   static List<Subject> _subject;
-  StandardDropDown.init( ){
+  Exam exam = new Exam();
 
+
+
+  StandardDropDown.init(Exam exam  ){
+    this.exam = exam;
   }
   StandardDropDown( ){
 
@@ -60,6 +66,7 @@ class StandardDropDown extends State<StandardDropdownWidget> {
         },
       ),
     );*/
+
   return FutureBuilder (
         future: getStandards() ,
         builder: ( context , projectSnap ) {

@@ -69,7 +69,7 @@ class ExamService{
        widgetList.add(CardDetail2Oct(ExamPage()));
     }
     if(examSecurityCheck.markHeader){
-      widgetList.add(MarkWidget());
+      //widgetList.add(MarkWidget());
     }
     if(examSecurityCheck.gradeBoundry){
       widgetList.add(HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"));
@@ -79,12 +79,12 @@ class ExamService{
     }
     if(examSecurityCheck.syllabus){
       var propertyService = new PropertyService();
-      widgetList.add( TitleViewDetail.init(propertyService.getExamData()),);
-      widgetList.add(DescriptionCustomView.init(propertyService.getExamData()));
+      //widgetList.add( TitleViewDetail.init(propertyService.getExamData()),);
+     // widgetList.add(DescriptionCustomView.init(propertyService.getExamData()));
     }
     if(examSecurityCheck.description){
       var propertyService = new PropertyService();
-      widgetList.add(TitleViewDetail.init(propertyService.getData()));
+     // widgetList.add(TitleViewDetail.init(propertyService.getData()));
       widgetList.add(DescriptionCustomView.init(propertyService.getData()));
     }
     if(examSecurityCheck.result){
@@ -152,13 +152,13 @@ class ExamService{
     PropertyService propertyService = new PropertyService();
       List<Widget> examWidget = [
         HeaderContainer.init("Unit Test 1",""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
-        CardDetail2Oct(ExamWidget2()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
-        MarkWidget(),
+       // CardDetail2Oct(ExamWidget2()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+       // MarkWidget(),
         HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"), // It display date in blue container
         TypeView(),
-        TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
+      //  TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
         DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
-        TitleViewDetail.init(propertyService.getData()),
+       // TitleViewDetail.init(propertyService.getData()),
         DescriptionCustomView.init(propertyService.getData()),
         //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
         // AttachmentView(),                                       // It dispay container in water mark
