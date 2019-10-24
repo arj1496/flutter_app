@@ -25,4 +25,9 @@ class UrlUtils{
     String url = SchoolUtils().baseUrl + "rest/webviewpage/getwebview";
     return url;
   }
+
+  String getStudentAddUrl(){
+    String url = SchoolUtils().baseUrl + "rest/student/savestudent";
+    return url;
+  }
 }

@@ -22,7 +22,7 @@ class StandardDropDown extends StatefulWidget {
 class _StandardDropDown extends State<StandardDropDown> {
   String _class;
 
-  String standardOf = "Select Standard";
+  String standardOf = "Select Class";
   List<String> _standard;
   TextEditingController labelText = new TextEditingController();
 

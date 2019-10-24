@@ -1,22 +1,22 @@
 
-import 'package:flutter_app/src/mo/Parent/Parent.dart';
-import 'package:flutter_app/src/mo/Parent/ParentService.dart';
-import 'package:flutter_app/src/mo/Student/StudentService.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 
-import 'Student.dart';
+import 'StudentService.dart';
 
 class StudentActivity{
 
-  StudentService studentService = new StudentService();
-  ParentService parentService = new ParentService();
-  saveStudentDetail(student, callBack){
+  saveStudentDetail(GenericModel genericmodel, callBack){
+    StudentService studentservice = new StudentService();
+    studentservice.updateParentDetailOfStudent(genericmodel);
     Future.delayed(Duration(seconds: 15), () {
       callBack();
     });
   }
 
-  Future<List<Student>> getStudentListFromLocalDB() async{
-    List<Student> studentListFromFuture = await studentService.getStudentListFromLocalDB();
-    return studentListFromFuture;
+  addStudent(GenericModel genericModel, callBack){
+    StudentService studentService = new StudentService();
+    studentService.addStudent( genericModel);
   }
+
+
 }

@@ -16,68 +16,26 @@ class  GenericModel{
   String firstName;
   String lastName;
   String email;
-  int contactNo;
+  String contactNo;
   String gender;
   String invitation;
   String birthDate;
   String academicType;
-  // exam status
-   /*setTitle(String title){
-     this.title = title;
-   }
-    setClassId(int classId){
-     this.classId= classId;
-    }
-    setSubjectId(int subjectId){
-     this.subjectId = subjectId;
-    }
-    setDescription(String description){
-     this.description = description;
-    }
-    setPlace(String place){
-     this.place = place;
-    }
-    setDate(String date){
-     this.date = date;
-    }
-    setTime(String time){
-     this.time = time;
-    }*/
+
+  //Student Fields
+  int studentDBId;
+  String studMiddleName;
+  int studClass;
+  String studJoiningDate;
+  String studId;//This ID is School Student Id....NOT DB ID.
+  String studRollNO;
+  String fatherFirstName;
+  String fatherLastName;
+  String fatherContact;
+  String fatherEmail;
+  String moherFirstName;
+  String motherLastName;
+  String motherContact;
+  String motherEmail;
 
 }
-
-/*
-class EventModel implements GenericModel{
-  @override
-  int classId;
-
-  @override
-  int date;
-
-  @override
-  String description;
-
-  @override
-  String place;
-
-  @override
-  int subjectId;
-
-  @override
-  int time;
-
-  @override
-  String title;
-
-  @override
-  String eventType;
-
-  @override
-  String examType;
-
-  @override
-  String syllabus;
-
-}
-*/
-

@@ -2,6 +2,7 @@
 
 import 'dart:collection';
 
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
@@ -13,6 +14,32 @@ class StudentService{
 
   StudentDao _studentDao = new StudentDao();
   ParentService parentService = new ParentService();
+
+  addStudent(GenericModel genericModel) async{
+    StudentWebService _studentWebService = new StudentWebService();
+    Map<String, dynamic> responseData = await _studentWebService.addStudent(genericModel);
+
+    if(responseData['status']){
+      Student student = Student.fromJson_server(responseData['student']);
+      print(student);
+      List<Student> studentList = [];
+      studentList.add(student);
+      batchAddStudents(studentList);
+
+      List<dynamic> parentsDynamic = responseData['parents'];
+      if(parentsDynamic != null && parentsDynamic.length > 0){
+        List<Parent> parentList = List.generate(parentsDynamic.length, (i){
+          Parent parent = Parent.fromJsonServer(parentsDynamic[i]);
+          return parent;
+        });
+        await parentService.batchAddParents(parentList);
+      }
+      // p
+    }
+    else{
+      print("False");
+    }
+  }
 
   // this method is used to save the List of Students
   batchAddStudents(List<Student> studentList){
@@ -91,6 +118,28 @@ class StudentService{
       student.isCardActive = 1;
       student.birthDate = i;
 
+
+      Parent father = new Parent();
+      father.firstName = "Dilip";
+      father.lastName = "Kadam";
+      father.email = "d@gmail.com";
+      father.gender = "MALE";
+      father.mobileNumber = "9405186233";
+      father.relation = "FATHER";
+
+      Parent mother = new Parent();
+      mother.firstName = "Kalpana";
+      mother.lastName = "Kadam";
+      mother.email = "kk@gmail.com";
+      mother.gender = "FEMALE";
+      mother.mobileNumber = "9422481016";
+      mother.relation = "MOTHER";
+
+      List<Parent> parentList = new List();
+      parentList.add(father);
+      parentList.add(mother);
+      student.parentList = parentList;
+
       students.add(student);
     }
     return students;
@@ -106,6 +155,16 @@ class StudentService{
       await batchAddStudents(studentList);
     }
 
+  }
+
+  updateParentDetailOfStudent(GenericModel genericmodel) async {
+    StudentWebService studentwebservice = new StudentWebService();
+    Map<String, dynamic> responseData = await studentwebservice
+        .updateParentDetailOfStudent(genericmodel);
+    if (responseData['status']) {
+      Student student = Student.fromJson_server(responseData['student']);
+      print(student);
+    }
   }
 
 }

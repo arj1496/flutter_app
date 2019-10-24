@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Gender extends StatefulWidget {
   @override
@@ -22,9 +23,14 @@ void onChanged(int value){
       list.add(
           Row(
               children: <Widget>[
+                Icon(
+                    FontAwesomeIcons.transgender,
+                  color: Colors.grey,
+                ),
+                SizedBox(width: 20,),
                 Text("Male"),
                 Radio(value: 1,groupValue: _selected,onChanged:(int value){onChanged(value);}),
-               Text("Female"),
+                Text("Female"),
                 Radio(value: 2,groupValue: _selected,onChanged:(int value){onChanged(value);})
               ]
           ));
