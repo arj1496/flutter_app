@@ -15,9 +15,9 @@ import 'PropertyFile.dart';
 
 class DescriptionCustomView extends StatelessWidget {
 
-  var property = new PropertyFile();
-  DescriptionCustomView.init(PropertyFile property){
-    this.property = property;
+  String description ;
+  DescriptionCustomView.init(String description){
+    this.description = description;
   }
   @override
   Widget build( BuildContext context ) {
@@ -62,7 +62,7 @@ class DescriptionCustomView extends StatelessWidget {
                     throw 'Could not launch $link';
                   }
                 },
-                text:(property.data),
+                text:(description),
                 textDirection: TextDirection.ltr,
                 style: new TextStyle(
                   fontFamily:AppTheme.workSansFontName,

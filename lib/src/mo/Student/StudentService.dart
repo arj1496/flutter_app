@@ -3,6 +3,7 @@
 import 'dart:collection';
 
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
+import 'package:flutter_app/src/mo/Parent/ParentService.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentDao.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_app/src/mo/Student/StudentWebService.dart';
 class StudentService{
 
   StudentDao _studentDao = new StudentDao();
+  ParentService parentService = new ParentService();
 
   // this method is used to save the List of Students
   batchAddStudents(List<Student> studentList){
@@ -39,9 +41,21 @@ class StudentService{
     return studentList;
   }
 
+  // To get student data with parentList
+  /**
+   * get parentids from student and call parentservice to get parent data in the form of list.
+   */
   Future<List<Student>> getStudentListFromLocalDB() async{
     List<Student> studentListFromFuture = await _studentDao.getAllStudentDataFromLocalDB();
-    return studentListFromFuture;
+    List<Student> newList = new List();
+    for(Student student in studentListFromFuture){
+      Student std = new Student();
+      std = student;
+      List<Parent> parentList = await parentService.getAllParentDataFromId(student.parentIds);
+      std.parentList = parentList;
+      newList.add(std);
+    }
+    return newList;
   }
 
   Future<List<Student>> getStudentListFromLocalDB_(int classId, int subjectId) async{

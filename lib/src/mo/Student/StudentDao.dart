@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_app/src/fr/db/DBProvider.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:sqflite/sqflite.dart';
@@ -34,11 +36,13 @@ class StudentDao{
     print("getAllStudentDataFromLocalDB Starts ");
     Database db = await getDataBaseHandler();
 
-    String seletedField =  's.id as studId, s.firstName as studFirstName, s.lastName as studLastName';
+    String seletedField =  's.id as studId, s.firstName as studFirstName, s.lastName as studLastName , s.parentIds';
 
     List<Map<String, dynamic>> maps = await db.rawQuery(
         "SELECT ${seletedField} FROM  ${studentTable} s");
 
+    String str = json.encode(maps);
+    print("student left join data: ${str} ");
     var test = List.generate(maps.length, ( i ) {
       return Student.fromJson_local(maps[i]);
     });

@@ -40,6 +40,11 @@ class ParentService{
     return parentListFromFuture;
   }
 
+  // To get Parent data from parentIds
+  Future<List<Parent>> getAllParentDataFromId(String parentIds) async{
+    List<Parent> parentListFromFuture = await parentDAO.getAllParentDataFromId(parentIds);
+    return parentListFromFuture;
+  }
   syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
     List<dynamic> parentsDynamic = syncDataResponse['parents'];
     if(parentsDynamic != null && parentsDynamic.length > 0){

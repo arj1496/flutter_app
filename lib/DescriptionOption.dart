@@ -35,9 +35,9 @@ class DescriptionOption extends StatelessWidget {
     CardDetail2Oct(EventWidget()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
     DateWidget(),                     // It display date in blue container
     //TitleViewDetail.init(propertyService.getPlaceData()),  // It display title of place and description in listview.
-    DescriptionCustomView.init(propertyService.getPlaceData()),  // All place data is displayed in container
+    DescriptionCustomView.init("Hello world"),  // All place data is displayed in container
    // TitleViewDetail.init(propertyService.getData()),
-    DescriptionCustomView.init(propertyService.getData()),
+    DescriptionCustomView.init("Hello world"),
     AttachmentView(),                                       // It dispay container in water mark
     AttachmentFileView(),                                    // This display all atachment in listview.
   ];
@@ -47,9 +47,9 @@ class DescriptionOption extends StatelessWidget {
     CardDetail2Oct(ExamWidget()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
    // DateWidget(),                     // It display date in blue container
     //TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
-    DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
+    DescriptionCustomView.init("Hello world"),  // Alll place data is displayed in container
    // TitleViewDetail.init(propertyService.getData()),
-    DescriptionCustomView.init(propertyService.getData()),
+    DescriptionCustomView.init("Hello world"),
   //  ButtonUI.init('RESULTS','CLOSE'),
    // AttachmentView(),                                       // It dispay container in water mark
    // AttachmentFileView(),                                    // This display all atachment in listview.
@@ -61,9 +61,9 @@ class DescriptionOption extends StatelessWidget {
     HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"), // It display date in blue container
     TypeView(),
    // TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
-    DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
+    DescriptionCustomView.init("Hello world"),  // Alll place data is displayed in container
    // TitleViewDetail.init(propertyService.getData()),
-    DescriptionCustomView.init(propertyService.getData()),
+    DescriptionCustomView.init("Hello world"),
     //ButtonUI.init('RESULTS','DELETE','CLOSE'),
     //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
     // AttachmentView(),                                       // It dispay container in water mark

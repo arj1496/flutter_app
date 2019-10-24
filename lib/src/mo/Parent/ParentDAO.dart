@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_app/src/fr/db/DBProvider.dart';
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,6 +35,24 @@ class ParentDAO {
 
     List<Map<String, dynamic>> maps = await db.rawQuery(
         "SELECT * FROM  ${parentTable} p ");
+
+    var parentList = List.generate(maps.length, ( i ) {
+      return Parent.fromJsonLocal(maps[i]);
+    });
+    print("Parent List size : ${parentList.length}");
+    return parentList;
+  }
+
+  // To get Parent data from parentIds ("12,13")
+  getAllParentDataFromId(String parentIds ) async {
+    print("getAllParentDataFromId Starts ");
+    Database db = await getDataBaseHandler();
+
+    //String seletedField =  'p.id as parentId, p.firstName as parentFirstName, p.lastName as parentLastName,p.gender as pGender ,p.email as pEmail,p.mobileNumber as pMobilenumber,p.relation, p.id as personId';
+
+    List<Map<String, dynamic>> maps = await db.rawQuery(
+        "SELECT * FROM  ${parentTable} p where p.id in  (${parentIds}) ");
+
 
     var parentList = List.generate(maps.length, ( i ) {
       return Parent.fromJsonLocal(maps[i]);

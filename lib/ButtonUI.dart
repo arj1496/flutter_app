@@ -118,11 +118,11 @@ class ButtonUIState extends  State<ButtonUI> {
   }
 
   justClick(String text) async {
-    PropertyService propertyService =  new PropertyService();
+    /*PropertyService propertyService =  new PropertyService();
     PropertyFile propertyFile1 = propertyService.getExamData();
      widget.exam.description = propertyFile1.data;
      propertyFile1 = propertyService.getSyllabusData();
-     widget.exam.syllabus = propertyFile1.data;
+     widget.exam.syllabus = propertyFile1.data;*/
     if(text == "EDIT"){
       Navigator.push(
         context,
