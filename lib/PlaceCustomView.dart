@@ -42,7 +42,7 @@ class PlaceCustomView extends StatelessWidget {
 
         child: new Column (
           children: <Widget>[
-            
+
             Padding(
               padding: const EdgeInsets.only(left:8.0,bottom:8.0,right:2.0),
               child:

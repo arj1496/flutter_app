@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/ButtonUI.dart';
 import 'package:flutter_app/HeaderContainer.dart';
 import 'package:flutter_app/PropertyService.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Exam/ButtonAccess.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/ExamDao.dart';
@@ -85,7 +86,7 @@ class ExamService{
     if(examSecurityCheck.description){
       var propertyService = new PropertyService();
      // widgetList.add(TitleViewDetail.init(propertyService.getData()));
-      widgetList.add(DescriptionCustomView.init(propertyService.getData()));
+      widgetList.add(DescriptionCustomView.init("Hello world"));
     }
     if(examSecurityCheck.result){
       widgetList.add(ButtonAccess());
@@ -119,13 +120,17 @@ class ExamService{
     return examList;
   }
 
-
-    Future<int> addOrUpdateExam(Exam exam) async{
-      Map<String, dynamic> examData = await examWebService.addOrUpdateExam(exam);
-
+    // call webservice to add exam to server.
+    Future<int> addOrUpdateExam(GenericModel genericModel) async{
+      Map<String, dynamic> examData = await examWebService.addOrUpdateExam(genericModel);
+      // if the response is true and the examId is present allredy update that exam otherwise add that exam to local database
       if(examData['status']){
         Exam exam = Exam.fromJson(examData['exam']);
-        await examDao.addExam(exam);
+        if(genericModel.examId != null) {
+          await examDao.updateExam (exam );
+        }else{
+          await examDao.addExam ( exam );
+        }
         return exam.id;
       }else{
         print('Exam Add False');
@@ -157,9 +162,9 @@ class ExamService{
         HeaderContainer.init("Grade Boundry","Grade Level 1 Science and Enginerring mathematics"), // It display date in blue container
         TypeView(),
       //  TitleViewDetail.init(propertyService.getExamData()),  // It display title of place and description in listview.
-        DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
+        DescriptionCustomView.init("Hello world"),  // Alll place data is displayed in container
        // TitleViewDetail.init(propertyService.getData()),
-        DescriptionCustomView.init(propertyService.getData()),
+        DescriptionCustomView.init("Hello world"),
         //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
         // AttachmentView(),                                       // It dispay container in water mark
         // AttachmentFileView(),                                    // This display all atachment in listview.

@@ -61,6 +61,7 @@ class _ExamAddState extends State<ExamEditPage> {
     );
   }
 
+  // Pass Data to Exam edit page form the fill exam details in form which is previously created .
   getWidgetList(){
     List<Widget> widgetList = [
       _getClassDropdownwidget(_formKey,genericModel,widget.exam),
@@ -176,7 +177,7 @@ class _ExamAddState extends State<ExamEditPage> {
   }
 
   _getClassDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {
-    return DropDownProvider(_formKey,genericModel,exam);
+    return DropDownProvider.init(_formKey,genericModel,exam);
   }
 
   _getDateAndTime(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {

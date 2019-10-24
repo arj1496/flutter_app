@@ -7,7 +7,7 @@ import 'Exam.dart';
 
 class ExamDao{
   static final examTable = "Exam";
-  String selectedField = "e.id as examId,e.name as examName,e.totalMark,e.examType,e.examDate,e.owner, "
+  String selectedField = "e.id as examId,e.name as examName,e.totalMark,e.examType,e.examDate,e.owner,e.description,e.syllabus, "
       "s.id as standardId,s.name as standardName, "
       "sub.id as subjectId,sub.name as subjectName " ;
   Future<Database> getDataBaseHandler( ) async {
@@ -25,6 +25,7 @@ class ExamDao{
         exam.toJson ( ) ,
         conflictAlgorithm: ConflictAlgorithm.replace ,
       );
+
      /* int examId;
       futureId.then<int> ( ( id ) {
         examId = id;
@@ -108,4 +109,19 @@ class ExamDao{
       print("Exam Saved Successfully in to Local DB : " + examList.length.toString());
     });
   }
+
+  updateExam(Exam exam) {
+    Database db = null;
+    getDataBaseHandler ( ).then ( ( dataBaseInstance ) async{
+      db = dataBaseInstance;
+
+      int futureId = await db.update (
+        examTable ,
+        exam.toJson ( ) ,
+        where: "id= ?",
+        whereArgs: [exam.id],
+      );
+      return futureId;
+  });
+        }
 }

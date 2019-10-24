@@ -16,7 +16,8 @@ class ExamAddPage extends StatefulWidget {
 }
 
 class _ExamAddState extends State<ExamAddPage> {
-  //EventPojo eventPojo = new EventPojo();
+
+  //Generic model to get form data.
   GenericModel genericModel = new GenericModel();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   static ExamActivity examActivity = new ExamActivity();
@@ -56,12 +57,12 @@ class _ExamAddState extends State<ExamAddPage> {
       ),
     );
   }
-
+//this method returns the widget list which is assigned to generic model toget data from form
   getWidgetList(){
     List<Widget> widgetList = [
-    _getClassDropdownwidget(_formKey,genericModel),
+     _getClassDropdownwidget(_formKey,genericModel),
       _getExamTypeDropdownwidget(_formKey,genericModel),
-    _getTextFormTextField(Icon(Icons.title), 'Enter Exam Title', 'Title','title'),
+     _getTextFormTextField(Icon(Icons.title), 'Enter Exam Title', 'Title','title'),
       _getTextFormTextField(Icon(Icons.adjust), 'Enter Totalmark', 'Mark','Mark'),
     _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Description', 'Description','description'),
     _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Syllabus', 'Syllabus','Syllabus'),
@@ -71,11 +72,12 @@ class _ExamAddState extends State<ExamAddPage> {
     return widgetList;
   }
 
+  // For single line textfield
   _getTextFormTextField(Icon icon , hintText, labelText,paramenter) {
     return TextFormField(
       onSaved: (val) => paramenter == 'title'
           ? genericModel.title = val : paramenter == 'description'
-          ? genericModel.description = val :  paramenter == 'marks' ? genericModel.totalMarks = val as int : null,
+          ? genericModel.description = val :  paramenter == 'totalMarks' ? genericModel.totalMarks = val as int : null,
       autovalidate: true,
       decoration: InputDecoration(
           icon: icon,
@@ -100,7 +102,7 @@ class _ExamAddState extends State<ExamAddPage> {
       },
     );
   }
-
+  // For description and syllabus require multiline textfiels
   _getMultilineTextFormTextField(Icon icon , hintText, labelText,paramenter) {
     return TextFormField(
       onSaved: (val) => paramenter == 'title'
@@ -154,24 +156,29 @@ class _ExamAddState extends State<ExamAddPage> {
         print("exam Type : ${genericModel.examType}");
         print("exam date : ${genericModel.date}");
         print("exam time : ${genericModel.time}");
-
+        print("exam mark : ${genericModel.totalMarks}");
       },
     );
   }
 
+
+  // 'DRAFT','PUBLISH','CLOSE' UI and pass the generic model to add all data of form to the server as exam data.
   submitButton(_formKey, genericModel,exam){
     return ButtonUI2.init(_formKey, genericModel,'DRAFT','PUBLISH','CLOSE',exam);
 
   }
 
+  // drop down for type
   _getExamTypeDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel) {
     return TypeDropdownWidget(_formKey,genericModel);
   }
 
+  // drop down for class and subject
   _getClassDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel) {
     return DropDownProvider(_formKey,genericModel,null);
   }
 
+  // Date and time textfield
   _getDateAndTime(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam ) {
     return DatePickerDemo.init(_formKey,genericModel,exam);
   }

@@ -82,26 +82,25 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
       ),
     );
   }
-
+// Pass exam field to widget constructur to fill in the exam detail page
   Widget _listTileViewUV(data) {
     return  GestureDetector(
         onTap: (){
-
-      PropertyService propertyService = new PropertyService();
       List<Widget> examWidget2 = [
         HeaderContainer.init(data.name,""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
         CardDetail2Oct(ExamWidget2(data)),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
         MarkWidget(data),
         //TypeView(),
         TitleViewDetail.init("Syllabus",FontAwesomeIcons.book),  // It display title of place and description in listview.
-        DescriptionCustomView.init(propertyService.getExamData()),  // Alll place data is displayed in container
+        DescriptionCustomView.init(data.syllabus),  // Alll place data is displayed in container
         TitleViewDetail.init("Description",FontAwesomeIcons.bookOpen),
-        DescriptionCustomView.init(propertyService.getData()),
+        DescriptionCustomView.init(data.description),
         ButtonUI.init('EDIT','CLOSE',data),
         //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
         // AttachmentView(),                                       // It dispay container in water mark
         // AttachmentFileView(),                                    // This display all atachment in listview.
       ];
+      // when click on list view of exam all the details of that exam is displayed.
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DetailView2Oct.init(examWidget2," "),
@@ -311,7 +310,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                                     left: 2, bottom: 3),
                                                 child:
                                                 Text(
-                                                  'Science',
+                                                  data.subjectName,
                                                   overflow: TextOverflow.ellipsis,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -349,7 +348,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                             padding: const EdgeInsets.only(
                                                 left: 1, bottom: 2),
                                             child: Text(
-                                              'Class-1',
+                                              data.standardName,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontFamily:

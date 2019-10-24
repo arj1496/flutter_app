@@ -123,9 +123,8 @@ class ButtonUIState extends  State<ButtonUI2> {
   }
 
   justClick(String text) async {
-     ExamService examService = new ExamService();
-
     ExamActivity examActivity = new ExamActivity();
+
    if(text == "DRAFT"){
      if(widget.formKey.currentState.validate()){
        widget.formKey.currentState.save();

@@ -62,7 +62,7 @@ class MainDetailPage extends StatelessWidget {
 
  List<Widget> _getWidget(){
     List<Widget> list = [
-      DescriptionCustomView.init(propertyService.getData())
+      DescriptionCustomView.init("Hello world")
     ];
    return list;
  }
@@ -240,8 +240,8 @@ class MainDetailPage extends StatelessWidget {
                                         SizedBox(
                                           width: 28,
                                           height: 28,
-                                          child: Image.asset(
-                                              "assets/fitness_app/burned.png"),
+                                          /*child: Image.asset(
+                                              "assets/fitness_app/burned.png"),*/
                                         ),
                                         Padding(
                                           padding:

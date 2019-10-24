@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
-
 import 'Exam.dart';
 
 
@@ -16,13 +15,14 @@ class ExamActivity{
 
    Future<int> addExamToServer(Exam exam) async{
     print("in examactivity");
-    int examObject = await examService.addOrUpdateExam(exam);
-    return examObject;
+   // int examObject = await examService.addOrUpdateExam(exam);
+   // return examObject;
   }
+  // Pass all data from exam add page in the form of generic model.
   Future<int> addExamToServer_(  GlobalKey<FormState> formKey,GenericModel genericModel) async{
     print("in examactivity");
     Exam exam = getExamFromGeneric(genericModel);
-    int examObject = await examService.addOrUpdateExam(exam);
+    int examObject = await examService.addOrUpdateExam(genericModel);
     return examObject;
   }
 
@@ -45,7 +45,7 @@ class ExamActivity{
     exam.subjectId = genericModel.subjectId ;
     exam.subjectName = 'computer science and enggineering - ' ;
     exam.examDate = genericModel.date;
-    exam.totalMark = 20;
+    exam.totalMark =genericModel.totalMarks;
    // exam.examType =genericModel.examType ;
     exam.owner = 'Ramlingam';
     exam.description = genericModel.description;

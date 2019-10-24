@@ -14,15 +14,11 @@ class PlaceCardModel extends StatelessWidget {
   var label = "Place: ";
   @override
   Widget build( BuildContext context ) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: new Card (
+    return new Card (
 
         child: new Column (
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(10),
-            ),
+
             Row(
               children:<Widget>[IconButton(
                 icon: new Icon(FontAwesomeIcons.venus),
@@ -69,7 +65,7 @@ class PlaceCardModel extends StatelessWidget {
 
           ],
         ),
-      ),
+
     );
 
   }

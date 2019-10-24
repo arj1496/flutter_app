@@ -18,7 +18,7 @@ class SubjectDropdownWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return ExamAddUIState.init();
+    return SubjectDropdownWidget1.init(exam);
   }
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
@@ -31,12 +31,26 @@ class SubjectDropdownWidget extends StatefulWidget {
 
   SubjectDropdownWidget(this.formKey, this.genericModel,exam);
 }
-class SubjectDropdownWidget1 extends StatelessWidget {
+class SubjectDropdownWidget1 extends State<SubjectDropdownWidget> {
   TextEditingController labelText = new TextEditingController( );
   Exam exam = new Exam();
   String subjectOf = "Select Subject";
+
+
+
+
+
   SubjectDropdownWidget1.init(Exam exam  ){
     this.exam = exam;
+  }
+  @override
+  void initState() {
+    if(widget.exam.subjectName != null){
+      subjectOf = widget.exam.subjectName;
+    }else{
+      subjectOf ="Select Subject";
+    }
+
   }
   @override
   Widget build(BuildContext context) {

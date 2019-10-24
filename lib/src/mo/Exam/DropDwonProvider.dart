@@ -13,7 +13,7 @@ class DropDownProvider extends StatefulWidget  {
   _DropDownProviderState createState() => _DropDownProviderState();
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
-  Exam exam;
+  Exam exam = new Exam();
   DropDownProvider.init(formKey, _eventPojo,exam) {
     this.formKey = formKey;
     this.genericModel = _eventPojo;
@@ -34,8 +34,8 @@ class _DropDownProviderState extends State<DropDownProvider>  with SingleTickerP
       child: Container(
         child: Column(
           children: <Widget>[
-            StandardDropdownWidget(widget.formKey, widget.genericModel,widget.exam),
-            SubjectDropdownWidget(widget.formKey, widget.genericModel,widget.exam),
+            StandardDropdownWidget.init(widget.formKey, widget.genericModel,widget.exam),
+            SubjectDropdownWidget.init(widget.formKey, widget.genericModel,widget.exam),
           ],
         ),
       ),

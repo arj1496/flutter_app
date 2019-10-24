@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/Descrptionview.dart';
 import 'package:flutter_app/Placeview.dart';
+import 'package:flutter_app/PropertyFile.dart';
 import 'AllDetailsview.dart';
 
 class Detailview extends StatelessWidget {
@@ -10,6 +11,7 @@ class Detailview extends StatelessWidget {
   Detailview.init(List<Widget>  widgetList){
     this._widgetList = widgetList;
   }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

@@ -39,7 +39,7 @@ class MenuFile extends StatelessWidget {
 
   static PropertyService propertyService = new PropertyService();
   List<Widget> widgetList = [Descriptionview(),Placeview(),AllDetailsview(),Dateview(),Buttonview()];
-  List<Widget> customWidget = [DescriptionCustomView.init(propertyService.getData())];
+  List<Widget> customWidget = [DescriptionCustomView.init("Hello world")];
 
   
   @override

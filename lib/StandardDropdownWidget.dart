@@ -17,7 +17,7 @@ class StandardDropdownWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return StandardDropDown.init(exam);
+    return StandardDropDown();
   }
 
   GlobalKey<FormState> formKey;
@@ -41,16 +41,24 @@ Future<List<Standard>> getStandards() async{
 class StandardDropDown extends State<StandardDropdownWidget> {
 
   TextEditingController labelText = new TextEditingController( );
-  String classOf = "Select Class";
+  String classOf;
   static int selectedStandardId;
   static List<Subject> _subject;
-  Exam exam = new Exam();
+ // Exam exam = new Exam();
 
 
+  @override
+  void initState() {
+    if(widget.exam.standardName != null){
+      classOf = widget.exam.standardName;
+    }else{
+      classOf ="Select Class";
+    }
 
-  StandardDropDown.init(Exam exam  ){
-    this.exam = exam;
   }
+ /* StandardDropDown.init(Exam exam  ){
+    this.wexam = exam;
+  }*/
   StandardDropDown( ){
 
   }

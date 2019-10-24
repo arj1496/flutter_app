@@ -7,9 +7,12 @@ import 'TitleView.dart';
 class TitleViewDetail extends StatelessWidget {
 
   List<Widget> cutomWidgetList = new List();
-  var property = new PropertyFile();
-  TitleViewDetail.init(PropertyFile property){
-    this.property = property;
+  String title;
+  IconData subTitle;
+
+  TitleViewDetail.init(String title,IconData subTitle){
+    this.title = title;
+    this.subTitle = subTitle;
   }
   @override
   Widget build( BuildContext context ) {
@@ -25,8 +28,8 @@ class TitleViewDetail extends StatelessWidget {
                     left: 10, right: 10
                 ),
                 child:TitleView(
-                  titleTxt: property.label,
-                  subTxt: property.iconData,
+                  titleTxt: title,
+                  subTxt: subTitle,
                 ),
                   ),
                   ],
