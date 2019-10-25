@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/PropertyService.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,7 +12,6 @@ import '../../../ExamWidget2.dart';
 import '../../../HeaderContainer.dart';
 import '../../../MarkWidget.dart';
 import '../../../TitleViewDetail.dart';
-import '../../../TypeView.dart';
 import 'Exam.dart';
 
 
@@ -25,6 +24,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
 
 
   ExamService examService = new ExamService();
+  SchoolUtils schoolUtils = new SchoolUtils();
   @override
   void initState() {
 
@@ -53,7 +53,8 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
         title: Text("Exam"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(Icons.filter),
+           // onPressed: openFilterAlert(),
             // onPressed: synEvents,
           ),
           /* IconButton(
@@ -146,8 +147,6 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
 
 
                   // this Padding is Used to render the Horizontal line Starts
-
-
 
                   Padding(
                     padding: const EdgeInsets.only(
@@ -407,7 +406,8 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                   data.examDate.toString(),
+                                       //new DateTime.fromMillisecondsSinceEpoch(data.examDate).toString(),
+                                      schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.examDate),
                                     style: TextStyle(
                                       fontFamily: AppTheme.robotoFontName,
                                       fontWeight: FontWeight.w500,
@@ -529,4 +529,274 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
       ),
     );
   }
+  openFilterAlert() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Exam Filter"),
+            content: Container(
+              child: //getEditForm(student),
+               Text("hello"),
+
+              //getDisplayForm(),
+            ),
+            /*actions: <Widget>[
+              _isEditBtn
+                  ? MaterialButton(
+                  child: Text("Edit"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => getStudentEditForm(
+                              object: student,
+                              onCustCallBack: (){
+                                print('hey done');
+                              }
+                          )),
+                    );
+
+                  }) : null,
+              MaterialButton(
+                  child: Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],*/
+          );
+        });
+  }
+
+  Widget getDisplayForm() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(1.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+              alignment: Alignment.topLeft,
+              child: Text("Father details",
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold))),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "First Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Dilip",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Last Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Kadam",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Email: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "dilip123@gmail.com",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Contact: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "9405186233",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text("Mother details",
+                style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "First Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Kalpana",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Last Name: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Kadam",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Email: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "k123@gmail.com",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding:
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: "Contact: ",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "9422481016",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  } //getDisplayForm
 }
+
+
+
+

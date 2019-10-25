@@ -34,7 +34,7 @@ class _ExamAddState extends State<ExamEditPage> {
           appBar: AppBar(
             elevation: 0.0,
             backgroundColor: AppTheme.background,
-            title: Text("Add Exam form"),
+            title: Text("Edit Exam form"),
           ),
           //body: _getContainerBody(),
           body:SingleChildScrollView(
@@ -65,7 +65,7 @@ class _ExamAddState extends State<ExamEditPage> {
   getWidgetList(){
     List<Widget> widgetList = [
       _getClassDropdownwidget(_formKey,genericModel,widget.exam),
-      _getExamTypeDropdownwidget(_formKey,genericModel),
+      _getExamTypeDropdownwidget(_formKey,genericModel,widget.exam),
       _getTextFormTextField(Icon(Icons.title), 'Enter Exam Title', 'Title','title',widget.exam.name),
       _getTextFormTextField(Icon(Icons.adjust), 'Enter Totalmark', 'Mark','Mark',widget.exam.totalMark.toString()),
       _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Description', 'Description','description',widget.exam.description),
@@ -172,8 +172,8 @@ class _ExamAddState extends State<ExamEditPage> {
 
   }
 
-  _getExamTypeDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel) {
-    return TypeDropdownWidget(_formKey,genericModel);
+  _getExamTypeDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {
+    return TypeDropdownWidget.init(_formKey,genericModel,exam);
   }
 
   _getClassDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {

@@ -114,8 +114,8 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Text("sub join demo",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
               onPressed: ()async {
-                List<Exam> examObject = await examService.getSubJoinDbExam();
-                print(examObject.length);
+               // List<Exam> examObject = await examService.getSubJoinDbExam();
+                //print(examObject.length);
 //          setState(() {
 //            _isNeedHelp = true;
 //          });

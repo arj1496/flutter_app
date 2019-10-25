@@ -36,6 +36,11 @@ class ExamActivity{
     return examListFromFuture;
   }
 
+  Future<List<Exam>> getFilterExam(int standardId,int subjectId,String type) async{
+    List<Exam> examListFromFuture = await examService.getDbExam();
+    return examListFromFuture;
+  }
+  // Prepare exam object from generic model.
   getExamFromGeneric(GenericModel genericModel){
     Exam exam = new Exam();
     exam.id = genericModel.examId;
@@ -46,7 +51,6 @@ class ExamActivity{
     exam.subjectName = 'computer science and enggineering - ' ;
     exam.examDate = genericModel.date;
     exam.totalMark =genericModel.totalMarks;
-   // exam.examType =genericModel.examType ;
     exam.owner = 'Ramlingam';
     exam.description = genericModel.description;
     exam.syllabus = genericModel.syllabus;

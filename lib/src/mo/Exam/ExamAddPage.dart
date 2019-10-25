@@ -60,8 +60,8 @@ class _ExamAddState extends State<ExamAddPage> {
 //this method returns the widget list which is assigned to generic model toget data from form
   getWidgetList(){
     List<Widget> widgetList = [
-     _getClassDropdownwidget(_formKey,genericModel),
-      _getExamTypeDropdownwidget(_formKey,genericModel),
+     _getClassDropdownwidget(_formKey,genericModel,null),
+      _getExamTypeDropdownwidget(_formKey,genericModel,null),
      _getTextFormTextField(Icon(Icons.title), 'Enter Exam Title', 'Title','title'),
       _getTextFormTextField(Icon(Icons.adjust), 'Enter Totalmark', 'Mark','Mark'),
     _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Description', 'Description','description'),
@@ -169,13 +169,13 @@ class _ExamAddState extends State<ExamAddPage> {
   }
 
   // drop down for type
-  _getExamTypeDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel) {
-    return TypeDropdownWidget(_formKey,genericModel);
+  _getExamTypeDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {
+    return TypeDropdownWidget.init(_formKey,genericModel,exam);
   }
 
   // drop down for class and subject
-  _getClassDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel) {
-    return DropDownProvider(_formKey,genericModel,null);
+  _getClassDropdownwidget(GlobalKey<FormState> formKey, GenericModel genericModel,Exam exam) {
+    return DropDownProvider.init(_formKey,genericModel,null);
   }
 
   // Date and time textfield

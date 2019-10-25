@@ -11,7 +11,7 @@ class SchoolUtils {
 
   //String baseUrl = "https://educloud.in";
   //String baseUrl = "http://192.168.0.100:8080/soms/";
-  String baseUrl = "http://192.168.0.109:8080/soms/";
+  String baseUrl = "http://192.168.0.102:8080/soms/";
 
   SchoolUtils._internal(){
   }
@@ -71,6 +71,15 @@ class SchoolUtils {
     String daysStr = days + " Day(s)";
     return daysStr;
 
+  }
+
+  String getDateStringWithoutYear(int dateLong){
+
+    //var  todayDate = DateTime.fromMicrosecondsSinceEpoch(dateLong,isUtc: true);
+    var  todayDate = DateTime.fromMillisecondsSinceEpoch(dateLong,isUtc: false);
+    String dateSring = formatDate(todayDate, [dd, ' ', M ]);
+    //print(dateSring);
+    return dateSring;
   }
 }
 

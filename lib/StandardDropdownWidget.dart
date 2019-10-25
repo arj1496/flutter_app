@@ -44,13 +44,15 @@ class StandardDropDown extends State<StandardDropdownWidget> {
   String classOf;
   static int selectedStandardId;
   static List<Subject> _subject;
+  bool isStandardDisabled = true;
  // Exam exam = new Exam();
 
 
   @override
   void initState() {
-    if(widget.exam.standardName != null){
+    if(widget.exam!= null && widget.exam.standardName != null){
       classOf = widget.exam.standardName;
+      isStandardDisabled = false;
     }else{
       classOf ="Select Class";
     }
@@ -109,7 +111,6 @@ class StandardDropDown extends State<StandardDropdownWidget> {
                           isDense: true ,
                           onChanged: ( dynamic newValue ) {
                             setState ( ( ) {
-                              selectedStandardId = newValue.id;
                               classOf = newValue.name;
                               state.didChange ( newValue );
                               widget.formKey.currentState.save();

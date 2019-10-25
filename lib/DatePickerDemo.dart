@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:intl/intl.dart';
@@ -28,10 +29,16 @@ class ExamAddUIState extends State<DatePickerDemo>{
   DateTime _todayDate = new DateTime.now();
   TimeOfDay  _pickedTime = TimeOfDay.now();
   TextEditingController labelText = new TextEditingController();
+  SchoolUtils schoolUtils = new SchoolUtils();
 
-  ExamAddUIState.init(){
-
+  @override
+  void initState() {
+   /* if(widget.exam!= null && widget.exam.examDate != null){
+      _todayDate = new DateTime.fromMicrosecondsSinceEpoch(widget.exam.examDate );
+    }*/
   }
+  ExamAddUIState.init(){}
+
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
@@ -132,16 +139,16 @@ class ExamAddUIState extends State<DatePickerDemo>{
         onTap: (){
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDate(context);
-        },
-       // initialValue: 'DateTime.fromMillisecondsSinceEpoch(widget.exam.examDate)',
-        style: TextStyle(
+        }, 
+        //initialValue:  widget.exam.examDate.toString(),     //schoolUtils.getDateStringFromLongWithOutSchoolTimeZone(widget.exam.examDate),
+       style: TextStyle(
           fontWeight: FontWeight.w100,
           fontSize: 16,
         ),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
           icon: Icon(Icons.date_range),
-          hintText: "Select Date",
+          hintText: '${myFormat.format(_todayDate)}',
           labelText: '${myFormat.format(_todayDate)}',
           /*border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0)
@@ -184,6 +191,7 @@ class ExamAddUIState extends State<DatePickerDemo>{
         context: context,
         initialDate: _todayDate,
         firstDate: DateTime(2000),
+
         lastDate: DateTime(2100)
     );
 

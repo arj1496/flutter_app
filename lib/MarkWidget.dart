@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -11,7 +12,7 @@ class MarkWidget extends StatelessWidget {
 
   var property = new PropertyFile( );
   Exam exam = new Exam();
-
+  SchoolUtils schoolUtils = new SchoolUtils();
   MarkWidget( Exam exam) {
    this.exam = exam;
   }
@@ -221,7 +222,7 @@ class MarkWidget extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 2 , left: 28 ) ,
                   child: Text (
-                    exam.examDate.toString() ,
+                    schoolUtils.getDateStringWithoutYear(exam.examDate),
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,

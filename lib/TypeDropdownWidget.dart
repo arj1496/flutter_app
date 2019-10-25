@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
 
 class TypeDropdownWidget extends StatefulWidget {
   List<String> _type = <String>['Unit Test 1', 'FA Exam', 'Term Exam', 'Class Test', 'Terminal(A)','test-1','test-2','test-3','test-4',];
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
-  TypeDropdownWidget.init(formKey, _eventPojo) {
+  Exam exam = new Exam();
+  TypeDropdownWidget.init(formKey, _eventPojo,exam) {
     this.formKey = formKey;
     this.genericModel = _eventPojo;
+    this.exam = exam;
   }
 
-  TypeDropdownWidget(this.formKey, this.genericModel);
+  TypeDropdownWidget(this.formKey, this.genericModel,this.exam);
 
   @override
   State<StatefulWidget> createState() {
@@ -20,12 +23,22 @@ class TypeDropdownWidget extends StatefulWidget {
 }
 
 class ExamAddUIState extends State<TypeDropdownWidget>{
-  String typeOf = "Select Type";
+  String typeOf;
   List<String> _type;
   TextEditingController labelText = new TextEditingController();
 
   ExamAddUIState.init(List<String> _type){
     this._type= _type;
+  }
+
+  @override
+  void initState() {
+    if(widget.exam!= null && widget.exam.examType != null){
+      typeOf = widget.exam.examType;
+
+    }else{
+      typeOf ="Select Type";
+    }
 
   }
   @override
