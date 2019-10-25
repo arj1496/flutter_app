@@ -72,4 +72,15 @@ class SubjectService{
   }
 
 
+  List<Subject> getAllSubject(){
+    List<Subject> subjectList = new List();
+    for(var i = 1 ; i < 3; i++){
+      Subject subject = new Subject();
+      subject.id = i;
+      subject.name = 'Matematics' + i.toString();
+      subject.standardId = i;
+      subjectList.add(subject);
+    }
+    return subjectList;
+  }
 }

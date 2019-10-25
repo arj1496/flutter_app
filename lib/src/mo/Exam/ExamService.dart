@@ -211,4 +211,9 @@ class ExamService{
 
   }
 
+  Future<List<Exam>> getFilterExam(int standardId,int subjectId,String type) async{
+    List<Exam> examListFromFuture = await examDao.getFilterExam(standardId, subjectId, type);
+    return examListFromFuture;
+  }
+
 }

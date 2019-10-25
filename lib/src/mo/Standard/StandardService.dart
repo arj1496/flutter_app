@@ -65,4 +65,21 @@ class StandardService{
 
   }
 
+
+  List<Standard> getAllStandard(){
+    List<Standard> standardList = new List();
+    for(var i = 1 ; i < 3; i++){
+      Standard standard = new Standard();
+      standard.id = i;
+      standard.name = 'Matematics' + i.toString();
+      standard.startDate = 1572021449+i ;
+      standard.endDate = 1572021449+i;
+      standard.startTime = "2" + i.toString();
+      standard.endTime = "2" + i.toString();
+      standardList.add(standard);
+    }
+    return standardList;
+  }
+
+
 }

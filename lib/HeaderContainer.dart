@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/Exam/Exam.dart';
 
 import 'AppTheme.dart';
 
 class HeaderContainer extends StatelessWidget {
   var title;
   var subtitle;
-  HeaderContainer(){}
+
+  Exam exam = new Exam();
 
   HeaderContainer.init(var title,var subtitle){
     this.title = title;
     this.subtitle = subtitle;
+  }
+  HeaderContainer(Exam exam){
+    this.exam = exam;
+
   }
   @override
   Widget build( BuildContext context ) {

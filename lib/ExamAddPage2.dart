@@ -98,12 +98,15 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Text("get exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
               onPressed: ()async {
-                List<Student> studentObject = await studentActivity.getStudentListFromLocalDB();
+              /*  List<Student> studentObject = await studentActivity.getStudentListFromLocalDB();
                 String str = json.encode(studentObject);
                 print("student left join examaddpage2: ${str} ");
-//          setState(() {
+
+*///          setState(() {
 //            _isNeedHelp = true;
 //          });
+                List<Exam> examList = await examActivity.getFilterExam(9, 62, "Terminal (A)");
+                print(examList.length);
               },
             ),
 

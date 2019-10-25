@@ -124,4 +124,43 @@ class ExamDao{
       return futureId;
   });
         }
+
+
+        getFilterExam(int standardId,int subjectId,String type) async {
+          print("getFilterExam Starts ");
+          Database db = await getDataBaseHandler();
+          bool isAndRequire = false;
+          /*List<Map<String, dynamic>> maps = await db.rawQuery("SELECT Exam.id,Exam.name,Exam.examDate,Standard.id,Standard.name "
+        "FROM Exam left join Standard on Exam.standardId = Standard.id");*/
+          String query = "SELECT * FROM Exam e where ";
+          if(standardId != null){
+            query +=  "e.standardId = ${standardId} ";
+            isAndRequire = true;
+          }
+          if(subjectId != null){
+            if(isAndRequire){
+              query +=  "and ";
+            }
+            query += "e.subjectId = ${subjectId} ";
+            isAndRequire = true;
+          }
+          if(type != null && type != ""){
+            if(isAndRequire){
+              query +=  "and ";
+            }
+            query += "e.type = ${type} ";
+
+          }
+
+          List<Map<String, dynamic>> maps = await db.rawQuery(query);
+
+          String str = json.encode(maps);
+          print("str: ${str} ");
+          var test =  List.generate(maps.length, (i) {
+            return Exam.fromJsonLocal(maps[i]);
+          });
+          print("Exam List size in join : ${test.length}");
+          return test;
+        }
+
 }

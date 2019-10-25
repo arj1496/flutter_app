@@ -37,8 +37,12 @@ class ExamActivity{
   }
 
   Future<List<Exam>> getFilterExam(int standardId,int subjectId,String type) async{
-    List<Exam> examListFromFuture = await examService.getDbExam();
+    List<Exam> examListFromFuture = await examService.getFilterExam(standardId, subjectId, type);
     return examListFromFuture;
+  }
+
+  getAccessRights(Exam exam){
+    //return map of variable<string,string>
   }
   // Prepare exam object from generic model.
   getExamFromGeneric(GenericModel genericModel){

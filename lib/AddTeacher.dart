@@ -117,7 +117,7 @@ class AddTeacherState extends State<AddTeacher>{
 
             onSaved: (val) {
               String test = val;
-              return genericModel.contactNo = int.parse(test);
+              return genericModel.contactNo = int.parse(test) as String;
             },
             keyboardType: TextInputType.numberWithOptions(decimal: true),
            // textInputAction: TextInputAction.next,

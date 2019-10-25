@@ -22,7 +22,7 @@ class CustomListviewExam extends StatefulWidget {
 
 class _ListTileViewUVState extends State<CustomListviewExam> {
 
-
+  ExamActivity examActivity = new ExamActivity();
   ExamService examService = new ExamService();
   SchoolUtils schoolUtils = new SchoolUtils();
   @override
@@ -31,14 +31,11 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
   }
 
   Future<List<Exam>> getData() async{
-    ExamActivity examActivity = new ExamActivity();
     List<Exam> examList = await examActivity.getJoinDbExam();
     return examList;
   }
   @override
   Widget build(BuildContext context) {
-    ExamActivity examActivity = new ExamActivity();
-    Future<List<Exam>> examListFuture = examActivity.getJoinDbExam();
 
     var futureBuilder = new FutureBuilder(
         future: getData(),
@@ -54,7 +51,7 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.filter),
-           // onPressed: openFilterAlert(),
+            // onPressed: _buildAboutDialog(context),
             // onPressed: synEvents,
           ),
           /* IconButton(
@@ -75,36 +72,21 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
       color: AppTheme.background,
       child: ListView.builder(
           itemCount: examList.length,
-
           itemBuilder: (BuildContext ctxt, int Index){
-            return examList != null && examList.length > 0  ?  _listTileViewUV(examList[Index]) : _listNotFound();
+            return examList != null && examList.length > 0  ?  _renderlistTileView(examList[Index]) : _listNotFound();
           }
 
       ),
     );
   }
 // Pass exam field to widget constructur to fill in the exam detail page
-  Widget _listTileViewUV(data) {
+  Widget _renderlistTileView(data) {
     return  GestureDetector(
         onTap: (){
-      List<Widget> examWidget2 = [
-        HeaderContainer.init(data.name,""),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
-        CardDetail2Oct(ExamWidget2(data)),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
-        MarkWidget(data),
-        //TypeView(),
-        TitleViewDetail.init("Syllabus",FontAwesomeIcons.book),  // It display title of place and description in listview.
-        DescriptionCustomView.init(data.syllabus),  // Alll place data is displayed in container
-        TitleViewDetail.init("Description",FontAwesomeIcons.bookOpen),
-        DescriptionCustomView.init(data.description),
-        ButtonUI.init('EDIT','CLOSE',data),
-        //ButtonUI2.init('RESULTS','DELETE','CLOSE'),
-        // AttachmentView(),                                       // It dispay container in water mark
-        // AttachmentFileView(),                                    // This display all atachment in listview.
-      ];
       // when click on list view of exam all the details of that exam is displayed.
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => DetailView2Oct.init(examWidget2," "),
+        MaterialPageRoute(builder: (context) => DetailView2Oct.examInit(data),
         ),
       );
     },
@@ -529,272 +511,29 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
       ),
     );
   }
-  openFilterAlert() {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Exam Filter"),
-            content: Container(
-              child: //getEditForm(student),
-               Text("hello"),
-
-              //getDisplayForm(),
-            ),
-            /*actions: <Widget>[
-              _isEditBtn
-                  ? MaterialButton(
-                  child: Text("Edit"),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => getStudentEditForm(
-                              object: student,
-                              onCustCallBack: (){
-                                print('hey done');
-                              }
-                          )),
-                    );
-
-                  }) : null,
-              MaterialButton(
-                  child: Text("Close"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-            ],*/
-          );
-        });
-  }
-
-  Widget getDisplayForm() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(1.0),
-      child: Column(
+  Widget _buildAboutDialog(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('About Pop up'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-              alignment: Alignment.topLeft,
-              child: Text("Father details",
-                  style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold))),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "First Name: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "Dilip",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "Last Name: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "Kadam",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "Email: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "dilip123@gmail.com",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "Contact: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "9405186233",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            child: Text("Mother details",
-                style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold)),
-          ),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "First Name: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "Kalpana",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "Last Name: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "Kadam",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "Email: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "k123@gmail.com",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding:
-            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
-            alignment: Alignment.topLeft,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: "Contact: ",
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "9422481016",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+         Text("Hello"),
+          Text("welcome"),
         ],
       ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Okay, got it!'),
+        ),
+      ],
     );
-  } //getDisplayForm
+  }
+
 }
 
 

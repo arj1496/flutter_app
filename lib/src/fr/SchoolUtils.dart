@@ -1,10 +1,15 @@
 
 import 'package:date_format/date_format.dart';
+import 'package:flutter_app/src/fr/User.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Standard/StandardService.dart';
+import 'package:flutter_app/src/mo/Subject/Subject.dart';
+import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
 
 class SchoolUtils {
 
   static final SchoolUtils _schoolUtils = new SchoolUtils._internal();
-
+  User user = new User();
   factory SchoolUtils() {
     return _schoolUtils;
   }
@@ -81,6 +86,23 @@ class SchoolUtils {
     //print(dateSring);
     return dateSring;
   }
+
+  List<Standard> getAccessibleClass(){
+    StandardService standardService =  new StandardService();
+    List<Standard> accessibleStandard = standardService.getAllStandard();
+    return accessibleStandard;
+  }
+
+  List<Subject> getAccessibleSubject(){
+    SubjectService subjectService =  new SubjectService();
+    List<Subject> accessibleSubject = subjectService.getAllSubject();
+    return accessibleSubject;
+  }
+
+  String getUserRole(){
+    return user.role;
+  }
+
 }
 
 

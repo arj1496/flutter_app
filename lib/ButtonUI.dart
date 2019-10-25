@@ -8,8 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
-import 'package:flutter_app/PropertyFile.dart';
-import 'package:flutter_app/PropertyService.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/ExamEditPage.dart';
 
@@ -118,11 +116,6 @@ class ButtonUIState extends  State<ButtonUI> {
   }
 
   justClick(String text) async {
-    /*PropertyService propertyService =  new PropertyService();
-    PropertyFile propertyFile1 = propertyService.getExamData();
-     widget.exam.description = propertyFile1.data;
-     propertyFile1 = propertyService.getSyllabusData();
-     widget.exam.syllabus = propertyFile1.data;*/
     if(text == "EDIT"){
       Navigator.push(
         context,
