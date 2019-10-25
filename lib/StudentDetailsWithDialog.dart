@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
@@ -88,6 +90,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
       _isEditBtn = true;
     });
     String studentName = student.firstName + ' ' + student.lastName;
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -95,7 +98,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
             title: Text("Parent details of ${studentName}"),
             content: Container(
               child: //getEditForm(student),
-                  getDisplayForm(),
+                  getDisplayForm(student),
             ),
             actions: <Widget>[
               _isEditBtn
@@ -106,7 +109,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) => getStudentEditForm(
-                                object: student,
+                                  object: student,
                                 onCustCallBack: (){
                                   print('hey done');
                                 }
@@ -494,7 +497,24 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
     );
   } //getEditForm
 
-  Widget getDisplayForm() {
+  Widget getDisplayForm(Student student) {
+
+    Parent father;
+    Parent mother;
+
+
+    List<Parent> parentList = student.parentList;
+
+    // parentList
+    for(int i=0;i<parentList.length;i++){
+      Parent parent = parentList[i];
+      if(parent.relation == "FATHER"){
+        father = parent;
+      }else if(parent.relation == "MOTHER"){
+        mother = parent;
+      }
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(1.0),
       child: Column(
@@ -520,7 +540,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "Dilip",
+                    text: father != null && father.firstName != "" ? father.firstName : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -545,7 +565,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "Kadam",
+                    text: father != null && father.lastName != "" ? father.lastName : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -570,7 +590,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "dilip123@gmail.com",
+                    text: father != null && father.email != "" ? father.email : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -595,7 +615,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "9405186233",
+                    text: father != null && father.mobileNumber != "" ? father.mobileNumber : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -631,7 +651,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "Kalpana",
+                    text: mother != null && mother.firstName != "" ? mother.firstName : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -656,7 +676,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "Kadam",
+                    text: mother != null && mother.lastName != "" ? mother.lastName : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -681,7 +701,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "k123@gmail.com",
+                    text: mother != null && mother.email != "" ? mother.email : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -706,7 +726,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                 ),
                 children: [
                   TextSpan(
-                    text: "9422481016",
+                    text: mother != null && mother.mobileNumber != "" ? mother.mobileNumber : '',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
@@ -789,7 +809,7 @@ class getStudentEditForm extends StatefulWidget {
   VoidCallback onCustCallBack;
   Student student;
 
-  getStudentEditForm({Student object, @required onCustCallBack}) :
+  getStudentEditForm({Student object,  @required onCustCallBack}) :
         assert (onCustCallBack != null),
         student = object,
         onCustCallBack = onCustCallBack;
@@ -806,8 +826,13 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
   // manage state of modal progress HUD widget
   bool _isInAsyncCall = false;
 
-  String _fatherFirstName;
-  String _fatherLastName;
+ GenericModel genericmodel = new GenericModel();
+
+  Parent father;
+  Parent mother;
+
+
+
 
   bool _isUpdate = false;
 
@@ -822,7 +847,7 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
       // call activity
 
       StudentActivity studentActivity = new StudentActivity();
-      studentActivity.saveStudentDetail(widget.student, (){
+      studentActivity.saveStudentDetail(genericmodel, (){
         setState(() {
           _isUpdate = true;
           _isInAsyncCall = false;
@@ -831,25 +856,23 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
           widget.onCustCallBack();
         }
       });
-
-
-
-      /*Future.delayed(Duration(seconds: 5), () {
-        setState(() {
-          _isUpdate = true;
-          _isInAsyncCall = false;
-        });
-
-        if (_isUpdate) {
-          widget.onCustCallBack(student);
-        }
-      });*/
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Parent> parentList = widget.student.parentList;
+
+    // parentList
+    for(int i=0;i<parentList.length;i++){
+      Parent parent = parentList[i];
+      if(parent.relation == "FATHER"){
+        this.father = parent;
+      }else if(parent.relation == "MOTHER"){
+        this.mother = parent;
+      }
+    }
+
     String studentName = widget.student.firstName + ' ' + widget.student.lastName;
     return Scaffold(
       appBar: AppBar(
@@ -883,39 +906,45 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.father != null && this.father.firstName != "" ? this.father.firstName : '',
                     autocorrect: true,
                     decoration: InputDecoration(
                         icon: Icon(Icons.person),
                         hintText: 'Father First Name',
-                        labelText: 'Enter father firstName'),
-                        onSaved: (value) => _fatherFirstName = value,
+                        labelText: 'Enter father firstName'
+                    ),
+                        onSaved: (value) => genericmodel.fatherFirstName = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.father != null && this.father.lastName != "" ? this.father.lastName : '',
                     autocorrect: true,
                     decoration: InputDecoration(
                         icon: Icon(Icons.person),
                         hintText: 'Father Last Name',
                         labelText: 'Enter father lastName'),
-                        onSaved: (value) => _fatherLastName = value,
+                        onSaved: (value) => genericmodel.fatherLastName = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.father != null && this.father.email != "" ? this.father.email : '',
                     autocorrect: true,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         icon: Icon(Icons.alternate_email),
                         hintText: 'Father Email Id',
                         labelText: 'Enter father emailId'),
+                    onSaved: (value) => genericmodel.fatherEmail = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.father != null && this.father.mobileNumber != "" ? this.father.mobileNumber : '',
                     autocorrect: true,
                     keyboardType: TextInputType.phone,
                     inputFormatters: <TextInputFormatter>[
@@ -925,6 +954,7 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
                         icon: Icon(Icons.phone),
                         hintText: 'Phone Number',
                         labelText: 'Enter Father phoneNumber'),
+                    onSaved: (value) => genericmodel.fatherContact = value,
                   ),
                 ),
                 SizedBox(
@@ -944,38 +974,45 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.mother != null && this.mother.firstName != "" ? this.mother.firstName : '',
                     autocorrect: true,
                     decoration: InputDecoration(
                         icon: Icon(Icons.person),
                         hintText: 'Mother First Name',
                         labelText: 'Enter mother firstName'),
+                    onSaved: (value) => genericmodel.moherFirstName = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.mother != null && this.mother.lastName != "" ? this.mother.lastName : '',
                     autocorrect: true,
                     decoration: InputDecoration(
                       icon: Icon(Icons.person),
                       hintText: 'Mother Last Name',
                       labelText: 'Enter mother lastName',
                     ),
+                    onSaved: (value) => genericmodel.motherLastName = value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.mother != null && this.mother.email != "" ? this.mother.email : '',
                     autocorrect: true,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         icon: Icon(Icons.alternate_email),
                         hintText: 'Mother Email Id',
                         labelText: 'Enter mother emailId'),
+                    onSaved: (value) => genericmodel.motherEmail= value,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: TextFormField(
+                    initialValue: this.mother != null && this.mother.mobileNumber != "" ? this.mother.mobileNumber : '',
                     autocorrect: true,
                     keyboardType: TextInputType.phone,
                     inputFormatters: <TextInputFormatter>[
@@ -985,6 +1022,7 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
                         icon: Icon(Icons.phone),
                         hintText: 'Mother Phone Number',
                         labelText: 'Enter mother phoneNumber'),
+                    onSaved: (value) => genericmodel.motherContact = value,
                   ),
                 ),
                 Row(

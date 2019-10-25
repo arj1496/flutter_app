@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
+import 'package:sqflite/utils/utils.dart';
 import 'onlyDate.dart';
 import 'standardDropDown.dart';
 import 'Gender.dart';
@@ -16,6 +19,8 @@ class AddStudent extends StatefulWidget {
 class _addStudentState extends State<AddStudent> {
   //  _formKey and _autoValidate
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  GenericModel genericModel = new GenericModel();
 
   bool _autoValidate = false;
   String _firstname;
@@ -65,7 +70,7 @@ class _addStudentState extends State<AddStudent> {
                 TextFormField(
                   validator: validateFirstName,
                   onSaved: (String val) {
-                    _firstname = val;
+                    genericModel.firstName = val;
                   },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
@@ -80,6 +85,9 @@ class _addStudentState extends State<AddStudent> {
                 ),
                 //Student Middle Name
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.studMiddleName = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _studentMN,
@@ -95,7 +103,7 @@ class _addStudentState extends State<AddStudent> {
                 TextFormField(
                   validator: validateLastName,
                   onSaved: (String val) {
-                    _lastname = val;
+                    genericModel.lastName = val;
                   },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
@@ -109,13 +117,16 @@ class _addStudentState extends State<AddStudent> {
                       labelText: 'Enter Last Name'),
                 ),
                 //Student BirthDate
-                DatePicker(),
+                DatePicker(Icon(Icons.cake),"BirthDate"),
                 //Class of Student
                 StandardDropDown(),
                 // Joining Date of Student
-                DatePicker(),
+                DatePicker(Icon(Icons.calendar_today),"Joining Date"),
                 //StudentId(School Student Id)
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.studId = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _studID,
@@ -129,6 +140,9 @@ class _addStudentState extends State<AddStudent> {
                 ),
                 //Roll No
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.studRollNO = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _rollNO,
@@ -142,6 +156,9 @@ class _addStudentState extends State<AddStudent> {
                 ),
                 //Student Contact
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.contactNo = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _studentCONTACT,
@@ -158,7 +175,7 @@ class _addStudentState extends State<AddStudent> {
                 TextFormField(
                   validator: validateEmail,
                   onSaved: (String val) {
-                    _email = val;
+                    genericModel.email = val;
                   },
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: true,
@@ -176,18 +193,23 @@ class _addStudentState extends State<AddStudent> {
                 Gender(),
                 //Father Details
                 Padding(
-                  padding: const EdgeInsets.only(bottom:5.0, top:13.0),
+                  padding: const EdgeInsets.only(bottom:5.0, top:10.0),
                   child: Container(
-                      width: 370.0,
+                      width: 400.0,
                       height: 30.0,
                       alignment: Alignment.topLeft,
                       child: Text("Father Details",
                       style: TextStyle(
-                        fontSize: 20.0
+                        fontSize: 20.0,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold
                       ),)),
                 ),
                 //Father First Name
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.fatherFirstName = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _FFN,
@@ -201,6 +223,9 @@ class _addStudentState extends State<AddStudent> {
                 ),
                 //Father Last Name
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.fatherLastName = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _FLN,
@@ -215,6 +240,9 @@ class _addStudentState extends State<AddStudent> {
                 //Father Contact
                 TextFormField(
                   keyboardType: TextInputType.phone,
+                  onSaved: (String val) {
+                    genericModel.fatherContact = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _FCONTACT,
@@ -230,7 +258,7 @@ class _addStudentState extends State<AddStudent> {
                 TextFormField(
                   validator: validateEmail,
                   onSaved: (String val) {
-                    _fatheremail = val;
+                    genericModel.fatherEmail = val;
                   },
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: true,
@@ -253,11 +281,16 @@ class _addStudentState extends State<AddStudent> {
                       alignment: Alignment.topLeft,
                       child: Text("Mother Details",
                       style: TextStyle(
-                        fontSize: 20.0
+                        fontSize: 20.0,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold
                       ),)),
                 ),
                 //Mother First Name
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.moherFirstName = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _MFN,
@@ -271,6 +304,9 @@ class _addStudentState extends State<AddStudent> {
                 ),
                 //Mother Last Name
                 TextFormField(
+                  onSaved: (String val) {
+                    genericModel.motherLastName = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _MLN,
@@ -285,6 +321,9 @@ class _addStudentState extends State<AddStudent> {
                 //Mother Contact
                 TextFormField(
                   keyboardType: TextInputType.phone,
+                  onSaved: (String val) {
+                    genericModel.motherContact = val;
+                  },
                   autocorrect: true,
                   textInputAction: TextInputAction.next,
                   focusNode: _MCONTACT,
@@ -300,7 +339,7 @@ class _addStudentState extends State<AddStudent> {
                 TextFormField(
                   validator: validateEmail,
                   onSaved: (String val) {
-                    _motheremail = val;
+                    genericModel.motherEmail = val;
                   },
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: true,
@@ -316,7 +355,7 @@ class _addStudentState extends State<AddStudent> {
                       labelText: 'Enter Mother Email Id'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: MaterialButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),
@@ -328,9 +367,13 @@ class _addStudentState extends State<AddStudent> {
                         ),
                       ),
                       onPressed: () {
+                        _formKey.currentState.save();
+                        StudentActivity studentActivity = new StudentActivity();
+                        studentActivity.addStudent(genericModel, (){
+                          print("Student Added Successfully!");
                         setState(() {
-                         // _submitData();
                           _validateInputs();
+                          });
                         });
                       }),
                 )

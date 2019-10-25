@@ -4,11 +4,17 @@ import 'package:flutter_app/AppTheme.dart';
 import 'package:intl/intl.dart';
 
 class DatePicker extends StatefulWidget {
+  Icon icon;
+  String label;
   @override
   State<StatefulWidget> createState() {
     return BirthdateAdd();
-  }
 
+  }
+  DatePicker(Icon icon,String label, {Label}){
+    this.icon=icon;
+    this.label=label;
+  }
 }
 
 class BirthdateAdd extends State<DatePicker> {
@@ -39,7 +45,6 @@ class BirthdateAdd extends State<DatePicker> {
   _getTextFormTextField(Icon icon, hintText, labelText) {
     return TextFormField(
       autovalidate: true,
-
       decoration: InputDecoration(
         icon: icon,
         hintText: hintText,
@@ -87,9 +92,9 @@ class BirthdateAdd extends State<DatePicker> {
         ),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-          icon: Icon(Icons.date_range),
+          icon: widget.icon,
           hintText: "Select Date",
-          labelText: '${myFormat.format(_todayDate)}',
+          labelText: '${myFormat.format(_todayDate)}'
         ),
       ),
     );
@@ -100,7 +105,7 @@ class BirthdateAdd extends State<DatePicker> {
     final dateTime = await showDatePicker(
         context: context,
         initialDate: _todayDate,
-        firstDate: DateTime(2000),
+        firstDate: DateTime(1900),
         lastDate: DateTime(2100)
     );
     if (dateTime != null && dateTime != _todayDate) {
