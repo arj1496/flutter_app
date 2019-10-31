@@ -76,7 +76,7 @@ class StandardropdownState extends State<StandardDropDown> {
                     selectedStandardId = newValue.id;
                     standardOf = newValue.name;
                     state.didChange(newValue);
-                    widget.formKey.currentState.save();
+                   // widget.formKey.currentState.save();
                     widget.genericModel.studentDBId = newValue.id;
                   });
                 },
@@ -95,9 +95,3 @@ class StandardropdownState extends State<StandardDropDown> {
     return selectedStandardId;
   }
 }
-
-/*String classValidation(value) {
-  if (value.isEmpty) {
-    return 'Please Select Standard';
-  }
-}*/

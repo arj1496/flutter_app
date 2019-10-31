@@ -12,21 +12,25 @@ import 'AddTeacher.dart';
 class TeacherList extends  StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-
-    //
     // TODO: implement createState
     return TeacherListState();
   }
 }
 class TeacherListState extends State<TeacherList>{
-
+  Future<List<Teacher>> getTeacherData() async{
+    TeacherActivity teacherActivity = new TeacherActivity();
+    List<Teacher> teacherList = await teacherActivity.getJoinDbTeacher();
+    return teacherList;
+  }
   @override
   Widget build(BuildContext context) {
-    TeacherActivity teacherActivity =new TeacherActivity();
-    List<Teacher> teacherList = teacherActivity.getAllTeacherList();
+    var futureBuilder = new FutureBuilder(
+        future: getTeacherData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return _getListViewWithBuilder(context, snapshot);
+        }
+    );
     return Scaffold(
-
-
       drawer: Drawer(
         child:SafeArea(child:
         Column(
@@ -44,9 +48,7 @@ class TeacherListState extends State<TeacherList>{
               ],
             )
     ),
-            ListTile(trailing: Icon(Icons.flight),
-                title: Text('Todays Leave'),
-            onTap:(){_showDialog(context);}),
+            new listTileForDrawaer(),
             ListTile(trailing: Icon(Icons.calendar_today),
                 title: Text('Todays Teachers birthday'),
                 onTap:(){_showDialog(context);}),
@@ -63,13 +65,7 @@ class TeacherListState extends State<TeacherList>{
 
       ),
       appBar: AppBar(title:Text("TeacherList"),backgroundColor: Colors.orangeAccent,),
-
-       body: ListView.builder(
-        itemCount: teacherList.length,
-        itemBuilder: (BuildContext ctxt, int index){
-          return (teacherListView(ctxt, teacherList[index]));
-        }
-    ),
+       body: futureBuilder,
       floatingActionButton:FloatingActionButton (
         backgroundColor: Colors.orangeAccent,
         child:Icon(Icons.person_add),
@@ -85,17 +81,70 @@ class TeacherListState extends State<TeacherList>{
   }
 }
 
-Widget teacherListView(BuildContext context, Teacher data) {
+Widget _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
+  List<Teacher> teacherList = snapshot.data;
+  return Container(
+      child: ListView.builder(
+        itemCount: teacherList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return teacherList != null && teacherList.length > 0 ? ListTileView(context,teacherList[index],) : dataNotFound();
+        },
+      )
+  );
+}
+Widget ListTileView(context,data){
+  return  Card(
+      child: Wrap(
+          children: <Widget>[
+            ExpansionTile(
+                leading: GestureDetector(
+                  onTap: (){
+                   Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => TeacherDetail(data),
+                        ));
+                  },
+                  child: CircleAvatar(backgroundColor: Colors.indigo,child:Text(data.firstName.substring(0,1).toUpperCase())),
+                ),
+                title: Text(data.firstName +" " +data.lastName,overflow: TextOverflow.ellipsis),
+                children:<Widget>[
+                  subjectList(),
+                ]
+            ),
+          ]
+      )
+  );
+
+}
+
+dataNotFound() {
+}
+
+class listTileForDrawaer extends StatelessWidget {
+  const listTileForDrawaer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(trailing: Icon(Icons.flight),
+        title: Text('Todays Leave'),
+    onTap:(){_showDialog(context);});
+  }
+}
+/*Widget teacherListView(BuildContext context, Teacher data) {
   return Card(
         child: Wrap(
           children: <Widget>[
             ExpansionTile(
              leading: GestureDetector(
                onTap: (){
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context) => TeacherDetail(data)),
-                 );
+                Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (BuildContext context) => TeacherDetail(data),
+                     ));
                },
                child: CircleAvatar(backgroundColor: Colors.indigo,child:Text(data.firstName.substring(0,1))),
              ),
@@ -107,9 +156,8 @@ Widget teacherListView(BuildContext context, Teacher data) {
               ]
               )
   );
-}
-Widget subjectList()
-{
+}*/
+Widget subjectList() {
   SubjectActivity subjectActivity = new SubjectActivity();
   List<Subject> subjectList = subjectActivity.getHardCodedSubjectList();
   return Container(
@@ -120,7 +168,6 @@ Widget subjectList()
         itemBuilder: (BuildContext ctxt, int index){
           return ListTile(title:Padding(padding: EdgeInsets.only(left: 2.0),
               child: Text(subjectList[index].standard.name)),
-
           trailing:Padding(padding: EdgeInsets.only(right: 30.0),
           child: Text(subjectList[index].name)),
           );

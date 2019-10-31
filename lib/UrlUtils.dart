@@ -30,4 +30,10 @@ class UrlUtils{
     String url = SchoolUtils().baseUrl + "rest/student/savestudent";
     return url;
   }
+
+  String getAddTeacher(){
+    String url = SchoolUtils().baseUrl + "rest/teacher/addOrUpdateTeacher";
+    return url;
+
+  }
 }

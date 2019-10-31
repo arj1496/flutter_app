@@ -13,6 +13,8 @@ class  GenericModel{
   String examType;
   int totalMarks;
   String status;
+  //teacher Details
+  int teacherId;
   String firstName;
   String lastName;
   String email;
@@ -20,7 +22,8 @@ class  GenericModel{
   String gender;
   String invitation;
   String birthDate;
-  String academicType;
+  int academicType;
+  String mobileNumber;
 
   //Student Fields
   int studentDBId;
@@ -37,5 +40,8 @@ class  GenericModel{
   String motherLastName;
   String motherContact;
   String motherEmail;
+
+
+
 
 }

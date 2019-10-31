@@ -1,6 +1,7 @@
 
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:sqflite/sqflite.dart';
 
@@ -18,6 +19,7 @@ class TeacherDAO{
   }
 
   Teacher addTeacher(Teacher teacher) {
+    print("add teacher");
     Database db = null;
     getDataBaseHandler().then((dataBaseInstance){
        db = dataBaseInstance;
@@ -61,7 +63,7 @@ class TeacherDAO{
     return maps;
   }
 
-  getAllTeacherData() async{
+  getJoinDbTeacher() async{
     print("getAllTeacherData Starts ");
     Database db = await getDataBaseHandler();
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Teacher ");
@@ -86,11 +88,5 @@ class TeacherDAO{
     await batch.commit(noResult: true);
     print("Teacher Deleted Successfully in to Local DB : " + teacherIds.toString());
   }
-
-
-
-
-
-
 
 }

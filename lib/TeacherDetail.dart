@@ -1,10 +1,12 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/TeacherEditPage.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectActivity.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
 
+import 'AddTeacher.dart';
 import 'Contacts.dart';
 import 'TeacherList.dart';
 
@@ -24,31 +26,10 @@ class TeacherDetailState extends State<TeacherDetail> {
   TeacherList teacherList;
   List<Contacts> contactList;
   List<Subject> subjectList;
-  void initState() {
-     contactList = [
-      new Contacts(teacher.mobile, "mobile", Icons.phone, Icons.email),
-      new Contacts(teacher.email, "email", Icons.email, Icons.alternate_email),
-    ];
-     subjectList =[
-       new Subject()
-     ];
-  }
   TeacherDetailState.init(Teacher teacher) {
     this.teacher = teacher;
   }
-  _buildExpandableContent(List<Contacts> contactsList) {
-    List<Widget> columnContent = [];
-    for (Contacts content in contactsList)
-    columnContent.add(
-      new ListTile(
-        title: new Text(content.title, style: new TextStyle(fontSize: 16.0),),
-        leading: new Icon(content.leadingIcon),
-        subtitle: Text("mobile"),
-        trailing: Icon(content.trailingIcon),
-      ),
-    );
-    return columnContent;
-  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -62,8 +43,8 @@ class TeacherDetailState extends State<TeacherDetail> {
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle:true,
                 background:Padding(
-                  padding:EdgeInsets.all(80),
-                  child: CircleAvatar(backgroundColor:Colors.white,child: Text(teacher.firstName.substring(0,1),style: TextStyle(fontSize: 40),),),
+                  padding:EdgeInsets.all(60),
+                  child: CircleAvatar(backgroundColor:Colors.white,child: Text(teacher.firstName.substring(0,1).toUpperCase(),style: TextStyle(fontSize: 40),),),
                 ),
                  //CircleAvatar(backgroundColor:Colors.white,child: Text(teacher.firstName.substring(0,1),style: TextStyle(fontSize: 50.0),),),
                 /*Image.network(
@@ -87,7 +68,7 @@ class TeacherDetailState extends State<TeacherDetail> {
                     ),
                     ListTile(
                       leading:Icon(Icons.phone),
-                      title: Text(teacher.mobile),
+                     title: Text(teacher.mobileNumber),
                       subtitle:Text("mobile no"),
                       trailing: Icon(Icons.message),
                     ),
@@ -123,6 +104,20 @@ class TeacherDetailState extends State<TeacherDetail> {
                   ],
                 ),
               ),
+              Padding(
+              padding:EdgeInsets.only(left:60,right: 60),
+                child:RaisedButton(
+
+                  child: Text("Edit"),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TeacherEditPage(teacher)),
+                    );
+                  },
+                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+                )
+              )
 
             ],
           ),
@@ -133,26 +128,7 @@ class TeacherDetailState extends State<TeacherDetail> {
     )
     );
   }
-  Widget contactWidget(){
-    return ListView.builder(
 
-        itemCount: 1,
-        itemBuilder: (context, i) {
-          return new
-          ExpansionTile(
-            title: new Text("Contact", style: new TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,),),
-            children: <Widget>[
-              new Column(
-                children: _buildExpandableContent(contactList),
-               // _buildExpandableContent(subjectList),
-              ),
-            ],
-          );
-        }
-    );
-  }
 }
 Widget subjectList1()
 {
@@ -161,13 +137,11 @@ Widget subjectList1()
   return Container(
 
     height: 400,
-    // color: Colors.white,
+
     child:  ListView.builder(
         itemCount: subjectList.length,
         itemBuilder: (BuildContext ctxt, int index){
-
           return ListTile(
-
             title:Padding(padding: EdgeInsets.only(left: 10.0),
             child:  Text(subjectList[index].name),),
             trailing:Padding(padding: EdgeInsets.only(right: 30.0),

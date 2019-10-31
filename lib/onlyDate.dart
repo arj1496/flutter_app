@@ -1,27 +1,27 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:intl/intl.dart';
 
 class DatePicker extends StatefulWidget {
   Icon icon;
   String label;
+  GenericModel genericModel=new GenericModel();
   @override
   State<StatefulWidget> createState() {
     return BirthdateAdd();
-
   }
   DatePicker(Icon icon,String label, {Label}){
     this.icon=icon;
     this.label=label;
   }
 }
-
 class BirthdateAdd extends State<DatePicker> {
-
+  GenericModel genericModel=new GenericModel();
   DateTime _todayDate = new DateTime.now();
   TextEditingController labelText = new TextEditingController();
-
+  GlobalKey<FormState> formKey;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -32,8 +32,6 @@ class BirthdateAdd extends State<DatePicker> {
           autovalidate: true,
           child: Column(
             children: <Widget>[
-              // This method is Accepts 2 parameter
-              // 0 : Icon, 1 : hintText , 2 : Label Text
               _getDatePicker("date", context),
             ],
           )
@@ -81,7 +79,9 @@ class BirthdateAdd extends State<DatePicker> {
     var myFormat = DateFormat('dd-MM-yyyy');
     return Padding(
       padding: EdgeInsets.only(top: 0, bottom: 0),
-      child: TextField(
+
+      child: TextFormField(
+        onSaved: (val) =>  genericModel.birthDate = val ,
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDate(context);
@@ -106,7 +106,7 @@ class BirthdateAdd extends State<DatePicker> {
         context: context,
         initialDate: _todayDate,
         firstDate: DateTime(1900),
-        lastDate: DateTime(2100)
+        lastDate: DateTime(2099)
     );
     if (dateTime != null && dateTime != _todayDate) {
       print('date Selected : ${_todayDate.toString()} ');

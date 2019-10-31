@@ -81,7 +81,11 @@ class  DBProvider {
         "email TEXT,"
         "standardIds TEXT,"
         "userId INTEGER,"
-        "role TEXT"
+        "role TEXT,"
+        "academicType TEXT,"
+        "mobileNumber TEXT,"
+        "invitation TEXT,"
+        "birthDate TEXT"
         ")" ;
   }
 
@@ -106,6 +110,8 @@ class  DBProvider {
         "isCardActive TEXT,"
         "birthDate INTEGER"
         "userId TEXT "
+        "academicType TEXT"
+
         ")" ;
 
 

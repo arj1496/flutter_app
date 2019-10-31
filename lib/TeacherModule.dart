@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Subject/AddSubject.dart';
 import 'TeacherList.dart';
 
 class TeacherModule extends StatefulWidget{
@@ -32,10 +33,24 @@ class TeacherModuleState extends State<TeacherModule>{
 
             },
           )
-    )
+    ),
+          Padding(padding:EdgeInsets.only(left:120.0,top: 20),
+              child:
+              RaisedButton(
+                child: Text("Subject Module"),
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddSubject()),
+                  );
+
+                },
+              )
+          )
         ],
       ),
     );
   }
 
 }
+
