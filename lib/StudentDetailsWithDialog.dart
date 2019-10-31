@@ -15,7 +15,8 @@ import 'addStudent.dart';
 class StudentDetailWithDialog extends StatefulWidget {
 
   @override
-  _StudentDetailWithDialogState createState() => _StudentDetailWithDialogState();
+  _StudentDetailWithDialogState createState() =>
+      _StudentDetailWithDialogState();
 }
 
 class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
@@ -36,10 +37,18 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return appBar();
-  }
+    /*return appBar();
+  }*/
+    StudentActivity studentActivity = new StudentActivity();
+    Future<List<Student>> studentList1 = studentActivity.getAllStudent();
+    var futureBuilder = new FutureBuilder(
+        future: studentList1,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return _getListViewWithBuilder(context, snapshot);
+        }
+    );
 
-  appBar() {
+    // appBar() {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -65,13 +74,12 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           )
         ],
       ),
-      body: getListViewBuilder(context),
+      body: futureBuilder,
     );
   }
 
-  Widget getListViewBuilder(BuildContext context) {
-    StudentService ss = StudentService();
-    studentList = ss.getStudentsForTest();
+  Widget _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    studentList = snapshot.data;
     return Container(
       color: AppTheme.background,
       child: ListView.builder(
@@ -97,25 +105,25 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
             title: Text("Parent details of ${studentName}"),
             content: Container(
               child: //getEditForm(student),
-                  getDisplayForm(student),
+              getDisplayForm(student),
             ),
             actions: <Widget>[
               _isEditBtn
                   ? MaterialButton(
-                      child: Text("Edit"),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => getStudentEditForm(
-                                  object: student,
-                                onCustCallBack: (){
-                                  print('hey done');
-                                }
-                              )),
-                        );
-                        
-                      }) : null,
+                  child: Text("Edit"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => getStudentEditForm(
+                              object: student,
+                              onCustCallBack: (){
+                                print('hey done');
+                              }
+                          )),
+                    );
+
+                  }) : null,
               MaterialButton(
                   child: Text("Close"),
                   onPressed: () {
@@ -133,7 +141,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
       },
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 5.0, right: 5.0, top: 3, bottom: 3),
+        const EdgeInsets.only(left: 5.0, right: 5.0, top: 3, bottom: 3),
         // This is the Main Table Container
         child: Container(
           // given Box Shadow to the Container
@@ -158,9 +166,23 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
   }
 
   Widget _icon(Student student) {
+    Parent father;
+    Parent mother;
+
+    List<Parent> parentlist = student.parentList;
+    for (var i = 0; i < parentlist.length; i++){
+      Parent parent = parentlist[i];
+      if(parent.relation == 'FATHER'){
+        father =  parent;
+      }
+      else if(parent.relation == 'MOTHER'){
+        mother =  parent;
+      }
+    }
+
     return Container(
       width: 30.0,
-      alignment: Alignment.topCenter,
+      // alignment: Alignment.topCenter,
       child: Stack(
           fit: StackFit.passthrough,
           alignment: AlignmentGeometry.lerp(
@@ -171,25 +193,34 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
               child: Text(student.firstName.substring(0, 1)),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 35.0),
+              padding: EdgeInsets.only(top: 32.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
-                    child: GestureDetector(
+                      child: GestureDetector(
                         onTap: () {},
-                        child: Icon(
+                        child:
+                        father != null ?
+                        Icon(
                           FontAwesomeIcons.male,
-                          size: 30.0,
-                        )),
+                          color: Colors.lightBlue,
+                          size: 25.0,
+                        )  : null,
+                      )
                   ),
                   Expanded(
                       child: GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            FontAwesomeIcons.female,
-                            size: 30.0,
-                          ))),
+                        onTap: () {},
+                        child:
+                        mother != null ?
+                        Icon(
+                          FontAwesomeIcons.female,
+                          color: Colors.pinkAccent,
+                          size: 25.0,
+                        ) : null,
+                      )
+                  ),
                 ],
               ),
             )
@@ -237,7 +268,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
         ),
         Padding(
           padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 8),
+          const EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 8),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -246,7 +277,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      student.standard.name,
+                      student.standard != null   ?  student.standard.name : "Class - 1",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: AppTheme.robotoFontName,
@@ -269,7 +300,8 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          student.rollNo,
+                          student.rollNo != null   ?  student.rollNo.toString() : " ",
+                          // student.rollNo.toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppTheme.robotoFontName,
@@ -307,7 +339,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
       ),
     );
   }
-  
+
   Widget getEditForm(Student student) {
     String studentName = student.firstName + ' ' + student.lastName;
     return Scaffold(
@@ -347,7 +379,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                         icon: Icon(Icons.person),
                         hintText: 'Father First Name',
                         labelText: 'Enter father firstName'),
-                        onSaved: (value) => _fatherFirstName = value,
+                    onSaved: (value) => _fatherFirstName = value,
                   ),
                 ),
                 Padding(
@@ -358,7 +390,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                         icon: Icon(Icons.person),
                         hintText: 'Father Last Name',
                         labelText: 'Enter father lastName'),
-                        onSaved: (value) => _fatherLastName = value,
+                    onSaved: (value) => _fatherLastName = value,
                   ),
                 ),
                 Padding(
@@ -527,7 +559,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                       fontWeight: FontWeight.bold))),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -552,7 +584,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -577,7 +609,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -602,7 +634,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -638,7 +670,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -663,7 +695,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -688,7 +720,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -713,7 +745,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
+            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 2.0, left: 20.0),
             alignment: Alignment.topLeft,
             child: RichText(
               textAlign: TextAlign.start,
@@ -825,7 +857,7 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
   // manage state of modal progress HUD widget
   bool _isInAsyncCall = false;
 
- GenericModel genericmodel = new GenericModel();
+  GenericModel genericmodel = new GenericModel();
 
   Parent father;
   Parent mother;
@@ -912,7 +944,7 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
                         hintText: 'Father First Name',
                         labelText: 'Enter father firstName'
                     ),
-                        onSaved: (value) => genericmodel.fatherFirstName = value,
+                    onSaved: (value) => genericmodel.fatherFirstName = value,
                   ),
                 ),
                 Padding(
@@ -924,7 +956,7 @@ class _getStudentEditFormState extends State<getStudentEditForm> {
                         icon: Icon(Icons.person),
                         hintText: 'Father Last Name',
                         labelText: 'Enter father lastName'),
-                        onSaved: (value) => genericmodel.fatherLastName = value,
+                    onSaved: (value) => genericmodel.fatherLastName = value,
                   ),
                 ),
                 Padding(

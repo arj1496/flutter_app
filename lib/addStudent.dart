@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
 import 'package:sqflite/utils/utils.dart';
 import 'onlyDate.dart';
@@ -119,7 +120,7 @@ class _addStudentState extends State<AddStudent> {
                 //Student BirthDate
                 DatePicker(Icon(Icons.cake),"BirthDate"),
                 //Class of Student
-                StandardDropDown(),
+                StandardDropDown(_formKey,genericModel),
                 // Joining Date of Student
                 DatePicker(Icon(Icons.calendar_today),"Joining Date"),
                 //StudentId(School Student Id)
@@ -354,29 +355,55 @@ class _addStudentState extends State<AddStudent> {
                       hintText: 'Mother Email Id',
                       labelText: 'Enter Mother Email Id'),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      color: Colors.blue,
-                      child: Text(
-                        "Submit",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40.0, left: 30.0, right: 30.0, bottom: 30.0),
+                        child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            color: Colors.lightBlueAccent,
+                            child: Text(
+                              "Add Student",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              _formKey.currentState.save();
+                              StudentActivity studentActivity = new StudentActivity();
+                              studentActivity.addStudent(genericModel, (){
+                                print("Student Added Successfully!");
+                                setState(() {
+                                  _validateInputs();
+                                });
+                              });
+                            }),
                       ),
-                      onPressed: () {
-                        _formKey.currentState.save();
-                        StudentActivity studentActivity = new StudentActivity();
-                        studentActivity.addStudent(genericModel, (){
-                          print("Student Added Successfully!");
-                        setState(() {
-                          _validateInputs();
-                          });
-                        });
-                      }),
-                )
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40.0, left: 30.0, right: 30.0, bottom: 30.0),
+                        child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            color: Colors.lightBlueAccent,
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

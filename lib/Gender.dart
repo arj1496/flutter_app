@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Gender extends StatefulWidget {
@@ -8,7 +9,10 @@ class Gender extends StatefulWidget {
 }
 
 class _genderState extends State<Gender> {
-int _selected =0;
+
+  GenericModel genericModel = new GenericModel();
+
+  int _selected =0;
 
 void onChanged(int value){
   setState(() {

@@ -1,9 +1,17 @@
 
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Parent/Parent.dart';
+import 'package:flutter_app/src/mo/Student/Student.dart';
 
 import 'StudentService.dart';
 
 class StudentActivity{
+
+  Future<List<Student>> getAllStudent() async{
+    StudentService studentservice = new StudentService();
+    List<Student> events =  await studentservice.getStudentListFromLocalDB();
+    return events;
+  }
 
   saveStudentDetail(GenericModel genericmodel, callBack){
     StudentService studentservice = new StudentService();

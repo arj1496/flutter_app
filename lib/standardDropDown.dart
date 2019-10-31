@@ -1,44 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
 
 class StandardDropDown extends StatefulWidget {
-  List<String> _standard = <String>[
-    'First',
-    'Second',
-    'Third',
-    'Fourth',
-    'Fifth',
-    'Sixth',
-    'Seventh',
-    'Eighth',
-    'Ninth',
-  ];
+
+  /*List<String> _standard = null;*/
 
   @override
   State<StatefulWidget> createState() {
-    return _StandardDropDown.init(_standard);
+    return StandardropdownState();
   }
+
+  GlobalKey<FormState> formKey;
+  GenericModel genericModel;
+  StandardDropDown.init(formKey, _eventPojo) {
+    this.formKey = formKey;
+    this.genericModel = _eventPojo;
+  }
+
+  StandardDropDown(this.formKey, this.genericModel);
+
 }
 
-class _StandardDropDown extends State<StandardDropDown> {
+Future<List<Standard>> getStandards() async {
+  StandardActivity standardActivity = new StandardActivity();
+  List<Standard> _standard = await standardActivity.getStandardListFromLocalDB();
+
+  return _standard;
+}
+
+class StandardropdownState extends State<StandardDropDown> {
   String _class;
 
   String standardOf = "Select Class";
-  List<String> _standard;
+  static int selectedStandardId;
   TextEditingController labelText = new TextEditingController();
 
-  _StandardDropDown.init(List<String> _standard) {
-    this._standard = _standard;
-  }
 
   @override
   Widget build(BuildContext context) {
-    return _getDropDownFormField(
-        Icon(Icons.class_), 'Select Class', 'Standard', _standard);
+    return FutureBuilder(
+      future: getStandards(),
+      builder: (context , snapshot){
+        return Container(
+          child: Column(
+            children: <Widget>[
+              _getDropDownFormField (Icon(Icons.class_), 'Select Class', 'Standard',snapshot ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
-  _getDropDownFormField(
-      Icon icon, String hintText, String labelText, List<String> _standard) {
+  _getDropDownFormField(Icon icon, String hintText, String labelText, AsyncSnapshot snapshot) {
     String _color = '';
+    List<Standard> standardList = new List();
+    if(snapshot.data != null){
+      standardList = snapshot.data;
+    }
     return FormField(
        // validator: classValidation,
         builder: (FormFieldState state) {
@@ -50,25 +71,28 @@ class _StandardDropDown extends State<StandardDropDown> {
               padding: EdgeInsets.only(right: 8.0, left: 8.0),
               child: DropdownButton(
                 isDense: true,
-                onChanged: (String newValue) {
+                onChanged: (newValue) {
                   setState(() {
-                    standardOf = newValue;
+                    selectedStandardId = newValue.id;
+                    standardOf = newValue.name;
                     state.didChange(newValue);
-                   /* onSaved: (String val) {
-                      _class = val;
-                    };*/
+                    widget.formKey.currentState.save();
+                    widget.genericModel.studentDBId = newValue.id;
                   });
                 },
-                items: _standard.map((String value) {
+                items: standardList.map((Standard standard) {
                   return new DropdownMenuItem(
-                    value: value,
-                    child: new Text(value),
+                    value: standard,
+                    child: new Text(standard.name),
                   );
                 }).toList(),
               ),
             )),
           );
         });
+  }
+  getSelectedStandard() async {
+    return selectedStandardId;
   }
 }
 
