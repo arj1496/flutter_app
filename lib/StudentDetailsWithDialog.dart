@@ -15,8 +15,7 @@ import 'addStudent.dart';
 class StudentDetailWithDialog extends StatefulWidget {
 
   @override
-  _StudentDetailWithDialogState createState() =>
-      _StudentDetailWithDialogState();
+  _StudentDetailWithDialogState createState() => _StudentDetailWithDialogState();
 }
 
 class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {

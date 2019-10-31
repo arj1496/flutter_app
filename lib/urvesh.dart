@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/src/fr/Login.dart';
 import 'package:flutter_app/src/fr/LoginService.dart';
 import 'package:flutter_app/src/fr/SharedPreference.dart';
-import 'package:flutter_app/src/fr/webservice/WebClient.dart';
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
@@ -64,7 +62,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
         minWidth: MediaQuery
             .of(context)
             .size
-            .width,
+            .width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           sharedPreferences.clear();
@@ -89,7 +87,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
         minWidth: MediaQuery
             .of(context)
             .size
-            .width,
+            .width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
@@ -108,7 +106,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           getTeacherData();
@@ -378,8 +376,8 @@ class _UrveshHomePageState extends State<UrveshHome> {
                   homePage,
                   SizedBox(height: 5.0,),
                   getDataBtn,
-                  SizedBox(height: 5.0,),
-                  saveTeacherBtn,
+                  //SizedBox(height: 5.0,),
+                  //saveTeacherBtn,
                   //SizedBox(height: 5.0,),
                   //saveTeacherBtn_,
                   SizedBox(height: 5.0,),

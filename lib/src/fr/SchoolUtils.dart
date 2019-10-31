@@ -6,6 +6,8 @@ import 'package:flutter_app/src/mo/Standard/StandardService.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
 
+import 'SchoolDs.dart';
+
 class SchoolUtils {
 
   static final SchoolUtils _schoolUtils = new SchoolUtils._internal();
@@ -18,8 +20,7 @@ class SchoolUtils {
   //String baseUrl = "http://192.168.0.100:8080/soms/";
   String baseUrl = "http://192.168.0.102:8080/soms/";
 
-  SchoolUtils._internal(){
-  }
+  SchoolUtils._internal(){}
 
   Future<int> initApp() async{
    final result = await Future.delayed(const Duration(milliseconds: 5000), (){
@@ -29,13 +30,28 @@ class SchoolUtils {
     return result;
   }
 
-  String getDateStringFromLongWithSchoolTimeZone(int dateLong){
+  // return SchoolTimeZone
+  String getTimeZone(){
 
-    //var  todayDate = DateTime.fromMicrosecondsSinceEpoch(dateLong,isUtc: true);
+  }
+
+  String getSchoolCode(){
+
+  }
+
+  SchoolDs getCurrentSchoolDs(){
+
+  }
+
+  SchoolDs getCurrentSemester(){
+
+  }
+
+
+  String getDateStringFromLongWithSchoolTimeZone(int dateLong){
     var  todayDate = DateTime.fromMillisecondsSinceEpoch(dateLong,isUtc: false);
-    String dateSring = formatDate(todayDate, [dd, ' ', M , ' ', yyyy]);
-    //print(dateSring);
-    return dateSring;
+    String dateString = formatDate(todayDate, [dd, ' ', M , ' ', yyyy]);
+    return dateString;
   }
 
   String getTimeStringFromLongWithTimeZone (int dateLong){
@@ -44,9 +60,11 @@ class SchoolUtils {
     //print(dateSring);
     return dateSring;
   }
+
   String getDateStringFromLongWithOutSchoolTimeZone(int dateLong){
     return null;
   }
+
   String getDurationBetweenTwoTimestamp (int startDateLong, int endDateLong){
     var startDate = DateTime.fromMillisecondsSinceEpoch(startDateLong,isUtc: false);
     var endDate = DateTime.fromMillisecondsSinceEpoch(endDateLong,isUtc: false);
@@ -61,8 +79,6 @@ class SchoolUtils {
     }else{
       return durationToStringForDiffDay(startDate,endDate);
     }
- //   return sdate.compareTo(edate) == true ? durationToStringForSameDay(endDate.difference(startDate).inMinutes) : durationToStringForDiffDay(startDate,endDate);
-
   }
 
   String durationToStringForSameDay(int value) {
