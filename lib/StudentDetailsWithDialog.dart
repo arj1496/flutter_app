@@ -115,12 +115,14 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => getStudentEditForm(
+                          builder: (BuildContext context) => AddStudent()
+                        /*getStudentEditForm(
                               object: student,
                               onCustCallBack: (){
                                 print('hey done');
                               }
-                          )),
+                          )*/
+                      ),
                     );
 
                   }) : null,
