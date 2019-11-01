@@ -15,7 +15,7 @@ class StudentService{
   StudentDao _studentDao = new StudentDao();
   ParentService parentService = new ParentService();
 
-  addStudent(GenericModel genericModel) async{
+ Future addStudent(GenericModel genericModel) async{
     StudentWebService _studentWebService = new StudentWebService();
     Map<String, dynamic> responseData = await _studentWebService.addStudent(genericModel);
 
@@ -34,7 +34,6 @@ class StudentService{
         });
         await parentService.batchAddParents(parentList);
       }
-      // p
     }
     else{
       print("False");

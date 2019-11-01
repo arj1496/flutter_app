@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:sqflite/utils/utils.dart';
@@ -12,7 +13,16 @@ import 'Gender.dart';
 import 'StudentDetailsWithDialog.dart';
 
 class AddStudent extends StatefulWidget {
-  AddStudent({Key key}) : super(key: key);
+  //AddStudent({Key key}) : super(key: key);
+
+  VoidCallback onCallBack;
+  Student student;
+
+  AddStudent({@required Student object, @required onCallBack}) :
+      assert (object != null),
+      assert (onCallBack != null),
+      this.student = object,
+      this.onCallBack = onCallBack;
 
   @override
   _addStudentState createState() => _addStudentState();
@@ -27,7 +37,6 @@ class _addStudentState extends State<AddStudent> {
   bool _autoValidate = false;
   bool _isInAsyncCall = false;
   bool _isAdd = false;
-
 
   final FocusNode _studentFN = FocusNode();
   final FocusNode _studentMN = FocusNode();

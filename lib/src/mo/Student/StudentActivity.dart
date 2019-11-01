@@ -23,7 +23,10 @@ class StudentActivity{
 
   addStudent(GenericModel genericModel, callBack){
     StudentService studentService = new StudentService();
-    studentService.addStudent(genericModel);
+    studentService.addStudent(genericModel).then((value){
+      callBack();
+    });
+
    /* Future.delayed(Duration(seconds: 5), () {
       callBack();
     });*/
