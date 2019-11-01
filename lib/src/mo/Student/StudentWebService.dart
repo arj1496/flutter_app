@@ -38,7 +38,7 @@ class StudentWebService{
 
     Map<String, String> studDetailMap = getStudentDetailMap(genericModel);
 
-    final finalurl = SchoolUtils().baseUrl + "rest/student/savestudent";
+    final finalurl = SchoolUtils().baseUrl + "rest/student/savestudent";//
     var response = await http.post(finalurl, headers: headers, body: studDetailMap);
     if(response.statusCode == 200){
       var str = response.body;
@@ -73,7 +73,7 @@ class StudentWebService{
     StudentDetailMap['studentFirstName'] = genericmodel.firstName;
     StudentDetailMap['studMiddleName'] = genericmodel.studMiddleName;
     StudentDetailMap['studentLastName'] = genericmodel.lastName;
-    StudentDetailMap['standardId'] = 8.toString();//genericmodel.studClass.toString();
+    StudentDetailMap['standardId'] = genericmodel.studClass.toString();//8.toString();
     StudentDetailMap['studentId'] = genericmodel.studId;
     StudentDetailMap['studRollNO'] = genericmodel.studRollNO;
     StudentDetailMap['contactNo'] = genericmodel.contactNo;
