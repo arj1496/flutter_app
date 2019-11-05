@@ -114,8 +114,7 @@ Future<List<Subject>> getSubjects() async{
   int id= standardWidget.getSelectedStandard();
   SubjectActivity subjectActivity = new SubjectActivity();
   if(id!=null) {
-    List<Subject> subjectList = await subjectActivity
-        .getSubjectByStandardId (id);
+    List<Subject> subjectList = await subjectActivity.getSubjectByStandardId (id);
     return subjectList;
   }else{
     List<Subject> subjectList = await subjectActivity.getSubjectListFromLocalDB();

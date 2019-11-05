@@ -21,14 +21,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
 
-class UrveshHome extends StatefulWidget{
-
+class UrveshHome extends StatefulWidget {
   @override
   _UrveshHomePageState createState() => _UrveshHomePageState();
 }
 
 class _UrveshHomePageState extends State<UrveshHome> {
-
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
   SharedPreferences sharedPreferences;
 
@@ -42,8 +40,8 @@ class _UrveshHomePageState extends State<UrveshHome> {
     sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.getString("token") == null) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => LoginPage()), (
-          Route<dynamic> route) => false);
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          (Route<dynamic> route) => false);
     }
   }
 
@@ -58,19 +56,13 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width / 2,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           sharedPreferences.clear();
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (BuildContext context) => LoginPage()
-              ), (Route<dynamic> route) => false
-          );
+              MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+              (Route<dynamic> route) => false);
         },
         child: Text("Logout",
             textAlign: TextAlign.center,
@@ -83,17 +75,12 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width / 2,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (BuildContext context) => MyApp()
-              ), (Route<dynamic> route) => false
-          );
+              MaterialPageRoute(builder: (BuildContext context) => MyApp()),
+              (Route<dynamic> route) => false);
         },
         child: Text("Home Page",
             textAlign: TextAlign.center,
@@ -114,10 +101,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
         child: Text("Get Teacher Data from LocalDB",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold
-            )
-        ),
+                color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -125,10 +109,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size.width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           addTeacher();
@@ -144,11 +125,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getTecherFromServerAndSaveToLocalDB();
@@ -164,11 +141,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getSharedPreDataFromLocalDB();
@@ -184,11 +157,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getStudentDataFromServer();
@@ -204,11 +173,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getStudentDataFromLocalDB();
@@ -220,16 +185,11 @@ class _UrveshHomePageState extends State<UrveshHome> {
       ),
     );
 
-
     final standardsFromServer = Material(
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getStandardDataFromServer();
@@ -245,11 +205,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getStandardDataFromLocalDB();
@@ -265,11 +221,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getSubjectDataFromServer();
@@ -285,11 +237,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getSubjectDataFromLocalDB();
@@ -305,11 +253,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getParentDataFromServer();
@@ -325,11 +269,7 @@ class _UrveshHomePageState extends State<UrveshHome> {
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getParentDataFromLocalDB();
@@ -341,15 +281,27 @@ class _UrveshHomePageState extends State<UrveshHome> {
       ),
     );
 
+    final getStandardTeachers = Material(
+      color: Colors.indigo,
+      borderRadius: BorderRadius.circular(30.0),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width / 2,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          _getStandardTeachersData();
+        },
+        child: Text("Standard Teacher Mapping ",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     final syncData = Material(
       color: Colors.indigo,
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
-
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width / 2,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           _getParameterizedSyncData();
@@ -367,132 +319,158 @@ class _UrveshHomePageState extends State<UrveshHome> {
       ),
       body: SingleChildScrollView(
           child: Container(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-              child: Column(
-                children: <Widget>[
-                  logoutButon,
-                  SizedBox(height: 5.0,),
-                  homePage,
-                  SizedBox(height: 5.0,),
-                  getDataBtn,
-                  //SizedBox(height: 5.0,),
-                  //saveTeacherBtn,
-                  //SizedBox(height: 5.0,),
-                  //saveTeacherBtn_,
-                  SizedBox(height: 5.0,),
-                  sharedPrefrenceBtn,
-                  //SizedBox(height: 5.0,),
-                  //studentsFromServer,
-                  SizedBox(height: 5.0,),
-                  studentDataFromLocalDB,
-                  //SizedBox(height: 5.0,),
-                  //standardsFromServer,
-                  SizedBox(height: 5.0,),
-                  standardDataFromLocalDB,
-                  //SizedBox(height: 5.0,),
-                  //subjectFromServer,
-                  SizedBox(height: 5.0,),
-                  subjectDataFromLocalDB,
-                  //SizedBox(height: 5.0,),
-                  //parentFromServer,
-                  SizedBox(height: 5.0,),
-                  parentDataFromLocalDB,
-                  SizedBox(height: 5.0,),
-                  syncData
-                ],
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+          child: Column(
+            children: <Widget>[
+              logoutButon,
+              SizedBox(
+                height: 5.0,
               ),
-            ),
-          )
-      ),
+              homePage,
+              SizedBox(
+                height: 5.0,
+              ),
+              getDataBtn,
+              //SizedBox(height: 5.0,),
+              //saveTeacherBtn,
+              //SizedBox(height: 5.0,),
+              //saveTeacherBtn_,
+              SizedBox(
+                height: 5.0,
+              ),
+              sharedPrefrenceBtn,
+              //SizedBox(height: 5.0,),
+              //studentsFromServer,
+              SizedBox(
+                height: 5.0,
+              ),
+              studentDataFromLocalDB,
+              //SizedBox(height: 5.0,),
+              //standardsFromServer,
+              SizedBox(
+                height: 5.0,
+              ),
+              standardDataFromLocalDB,
+              //SizedBox(height: 5.0,),
+              //subjectFromServer,
+              SizedBox(
+                height: 5.0,
+              ),
+              subjectDataFromLocalDB,
+              //SizedBox(height: 5.0,),
+              //parentFromServer,
+              SizedBox(
+                height: 5.0,
+              ),
+              parentDataFromLocalDB,
+              SizedBox(
+                height: 5.0,
+              ),
+              syncData,
+              SizedBox(
+                height: 5.0,
+              ),
+              getStandardTeachers,
+            ],
+          ),
+        ),
+      )),
     );
   }
 
   void addTeacher() {
     Teacher teacher = new Teacher(
-      lid: null,
-      id: null,
-      firstName: "Test",
-      lastName: "Teacher",
-      person: 3,
-      gender: "M",
-      email: "urveshTEst@urvesh.com",
-      standardIds: "11,12,13,14,15",
-      subjectIds: "16,17,18,19,20",
-      userId: 4,
-      role: "teacher"
-    );
+        lid: null,
+        id: null,
+        firstName: "Test",
+        lastName: "Teacher",
+        person: 3,
+        gender: "M",
+        email: "urveshTEst@urvesh.com",
+        standardIds: "11,12,13,14,15",
+        subjectIds: "16,17,18,19,20",
+        userId: 4,
+        role: "teacher");
 
     TeacherServcie teacherServcie = new TeacherServcie();
     teacherServcie.addTeacher(teacher);
-
   }
 
-  Future<List<Teacher>> getTeacherData() async{
+  Future<List<Teacher>> getTeacherData() async {
     TeacherServcie teacherServcie = new TeacherServcie();
     List<Teacher> teacherList = await teacherServcie.getTeacherList();
     print(teacherList);
-    for(int i = 0; i < teacherList.length; i++){
-      print('id : ${teacherList[i].id} | name :  ${teacherList[i].firstName} ${teacherList[i].lastName}');
+    for (int i = 0; i < teacherList.length; i++) {
+      print(
+          'id : ${teacherList[i].id} | name :  ${teacherList[i].firstName} ${teacherList[i].lastName}');
     }
+    return null;
   }
 
   Future<List<Teacher>> _getTecherFromServerAndSaveToLocalDB() async {
     TeacherServcie teacherServcie = new TeacherServcie();
-    List<Teacher> _teacherList =  await teacherServcie.getTeacherListDataFromServer();
+    List<Teacher> _teacherList =
+        await teacherServcie.getTeacherListDataFromServer();
     print(_teacherList);
     return _teacherList;
-
   }
 
   Future<List<SharedPreference>> _getSharedPreDataFromLocalDB() async {
     LoginService loginService = new LoginService();
-    List<SharedPreference> _sharedPreferenceList =  await loginService.getSharedPrefrerenceData();
-    _sharedPreferenceList.forEach((sharedPreferenceObject){
-     var data = json.decode(sharedPreferenceObject.value);
-     print(data);
+    List<SharedPreference> _sharedPreferenceList =
+        await loginService.getSharedPrefrerenceData();
+    _sharedPreferenceList.forEach((sharedPreferenceObject) {
+      var data = json.decode(sharedPreferenceObject.value);
+      print(data);
     });
     return _sharedPreferenceList;
   }
 
   _getStudentDataFromServer() async {
     StudentService studentService = new StudentService();
-    List<Student> studentList = await studentService.getStudentListDataFromServer();
+    List<Student> studentList =
+        await studentService.getStudentListDataFromServer();
     print(studentList);
   }
 
   _getStudentDataFromLocalDB() async {
     StudentService studentService = new StudentService();
-    List<Student> studentList = await studentService.getStudentListFromLocalDB();
+    List<Student> studentList =
+        await studentService.getStudentListFromLocalDB();
     print(studentList);
   }
 
   _getStandardDataFromServer() async {
     StandardService standardService = new StandardService();
-    List<Standard> standardList = await standardService.getStandardListDataFromServer();
+    List<Standard> standardList =
+        await standardService.getStandardListDataFromServer();
     print(standardList);
   }
 
   _getStandardDataFromLocalDB() async {
     StandardService standardService = new StandardService();
-    List<Standard> standardList = await standardService.getStandardListFromLocalDB();
+    List<Standard> standardList =
+        await standardService.getStandardListFromLocalDB();
     print(standardList.length);
-    for(int i = 0; i < standardList.length; i++){
+    for (int i = 0; i < standardList.length; i++) {
       print('id : ${standardList[i].id} name :  ${standardList[i].name}');
     }
   }
 
   _getSubjectDataFromServer() async {
     SubjectService subjectService = new SubjectService();
-    List<Subject> subjectList = await subjectService.getSubjectListDataFromServer();
+    List<Subject> subjectList =
+        await subjectService.getSubjectListDataFromServer();
     print(subjectList);
   }
 
   _getSubjectDataFromLocalDB() async {
     SubjectService subjectService = new SubjectService();
-    List<Subject> subjectList = await subjectService.getSubjectListFromLocalDB();
+    List<Subject> subjectList =
+        await subjectService.getSubjectListFromLocalDB();
     print(subjectList.length);
-    for(int i = 0; i < subjectList.length; i++){
+    for (int i = 0; i < subjectList.length; i++) {
       print('id : ${subjectList[i].id} name :  ${subjectList[i].name}');
     }
   }
@@ -514,4 +492,8 @@ class _UrveshHomePageState extends State<UrveshHome> {
     await syncService.regularLightSync();
   }
 
+  _getStandardTeachersData() {
+    TeacherServcie teacherServcie = new TeacherServcie();
+    teacherServcie.getStandardTeachersDataFromLocalDB();
+  }
 }

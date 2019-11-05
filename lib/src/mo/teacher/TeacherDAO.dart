@@ -3,14 +3,16 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_app/src/fr/db/DBProvider.dart' ;
+import 'package:flutter_app/src/mo/teacher/StandardTeacher.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'Teacher.dart';
-import 'package:flutter_app/src/fr/db/DBProvider.dart' ;
 
 class TeacherDAO{
 
   static final teacherTable = "Teacher";
+  static final standardTeacherTable = "StandardTeacherTable";
 
   Future<Database> getDataBaseHandler()  async {
     final dbHelper = DBProvider.single_instance;
@@ -87,6 +89,37 @@ class TeacherDAO{
     }
     await batch.commit(noResult: true);
     print("Teacher Deleted Successfully in to Local DB : " + teacherIds.toString());
+  }
+
+  deleteAllStandardTeacherMapping() async{
+    Database db = await getDataBaseHandler();
+    /*List<Map<String, dynamic>> maps = await getAllStandardTeacherMappingsFromLocalDB();
+    print(maps);*/
+    await db.delete(standardTeacherTable);
+    /*List<Map<String, dynamic>> afterDelete = await getAllStandardTeacherMappingsFromLocalDB();
+    print(afterDelete);*/
+  }
+
+  getAllStandardTeacherMappingsFromLocalDB() async{
+    Database db = await getDataBaseHandler();
+    List<Map<String, dynamic>> maps = await db.rawQuery("Select * from standardTeacherTable");
+    print(maps);
+    return maps;
+  }
+
+  batchAddStandardTeacher(List<StandardTeacher> standardTeacherMappingList) async{
+    Database db = await getDataBaseHandler();
+    Batch batch = db.batch();
+    for(var i = 0; i < standardTeacherMappingList.length; i++){
+      StandardTeacher standardTeacher = standardTeacherMappingList[i];
+      batch.insert(
+          standardTeacherTable,
+          standardTeacher.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace
+      );
+    }
+    await batch.commit(noResult: true);
+    print("StandardTeacher Saved Successfully in to Local DB : " + standardTeacherMappingList.length.toString());
   }
 
 }

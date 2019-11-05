@@ -9,6 +9,7 @@ class Standard {
   String cordTeacher;
   int divisionId;
   String divisionName;
+  int isAccess = 1;
 
   //Transient
   int startHour;
@@ -39,7 +40,8 @@ class Standard {
       this.eTime,
       this.sFormate,
       this.eFormate,
-      this.isSlelected});
+      this.isSlelected,
+      this.isAccess});
 
   factory Standard.fromJsonServer(Map<String, dynamic> json) => Standard(
       id: json["id"],
@@ -59,7 +61,8 @@ class Standard {
       eTime: json["eTime"],
       sFormate: json["sFormate"],
       eFormate: json["eFormate"],
-      isSlelected: json["isSlelected"]);
+      isSlelected: json["isSlelected"],
+      isAccess: json["isAccess"]);
 
   factory Standard.fromJsonLocal(Map<String, dynamic> json) => Standard(
       id: json["id"],
@@ -79,7 +82,8 @@ class Standard {
       eTime: json["eTime"],
       sFormate: json["sFormate"],
       eFormate: json["eFormate"],
-      isSlelected: json["isSlelected"]);
+      isSlelected: json["isSlelected"],
+      isAccess: json["isAccess"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -89,6 +93,7 @@ class Standard {
         "startTime": startTime,
         "endTime": endTime,
         "divisionId": divisionId,
-        "divisionName": divisionName
+        "divisionName": divisionName,
+        "isAccess": isAccess
       };
 }

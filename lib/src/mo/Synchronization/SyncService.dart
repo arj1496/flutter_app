@@ -1,6 +1,7 @@
 
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
+import 'package:flutter_app/src/mo/PermissionService.dart';
 import 'package:flutter_app/src/mo/Standard/StandardService.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
@@ -17,6 +18,7 @@ class SyncService{
   StudentService studentService = new StudentService();
   ParentService parentService = new ParentService();
   ExamService examService = new ExamService();
+  PermissionService permissionService = new PermissionService();
 
   List<String> getSyncParameters(){
 
@@ -27,6 +29,8 @@ class SyncService{
     parameters.add("student_sync_time");
     parameters.add("parent_sync_time");
     parameters.add("exam_sync_time");
+    parameters.add("permission_sync_time");
+    parameters.add("teacher_subject_sync_time");
 
     return parameters;
   }
@@ -87,7 +91,6 @@ class SyncService{
 
     if(syncDataResponse.containsKey('isStandardSync')){
       if(syncDataResponse['isStandardSync']){
-        print("isStandardSync");
         await standardService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("standard_sync_time", todayDate.toString());
       }
@@ -95,7 +98,6 @@ class SyncService{
 
     if(syncDataResponse.containsKey('isSubjectSync')){
       if(syncDataResponse['isSubjectSync']){
-        print("isSubjectSync");
         await subjectService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("subject_sync_time", todayDate.toString());
       }
@@ -103,7 +105,6 @@ class SyncService{
 
     if(syncDataResponse.containsKey('isTeacherSync')){
       if(syncDataResponse['isTeacherSync']){
-        print("isTeacherSync");
         await teacherService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("teacher_sync_time", todayDate.toString());
       }
@@ -111,7 +112,6 @@ class SyncService{
 
     if(syncDataResponse.containsKey('isStudentSync')){
       if(syncDataResponse['isStudentSync']){
-        print("isStudentSync");
         await studentService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("student_sync_time", todayDate.toString());
       }
@@ -119,7 +119,6 @@ class SyncService{
 
     if(syncDataResponse.containsKey('isParentSync')){
       if(syncDataResponse['isParentSync']){
-        print("isParentSync");
         await parentService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("parent_sync_time", todayDate.toString());
       }
@@ -127,9 +126,22 @@ class SyncService{
 
     if(syncDataResponse.containsKey('isExamSync')){
       if(syncDataResponse['isExamSync']){
-        print("isExamSync");
         await examService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("exam_sync_time", todayDate.toString());
+      }
+    }
+
+    if(syncDataResponse.containsKey('isPermissionSync')){
+      if(syncDataResponse['isPermissionSync']){
+        await permissionService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("permission_sync_time", todayDate.toString());
+      }
+    }
+
+    if(syncDataResponse.containsKey('isSubjectTeacherSync')){
+      if(syncDataResponse['isSubjectTeacherSync']){
+        await teacherService.syncCallBackHandleForStandardTeacher(syncDataResponse);
+        sharedPreferences.setString("teacher_subject_sync_time", todayDate.toString());
       }
     }
   }

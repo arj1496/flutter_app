@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/fr/UserProfile.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
@@ -50,7 +51,10 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.sync),
-            onPressed: () {},
+            onPressed: () {
+              UserProfile userProfile = new UserProfile();
+              userProfile.getEmailId();
+            },
           ),
           IconButton(
             icon: Icon(Icons.add),

@@ -1,15 +1,24 @@
 
+import 'package:flutter_app/src/fr/UserProfileDao.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Subject/Subject.dart';
+
 class UserProfile{
 
+  UserProfileDao _userProfileDao = new UserProfileDao();
 
   // Get the AccessibleClasses of Logged in User
-  List<int> getAccessibleClasses() {
-
+  Future<List<Standard>> getAccessibleClasses() async{
+    List<Standard> standardList = await _userProfileDao.getAcceessibleStandardsFromLocalDB();
+    print("Accessible standards : ${standardList.length}");
+    return standardList;
   }
 
   // Get the AccessibleSubjects of Logged in User
-  List<int> getAccessibleSubjects(){
-
+  Future<List<Subject>> getAccessibleSubjects() async{
+    List<Subject> subjectList = await _userProfileDao.getAcceessibleSubjectsFromLocalDB();
+    print("Accessible Subjects : ${subjectList.length}");
+    return subjectList;
   }
 
   // Get the AccessibleGrades of Logged in User
@@ -23,8 +32,10 @@ class UserProfile{
   }
 
   // get the emailId of Logged in User
-  String getEmailId(){
-
+  Future<String> getEmailId() async{
+    String emailid = await _userProfileDao.getEmailIdFromLocalDB();
+    print("Email Id : ${emailid}");
+    return emailid;
   }
 
   // get the Role of Logged in User

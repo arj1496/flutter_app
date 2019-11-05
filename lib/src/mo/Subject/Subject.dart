@@ -40,11 +40,10 @@ class Subject{
 
       id : jsonObject["id"],
       name : jsonObject["name"],
-      standardId: jsonObject["standard"],
-      standard : Standard(id: jsonObject["standard"]),      //Standard.fromJsonServer(jsonObject["standard"]),
+      standardId: jsonObject["standardId"],
       isAccess : jsonObject["isAccess"],
       color : jsonObject["color"],
-      isOptional : jsonObject["isOptional"] == true ? 1 : 0,
+      isOptional : jsonObject["isOptional"],
       optionalStudentIds : jsonObject["optionalStudentIds"]
 
   );
@@ -53,20 +52,34 @@ class Subject{
 
       id : jsonObject["id"],
       name : jsonObject["name"],
-     // standardId: jsonObject["standard"],
-      standard : Standard(id: jsonObject["standard"]),      //Standard.fromJsonServer(jsonObject["standard"]),
+      standard : Standard(id: jsonObject["standard"]),
       isAccess : jsonObject["isAccess"],
       color : jsonObject["color"],
-      isOptional : jsonObject["isOptional"] == true ? 1 : 0,
+      isOptional : jsonObject["isOptional"],
       optionalStudentIds : jsonObject["optionalStudentIds"]
+  );
 
+  factory Subject.fromJsonLocalWithStandard(Map<String, dynamic> jsonObject) => Subject(
+
+      id : jsonObject["subjectId"],
+      name : jsonObject["subjectName"],
+      standardId: jsonObject["subStandardId"],
+      standard : Standard(
+        id: jsonObject["standardId"],
+        name: jsonObject["standardName"],
+        isAccess: jsonObject["stdAccessible"]
+      ),
+      isAccess : jsonObject["isAccessibleSubject"],
+      color : jsonObject["subjectColor"],
+      isOptional : jsonObject["subOptional"],
+      optionalStudentIds : jsonObject["subOptionalStudentIds"]
   );
 
   Map<String, dynamic> toJson() => {
 
     "id" : id,
     "name" : name,
-    "standard" : standard.id,
+    "standardId": standardId,
     "isAccess" : isAccess,
     "color" : color,
     "isOptional" : isOptional,

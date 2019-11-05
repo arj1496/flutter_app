@@ -44,6 +44,7 @@ class  DBProvider {
       await db.execute(createExamTable());
       await db.execute(createParentTable());
       await db.execute(createDumpTable());
+      await db.execute(createStandardTeacherTable());
 
     });
   }
@@ -157,7 +158,8 @@ class  DBProvider {
       " endTime TEXT, "
       " teacherIds INTEGER, "
       " divisionId Integer, "
-      " divisionName TEXT "
+      " divisionName TEXT,"
+      "isAccess INTEGER "
       " )";
   }
 
@@ -184,7 +186,7 @@ class  DBProvider {
         " lid INTEGER ,"
         " id INTEGER PRIMARY KEY,"
         " name TEXT ,"
-        " standard INTEGER ,"
+        " standardId INTEGER ,"
         " isAccess Integer, "
         " color Integer, "
         " isOptional Integer, "
@@ -237,6 +239,19 @@ class  DBProvider {
         " entity TEXT , "
         " entityId INTEGER, "
         " dump TEXT"
+        ")";
+  }
+
+  String createStandardTeacherTable() {
+    return "CREATE TABLE StandardTeacherTable( "
+        " id INTEGER PRIMARY KEY,"
+        " standardId INTEGER ,"
+        " teacherId INTEGER ,"
+        " schoolDs INTEGER ,"
+        " subjectId INTEGER ,"
+        " association INTEGER ,"
+        " tracker INTEGER ,"
+        " sharePercentage INTEGER"
         ")";
   }
 }

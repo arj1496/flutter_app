@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/teacher/StandardTeacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherDAO.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherWebService.dart';
 import 'Teacher.dart';
@@ -75,17 +76,16 @@ class TeacherServcie{
       await batchDeleteTeacher(teacherIds);
     }
   }
+
+
+
   deleteTeacher(Teacher teacher){
     teacherDAO.deleteTeacher(teacher.id);
   }
+
   batchDeleteTeacher(List<int> teacherIds){
     teacherDAO.batchDeleteTeacher(teacherIds);
   }
-  void addorupdateTeacherToServer(GenericModel genericModel) {
-    TeacherWebService teacherWebService = new TeacherWebService();
-    teacherWebService.addOrUpdateTeacher(genericModel);
-  }
-
 
   Future<int> addOrUpdateTeacher(GenericModel genericModel) async{
     Map<String, dynamic> teacherData = await teacherWebService.addOrUpdateTeacher(genericModel);
@@ -104,6 +104,30 @@ class TeacherServcie{
   Future<List<Teacher>> getJoinDbTeacher() async{
     List<Teacher> teacherListFromFuture = await teacherDAO.getJoinDbTeacher();
     return teacherListFromFuture;
+  }
+
+  syncCallBackHandleForStandardTeacher(Map<String, dynamic> syncDataResponse) async{
+    List<dynamic> subjectTeacherMappingDynamic = syncDataResponse['subjectTeacherMapping'];
+    if(subjectTeacherMappingDynamic != null && subjectTeacherMappingDynamic.length > 0){
+      List<StandardTeacher> standardTeacherMappingList = List.generate(subjectTeacherMappingDynamic.length, (i){
+        StandardTeacher standardTeacher = StandardTeacher.fromJsonServer(subjectTeacherMappingDynamic[i]);
+        return standardTeacher;
+      });
+      await eraseStandardTeacherMappingData();
+      await batchAddStandardTeacher(standardTeacherMappingList);
+    }
+  }
+
+  eraseStandardTeacherMappingData() async{
+    await teacherDAO.deleteAllStandardTeacherMapping();
+  }
+
+  batchAddStandardTeacher(List<StandardTeacher> standardTeacherMappingList) {
+    teacherDAO.batchAddStandardTeacher(standardTeacherMappingList);
+  }
+
+  getStandardTeachersDataFromLocalDB() {
+    teacherDAO.getAllStandardTeacherMappingsFromLocalDB();
   }
 
 
