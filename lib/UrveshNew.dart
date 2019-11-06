@@ -9,6 +9,7 @@ import 'package:flutter_app/urvesh.dart';
 
 import 'AppTheme.dart';
 import 'HeaderContainer.dart';
+import 'StudentDashboard.dart';
 
 class UrveshNew extends StatefulWidget {
   @override
@@ -77,6 +78,15 @@ class _UrveshNewState extends State<UrveshNew> {
                   );
                 },
                 child: Text('Student Home Page'),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( builder: (context) => StudentDashboard()),
+                  );
+                },
+                child: Text('Student Dashboard'),
               ),
             ],
           ),

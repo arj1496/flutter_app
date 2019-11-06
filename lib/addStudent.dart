@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
+//import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:sqflite/utils/utils.dart';
 import 'onlyDate.dart';
@@ -16,16 +18,19 @@ class AddStudent extends StatefulWidget {
   //AddStudent({Key key}) : super(key: key);
 
   VoidCallback onCallBack;
-  Student student;
+  Student  student = new Student();
+  bool isUpdateFlag;
 
-  AddStudent({@required Student object, @required onCallBack}) :
+  AddStudent( {@required Student object, @required onCallBack, this.isUpdateFlag}) :
       assert (object != null),
       assert (onCallBack != null),
-      this.student = object,
+        this.student = object,
       this.onCallBack = onCallBack;
+
 
   @override
   _addStudentState createState() => _addStudentState();
+
 }
 
 class _addStudentState extends State<AddStudent> {
@@ -33,6 +38,8 @@ class _addStudentState extends State<AddStudent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   GenericModel genericModel = new GenericModel();
+  Parent father;
+  Parent mother;
 
   bool _autoValidate = false;
   bool _isInAsyncCall = false;
@@ -78,6 +85,23 @@ class _addStudentState extends State<AddStudent> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<Parent> parentList = widget.student.parentList;
+    if(parentList != null){
+      for(int i=0;i<parentList.length;i++){
+        Parent parent = parentList[i];
+        if(parent.relation == "FATHER"){
+          this.father = parent;
+        }else if(parent.relation == "MOTHER"){
+          this.mother = parent;
+        }
+      }
+    }
+
+
+
+
+
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -102,6 +126,7 @@ class _addStudentState extends State<AddStudent> {
                 children: <Widget>[
                   //Student First Name
                   TextFormField(
+                    initialValue: widget.student.firstName != "" ? widget.student.firstName : '',
                     //validator: validateFirstName,
                     onSaved: (String val) {
                       genericModel.firstName = val;
@@ -119,6 +144,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Student Middle Name
                   TextFormField(
+
                     onSaved: (String val) {
                       genericModel.studMiddleName = val;
                     },
@@ -135,6 +161,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Student Last Name
                   TextFormField(
+                    initialValue: widget.student.lastName != "" ? widget.student.lastName : '',
                     //validator: validateLastName,
                     onSaved: (String val) {
                       genericModel.lastName = val;
@@ -151,13 +178,36 @@ class _addStudentState extends State<AddStudent> {
                         labelText: 'Enter Last Name'),
                   ),
                   //Student BirthDate
-                  DatePicker(Icon(Icons.cake),"BirthDate"),
+             /*     FlatButton(
+                      onPressed: () {
+                        DatePicker.showDatePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(2018, 3, 5),
+                            maxTime: DateTime(2019, 6, 7), onChanged: (date) {
+                              print('change $date');
+                            }, onConfirm: (date) {
+                              print('confirm $date');
+                            }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        return D
+                      },
+                      child: Text(
+                        'show date time picker (Chinese)',
+                        style: TextStyle(color: Colors.blue),
+                      )
+                  ),*/
+                DatePicker(Icon(Icons.cake),"BirthDate"),
                   //Class of Student
-                  StandardDropDown(_formKey, genericModel),
+                  //StandardDropDown(, , widget.student),
+                  StandardDropDown(
+                    formKey: _formKey,
+                    genericModel: genericModel,
+                    student: widget.student
+                  ),
                   // Joining Date of Student
                   DatePicker(Icon(Icons.calendar_today),"Joining Date"),
                   //StudentId(School Student Id)
                   TextFormField(
+                    initialValue: widget.student.studentId != "" ? widget.student.studentId : '',
                     onSaved: (String val) {
                       genericModel.studId = val;
                     },
@@ -174,6 +224,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Roll No
                   TextFormField(
+                    initialValue: widget.student.rollNo != "" ? widget.student.rollNo : '',
                     onSaved: (String val) {
                       genericModel.studRollNO = val;
                     },
@@ -190,6 +241,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Student Contact
                   TextFormField(
+                    initialValue: widget.student.mobileNumber != "" ? widget.student.mobileNumber : '',
                     onSaved: (String val) {
                       genericModel.contactNo = val;
                     },
@@ -207,6 +259,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mail Id
                   TextFormField(
+                    initialValue: widget.student.email != "" ? widget.student.email : '',
                     //validator: validateEmail,
                     onSaved: (String val) {
                       genericModel.email = val;
@@ -224,7 +277,10 @@ class _addStudentState extends State<AddStudent> {
                         labelText: 'Enter Email Id'),
                   ),
                   //Student Gender
-                  Gender(),
+                  /*Padding(
+                    padding: const EdgeInsets.only(bottom:5.0, top:10.0),
+                    child: Gender(_formKey, genericModel),
+                  ),*/
                   //Father Details
                   Padding(
                     padding: const EdgeInsets.only(bottom:5.0, top:10.0),
@@ -241,6 +297,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Father First Name
                   TextFormField(
+                    initialValue: this.father != null && this.father.firstName != "" ? this.father.firstName : '',
                     onSaved: (String val) {
                       genericModel.fatherFirstName = val;
                     },
@@ -257,6 +314,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Father Last Name
                   TextFormField(
+                    initialValue: this.father != null && this.father.lastName != "" ? this.father.lastName : '',
                     onSaved: (String val) {
                       genericModel.fatherLastName = val;
                     },
@@ -274,6 +332,7 @@ class _addStudentState extends State<AddStudent> {
                   //Father Contact
                   TextFormField(
                     keyboardType: TextInputType.phone,
+                    initialValue: this.father != null && this.father.mobileNumber != "" ? this.father.mobileNumber : '',
                     onSaved: (String val) {
                       genericModel.fatherContact = val;
                     },
@@ -290,6 +349,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Father Email Id
                   TextFormField(
+                    initialValue: this.father != null && this.father.email != "" ? this.father.email : '',
                     //validator: validateEmail,
                     onSaved: (String val) {
                       genericModel.fatherEmail = val;
@@ -322,6 +382,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother First Name
                   TextFormField(
+                    initialValue: this.mother != null && this.mother.firstName != "" ? this.mother.firstName : '',
                     onSaved: (String val) {
                       genericModel.moherFirstName = val;
                     },
@@ -338,6 +399,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother Last Name
                   TextFormField(
+                    initialValue: this.mother != null && this.mother.lastName != "" ? this.mother.lastName : '',
                     onSaved: (String val) {
                       genericModel.motherLastName = val;
                     },
@@ -354,6 +416,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother Contact
                   TextFormField(
+                    initialValue: this.mother != null && this.mother.mobileNumber != "" ? this.mother.mobileNumber : '',
                     keyboardType: TextInputType.phone,
                     onSaved: (String val) {
                       genericModel.motherContact = val;
@@ -371,6 +434,7 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother Email Id
                   TextFormField(
+                    initialValue: this.mother != null && this.mother.email != "" ? this.mother.email : '',
                     //validator: validateEmail,
                     onSaved: (String val) {
                       genericModel.motherEmail = val;
@@ -391,15 +455,15 @@ class _addStudentState extends State<AddStudent> {
                   Row(
                     children: <Widget>[
                       Expanded(
-                        child: Padding(
+                        child:  Padding(
                           padding: const EdgeInsets.only(
                               top: 40.0, left: 30.0, right: 30.0, bottom: 30.0),
-                          child: MaterialButton(
+                          child: widget.isUpdateFlag ?  MaterialButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(30.0)),
                               color: Colors.lightBlueAccent,
                               child: Text(
-                                "Add Student",
+                                "Update",
                                 style: TextStyle(
                                   color: Colors.black,
                                 ),
@@ -414,7 +478,21 @@ class _addStudentState extends State<AddStudent> {
                                     _validateInputs();
                                   });
                                 });*/
-                              }),
+                              }
+                              ) : MaterialButton(
+                              shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                              color: Colors.lightBlueAccent,
+                              child: Text(
+                                "Add Student",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              onPressed: () {
+                                _submit();
+                              }
+                              ),
                         ),
                       ),
                       Expanded(

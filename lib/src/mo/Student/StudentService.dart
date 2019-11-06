@@ -1,5 +1,3 @@
-
-
 import 'dart:collection';
 
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
@@ -10,16 +8,16 @@ import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentDao.dart';
 import 'package:flutter_app/src/mo/Student/StudentWebService.dart';
 
-class StudentService{
-
+class StudentService {
   StudentDao _studentDao = new StudentDao();
   ParentService parentService = new ParentService();
 
- Future addStudent(GenericModel genericModel) async{
+  Future addStudent(GenericModel genericModel) async {
     StudentWebService _studentWebService = new StudentWebService();
-    Map<String, dynamic> responseData = await _studentWebService.addStudent(genericModel);
+    Map<String, dynamic> responseData =
+        await _studentWebService.addStudent(genericModel);
 
-    if(responseData['status']){
+    if (responseData['status']) {
       Student student = Student.fromJson_server(responseData['student']);
       print(student);
       List<Student> studentList = [];
@@ -27,21 +25,20 @@ class StudentService{
       batchAddStudents(studentList);
 
       List<dynamic> parentsDynamic = responseData['parents'];
-      if(parentsDynamic != null && parentsDynamic.length > 0){
-        List<Parent> parentList = List.generate(parentsDynamic.length, (i){
+      if (parentsDynamic != null && parentsDynamic.length > 0) {
+        List<Parent> parentList = List.generate(parentsDynamic.length, (i) {
           Parent parent = Parent.fromJsonServer(parentsDynamic[i]);
           return parent;
         });
         await parentService.batchAddParents(parentList);
       }
-    }
-    else{
+    } else {
       print("False");
     }
   }
 
   // this method is used to save the List of Students
-  batchAddStudents(List<Student> studentList){
+  batchAddStudents(List<Student> studentList) {
     _studentDao.batchAddStudents(studentList);
   }
 
@@ -51,17 +48,18 @@ class StudentService{
     HashMap map = new HashMap<String, String>();
     map['student_sync_time'] = 0.toString();
 
-    Map<String, dynamic> studentDataFromServer = await _studentWebService.getData_(map, "rest/sync/getSyncInfo");
+    Map<String, dynamic> studentDataFromServer =
+        await _studentWebService.getData_(map, "rest/sync/getSyncInfo");
     List<Student> studentList;
-    if(studentDataFromServer['isStudentSync']){
+    if (studentDataFromServer['isStudentSync']) {
       print(studentDataFromServer);
       List<dynamic> studentsDynamic = studentDataFromServer['students'];
-      studentList = List.generate(studentsDynamic.length, (i){
+      studentList = List.generate(studentsDynamic.length, (i) {
         Student student = Student.fromJson_server(studentsDynamic[i]);
         return student;
       });
       await batchAddStudents(studentList);
-    }else{
+    } else {
       print('Student Sync is false');
     }
     return studentList;
@@ -71,29 +69,32 @@ class StudentService{
   /**
    * get parentids from student and call parentservice to get parent data in the form of list.
    */
-  Future<List<Student>> getStudentListFromLocalDB() async{
-    List<Student> studentListFromFuture = await _studentDao.getAllStudentDataFromLocalDB();
+  Future<List<Student>> getStudentListFromLocalDB() async {
+    List<Student> studentListFromFuture =
+        await _studentDao.getAllStudentDataFromLocalDB();
     List<Student> newList = new List();
-    for(Student student in studentListFromFuture){
+    for (Student student in studentListFromFuture) {
       Student std = new Student();
       std = student;
-      List<Parent> parentList = await parentService.getAllParentDataFromId(student.parentIds);
+      List<Parent> parentList =
+          await parentService.getAllParentDataFromId(student.parentIds);
       std.parentList = parentList;
       newList.add(std);
     }
     return newList;
   }
 
-  Future<List<Student>> getStudentListFromLocalDB_(int classId, int subjectId) async{
-    List<Student> studentListFromFuture = await _studentDao.getAllStudentDataFromLocalDB();
+  Future<List<Student>> getStudentListFromLocalDB_(
+      int classId, int subjectId) async {
+    List<Student> studentListFromFuture =
+        await _studentDao.getAllStudentDataFromLocalDB();
     return studentListFromFuture;
   }
 
-  List<Student> getStudentsForTest(){
-
+  List<Student> getStudentsForTest() {
     List<Student> students = new List();
 
-    for(var i = 1 ; i < 10; i++){
+    for (var i = 1; i < 10; i++) {
       Student student = new Student();
       student.lid = i;
       student.id = i;
@@ -116,7 +117,6 @@ class StudentService{
       student.cardId = 'card' + i.toString();
       student.isCardActive = 1;
       student.birthDate = i;
-
 
       Parent father = new Parent();
       father.firstName = "Dilip";
@@ -146,24 +146,32 @@ class StudentService{
 
   syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
     List<dynamic> studentsDynamic = syncDataResponse['students'];
-    if(studentsDynamic != null && studentsDynamic.length > 0){
-      List<Student> studentList = List.generate(studentsDynamic.length, (i){
+    if (studentsDynamic != null && studentsDynamic.length > 0) {
+      List<Student> studentList = List.generate(studentsDynamic.length, (i) {
         Student student = Student.fromJson_server(studentsDynamic[i]);
         return student;
       });
       await batchAddStudents(studentList);
     }
-
   }
 
   updateParentDetailOfStudent(GenericModel genericmodel) async {
     StudentWebService studentwebservice = new StudentWebService();
-    Map<String, dynamic> responseData = await studentwebservice
-        .updateParentDetailOfStudent(genericmodel);
+    Map<String, dynamic> responseData =
+        await studentwebservice.updateParentDetailOfStudent(genericmodel);
     if (responseData['status']) {
       Student student = Student.fromJson_server(responseData['student']);
       print(student);
     }
   }
 
+  removeParentDetailOfStudent(GenericModel genericmodel) async {
+    StudentWebService studentwebservice = new StudentWebService();
+   /* Map<String, dynamic> responseData =
+    await studentwebservice.removeParentDetailOfStudent(genericmodel);
+    if (responseData['status']) {
+      Student student = Student.fromJson_server(responseData['student']);
+      print(student);
+    }*/
+  }
 }

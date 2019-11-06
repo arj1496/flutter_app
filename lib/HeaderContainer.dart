@@ -22,7 +22,7 @@ class HeaderContainer extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: MediaQuery.of(context).padding.top,
+          height: 2.0,//MediaQuery.of(context).padding.top,
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -86,7 +86,7 @@ class HeaderContainer extends StatelessWidget {
 
            ),
         Padding(
-          padding: const EdgeInsets.only(bottom:8.0,left:10.0),
+          padding: const EdgeInsets.only(bottom:2.0,left:10.0),
           child: Text(
             subtitle ,
             textAlign: TextAlign.left,

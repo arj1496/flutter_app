@@ -38,7 +38,7 @@ class StudentWebService{
 
     Map<String, String> studDetailMap = getStudentDetailMap(genericModel);
 
-    final finalurl = SchoolUtils().baseUrl + "rest/student/savestudent";//
+    final finalurl =  SchoolUtils().baseUrl + "rest/student/savestudent";//SchoolUtils().baseUrl;//
     var response = await http.post(finalurl, headers: headers, body: studDetailMap);
     if(response.statusCode == 200){
       var str = response.body;

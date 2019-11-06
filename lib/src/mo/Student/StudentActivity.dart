@@ -32,5 +32,12 @@ class StudentActivity{
     });*/
   }
 
+  removeParentDetail(GenericModel genericmodel, callBack){
+    StudentService studentservice = new StudentService();
+    studentservice.removeParentDetailOfStudent(genericmodel);
+    Future.delayed(Duration(seconds: 15),(){
+      callBack();
+    });
+  }
 
 }

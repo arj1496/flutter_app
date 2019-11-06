@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/TeacherDropDown.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
+import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherActivity.dart';
 
@@ -10,6 +11,7 @@ import '../standardDropDown.dart';
 
 
 class AddSubject  extends StatefulWidget{
+  Student student = new Student();
   GenericModel genericModel=new GenericModel();
   GlobalKey<FormState> formKey;
   @override
@@ -59,7 +61,11 @@ class AddSubjectState extends State<AddSubject>{
 
              Padding(
                padding: EdgeInsets.all(10.0),
-               child: StandardDropDown(widget.formKey,widget.genericModel),
+               child:
+               StandardDropDown(
+                   formKey :widget.formKey,
+                   genericModel :widget.genericModel,
+                   student: widget.student),
              ),
               TeacherDropDown(widget.formKey,widget.genericModel),
               Padding(

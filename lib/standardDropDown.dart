@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
+import 'package:flutter_app/src/mo/Student/Student.dart';
 
 class StandardDropDown extends StatefulWidget {
 
@@ -12,12 +13,14 @@ class StandardDropDown extends StatefulWidget {
 
   GlobalKey<FormState> formKey;
   GenericModel genericModel;
-  StandardDropDown.init(formKey, _eventPojo) {
+  Student student;
+  StandardDropDown.init(formKey, _eventPojo, student) {
     this.formKey = formKey;
     this.genericModel = _eventPojo;
+    this.student = student;
   }
 
-  StandardDropDown(this.formKey, this.genericModel);
+  StandardDropDown({this.formKey, this.genericModel, this.student});
 
 }
 
@@ -28,9 +31,19 @@ Future<List<Standard>> getStandards() async {
 }
 
 class StandardropdownState extends State<StandardDropDown> {
+  String classOf;
+  bool isStandardDisabled = true;
   String standardOf = "Select Class";
   static int selectedStandardId;
   TextEditingController labelText = new TextEditingController();
+
+  @override
+  void initState() {
+    if(widget.student!= null && widget.student.standard != null){
+      standardOf = widget.student.standard.toString();
+      isStandardDisabled = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +71,9 @@ class StandardropdownState extends State<StandardDropDown> {
         builder: (FormFieldState state) {
           return InputDecorator(
             decoration: InputDecoration(
-                icon: Icon(Icons.class_), prefixText: standardOf),
+                icon: Icon(Icons.class_), prefixText: standardOf,
+                ),
+
             child: DropdownButtonHideUnderline(
                 child: Padding(
                   padding: EdgeInsets.only(right: 8.0, left: 8.0),
