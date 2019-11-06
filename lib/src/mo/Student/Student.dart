@@ -1,7 +1,7 @@
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
-import 'package:flutter_app/src/mo/StandardMapping/StandardMapping.dart';
+import 'package:flutter_app/src/mo/Student/StandardMapping.dart';
 
 class Student {
   int lid; // local database id
@@ -48,6 +48,7 @@ class Student {
       this.standardMappings,
       this.parentList});
 
+  // ignore: non_constant_identifier_names
   factory Student.fromJson_server(Map<String, dynamic> jsonObject) => Student(
         lid: jsonObject['lid'],
         id: jsonObject['id'],  // Data from Json
@@ -88,7 +89,7 @@ class Student {
     cardId: jsonObject['cardId'],
     isCardActive: jsonObject['isCardActive'],
     birthDate: jsonObject['birthDate'],
-    standardMappings: StandardMapping.getStandardMappingsList(jsonObject['standardMappings']),
+    //standardMappings: StandardMapping.getStandardMappingsList(jsonObject['standardMappings']),
     parentList: jsonObject['parentList'],
   );
 
@@ -101,14 +102,12 @@ class Student {
         'studentId': studentId,
         'schoolName': schoolName,
         'gender': gender,
-        //'standard' : standard,
         'rollNo': rollNo,
         'personId': personId,
         'email': email,
         'mobileNumber': mobileNumber,
         'parentIds': parentIds,
         'isWritable': isWritable,
-        //'userId' : userId,
         'cardId': cardId,
         'isCardActive': isCardActive,
         'birthDate': birthDate

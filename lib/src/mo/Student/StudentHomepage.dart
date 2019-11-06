@@ -49,7 +49,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
 
   Widget getListViewBuilder(BuildContext context) {
     StudentService ss = StudentService();
-    studentList = ss.getStudentsForTest();
+    studentList = new List();//ss.getStudentsForTest();
     return Container(
       color: AppTheme.background,
       child: ListView.builder(

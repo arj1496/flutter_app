@@ -9,8 +9,8 @@ class StudentActivity{
 
   Future<List<Student>> getAllStudent() async{
     StudentService studentservice = new StudentService();
-    List<Student> events =  await studentservice.getStudentListFromLocalDB();
-    return events;
+    List<Student> studentList =  await studentservice.getStudentListFromLocalDB();
+    return studentList;
   }
 
   saveStudentDetail(GenericModel genericmodel, callBack){

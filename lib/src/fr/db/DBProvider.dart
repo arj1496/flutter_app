@@ -45,6 +45,7 @@ class  DBProvider {
       await db.execute(createParentTable());
       await db.execute(createDumpTable());
       await db.execute(createStandardTeacherTable());
+      await db.execute(createStandardMappingTable());
 
     });
   }
@@ -252,6 +253,20 @@ class  DBProvider {
         " association INTEGER ,"
         " tracker INTEGER ,"
         " sharePercentage INTEGER"
+        ")";
+  }
+
+  String createStandardMappingTable() {
+    return "CREATE TABLE StandardMappingTable( "
+        " smId INTEGER PRIMARY KEY,"
+        " studentId INTEGER ,"
+        " standardId INTEGER ,"
+        " schoolDs INTEGER ,"
+        " mappingType INTEGER ,"
+        " gradeId INTEGER ,"
+        " studentStatus INTEGER ,"
+        " rollNo TEXT,"
+        " isVisible INTEGER"
         ")";
   }
 }

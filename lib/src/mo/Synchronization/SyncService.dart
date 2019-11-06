@@ -1,7 +1,7 @@
 
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
-import 'package:flutter_app/src/mo/PermissionService.dart';
+import 'package:flutter_app/src/mo/Permission/PermissionService.dart';
 import 'package:flutter_app/src/mo/Standard/StandardService.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
@@ -86,7 +86,7 @@ class SyncService{
   void processForResult(Map<String, dynamic> syncDataResponse) async {
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    int todayDate = DateTime.now().millisecondsSinceEpoch;
+    int todayDate = 0;//DateTime.now().millisecondsSinceEpoch;
     print(todayDate);
 
     if(syncDataResponse.containsKey('isStandardSync')){

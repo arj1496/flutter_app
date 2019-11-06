@@ -48,10 +48,7 @@ class ParentDAO {
     print("getAllParentDataFromId Starts ");
     Database db = await getDataBaseHandler();
 
-    //String seletedField =  'p.id as parentId, p.firstName as parentFirstName, p.lastName as parentLastName,p.gender as pGender ,p.email as pEmail,p.mobileNumber as pMobilenumber,p.relation, p.id as personId';
-
-    List<Map<String, dynamic>> maps = await db.rawQuery(
-        "SELECT * FROM  ${parentTable} p where p.id in  (${parentIds}) ");
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM  ${parentTable} p where p.id in  (${parentIds}) ");
 
 
     var parentList = List.generate(maps.length, ( i ) {
