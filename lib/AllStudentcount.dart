@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'AppTheme.dart';
 
 class AllStudentCount extends StatelessWidget {
+  
+  AllStudentCount(
+      
+      )
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return studentCount();
   }
 }

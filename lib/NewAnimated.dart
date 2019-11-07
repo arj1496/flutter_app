@@ -11,6 +11,7 @@ class NewAnimated extends StatelessWidget {
 
   Widget totalAndGradeView() {
     return Container(
+      color: Colors.transparent,
       margin: EdgeInsets.symmetric(vertical: 10.0),
       height: 140.0,
       child: ListView.builder(
@@ -32,7 +33,24 @@ class NewAnimated extends StatelessWidget {
         padding: const EdgeInsets.only(left: 10, top: 3, bottom: 3),
         child: Container(
           width: 200.0,
-          color: Colors.black12,
+          decoration: BoxDecoration(
+            color: Colors.black12,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0),
+                topRight: Radius.circular(8.0)
+            ),
+              boxShadow: <BoxShadow>[
+          BoxShadow(
+          color: AppTheme.grey.withOpacity(0.2),
+            offset: Offset(1.1, 1.1),
+            blurRadius: 10.0
+        ),
+        ],
+          ),
+       /*   width: 200.0,
+          color: Colors.black12,*/
             child: Column(
               children: <Widget>[
                 Padding(
