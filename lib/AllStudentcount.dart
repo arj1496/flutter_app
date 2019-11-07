@@ -3,9 +3,7 @@ import 'AppTheme.dart';
 
 class AllStudentCount extends StatelessWidget {
   
-  AllStudentCount(
-      
-      )
+  AllStudentCount();
 
   @override
   Widget build(BuildContext context) {
