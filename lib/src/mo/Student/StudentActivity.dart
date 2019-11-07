@@ -7,22 +7,22 @@ import 'StudentService.dart';
 
 class StudentActivity{
 
+  StudentService studentService = new StudentService();
+
   Future<List<Student>> getAllStudent() async{
-    StudentService studentservice = new StudentService();
-    List<Student> studentList =  await studentservice.getStudentListFromLocalDB();
+
+    List<Student> studentList =  await studentService.getStudentListFromLocalDB();
     return studentList;
   }
 
   saveStudentDetail(GenericModel genericmodel, callBack){
-    StudentService studentservice = new StudentService();
-    studentservice.updateParentDetailOfStudent(genericmodel);
+    studentService.updateParentDetailOfStudent(genericmodel);
     Future.delayed(Duration(seconds: 15), () {
       callBack();
     });
   }
 
   addStudent(GenericModel genericModel, callBack){
-    StudentService studentService = new StudentService();
     studentService.addStudent(genericModel).then((value){
       callBack();
     });
@@ -33,8 +33,7 @@ class StudentActivity{
   }
 
   removeParentDetail(GenericModel genericmodel, callBack){
-    StudentService studentservice = new StudentService();
-    studentservice.removeParentDetailOfStudent(genericmodel);
+    studentService.removeParentDetailOfStudent(genericmodel);
     Future.delayed(Duration(seconds: 15),(){
       callBack();
     });

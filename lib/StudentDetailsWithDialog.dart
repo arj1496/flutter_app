@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/fr/User.dart';
+import 'package:flutter_app/src/fr/UserProfile.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
@@ -22,7 +23,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
   // maintains validators and state of form fields
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
-  List<Student> studentList = null;
+  List<Student> studentList;
   bool _isUpdateBtn = true;
   bool _isEditBtn = true;
 
@@ -62,7 +63,8 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                         print('hey done on add student');
                       },
                       isUpdateFlag: false,
-                    )),
+                    )
+                ),
               );
             },
           ),

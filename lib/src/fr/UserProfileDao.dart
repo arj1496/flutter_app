@@ -6,6 +6,7 @@ import 'package:flutter_app/src/fr/LoginDAO.dart';
 import 'package:flutter_app/src/fr/SharedPreference.dart';
 import 'package:flutter_app/src/fr/db/DBProvider.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -89,6 +90,33 @@ class UserProfileDao{
     Map<String, dynamic> userDetails = getUserDetails(sharedPreferenceDataMap);
     var emailId = userDetails['userId'];
     return emailId;
+  }
+
+  getRoleFromLocalDB() async{
+    List<SharedPreference> sharedPreferenceData = await getSharedPreferenceDataList();
+    Map<String, dynamic> sharedPreferenceDataMap = getSharedPreferenceDataMap(sharedPreferenceData);
+    Map<String, dynamic> userDetails = getUserDetails(sharedPreferenceDataMap);
+    var role = userDetails['role'];
+    return role;
+  }
+
+  getStudentsOfParentFromLocalDB() async{
+    List<SharedPreference> sharedPreferenceData = await getSharedPreferenceDataList();
+    Map<String, dynamic> sharedPreferenceDataMap = getSharedPreferenceDataMap(sharedPreferenceData);
+    Map<String, dynamic> userDetails = getUserDetails(sharedPreferenceDataMap);
+    List<Student> studentList =  getStudentObjectFromGrowableList(userDetails['students']);
+    return studentList;
+  }
+
+  List<Student> getStudentObjectFromGrowableList(List<dynamic> studentGrowableList){
+    List<Student> studentList;
+    if(studentGrowableList != null && studentGrowableList.length > 0){
+      studentList = List.generate(studentGrowableList.length, (i){
+        Student student = Student.fromJson_server(studentGrowableList[i]);
+        return student;
+      });
+    }
+    return studentList;
   }
 
 

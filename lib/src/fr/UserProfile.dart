@@ -1,6 +1,7 @@
 
 import 'package:flutter_app/src/fr/UserProfileDao.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 
 class UserProfile{
@@ -33,19 +34,22 @@ class UserProfile{
 
   // get the emailId of Logged in User
   Future<String> getEmailId() async{
-    String emailid = await _userProfileDao.getEmailIdFromLocalDB();
-    print("Email Id : ${emailid}");
-    return emailid;
+    String emailId = await _userProfileDao.getEmailIdFromLocalDB();
+    print("Email Id : $emailId");
+    return emailId;
   }
 
   // get the Role of Logged in User
-  String getUserRole(){
-
+  Future<String> getUserRole() async{
+    String role = await _userProfileDao.getRoleFromLocalDB();
+    print("Role is : $role");
+    return role;
   }
 
   // get the Students of Logged in parent
-  List<int> getParentStudentIds(){
-
+  Future<List<Student>> getParentStudentIds() async{
+    List<Student> students = await _userProfileDao.getStudentsOfParentFromLocalDB();
+    return students;
   }
 
   // get the Student EmailId of Logged in User

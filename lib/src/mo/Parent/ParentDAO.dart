@@ -45,16 +45,13 @@ class ParentDAO {
 
   // To get Parent data from parentIds ("12,13")
   getAllParentDataFromId(String parentIds ) async {
-    print("getAllParentDataFromId Starts ");
+    //print("getAllParentDataFromId Starts ");
     Database db = await getDataBaseHandler();
-
     List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM  ${parentTable} p where p.id in  (${parentIds}) ");
-
-
     var parentList = List.generate(maps.length, ( i ) {
       return Parent.fromJsonLocal(maps[i]);
     });
-    print("Parent List size : ${parentList.length}");
+    //print("Parent List size : ${parentList.length}");
     return parentList;
   }
 

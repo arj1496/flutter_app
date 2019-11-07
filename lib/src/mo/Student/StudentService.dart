@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
-import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/StandardMapping.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentDao.dart';
@@ -12,11 +11,10 @@ import 'package:flutter_app/src/mo/Student/StudentWebService.dart';
 class StudentService {
   StudentDao _studentDao = new StudentDao();
   ParentService parentService = new ParentService();
+  StudentWebService studentWebService = new StudentWebService();
 
   Future addStudent(GenericModel genericModel) async {
-    StudentWebService _studentWebService = new StudentWebService();
-    Map<String, dynamic> responseData =
-        await _studentWebService.addStudent(genericModel);
+    Map<String, dynamic> responseData = await studentWebService.addStudent(genericModel);
 
     if (responseData['status']) {
       Student student = Student.fromJson_server(responseData['student']);
@@ -48,13 +46,11 @@ class StudentService {
   }
 
   Future<List<Student>> getStudentListDataFromServer() async {
-    StudentWebService _studentWebService = new StudentWebService();
 
     HashMap map = new HashMap<String, String>();
     map['student_sync_time'] = 0.toString();
 
-    Map<String, dynamic> studentDataFromServer =
-        await _studentWebService.getData_(map, "rest/sync/getSyncInfo");
+    Map<String, dynamic> studentDataFromServer = await studentWebService.getData_(map, "rest/sync/getSyncInfo");
     List<Student> studentList;
     if (studentDataFromServer['isStudentSync']) {
       print(studentDataFromServer);
@@ -126,9 +122,7 @@ class StudentService {
   }
 
   updateParentDetailOfStudent(GenericModel genericmodel) async {
-    StudentWebService studentwebservice = new StudentWebService();
-    Map<String, dynamic> responseData =
-        await studentwebservice.updateParentDetailOfStudent(genericmodel);
+    Map<String, dynamic> responseData = await studentWebService.updateParentDetailOfStudent(genericmodel);
     if (responseData['status']) {
       Student student = Student.fromJson_server(responseData['student']);
       print(student);
@@ -136,13 +130,8 @@ class StudentService {
   }
 
   removeParentDetailOfStudent(GenericModel genericmodel) async {
-    StudentWebService studentwebservice = new StudentWebService();
-   /* Map<String, dynamic> responseData =
-    await studentwebservice.removeParentDetailOfStudent(genericmodel);
-    if (responseData['status']) {
-      Student student = Student.fromJson_server(responseData['student']);
-      print(student);
-    }*/
+
+
   }
 
 
