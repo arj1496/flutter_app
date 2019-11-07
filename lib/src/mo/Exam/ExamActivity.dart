@@ -19,11 +19,14 @@ class ExamActivity{
    // return examObject;
   }
   // Pass all data from exam add page in the form of generic model.
-  Future<int> addExamToServer_(  GlobalKey<FormState> formKey,GenericModel genericModel) async{
+  addExamToServer_( GenericModel genericModel,callBack) async{
+
     print("in examactivity");
-    Exam exam = getExamFromGeneric(genericModel);
-    int examObject = await examService.addOrUpdateExam(genericModel);
-    return examObject;
+    examService.addOrUpdateExam(genericModel).then((value){
+      callBack();
+    });
+   /* int examObject = await examService.addOrUpdateExam(genericModel);
+    return examObject;*/
   }
 
   Future<List<Exam>> getDbExam() async{

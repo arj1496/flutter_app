@@ -1,192 +1,531 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/mo/HomeWork/HWListTile.dart';
-import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
-import 'package:flutter_app/src/mo/HomeWork/hwservice.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
+import 'package:flutter_app/src/mo/Exam/ExamAddPage.dart';
+import 'package:flutter_app/src/mo/HomeWork/HWDetail.dart';
+import 'package:flutter_app/src/mo/HomeWork/HomeworkAdd.dart';
+
+import '../../../AppTheme.dart';
+import '../../../DetailView2Oct.dart';
+import 'HomeWork.dart';
+import 'HomeworkActivity.dart';
 
 class HWList extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return new _HWListState();
-  }
+  _ListTileViewUVState createState() => _ListTileViewUVState();
 }
 
-class _HWListState extends State<HWList> {
-  List<HomeWork> _homeWorkList = null;
+class _ListTileViewUVState extends State<HWList> {
 
+  HomeworkActivity homeworkActivity = new HomeworkActivity();
+  SchoolUtils schoolUtils = new SchoolUtils();
   @override
   void initState() {
-    HWService hwService = new HWService();
-    _homeWorkList = hwService.getAllHomeWork();
+
   }
 
+  Future<List<HomeWork>> getData() async{
+    List<HomeWork> HWList = await homeworkActivity.getLocalDbHomework();
+    return HWList;
+  }
   @override
   Widget build(BuildContext context) {
-    // return getListView(context);
-    return getCustomerListView_Sliver(context);
+
+    var futureBuilder = new FutureBuilder(
+        future: getData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return _getListViewWithBuilder(context, snapshot);
+        }
+    );
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: AppTheme.background,
+        title: Text("Homework"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.filter),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeworkAdd()),
+              );
+            },
+          ),
+
+        ],
+      ),
+      body: futureBuilder,
+    );
+    //return _getListViewWithBuilder();
   }
 
-  Widget getListView(BuildContext context) {
-    return ListView.builder(
-        itemCount: this._homeWorkList.length,
-        itemBuilder: (BuildContext ctxt, int Index) {
-          return HWListTile(this._homeWorkList[Index]);
-        });
-  }
+  Widget _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    List<HomeWork> hwList = snapshot.data;
 
-  Widget getCustomerListView_Sliver(BuildContext context) {
-    return CustomScrollView(slivers: <Widget>[
-      buildSliverAppBar(),
-      buildSliverList_1()
+    return  Container(
+      color: AppTheme.background,
+      child: ListView.builder(
+          itemCount: hwList.length,
+          itemBuilder: (BuildContext ctxt, int Index){
+            return hwList != null && hwList.length > 0  ?  _renderlistTileView(hwList[Index]) : _listNotFound();
+          }
 
-    ]);
-  }
-
-  SliverAppBar buildSliverAppBar() {
-    return SliverAppBar(
-      floating: false,
-      expandedHeight: 200.0,
-      pinned: true,
-      title: Text("The Sliver App Bar 12"),
-     //flexibleSpace: Text("Hi ... 23"),
-
-      // leading: Text("Leading"),
-      backgroundColor: Colors.orangeAccent,
-      // bottom: PreferredSize(child: Icon(Icons.linear_scale,size: 60.0,), preferredSize: Size.fromHeight(50.0)),
-      flexibleSpace: getFlexibleSpaceBar(),
-
-
+      ),
     );
   }
-
-  SliverList buildSliverList_2(){
-
-    return SliverList(
-
-      delegate: SliverChildListDelegate([
-
-        Text("Hello 12"),
-        Container(color: Colors.red, height: 150.0,
-          child: ListView(children: <Widget>[
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-
-            Text("He"),
-            Text("He"),
-            Text("He"),
-            Text("He"),
-
-          ],),
-
-
+// Pass exam field to widget constructur to fill in the exam detail page
+  Widget _renderlistTileView(data) {
+    return  GestureDetector(
+      onTap: (){
+        // when click on list view of exam all the details of that exam is displayed.
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HWDetail(data),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(
+            left: 10, right: 10, top: 3, bottom: 3
         ),
-        Container(color: Colors.purple, height: 150.0),
-        Container(color: Colors.green, height: 150.0),
-        Container(color: Colors.lightBlue, height: 150.0),
-        Container(color: Colors.amberAccent, height: 150.0),
-        Container(color: Colors.black38, height: 150.0),
-
-      ]),
-
-    );
-
-  }
-
-  SliverList buildSliverList_1() {
-    return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index){
-                  return HWListTile(this._homeWorkList[index]);
-              }
+        // This is the Main Table Container
+        child: Container(
+          // given Box Shadow to the Container
+          decoration: BoxDecoration(
+            color: AppTheme.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0),
+                topRight: Radius.circular(8.0)
             ),
-    );
-  }
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: AppTheme.grey.withOpacity(0.2),
+                  offset: Offset(1.1, 1.1),
+                  blurRadius: 10.0
+              ),
+            ],
+          ),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding:
+                const EdgeInsets.only(top: 5, left: 5, right: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
 
-  Widget getFelixSpace(){
+                    // this Padding is Used to render the Horizontal line Starts
 
-    return Container(
-      height: 100,
-      child: Row(
-        children: <Widget>[
-          Text("Hello 1"),
-          Text("Hello 2")
-        ],
+                    // this Padding is Used to render the Horizontal line Ends
 
-      ),
-    );
 
-  }
+                    // this Padding is Used to render the Horizontal line Starts
 
-  FlexibleSpaceBar getFlexibleSpaceBar() {
-    return FlexibleSpaceBar(
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 1, top: 3, bottom: 8
+                      ),
+                      child: Row(
+                        children: <Widget>[
 
-      centerTitle: true,
-      title: Container(
-      ),
-      background:  Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RaisedButton(child: Text("Rock & Roll"),
-            onPressed: () => changeList(),
-            color: Colors.red,
-            textColor: Colors.yellow,
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            splashColor: Colors.grey,
-          )
-        ],
-      ),
-    );
-  }
 
-  changeList(){
-//    this._homeWorkList.removeAt(0);
+                          Padding(
+                            padding:  EdgeInsets.only(right: 0),
+                            // child: Center(
+                            child: Stack(
+                              overflow: Overflow.visible,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100.0),
+                                      ),
+                                      border: new Border.all(
+                                          width: 2,
+                                          color: AppTheme
+                                              .nearlyDarkBlue
+                                              .withOpacity(0.2)),
+                                      //color:HexColor("#FF5287"),),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          data.mark.toString(),
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                            fontFamily:
+                                            AppTheme.robotoFontName,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            color: AppTheme
+                                                .nearlyDarkBlue,
 
-    setState((){
-      this._homeWorkList.removeAt(0);
-      this._homeWorkList.removeAt(1);
-      this._homeWorkList.removeAt(2);
-      this._homeWorkList.removeAt(3);
-      this._homeWorkList.removeAt(4);
-      this._homeWorkList.removeAt(5);
-      this._homeWorkList.removeAt(6);
-      this._homeWorkList.removeAt(7);
-      this._homeWorkList.removeAt(8);
 
-    });
+                                          ),
+                                        ),
 
-  }
+                                      ],
+                                    ),
+                                  ),
+                                ),
 
-  Widget getCustomerListView_Sliver_1(BuildContext context) {
-    return Container(
-      child: CustomScrollView(slivers: <Widget>[
-        SliverAppBar(
-          floating: true,
-          expandedHeight: 200.0,
-          title: Text("The Sliver App Bar"),
-        ),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              //getListView(context),
+                              ],
+                            ),
+                            //),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 0, right: 5, top: 8, bottom: 8
+                            ),
+                            child: Container(
+                              height: 2,
+                              decoration: BoxDecoration(
+                                color: AppTheme.background,
+                                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                              ),
+                            ),
+                          ),
+                          /* Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              data.owner,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTheme.robotoFontName,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                letterSpacing: -0.2,
+                                color: AppTheme.darkText,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Text(
+                                'Created By',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: AppTheme.robotoFontName,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  color: AppTheme.grey
+                                      .withOpacity(0.5),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),*/
+                          Expanded(
+                            child: Padding(
+                              padding:  EdgeInsets.only(
+                                  left: 0, right: 0, top: 4),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: <Widget>[
+
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 1, bottom: 2),
+                                              child:new  Text(
+                                                data.title,
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                  AppTheme.robotoFontName,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                  letterSpacing: -0.1,
+                                                  color: AppTheme.darkerText
+                                                  ,
+                                                ),
+                                              ),
+                                            ),
+
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets.only(
+                                                      left: 2, bottom: 3),
+                                                  child:
+                                                  Text(
+                                                    data.subjectName,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                        AppTheme
+                                                            .robotoFontName,
+                                                        fontWeight:
+                                                        FontWeight.w600,
+                                                        fontSize: 12,
+                                                        color: Colors.green
+                                                    ),
+                                                  ),
+                                                ),
+
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+
+                                  Row(
+                                    children: <Widget>[
+
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 1, bottom: 2),
+                                              child: Text(
+                                                data.className,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                  AppTheme.robotoFontName,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 12,
+                                                  letterSpacing: -0.1,
+                                                  color: AppTheme.darkerText,
+                                                ),
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                              children: <Widget>[
+
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets.only(
+                                                      left: 1, bottom: 3),
+                                                  child: Text(
+                                                    'Term A',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                        AppTheme
+                                                            .robotoFontName,
+                                                        fontWeight:
+                                                        FontWeight.w600,
+                                                        fontSize: 12,
+                                                        color: Colors.red
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      //new DateTime.fromMillisecondsSinceEpoch(data.examDate).toString(),
+                                      schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.startDate),
+                                      style: TextStyle(
+                                        fontFamily: AppTheme.robotoFontName,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                        letterSpacing: -0.2,
+                                        color: AppTheme.darkText,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 6),
+                                      child: Text(
+                                        data.owner,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: AppTheme.robotoFontName,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: AppTheme.grey.withOpacity(0.5),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+
+
+                    )
+
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-      ]),
+      ),);
+
+  }
+
+  Widget _listNotFound(){
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 10, right: 10, top: 3, bottom: 3
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+              bottomRight: Radius.circular(8.0),
+              topRight: Radius.circular(8.0)
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: AppTheme.grey.withOpacity(0.2),
+                offset: Offset(1.1, 1.1),
+                blurRadius: 10.0
+            ),
+          ],
+        ),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.only(top: 5, left: 5, right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, bottom: 1,top: 5),
+                    /*child: Text(
+                        'Title',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: AppTheme.robotoFontName,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            letterSpacing: -0.1,
+                            color: AppTheme.darkText),
+                      ),*/
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, bottom: 3
+                            ),
+                            child: Text(
+                              'Event Not Found',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: AppTheme.robotoFontName,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: AppTheme.nearlyDarkBlue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _buildAboutDialog(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('About Pop up'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text("Hello"),
+          Text("welcome"),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Okay, got it!'),
+        ),
+      ],
     );
   }
 }

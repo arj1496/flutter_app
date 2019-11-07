@@ -13,7 +13,7 @@ class MarkWidget extends StatelessWidget {
   var property = new PropertyFile( );
   Exam exam = new Exam();
   SchoolUtils schoolUtils = new SchoolUtils();
-  MarkWidget( Exam exam) {
+  MarkWidget( dynamic object) {
    this.exam = exam;
   }
 

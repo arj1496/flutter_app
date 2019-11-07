@@ -3,6 +3,7 @@ import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_app/DatePickerDemo.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Exam/DropDwonProvider.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../../../TypeDropdownWidget.dart';
 import '../../ButtonUI2.dart';
 import 'Exam.dart';
@@ -11,8 +12,15 @@ import 'ExamActivity.dart';
 
 
 class ExamAddPage extends StatefulWidget {
+  VoidCallback onCallBack;
+  Exam  exam;
   @override
   _ExamAddState createState() => _ExamAddState();
+  ExamAddPage({@required Exam object, @required onCallBack}) :
+        assert (object != null),
+        assert (onCallBack != null),
+        this.exam = object,
+        this.onCallBack = onCallBack;
 }
 
 class _ExamAddState extends State<ExamAddPage> {
@@ -21,6 +29,9 @@ class _ExamAddState extends State<ExamAddPage> {
   GenericModel genericModel = new GenericModel();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   static ExamActivity examActivity = new ExamActivity();
+  bool _autoValidate = false;
+  bool _isInAsyncCall = false;
+  bool _isAdd = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +45,14 @@ class _ExamAddState extends State<ExamAddPage> {
           title: Text("Add Exam form"),
         ),
         //body: _getContainerBody(),
-        body:SingleChildScrollView(
+        body:ModalProgressHUD(
+         inAsyncCall: _isInAsyncCall,
+         color: Colors.white,
+         child:SingleChildScrollView(
           child: _getSafeAreaBody(),
         )
 
+      ),
       ),
     );
   }
@@ -67,7 +82,7 @@ class _ExamAddState extends State<ExamAddPage> {
     _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Description', 'Description','description'),
     _getMultilineTextFormTextField(Icon(Icons.description) , 'Enter Syllabus', 'Syllabus','Syllabus'),
     _getDateAndTime(_formKey, genericModel,null),
-    submitButton(_formKey, genericModel,null),
+     submitButton(_formKey, genericModel,null),
       ];
     return widgetList;
   }
@@ -135,36 +150,94 @@ class _ExamAddState extends State<ExamAddPage> {
     );
   }
 
-  _submitButton() {
-    return MaterialButton(
-      minWidth: 200.0,
-      height: 35,
 
-      child: new Text("Add Exam",
-          style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
-      onPressed: (){
-        // Event eventObject = eventActivity.addEventToServer(event);
-        if(_formKey.currentState.validate()){
-          _formKey.currentState.save();
-        }
-        print("standard : ${genericModel.classId}");
-        print("subject : ${genericModel.subjectId}");
-        print("type : ${genericModel.examType}");
-        print("Titile : ${genericModel.title}");
-        print("Description : ${genericModel.description}");
-        print("syllabus : ${genericModel.syllabus}");
-        print("exam Type : ${genericModel.examType}");
-        print("exam date : ${genericModel.date}");
-        print("exam time : ${genericModel.time}");
-        print("exam mark : ${genericModel.totalMarks}");
-      },
-    );
-  }
+  void _submit(){
+      if (this._formKey.currentState.validate()) {
+        this._formKey.currentState.save();
+
+        setState(() {
+          _isInAsyncCall = true;
+        });
+        final snackBar = SnackBar(content: Text('Exam added sucessfully!'));
+
+        examActivity.addExamToServer_(genericModel, (){
+         // Scaffold.of(context).showSnackBar(snackBar);
+          setState(() {
+            _isAdd = true;
+            _isInAsyncCall = false;
+          });
+          if (_isAdd) {
+            Navigator.of(context).pop();
+          }
+        });
+      }
+    }
+
 
 
   // 'DRAFT','PUBLISH','CLOSE' UI and pass the generic model to add all data of form to the server as exam data.
   submitButton(_formKey, genericModel,exam){
-    return ButtonUI2.init(_formKey, genericModel,'DRAFT','PUBLISH','CLOSE',exam);
+    return Padding(
+        padding: EdgeInsets.only(bottom: 5),
+        child: Row(
+        children: <Widget>[Material(  //Wrap with Material
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(24.0),
+              side: BorderSide(color: AppTheme.nearlyBlue)
+          ),
+          //elevation: 16.0,
+          clipBehavior: Clip.antiAlias, // Add This
+          child: MaterialButton(
+            minWidth: 120.0,
+            height: 35,
+            child: new Text("DRAFT",
+                style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
+            onPressed: () async {
+              genericModel.status = "DRAFT";
+              _submit();
+            },
+          ),
+        ),
+      Material(  //Wrap with Material
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(24.0),
+            side: BorderSide(color: AppTheme.nearlyBlue)
+        ),
+        //elevation: 16.0,
+        clipBehavior: Clip.antiAlias, // Add This
+        child: MaterialButton(
+          minWidth: 120.0,
+          height: 35,
+          child: new Text("PUBLISH",
+              style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
+          onPressed: () async {
+            genericModel.status = "PUBLISH";
+            _submit();
+          },
+        ),
+      ),
+       Material(  //Wrap with Material
+       shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(24.0),
+          side: BorderSide(color: AppTheme.nearlyBlue)
+          ),
+          //elevation: 16.0,
+          clipBehavior: Clip.antiAlias, // Add This
+          child: MaterialButton(
+          minWidth: 120.0,
+          height: 35,
+          child: new Text("CANCEL",
+          style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
+          onPressed: (){
+            Navigator.pop(context);
+        },
+        ),
+        ),
+        ],
+        ),
+        );
+
+    //return ButtonUI2.init(_formKey, genericModel,'DRAFT','PUBLISH','CLOSE',exam);
 
   }
 

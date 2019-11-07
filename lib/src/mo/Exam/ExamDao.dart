@@ -148,7 +148,7 @@ class ExamDao{
             if(isAndRequire){
               query +=  "and ";
             }
-            query += "e.type = ${type} ";
+            query += "e.examType = '${type}' ";
 
           }
 

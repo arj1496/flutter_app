@@ -4,7 +4,6 @@
  * In this property file is accepted in constructor from calling widgets.
  * property contains label,icon and data properties.
  */
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
@@ -133,21 +132,23 @@ class ButtonUIState extends  State<ButtonUI2> {
      if(widget.exam != null) {
        widget.genericModel.examId = widget.exam.id;
      }
-     int examObject = await examActivity.addExamToServer_(widget.formKey, widget.genericModel);
+   /*  int examObject = await examActivity.addExamToServer_(widget.genericModel);
      if(examObject != null){
        final snackBar = SnackBar(content: Text('Exam added sucessfully!'));
        Scaffold.of(context).showSnackBar(snackBar);
-     }
+       Navigator.pop(context);
+     }*/
    }else if(text == "PUBLISH"){
      widget.genericModel.status = "PUBLISH";
      if(widget.exam != null) {
        widget.genericModel.examId = widget.exam.id;
      }
-     int examObject = await examActivity.addExamToServer_(widget.formKey, widget.genericModel);
+     /*int examObject = await examActivity.addExamToServer_(widget.genericModel);
      if(examObject != null){
        final snackBar = SnackBar(content: Text('Exam added sucessfully!'));
        Scaffold.of(context).showSnackBar(snackBar);
-     }
+       Navigator.pop(context);
+     }*/
    }
   }
 }

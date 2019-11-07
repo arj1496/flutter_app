@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../AppTheme.dart';
-import '../../../ButtonUI.dart';
-import '../../../CardDetail2Oct.dart';
-import '../../../DescriptionCustomView.dart';
 import '../../../DetailView2Oct.dart';
-import '../../../ExamWidget2.dart';
-import '../../../HeaderContainer.dart';
-import '../../../MarkWidget.dart';
-import '../../../TitleViewDetail.dart';
 import 'Exam.dart';
+import 'ExamAddPage.dart';
 
 
 class CustomListviewExam extends StatefulWidget {
@@ -51,8 +44,12 @@ class _ListTileViewUVState extends State<CustomListviewExam> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.filter),
-            // onPressed: _buildAboutDialog(context),
-            // onPressed: synEvents,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ExamAddPage()),
+              );
+            },
           ),
           /* IconButton(
             icon: Icon(Icons.get_app),

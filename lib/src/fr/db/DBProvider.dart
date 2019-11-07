@@ -46,7 +46,7 @@ class  DBProvider {
       await db.execute(createDumpTable());
       await db.execute(createStandardTeacherTable());
       await db.execute(createStandardMappingTable());
-
+      await db.execute(createHWTable());
     });
   }
 
@@ -269,4 +269,22 @@ class  DBProvider {
         " isVisible INTEGER"
         ")";
   }
+
+  String createHWTable(){
+    return "CREATE TABLE Homework( "
+        " lid INTEGER ,"
+        " id INTEGER PRIMARY KEY,"
+        " name TEXT ,"
+        " standardId INTEGER ,"
+        " standardName TEXT ,"
+        " subjectId INTEGER, "
+        " subjectName TEXT ,"
+        " startDate INTEGER, "
+        " endDate INTEGER, "
+        " owner TEXT ,"
+        " mark INTEGER, "
+        " description TEXT"
+        ")";
+  }
+
 }

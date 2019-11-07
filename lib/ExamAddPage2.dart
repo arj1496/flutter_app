@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
+import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
+import 'package:flutter_app/src/mo/HomeWork/HomeworkService.dart';
+import 'package:flutter_app/src/mo/HomeWork/SubjectPopup.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
+import 'package:flutter_app/src/mo/Subject/Subject.dart';
+import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
 
 import 'AppTheme.dart';
 
@@ -82,13 +87,12 @@ class YourPageState extends State<ExamAddPage2> {
 
               child: new Text("Add exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
-              onPressed: () async{
-                //int examObject = await examActivity.addExamToServer(exam);
-
-//          setState(() {
-//            _isNeedHelp = true;
-//          });
-              },
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SubjectPopup()),
+                );
+              }
             ),
 
             MaterialButton(
@@ -98,15 +102,9 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Text("get exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
               onPressed: ()async {
-              /*  List<Student> studentObject = await studentActivity.getStudentListFromLocalDB();
-                String str = json.encode(studentObject);
-                print("student left join examaddpage2: ${str} ");
-
-*///          setState(() {
-//            _isNeedHelp = true;
-//          });
-                List<Exam> examList = await examActivity.getFilterExam(9, 62, "Terminal (A)");
-                print(examList.length);
+                SubjectService subjectService = new SubjectService();
+                List<Subject> subjectList = await subjectService.getAccesibleSubjectList();
+                print(subjectList.length);
               },
             ),
 
@@ -117,11 +115,9 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Text("sub join demo",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
               onPressed: ()async {
-               // List<Exam> examObject = await examService.getSubJoinDbExam();
-                //print(examObject.length);
-//          setState(() {
-//            _isNeedHelp = true;
-//          });
+                HomeworkService  homeworkService = new HomeworkService();
+                List<HomeWork> HWList = await homeworkService.getLocalDbHomework();
+                print("homework= ${HWList}");
               },
             ),
           ],

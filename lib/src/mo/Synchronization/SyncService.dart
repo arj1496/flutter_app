@@ -1,5 +1,6 @@
 
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
+import 'package:flutter_app/src/mo/HomeWork/HomeworkService.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
 import 'package:flutter_app/src/mo/Permission/PermissionService.dart';
 import 'package:flutter_app/src/mo/Standard/StandardService.dart';
@@ -19,6 +20,7 @@ class SyncService{
   ParentService parentService = new ParentService();
   ExamService examService = new ExamService();
   PermissionService permissionService = new PermissionService();
+  HomeworkService homeworkService = new HomeworkService();
 
   List<String> getSyncParameters(){
 
@@ -31,7 +33,7 @@ class SyncService{
     parameters.add("exam_sync_time");
     parameters.add("permission_sync_time");
     parameters.add("teacher_subject_sync_time");
-
+    parameters.add("homework_sync_time");
     return parameters;
   }
 
@@ -142,6 +144,14 @@ class SyncService{
       if(syncDataResponse['isSubjectTeacherSync']){
         await teacherService.syncCallBackHandleForStandardTeacher(syncDataResponse);
         sharedPreferences.setString("teacher_subject_sync_time", todayDate.toString());
+      }
+    }
+
+    if(syncDataResponse.containsKey('isHomeWorkSync')){
+      if(syncDataResponse['isHomeWorkSync']){
+        print("isHomeWorkSync");
+        await homeworkService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("homework_sync_time", todayDate.toString());
       }
     }
   }

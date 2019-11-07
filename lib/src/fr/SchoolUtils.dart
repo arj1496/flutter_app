@@ -18,7 +18,7 @@ class SchoolUtils {
 
   //String baseUrl = "https://educloud.in";
   //String baseUrl = "http://192.168.0.100:8080/soms/";
-  String baseUrl = "http://192.168.0.102:8080/soms/";
+  String baseUrl = "http://192.168.0.103:8080/soms/";
 
   SchoolUtils._internal(){}
 
@@ -26,25 +26,20 @@ class SchoolUtils {
    final result = await Future.delayed(const Duration(milliseconds: 5000), (){
       return Future.value(1);
     });
-
-    return result;
+   return result;
   }
 
   // return SchoolTimeZone
   String getTimeZone(){
-
   }
 
   String getSchoolCode(){
-
   }
 
   SchoolDs getCurrentSchoolDs(){
-
   }
 
   SchoolDs getCurrentSemester(){
-
   }
 
 
@@ -57,7 +52,6 @@ class SchoolUtils {
   String getTimeStringFromLongWithTimeZone (int dateLong){
     var  todayDate = DateTime.fromMillisecondsSinceEpoch(dateLong,isUtc: false);
     String dateSring = formatDate(todayDate,  [ hh, ':', nn, ':', ss, ' ', am]);
-    //print(dateSring);
     return dateSring;
   }
 
@@ -95,11 +89,8 @@ class SchoolUtils {
   }
 
   String getDateStringWithoutYear(int dateLong){
-
-    //var  todayDate = DateTime.fromMicrosecondsSinceEpoch(dateLong,isUtc: true);
     var  todayDate = DateTime.fromMillisecondsSinceEpoch(dateLong,isUtc: false);
     String dateSring = formatDate(todayDate, [dd, ' ', M ]);
-    //print(dateSring);
     return dateSring;
   }
 
@@ -119,6 +110,19 @@ class SchoolUtils {
     return user.role;
   }
 
+   static String getCommaSeparated(List<int> list) {
+
+     String commaSeperate = "";
+     int i = 0;
+      for (int id in list) {
+        commaSeperate += id.toString();
+        if (i + 1 < list.length) {
+          commaSeperate +=",";
+        }
+        i++;
+      }
+      return commaSeperate;
+  }
 }
 
 

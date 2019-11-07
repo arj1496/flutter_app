@@ -83,4 +83,10 @@ class SubjectService{
     }
     return subjectList;
   }
+
+  Future<List<Subject>>  getAccesibleSubjectList() async{
+    List<Subject> subjectList = await subjectDao.getAccesibleSubjectList();
+    return subjectList;
+  }
+
 }

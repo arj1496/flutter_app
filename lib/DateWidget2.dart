@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
+import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,13 +12,11 @@ import 'PropertyFile.dart';
 
 class DateWidget2 extends StatelessWidget {
 
-  var property = new PropertyFile();
-  /*DateWidget.init(PropertyFile property){
-    this.property = property;
-  }*/
 
-  DateWidget2(){
-
+dynamic object;
+SchoolUtils schoolUtils = new SchoolUtils();
+  DateWidget2(dynamic object){
+  this.object = object;
   }
   @override
   Widget build( BuildContext context ) {
@@ -118,7 +118,7 @@ class DateWidget2 extends StatelessWidget {
                 Padding (
                   padding: const EdgeInsets.only( top: 6 ) ,
                   child: Text (
-                    '2 Oct ' ,
+                    schoolUtils.getDateStringWithoutYear(object.startDate),
                     textAlign: TextAlign.center ,
                     style: TextStyle (
                       fontFamily: AppTheme.robotoFontName ,
@@ -129,20 +129,7 @@ class DateWidget2 extends StatelessWidget {
                     ) ,
                   ) ,
                 ) ,
-                Padding (
-                  padding: const EdgeInsets.only( top: 6 ) ,
-                  child: Text (
-                    ' 2019 ' ,
-                    textAlign: TextAlign.center ,
-                    style: TextStyle (
-                      fontFamily: AppTheme.robotoFontName ,
-                      fontWeight: FontWeight.w500 ,
-                      fontSize: 16 ,
-                      //  letterSpacing: -0.2 ,
-                      color: AppTheme.white ,
-                    ) ,
-                  ) ,
-                ) ,
+
 
                 Padding (
                   padding: const EdgeInsets.only( top: 16,left:8 ) ,
@@ -290,7 +277,7 @@ class DateWidget2 extends StatelessWidget {
                     Padding (
                       padding: const EdgeInsets.only( top: 6 ) ,
                       child: Text (
-                        '2 Oct 2019' ,
+                        schoolUtils.getDateStringWithoutYear(object.endDate),
                         textAlign: TextAlign.center ,
                         style: TextStyle (
                           fontFamily: AppTheme.robotoFontName ,

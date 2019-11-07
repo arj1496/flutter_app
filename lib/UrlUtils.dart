@@ -36,4 +36,14 @@ class UrlUtils{
     return url;
 
   }
+
+  String getAddHWUrl(){
+    String url = SchoolUtils().baseUrl + "rest/homework/addOrUpdateHomeWork_";
+    return url;
+  }
+  String getUpdateHWUrl(){
+    String url = SchoolUtils().baseUrl + "rest/homework/addOrUpdateHomeWork";
+    return url;
+
+  }
 }

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
+import 'package:flutter_app/src/mo/Exam/ExamAddPage.dart';
 import 'package:flutter_app/src/mo/HomeWork/HWList.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
-import 'package:flutter_app/src/mo/HomeWork/hwservice.dart';
+import 'package:flutter_app/src/mo/HomeWork/HomeworkActivity.dart';
+
+import '../../../AppTheme.dart';
+import '../../../DetailView2Oct.dart';
+
 
 class HomeWorkListPage extends StatelessWidget {
 
@@ -18,12 +24,12 @@ class HomeWorkListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-/*
+
 
       appBar: AppBar(
         title: Text("Assignment 123"),
       ),
-*/
+
       body: HWList(),  // this is return a custom scroll view
 
     );
@@ -104,4 +110,13 @@ Widget homeWorkTile(HomeWork homeWorkList) {
     ],
   );
 }
+
+
+
+
+
+
+
+
+
 

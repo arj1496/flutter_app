@@ -52,6 +52,7 @@ class StandardDropDown extends State<StandardDropdownWidget> {
   void initState() {
     if(widget.exam!= null && widget.exam.standardName != null){
       classOf = widget.exam.standardName;
+      widget.genericModel.classId = widget.exam.standardId;
       isStandardDisabled = false;
     }else{
       classOf ="Select Class";
@@ -109,6 +110,7 @@ class StandardDropDown extends State<StandardDropdownWidget> {
                         padding: EdgeInsets.only ( right: 8.0 , left: 8.0 ) ,
                         child: DropdownButton (
                           isDense: true ,
+
                           onChanged: ( dynamic newValue ) {
                             setState ( ( ) {
                               classOf = newValue.name;
