@@ -66,7 +66,7 @@ class _MyPageState extends State<SubjectPopup> {
   _getSubjectList( AsyncSnapshot snapshot ) {
     // List<Subject> subjectList = new List();
     if (snapshot.data != null) {
-      setSelectedList ( widget.data,flag );
+     // setSelectedList ( widget.data,flag );
       subjectList = snapshot.data;
       setRange ( );
     }
@@ -98,9 +98,9 @@ class _MyPageState extends State<SubjectPopup> {
         if (!selectedsSubjectList.contains ( subjectList[index].id )) {
           selectedsSubjectList.add ( subjectList[index].id );
         }
-      } else {
+      } /*else {
         selectedsSubjectList.removeAt ( index );
-      }
+      }*/
     } );
   }
 
@@ -119,6 +119,9 @@ class _MyPageState extends State<SubjectPopup> {
     for (int i = 0; i < subjectList.length; i++) {
       if (widget.data.contains ( subjectList[i].id )) {
         inputs.add ( true );
+        if (!selectedsSubjectList.contains ( widget.data[i] )) {
+          selectedsSubjectList.add ( widget.data[i] );
+        }
       } else {
         inputs.add ( false );
       }
