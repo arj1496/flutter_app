@@ -33,11 +33,13 @@ class YourPageState extends State<SubjectList> {
     super.dispose();
     controller.dispose();
   }
+
   Future<List<Subject>> getSubjects() async{
     SubjectService subjectService = new SubjectService();
     List<Subject> _subject = await subjectService.getAccesibleSubjectList();
     return _subject;
   }
+
   @override
   Widget build(BuildContext context) {
     return new Material(

@@ -56,10 +56,10 @@ class HomeworkService{
     return HWListFromFuture;
   }
 
-  Future<List<Subject>>  getAccesibleSubjectList() async{
+ /* Future<List<Subject>>  getAccesibleSubjectList() async{
     List<Subject> subjectList = await subjectService.getAccesibleSubjectList();
     return subjectList;
-  }
+  }*/
 
   // call webservice to add exam to server.
   Future<int> addOrUpdateHW(HomeWork homeWork) async{
