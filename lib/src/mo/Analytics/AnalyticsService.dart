@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/Analytics/AnalyticsDao.dart';
+import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ class AnalyticsService{
     requestParameterMap["entity"] = "Student_Count";
     Map<String, dynamic> analyticsDataFuture = await getAnalyticsFromServer(requestParameterMap);
     var dataDump;
+    Map<String, dynamic> DataMap = new Map();
     if(analyticsDataFuture['status']){
       print(analyticsDataFuture);
       List<dynamic> analyticsDataList = analyticsDataFuture['studentCountData'];
@@ -24,8 +26,18 @@ class AnalyticsService{
         dataDump = json.decode(test);
         print(dataDump);
       }
+      DataMap['dataDumpMap'] = dataDump;
+
+      List<dynamic> standardsList = analyticsDataFuture['standards'];
+      var divisionGradeClassListMap = getDivisionGradeClassListMap(standardsList);
+      DataMap['divisionGradeClassListMap'] = divisionGradeClassListMap;
+
+      List<dynamic> divisionList = analyticsDataFuture['divisions'];
+      DataMap['divisionList'] = divisionList;
+
     }
-    return dataDump;
+    return DataMap;
+
   }
 
   Future<dynamic> getAnalyticsFromServer(Map<String, String> requestParameterMap) async{
@@ -43,6 +55,31 @@ class AnalyticsService{
       return data;
     }
     return null;
+  }
+
+  Map<int, Map<int, List<int>>> getDivisionGradeClassListMap(List standardsList) {
+    Map<int, Map<int, List<int>>> divisionGradeClassListMap;
+    if(standardsList != null && standardsList.length > 0){
+      divisionGradeClassListMap = new Map();
+      for(int i = 0; i < standardsList.length; i++){
+        if(standardsList[i]['divisionId'] != null){
+          Map<int, List<int>> gradeClassListMap = divisionGradeClassListMap[standardsList[i]['divisionId']];
+          if(gradeClassListMap == null){
+            gradeClassListMap = new Map();
+            divisionGradeClassListMap[standardsList[i]['divisionId']] = gradeClassListMap;
+          }
+          if(standardsList[i]['gradeId'] != null){
+            List<int> classList = gradeClassListMap[standardsList[i]['gradeId']];
+            if(classList == null){
+              classList = new List();
+              gradeClassListMap[standardsList[i]['gradeId']] = classList;
+            }
+            classList.add(standardsList[i]['id']);
+          }
+        }
+      }
+    }
+    return divisionGradeClassListMap;
   }
 
 }

@@ -10,16 +10,19 @@ class NewAnimated extends StatelessWidget {
   }
 
   Widget totalAndGradeView() {
-    return Container(
-      color: Colors.transparent,
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      height: 140.0,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 6,
-        itemBuilder:(context, index ) {
-          return getBox();
-      }
+    return Padding(
+      padding: const EdgeInsets.only(right:5.0,left: 5.0),
+      child: Container(
+        color: Colors.white,
+        margin: EdgeInsets.symmetric(vertical: 10.0),
+        height: 140.0,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 6,
+          itemBuilder:(context, index ) {
+            return getBox();
+        }
+        ),
       ),
     );
   }
@@ -27,10 +30,10 @@ class NewAnimated extends StatelessWidget {
   Widget getBox() {
     return GestureDetector(
       onTap: (){
-        
+        print("obj");
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 3, bottom: 3),
+        padding: const EdgeInsets.only(left: 5, top: 3, bottom: 3,right: 5.0),
         child: Container(
           width: 200.0,
           decoration: BoxDecoration(

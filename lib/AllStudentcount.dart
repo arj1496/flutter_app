@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/StudentDashboard.dart';
 import 'AppTheme.dart';
 
 class AllStudentCount extends StatelessWidget {
-  
-  AllStudentCount();
+
+  var data;
+  AllStudentCount({
+    this.data
+  });
 
   @override
   Widget build(BuildContext context) {
-    return studentCount();
+    return studentCount(this.data);
   }
 }
 
-  Widget studentCount(){
+  Widget studentCount(test){
  return  Padding(
      padding: const EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
      child: Container(
@@ -90,7 +94,7 @@ class AllStudentCount extends StatelessWidget {
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: <Widget>[
                        Text(
-                         '17',
+                         test['total'].toString(),
                          textAlign: TextAlign.center,
                          style: TextStyle(
                            fontFamily: AppTheme.robotoFontName,
@@ -126,7 +130,7 @@ class AllStudentCount extends StatelessWidget {
                          crossAxisAlignment: CrossAxisAlignment.center,
                          children: <Widget>[
                            Text(
-                             '9',
+                             test['male'].toString(),
                              textAlign: TextAlign.center,
                              style: TextStyle(
                                fontFamily: AppTheme.robotoFontName,
@@ -165,7 +169,7 @@ class AllStudentCount extends StatelessWidget {
                          crossAxisAlignment: CrossAxisAlignment.end,
                          children: <Widget>[
                            Text(
-                             '8',
+                             test['female'].toString(),
                              style: TextStyle(
                                fontFamily: AppTheme.robotoFontName,
                                fontWeight: FontWeight.w500,

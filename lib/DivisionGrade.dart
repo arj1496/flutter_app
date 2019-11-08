@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/getStudent.dart';
 import 'AppTheme.dart';
 import 'HeaderContainer.dart';
 import 'NewAnimated.dart';
 
 class DivisionGrade extends StatelessWidget {
+
+  var dataObject;
+  List<dynamic> classDetailsMap;
+  List<dynamic> gradeDetailMap;
+  Map<int, List<int>> gradeClassListMap;
+
+  Map<String, dynamic> test ;
+
+
+  DivisionGrade({
+    this.dataObject,
+    this.classDetailsMap,
+    this.gradeDetailMap,
+    this.gradeClassListMap
+});
+
   @override
   Widget build(BuildContext context) {
     return divisionContain();
@@ -12,43 +29,7 @@ class DivisionGrade extends StatelessWidget {
   Widget divisionContain() {
     return Container(
       child: Column(
-        children: <Widget>[
-          HeaderContainer.init("Division Name:", ""),
-          Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 3),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppTheme.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(8.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: AppTheme.grey.withOpacity(0.2),
-                        offset: Offset(1.1, 1.1),
-                        blurRadius: 10.0
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    title(),
-                    horizontalLine(),
-                    gradeTotal(),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    NewAnimated(),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                  ],
-                ),
-              )
-          ),
-        ],
+          children: getAllWidgets()
       ),
     );
   }
@@ -93,7 +74,7 @@ class DivisionGrade extends StatelessWidget {
       child: Container(
         height: 2,
         decoration: BoxDecoration(
-          color: AppTheme.background,
+          color: Colors.grey,
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
         ),
       ),
@@ -101,27 +82,27 @@ class DivisionGrade extends StatelessWidget {
     // this Padding is Used to render the Horizontal line Ends
   }
 
-  Widget gradeTotal() {
+  Widget gradeTotal(Map<String, dynamic> gradeDetail) {
     return Padding(
         padding: const EdgeInsets.only(
             left: 10, right: 10, top: 3, bottom: 8),
         child: Row(
           children: <Widget>[
-            gradeName(),
-            totalBoysGirls(),
+            gradeName(gradeDetail['gardeName'].toString()),
+            totalBoysGirls(gradeDetail),
           ],
         ),
       );
   }
 
- Widget gradeName() {
+ Widget gradeName(String gradeName) {
   return Expanded(
      child: Column(
        mainAxisAlignment: MainAxisAlignment.center,
        crossAxisAlignment: CrossAxisAlignment.start,
        children: <Widget>[
          Text(
-           'Grade',
+           gradeName,
            textAlign: TextAlign.center,
            style: TextStyle(
              fontFamily: AppTheme.robotoFontName,
@@ -149,43 +130,50 @@ class DivisionGrade extends StatelessWidget {
    );
  }
 
-  Widget totalBoysGirls() {
-    return Expanded(
+  Widget totalBoysGirls(Map<String, dynamic> gradeDetail) {
+    return Padding(
+      padding: EdgeInsets.only(right: 0.0,left: 2.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                'Total',
-                style: TextStyle(
-                  fontFamily: AppTheme.robotoFontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  letterSpacing: -0.2,
-                  color: AppTheme.darkText,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: Text(
-                  '8',
-                  textAlign: TextAlign.center,
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  'Total',
                   style: TextStyle(
                     fontFamily: AppTheme.robotoFontName,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
-                    color: AppTheme.grey.withOpacity(0.5),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    letterSpacing: -0.2,
+                    color: AppTheme.darkText,
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Text(
+                      gradeDetail['totalCount'].toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppTheme.robotoFontName,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                        color: AppTheme.grey.withOpacity(0.5),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:5.0),
+            padding: const EdgeInsets.only(right: 30.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -202,14 +190,17 @@ class DivisionGrade extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
-                  child: Text(
-                    '4',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTheme.robotoFontName,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                      color: AppTheme.grey.withOpacity(0.5),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Text(
+                      gradeDetail['maleCount'].toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppTheme.robotoFontName,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                        color: AppTheme.grey.withOpacity(0.5),
+                      ),
                     ),
                   ),
                 ),
@@ -217,7 +208,7 @@ class DivisionGrade extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:5.0),
+            padding: const EdgeInsets.only(right:13.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -234,14 +225,17 @@ class DivisionGrade extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
-                  child: Text(
-                    '4',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTheme.robotoFontName,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                      color: AppTheme.grey.withOpacity(0.5),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 13.0),
+                    child: Text(
+                      gradeDetail['femaleCount'].toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppTheme.robotoFontName,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                        color: AppTheme.grey.withOpacity(0.5),
+                      ),
                     ),
                   ),
                 ),
@@ -251,5 +245,91 @@ class DivisionGrade extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> getAllWidgets() {
+    List<Widget> widgetList = new List();
+    widgetList.add( HeaderContainer.init(dataObject['name'], ""));
+
+    List.generate(gradeDetailMap.length, (i){
+      Widget widget = allDetails(gradeDetailMap[i], gradeClassListMap);
+      if(widget != null){
+        widgetList.add(widget) ;
+      }
+    });
+
+    widgetList.add(horizontalLine());
+    return widgetList;
+  }
+
+  Widget allDetails(Map<String, dynamic> gradeDetail, Map<int, List<int>> gradeClassListMap) {
+    if(gradeClassListMap.containsKey(int.parse(gradeDetail['gardeId'].toString()))){
+      return Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 3),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0),
+                topRight: Radius.circular(8.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: AppTheme.grey.withOpacity(0.2),
+                  offset: Offset(1.1, 1.1),
+                  blurRadius: 10.0
+              ),
+            ],
+          ),
+          child: GestureDetector(
+            onTap: (){
+              print("hello");
+            },
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top:8.0,left: 10.0,right: 10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppTheme.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8.0),
+                          bottomLeft: Radius.circular(8.0),
+                          bottomRight: Radius.circular(8.0),
+                          topRight: Radius.circular(8.0)
+                      ),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: AppTheme.grey.withOpacity(0.2),
+                            offset: Offset(1.1, 1.1),
+                            blurRadius: 10.0
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        //  title(),
+                        gradeTotal(gradeDetail),
+                      ],
+                    ),
+                  ),
+                ),
+                horizontalLine(),
+                SizedBox(
+                  height: 2.0,
+                ),
+                NewAnimated(),
+                SizedBox(
+                  height: 5.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+
   }
 }
