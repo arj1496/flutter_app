@@ -4,7 +4,7 @@ import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/HomeWork/SubjectPopup.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'DateWidgetForHomework.dart';
-import 'EndDateWidget.dart';
+//import 'EndDateWidget.dart';
 import 'HomeWork.dart';
 import 'HomeworkActivity.dart';
 
@@ -200,7 +200,7 @@ class _HomeworkAddState extends State<HomeworkAdd> {
 
   // Date and time textfield
   _getEndDateAndTime( GlobalKey<FormState> formKey , HomeWork homework ) {
-    return EndDateWidget.init ( _formKey , homework );
+    //return EndDateWidget.init ( _formKey , homework );
   }
 
 

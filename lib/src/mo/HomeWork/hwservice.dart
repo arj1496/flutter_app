@@ -17,9 +17,9 @@ class HWService{
       hw.subjectId = i;
       hw.subjectName = "Subject_ " + i.toString();
       hw.teacherId = i;
-      hw.teacherName = "Teacher_" + i.toString();
+      /*hw.teacherName = "Teacher_" + i.toString();
       hw.startDate = DateTime.parse("2019-07-20");
-      hw.endDate = DateTime.parse("2019-07-22");
+      hw.endDate = DateTime.parse("2019-07-22");*/
 
       hwList.add(hw);
 

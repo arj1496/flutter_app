@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/AddFormUI.dart';
 import 'package:flutter_app/AlertDialogBoxTypes.dart';
 import 'package:flutter_app/DetailViewUV.dart';
+import 'package:flutter_app/src/mo/FileDownloadAndUpload/DonloadUploadWidget.dart';
+import 'package:flutter_app/src/mo/FileDownloadAndUpload/DownloadUpload.dart';
 import 'package:flutter_app/ListTileViewUV.dart';
 import 'package:flutter_app/ListViewUV.dart';
 import 'package:flutter_app/StudentDetailsWithDialog.dart';
@@ -89,6 +91,15 @@ class _UrveshNewState extends State<UrveshNew> {
                   );
                 },
                 child: Text('Student Dashboard'),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( builder: (context) => DownloadUploadWidget()),
+                  );
+                },
+                child: Text('File Download & Upload'),
               ),
             ],
           ),
