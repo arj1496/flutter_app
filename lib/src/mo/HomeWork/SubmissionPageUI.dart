@@ -12,7 +12,7 @@ import 'package:path/path.dart' as fileUtil;
 class SubmissionPageUI extends StatefulWidget {
 
   String title = null;
-  String _filePath;
+
   @override
   State<StatefulWidget> createState() {
     return DetailViewUVState();
@@ -28,6 +28,8 @@ class DetailViewUVState extends State<SubmissionPageUI> {
   String title = null;
   int groupValue=1;
   List<File> _fileList = new List();
+  Map<String,String> _filePath = new Map();
+  Map<String,String> filePath = new Map();
 
   /* DetailViewUVState(List<Widget> customWidget,title){
     this.customWidget = customWidget;
@@ -350,19 +352,22 @@ class DetailViewUVState extends State<SubmissionPageUI> {
 
                 child: Padding(
                   padding: const EdgeInsets.only(top:8.0),
-                  child: SizedBox(
-                    height: 150,
-                      width: 150,
-                      child: _buildPreviewImage()),
-                ),
+                  child:new GridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4.0,
+                        crossAxisSpacing: 4.0,
+                        children: _buildPreviewImage(),
+                      ),
+
           ),
-    );
+    ),);
+
 
   }
 
   void selectGender( int select ) {
-    getFilePath ( );
-    setState ( ( ) {
+    getFilePath ();
+    setState ( () {
       if (select == 1) {
         groupValue = 1;
       }
@@ -374,54 +379,75 @@ class DetailViewUVState extends State<SubmissionPageUI> {
 
   void getFilePath( ) async {
     try {
-      String filePath = await FilePicker.getFilePath ( type: FileType.ANY );
+      Map<String,String> filePath = await FilePicker.getMultiFilePath ( type: FileType.ANY );
       if (filePath == '') {
         return;
       }
-      print ( "File path: " + filePath );
+
       setState ( ( ) {
-        widget._filePath = filePath;
-        _imageFile = File ( filePath );
+        _filePath.addAll(filePath) ;
+        //_imageFile = File ( filePath );
       } );
     } catch (e) {
       print ( "Error while picking the file: " + e.toString ( ) );
     }
   }
 
-  Widget _buildPreviewImage( ) {
-    if (_imageFile == null) {
+   _buildPreviewImage( ) {
+    List<Widget> widgetList = new List();
+    if (_filePath == null) {
       return Container (
         height: 50,
         width: 50,
         alignment: Alignment.center ,
-        /*child: Text (
-          "Choose file" ,
-          style: TextStyle ( fontSize: 26 ) ,
-        ) ,*/
+
       );
-    } else if (_imageFile != null &&
-        ['.jpg' , 'jpeg' , '.bmp' , '.png'].contains (
-            fileUtil.extension ( _imageFile
-                .path ) )) // .contains(fileUtil.extension(_imageFile.path))
-        {
-
-      return Image.file (_imageFile,);
-    } else if (_imageFile != null &&
-        ['.pdf' , 'doc' ].contains (
-            fileUtil.extension ( _imageFile
-                .path ) )) // .contains(fileUtil.extension(_imageFile.path))
-           {
-         return Icon(FontAwesomeIcons.filePdf);
-
-       }
-     /* return Container (
-        alignment: Alignment.center,
-
-        child: Text (
-          "File: ${fileUtil.basename ( _imageFile.path )}" ,
-          style: TextStyle ( fontSize: 26 ) ,
-        ) ,
-      );*/
+    } else if (_filePath != null)
+         for(String key in _filePath.keys){
+            if(['.jpg' , 'jpeg' , '.bmp' , '.png'].contains ( fileUtil.extension ( _filePath[key] ) ))
+              {
+                widgetList.add(_imageIcon(File(_filePath[key])));
+              }else if( ['.pdf' , 'doc' ].contains ( fileUtil.extension ( _filePath[key] ) )){
+              widgetList.add(Icon(FontAwesomeIcons.filePdf));
+              }
+         }
+       return widgetList;
     }
+
+    _imageIcon(filePathString){
+      return Stack(
+
+        children: <Widget>[
+          Image.file(
+            filePathString,
+          ),
+          Positioned(
+            child: GestureDetector(
+              onTap: (){
+                deleteImage(filePathString);
+              },
+              child: Container(
+                // margin: EdgeInsets.only(left: 85),
+
+
+                  child: Icon(
+                      Icons.cancel
+                  ),
+                ),
+              ),
+            ),
+
+        ],
+      );
+    }
+
+  void deleteImage(filePathString) {
+    print(filePathString);
+     filePath.remove(filePathString);
+    print(_filePath.length);
   }
+
+  }
+
+
 

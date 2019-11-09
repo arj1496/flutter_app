@@ -15,6 +15,7 @@ import '../../../CardDetail2Oct.dart';
 import '../../../DescriptionCustomView.dart';
 import '../../../TitleViewDetail.dart';
 import 'HomeworkEdit.dart';
+import 'MessageUI.dart';
 
 
 class HWDetail extends StatefulWidget {
@@ -149,10 +150,10 @@ class DetailViewUVState extends State<HWDetail> {
           left: 8 ,
           right: 8 ,
           bottom: 8
-      ) ,
+      ),
       child: new Container (
         width: 800 ,
-        height: 170 ,
+        height: 150 ,
         alignment: Alignment.topLeft ,
         decoration: BoxDecoration (
           color: AppTheme.white ,
@@ -182,7 +183,7 @@ class DetailViewUVState extends State<HWDetail> {
                       Row(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(0.0),
                             child: Column(
                               mainAxisAlignment:
                               MainAxisAlignment.center,
@@ -191,7 +192,7 @@ class DetailViewUVState extends State<HWDetail> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 4, bottom: 2),
+                                      left: 0, bottom: 2),
                                   child: Text(
                                     'Student Corner :--',
                                     textAlign: TextAlign.center,
@@ -221,7 +222,7 @@ class DetailViewUVState extends State<HWDetail> {
                                     Padding(
                                       padding:
                                       const EdgeInsets.only(
-                                          left: 16, bottom: 3),
+                                          left: 0, bottom: 5,top:5),
                                       child: Text(
                                         'Review note for you',
                                         textAlign: TextAlign.center,
@@ -253,7 +254,7 @@ class DetailViewUVState extends State<HWDetail> {
                         CrossAxisAlignment.end,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left:10.0),
+                            padding: const EdgeInsets.only(bottom:0.0),
                             child: Text(
                                               "Status :",
                                             textAlign: TextAlign.center,
@@ -288,7 +289,7 @@ class DetailViewUVState extends State<HWDetail> {
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(top:8.0),
                         child: Column(
                           mainAxisAlignment:
                           MainAxisAlignment.center,
@@ -296,9 +297,9 @@ class DetailViewUVState extends State<HWDetail> {
                           CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(
+                              padding:  EdgeInsets.only(
                                   left:0),
-                              child: Text("A",
+                              child: Text("Click here to submit assignment file",
 
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -310,6 +311,8 @@ class DetailViewUVState extends State<HWDetail> {
                                 ),
                               ),
                             ),
+
+
                             Row(
                               mainAxisAlignment:
                               MainAxisAlignment.end,
@@ -373,10 +376,10 @@ class DetailViewUVState extends State<HWDetail> {
                 style: new TextStyle(
                     fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
             onPressed: ( ) {
-              /*Navigator.push(
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomeworkEdit(homeWork)),
-              );*/
+                MaterialPageRoute(builder: (context) => MessageUI()),
+              );
             } ,
           ) ,
         ) ,
