@@ -118,7 +118,7 @@ class FileService {
   static Future<String> fileUploadMultipart({File file, OnUploadProgressCallback onUploadProgress}) async {
     assert(file != null);
 
-    final url = '$baseUrl/api/file';
+    final url = '$baseUrl' + 'api/file';
 
     final httpClient = getHttpClient();
 
