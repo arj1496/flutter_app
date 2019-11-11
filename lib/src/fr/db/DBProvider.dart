@@ -47,6 +47,7 @@ class  DBProvider {
       await db.execute(createStandardTeacherTable());
       await db.execute(createStandardMappingTable());
       await db.execute(createHWTable());
+      await db.execute(createTimeTableTable());
     });
   }
 
@@ -285,6 +286,23 @@ class  DBProvider {
         " mark INTEGER, "
         " description TEXT"
         ")";
+  }
+
+  String createTimeTableTable() {
+    return "create table TimeTable ( "+
+        "id INTEGER PRIMARY KEY, "+
+        "lid INTEGER, "+
+        "title TEXT," +
+        "day TEXT NOT NULL," +
+        "time TEXT NOT NULL," +
+        "standardId INTEGER NOT NULL," +
+        "subjectId INTEGER," +
+        "date INTEGER," +
+        "personId INTEGER," +
+        "owner TEXT," +
+        "operation TEXT,"+
+        "isWritable NUMERIC NOT NULL, " +
+        "infraStructure TEXT)";
   }
 
 }

@@ -7,6 +7,7 @@ import 'package:flutter_app/src/mo/Standard/StandardService.dart';
 import 'package:flutter_app/src/mo/Student/StudentService.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
 import 'package:flutter_app/src/mo/Synchronization/SyncWebService.dart';
+import 'package:flutter_app/src/mo/TimeTable/TimeTableService.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,7 @@ class SyncService{
   ExamService examService = new ExamService();
   PermissionService permissionService = new PermissionService();
   HomeworkService homeworkService = new HomeworkService();
+  TimeTableService timeTableService = new TimeTableService();
 
   List<String> getSyncParameters(){
 
@@ -34,6 +36,7 @@ class SyncService{
     parameters.add("permission_sync_time");
     parameters.add("teacher_subject_sync_time");
     parameters.add("homework_sync_time");
+    parameters.add("timetable_sync_time");
     return parameters;
   }
 
@@ -149,9 +152,15 @@ class SyncService{
 
     if(syncDataResponse.containsKey('isHomeWorkSync')){
       if(syncDataResponse['isHomeWorkSync']){
-        print("isHomeWorkSync");
         await homeworkService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("homework_sync_time", todayDate.toString());
+      }
+    }
+
+    if(syncDataResponse.containsKey('isTimeTableSync')){
+      if(syncDataResponse['isTimeTableSync']){
+        await timeTableService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("timetable_sync_time", todayDate.toString());
       }
     }
   }
