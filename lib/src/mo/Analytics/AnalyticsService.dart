@@ -32,9 +32,11 @@ class AnalyticsService{
       var divisionGradeClassListMap = getDivisionGradeClassListMap(standardsList);
       DataMap['divisionGradeClassListMap'] = divisionGradeClassListMap;
 
+      var divisionClassListMap = getDivisionClassListMap(standardsList);
+      DataMap['divisionClassListMap'] = divisionClassListMap;
+
       List<dynamic> divisionList = analyticsDataFuture['divisions'];
       DataMap['divisionList'] = divisionList;
-
     }
     return DataMap;
 
@@ -80,6 +82,24 @@ class AnalyticsService{
       }
     }
     return divisionGradeClassListMap;
+  }
+
+  Map<int, List<int>> getDivisionClassListMap(List standardsList) {
+    Map<int, List<int>> divisionClassListMap;
+    if(standardsList != null && standardsList.length > 0) {
+      divisionClassListMap = new Map();
+      for (int i = 0; i < standardsList.length; i++) {
+        if (standardsList[i]['divisionId'] != null && standardsList[i]['gradeId'] == null) {
+          List<int> classList = divisionClassListMap[standardsList[i]['divisionId']];
+          if (classList == null) {
+            classList = new List();
+            divisionClassListMap[standardsList[i]['divisionId']] = classList;
+          }
+          classList.add(standardsList[i]['id']);
+        }
+      }
+    }
+    return divisionClassListMap;
   }
 
 }

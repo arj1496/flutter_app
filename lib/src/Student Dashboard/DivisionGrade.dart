@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/getStudent.dart';
-import 'AppTheme.dart';
-import 'HeaderContainer.dart';
+import 'package:flutter_app/src/Student%20Dashboard/ClassStudentsCount.dart';
+import '../../AppTheme.dart';
+import '../../HeaderContainer.dart';
 import 'NewAnimated.dart';
 
 class DivisionGrade extends StatelessWidget {
 
   var dataObject;
-  List<dynamic> classDetailsMap;
-  List<dynamic> gradeDetailMap;
+  List<dynamic> classDetailsList;
+  List<dynamic> gradeDetailList;
   Map<int, List<int>> gradeClassListMap;
-
+  List<int> divisionClassList;
+  final List<int> allreadyPrintClassId = new List<int>();
   Map<String, dynamic> test ;
 
+  List<dynamic> dataList;
 
   DivisionGrade({
-    this.dataObject,
-    this.classDetailsMap,
-    this.gradeDetailMap,
-    this.gradeClassListMap
+    this.dataList
+    /*this.dataObject,
+    this.classDetailsList,
+    this.gradeDetailList,
+    this.gradeClassListMap,
+    this.divisionClassList*/
 });
 
   @override
@@ -34,39 +39,7 @@ class DivisionGrade extends StatelessWidget {
     );
   }
 
-  Widget title() {
-    return Padding(
-        padding:
-        const EdgeInsets.only(top:5, left: 5, right: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding:
-                  const EdgeInsets.only(left: 4, bottom: 3),
-                  child: Text(
-                    'Grade And Class Students Count',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: AppTheme.robotoFontName,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: AppTheme.nearlyDarkBlue,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ));
-  }
-
-  Widget horizontalLine() {
+  Widget horizontalLine(Color color) {
     // this Padding is Used to render the Horizontal line Starts
    return Padding(
       padding: const EdgeInsets.only(
@@ -74,7 +47,7 @@ class DivisionGrade extends StatelessWidget {
       child: Container(
         height: 2,
         decoration: BoxDecoration(
-          color: Colors.grey,
+          color: color,
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
         ),
       ),
@@ -249,87 +222,116 @@ class DivisionGrade extends StatelessWidget {
 
   List<Widget> getAllWidgets() {
     List<Widget> widgetList = new List();
-    widgetList.add( HeaderContainer.init(dataObject['name'], ""));
+    //widgetList.add( HeaderContainer.init(dataObject['name'], ""));
 
-    List.generate(gradeDetailMap.length, (i){
-      Widget widget = allDetails(gradeDetailMap[i], gradeClassListMap);
-      if(widget != null){
-        widgetList.add(widget) ;
+    List.generate(dataList.length, (i){
+      widgetList.add(HeaderContainer.init(dataList[i]['name'], ""));
+      List<Widget> widgets = allDetails(dataList[i]["gradeList"]);
+      if(widgets != null && widgets.length > 0 ){
+        widgetList.addAll(widgets) ;
       }
-    });
+      List<dynamic> list =   dataList[i]["classList"];
+      if(list != null && list.length > 0 ){
+        Widget widget = ClassStudentsCount(
+          title:"Only Division Classes: ${dataList[i]["name"]} ",
+          list: dataList[i]["classList"],
+        );
+        if(widget != null){
+          widgetList.add(widget);
+        }
+      }
 
-    widgetList.add(horizontalLine());
+
+    });
+    widgetList.add(horizontalLine(Colors.grey));
     return widgetList;
   }
 
-  Widget allDetails(Map<String, dynamic> gradeDetail, Map<int, List<int>> gradeClassListMap) {
-    if(gradeClassListMap.containsKey(int.parse(gradeDetail['gardeId'].toString()))){
-      return Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 3),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8.0),
-                bottomLeft: Radius.circular(8.0),
-                bottomRight: Radius.circular(8.0),
-                topRight: Radius.circular(8.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: AppTheme.grey.withOpacity(0.2),
-                  offset: Offset(1.1, 1.1),
-                  blurRadius: 10.0
+  List<Widget> allDetails(List<dynamic> gradeDetailList) {
+
+    List<Widget> widgets = new List<Widget>();
+    List.generate(gradeDetailList.length, (i){
+      Widget widget =  getWidget(gradeDetailList[i]);
+      if(widget != null){
+        widgets.add(widget);
+      }
+    });
+    return widgets;
+  }
+
+  Map<int, dynamic> forClassList() {
+    Map<int, dynamic> classListMap = new Map<int, dynamic>();
+    for(int i= 0; i < classDetailsList.length; i++){
+      classListMap[classDetailsList[i]['classId']] = classDetailsList[i];
+    }
+    return classListMap;
+  }
+
+  Widget getWidget(Map<String,dynamic> gradeDetail) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 3),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+              bottomRight: Radius.circular(8.0),
+              topRight: Radius.circular(8.0)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: AppTheme.grey.withOpacity(0.2),
+                offset: Offset(1.1, 1.1),
+                blurRadius: 10.0
+            ),
+          ],
+        ),
+        child: GestureDetector(
+          onTap: (){
+            print("hello");
+          },
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top:8.0,left: 10.0,right: 10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppTheme.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8.0),
+                        bottomLeft: Radius.circular(8.0),
+                        bottomRight: Radius.circular(8.0),
+                        topRight: Radius.circular(8.0)
+                    ),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: AppTheme.grey.withOpacity(0.2),
+                          offset: Offset(1.1, 1.1),
+                          blurRadius: 10.0
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      gradeTotal(gradeDetail),
+                    ],
+                  ),
+                ),
+              ),
+              horizontalLine(Colors.black12),
+              NewAnimated(
+                /*classIds: gradeClassListMap[gradeId],
+                  classDetailsMap: forClassList(),
+                  allreadyPrintClassId : allreadyPrintClassId,*/
+                  classDataList : gradeDetail["classList"]
+              ),
+              SizedBox(
+                height: 5.0,
               ),
             ],
           ),
-          child: GestureDetector(
-            onTap: (){
-              print("hello");
-            },
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top:8.0,left: 10.0,right: 10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppTheme.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8.0),
-                          bottomLeft: Radius.circular(8.0),
-                          bottomRight: Radius.circular(8.0),
-                          topRight: Radius.circular(8.0)
-                      ),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: AppTheme.grey.withOpacity(0.2),
-                            offset: Offset(1.1, 1.1),
-                            blurRadius: 10.0
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        //  title(),
-                        gradeTotal(gradeDetail),
-                      ],
-                    ),
-                  ),
-                ),
-                horizontalLine(),
-                SizedBox(
-                  height: 2.0,
-                ),
-                NewAnimated(),
-                SizedBox(
-                  height: 5.0,
-                ),
-              ],
-            ),
-          ),
         ),
-      );
-    }
-
-
+      ),
+    );
   }
 }

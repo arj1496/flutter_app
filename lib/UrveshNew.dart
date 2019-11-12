@@ -13,7 +13,7 @@ import 'package:flutter_app/urvesh.dart';
 
 import 'AppTheme.dart';
 import 'HeaderContainer.dart';
-import 'StudentDashboard.dart';
+import 'src/Student Dashboard/StudentDashboard.dart';
 
 class UrveshNew extends StatefulWidget {
   @override

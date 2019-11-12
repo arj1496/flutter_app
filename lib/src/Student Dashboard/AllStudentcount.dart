@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/StudentDashboard.dart';
-import 'AppTheme.dart';
+import 'package:flutter_app/src/Student%20Dashboard/DivisionGrade.dart';
+import 'package:flutter_app/src/Student%20Dashboard/StudentDashboard.dart';
+import '../../AppTheme.dart';
 
 class AllStudentCount extends StatelessWidget {
 
@@ -39,11 +40,7 @@ class AllStudentCount extends StatelessWidget {
          children: <Widget>[
            Padding(
                padding: const EdgeInsets.only(top: 5, left: 5, right: 10),
-               child: Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: <Widget>[
-                   Row(
+               child: Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      crossAxisAlignment: CrossAxisAlignment.end,
                      children: <Widget>[
@@ -52,7 +49,7 @@ class AllStudentCount extends StatelessWidget {
                              left: 4, bottom: 3
                          ),
                          child: Text(
-                           'All Student Count',
+                           'All Students Count',
                            textAlign: TextAlign.center,
                            style: TextStyle(
                              fontFamily: AppTheme.robotoFontName,
@@ -64,9 +61,9 @@ class AllStudentCount extends StatelessWidget {
                        ),
                      ],
                    ),
-                 ],
-               )
            ),
+
+
            // this Padding is Used to render the Horizontal line Starts
            Padding(
              padding: const EdgeInsets.only(
