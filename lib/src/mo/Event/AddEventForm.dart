@@ -4,6 +4,7 @@ import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Event/EventActivity.dart';
 
 import 'package:flutter_app/src/mo/Event/EventTypeAutoComplte.dart';
+import 'package:flutter_app/src/mo/Event/ParticipantUI.dart';
 
 import 'Event.dart';
 
@@ -55,6 +56,7 @@ class _EventAddState extends State<EventAdd> {
             //Event Type
             _getEventTypeAutoCompte(_formKey,genericModel),
 
+            _getParticipantUI(),
             _submitButton(),
           ],
         ),
@@ -117,5 +119,9 @@ class _EventAddState extends State<EventAdd> {
   _getEventTypeAutoCompte(GlobalKey<FormState> formKey, GenericModel genericModel) {
     return EventTypeAutoComplte(_formKey,genericModel);
   }
+
+  _getParticipantUI() {
+     return ParticipantUI();
+   }
 }
 

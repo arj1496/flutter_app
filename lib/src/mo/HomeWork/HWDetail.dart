@@ -6,6 +6,7 @@ import 'package:flutter_app/HeaderContainer.dart';
 import 'package:flutter_app/src/mo/Event/HWWidget.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
+import 'package:flutter_app/src/mo/HomeWork/ApprovalUI.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
 import 'package:flutter_app/src/mo/HomeWork/SubmissionPageUI.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -378,7 +379,7 @@ class DetailViewUVState extends State<HWDetail> {
             onPressed: ( ) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MessageUI()),
+                MaterialPageRoute(builder: (context) => ApprovalUI()),
               );
             } ,
           ) ,

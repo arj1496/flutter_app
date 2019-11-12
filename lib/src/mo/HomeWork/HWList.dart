@@ -20,21 +20,29 @@ class _ListTileViewUVState extends State<HWList> {
   HomeworkActivity homeworkActivity = new HomeworkActivity();
   SchoolUtils schoolUtils = new SchoolUtils();
   @override
-  void initState() {
+  void initState() {}
 
-  }
-
-  Future<List<HomeWork>> getData() async{
-    List<HomeWork> HWList = await homeworkActivity.getLocalDbHomework();
+  Future<Map<String,List<HomeWork>>> getData() async{
+    Map<String,List<HomeWork>> HWList = await homeworkActivity.getLocalDbHomework();
     return HWList;
   }
+
   @override
   Widget build(BuildContext context) {
 
     var futureBuilder = new FutureBuilder(
         future: getData(),
         builder: (BuildContext context, AsyncSnapshot snapshot){
-          return _getListViewWithBuilder(context, snapshot);
+
+          return Padding(
+            padding: const EdgeInsets.only(top:4.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+                children: _getListViewWithBuilder(context, snapshot),
+
+            ),
+          );
         }
     );
     return Scaffold(
@@ -55,30 +63,98 @@ class _ListTileViewUVState extends State<HWList> {
 
         ],
       ),
-      body: futureBuilder,
-    );
-    //return _getListViewWithBuilder();
+      body: SingleChildScrollView(
+           child: Column(
+             children: <Widget>[
+              futureBuilder,
+             ],
+           )
+
+    ),);
+
   }
 
-  Widget _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
-    List<HomeWork> hwList = snapshot.data;
+   List<Widget> _getListViewWithBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    Map<String,List<HomeWork>> hwList = snapshot.data;
+    List<Widget> wigetList = new List();
+     for(String key in hwList.keys){
+       List<HomeWork> homeworkList = hwList[key];
+       wigetList.add(getListOfWidgets(key,homeworkList));
+     }
+     return wigetList;
+  }
 
-    return  Container(
-      color: AppTheme.background,
-      child: ListView.builder(
-          itemCount: hwList.length,
-          itemBuilder: (BuildContext ctxt, int Index){
-            return hwList != null && hwList.length > 0  ?  _renderlistTileView(hwList[Index]) : _listNotFound();
-          }
+  getListOfWidgets(key,homeworkList){
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: HexColor("#D7E0F9"),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  bottomLeft: Radius.circular(8.0),
+                  bottomRight: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: AppTheme.grey.withOpacity(0.2),
+                    offset: Offset(1.1, 1.1),
+                    blurRadius: 10.0),
+              ],
+            ),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 0, bottom: 12, right: 200, top: 8),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right:0.0),
+                      child: Text(
+                        key,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: AppTheme.robotoFontName,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          letterSpacing: 0.0,
+                          color: AppTheme.nearlyDarkBlue
+                              .withOpacity(0.6),
+                        ),
+                      ),
+                    ),
+                  ),
 
-      ),
-    );
+                ),
+
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            color: AppTheme.background,
+            child: ListView.builder(
+                physics:  NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount:homeworkList.length,
+                itemBuilder: (BuildContext ctxt, int Index){
+                  return homeworkList != null && homeworkList.length > 0  ?  _renderlistTileView(homeworkList[Index]) : _listNotFound();
+                }
+
+            ),
+          ),
+        ),
+      ],);
   }
 // Pass exam field to widget constructur to fill in the exam detail page
   Widget _renderlistTileView(data) {
+
     return  GestureDetector(
       onTap: (){
-        // when click on list view of exam all the details of that exam is displayed.
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => HWDetail(data),
@@ -117,22 +193,12 @@ class _ListTileViewUVState extends State<HWList> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
-                    // this Padding is Used to render the Horizontal line Starts
-
-                    // this Padding is Used to render the Horizontal line Ends
-
-
-                    // this Padding is Used to render the Horizontal line Starts
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 10, right: 1, top: 3, bottom: 8
                       ),
                       child: Row(
                         children: <Widget>[
-
-
                           Padding(
                             padding:  EdgeInsets.only(right: 0),
                             // child: Center(
@@ -163,6 +229,7 @@ class _ListTileViewUVState extends State<HWList> {
                                       CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
+
                                           data.mark.toString(),
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
@@ -173,8 +240,6 @@ class _ListTileViewUVState extends State<HWList> {
                                             letterSpacing: 0.0,
                                             color: AppTheme
                                                 .nearlyDarkBlue,
-
-
                                           ),
                                         ),
 
@@ -199,45 +264,7 @@ class _ListTileViewUVState extends State<HWList> {
                               ),
                             ),
                           ),
-                          /* Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              data.owner,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: AppTheme.robotoFontName,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                letterSpacing: -0.2,
-                                color: AppTheme.darkText,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6),
-                              child: Text(
-                                'Created By',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: AppTheme.robotoFontName,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: AppTheme.grey
-                                      .withOpacity(0.5),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),*/
+
                           Expanded(
                             child: Padding(
                               padding:  EdgeInsets.only(
@@ -311,7 +338,6 @@ class _ListTileViewUVState extends State<HWList> {
 
                                   Row(
                                     children: <Widget>[
-
                                       Padding(
                                         padding: const EdgeInsets.all(2.0),
                                         child: Column(
@@ -342,7 +368,6 @@ class _ListTileViewUVState extends State<HWList> {
                                               crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                               children: <Widget>[
-
                                                 Padding(
                                                   padding:
                                                   const EdgeInsets.only(
@@ -384,7 +409,7 @@ class _ListTileViewUVState extends State<HWList> {
                                   children: <Widget>[
                                     Text(
                                       //new DateTime.fromMillisecondsSinceEpoch(data.examDate).toString(),
-                                      schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.startDate),
+                                      schoolUtils.getDateStringFromLongWithSchoolTimeZone(data.endDate),
                                       style: TextStyle(
                                         fontFamily: AppTheme.robotoFontName,
                                         fontWeight: FontWeight.w500,
@@ -413,10 +438,7 @@ class _ListTileViewUVState extends State<HWList> {
                           )
                         ],
                       ),
-
-
                     )
-
                   ],
                 ),
               ),
@@ -424,7 +446,6 @@ class _ListTileViewUVState extends State<HWList> {
           ),
         ),
       ),);
-
   }
 
   Widget _listNotFound(){
