@@ -13,6 +13,7 @@ import 'package:flutter_app/urvesh.dart';
 
 import 'AppTheme.dart';
 import 'HeaderContainer.dart';
+import 'Subject/SubjectList.dart';
 import 'src/Student Dashboard/StudentDashboard.dart';
 
 class UrveshNew extends StatefulWidget {
@@ -100,6 +101,15 @@ class _UrveshNewState extends State<UrveshNew> {
                   );
                 },
                 child: Text('File Download & Upload'),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( builder: (context) => SubjectList()),
+                  );
+                },
+                child: Text('Subject List'),
               ),
             ],
           ),

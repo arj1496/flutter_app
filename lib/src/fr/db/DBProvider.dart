@@ -192,7 +192,8 @@ class  DBProvider {
         " isAccess Integer, "
         " color Integer, "
         " isOptional Integer, "
-        " optionalStudentIds TEXT"
+        " optionalStudentIds TEXT, "
+        " teacherIds TEXT"
         ")";
   }
 

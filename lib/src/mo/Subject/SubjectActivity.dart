@@ -1,3 +1,4 @@
+import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 
 import 'Subject.dart';
@@ -11,6 +12,7 @@ class SubjectActivity{
     List<Subject> subjectListFromFuture = await subjectService.getSubjectListFromLocalDB();
     return subjectListFromFuture;
   }
+
   getHardCodedSubjectList(){
     List<Subject> subbList = new List<Subject>();
     for(int i=1; i<= 6; i++){
@@ -28,5 +30,15 @@ class SubjectActivity{
   Future<List<Subject>> getSubjectByStandardId(int standardId) async{
     List<Subject> subjectListFromFuture = await subjectService.getSubjectByStandardId(standardId);
     return subjectListFromFuture;
+  }
+
+  addSubject(Subject subject, callBack){
+    subjectService.addSubjectInServer(subject).then((value){
+      callBack();
+    });
+
+    /* Future.delayed(Duration(seconds: 5), () {
+      callBack();
+    });*/
   }
 }

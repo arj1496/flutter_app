@@ -2,26 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
+import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherActivity.dart';
 
 class TeacherDropDown extends StatefulWidget {
-
-  /*List<String> _standard = null;*/
-
   @override
   State<StatefulWidget> createState() {
     return TeacherdropdownState();
   }
 
   GlobalKey<FormState> formKey;
-  GenericModel genericModel;
+  Subject subject;
   TeacherDropDown.init(formKey, _eventPojo) {
     this.formKey = formKey;
-    this.genericModel = _eventPojo;
+    this.subject = _eventPojo;
   }
 
-  TeacherDropDown(this.formKey, this.genericModel);
+  TeacherDropDown(this.formKey, this.subject);
 
 }
 
@@ -79,8 +77,9 @@ class TeacherdropdownState extends State<TeacherDropDown> {
                         selectedTeacherId = newValue.id;
                        teacher = newValue.firstName;
                         state.didChange(newValue.firstName);
-                        //widget.formKey.currentState.save();
-                        widget.genericModel.teacherId = newValue.id;
+                        List<int> teacherIdList = new List<int>();
+                        teacherIdList.add(newValue.id);
+                        widget.subject.teacherIds = teacherIdList;
                       });
                     },
                     items: teacherList.map((Teacher teacher) {

@@ -6,7 +6,7 @@ import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:provider/provider.dart';
 
-import '../../../SubjectDropdownWidget.dart';
+import '../../../Subject/SubjectDropdownWidget.dart';
 import 'Exam.dart';
 class DropDownProvider extends StatefulWidget  {
   @override
