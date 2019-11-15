@@ -115,4 +115,20 @@ class HomeworkWebService{
     return HWObjectmap;
   }
 
+
+   getAccessToken () async {
+    print("in webservice");
+    String authToken = await urlUtils.getAuthToken();
+    Map<String, String> headers = new Map<String, String>();
+    headers['authT'] = authToken;
+    final finalurl =  SchoolUtils().baseUrl + "rest/homework/getAccessToken";
+    Response response = await get(finalurl, headers: headers);
+    var data;
+    if(response.statusCode == 200){
+      data = json.decode(response.body);
+      print(data);
+    }
+    return data;
+  }
+
 }

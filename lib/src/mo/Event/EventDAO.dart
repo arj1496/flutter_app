@@ -14,7 +14,7 @@ class EventDAO{
     return db;
   }
 
-  Event addEvent(Event event) {
+ /* Event addEvent(Event event) {
     Database db = null;
     getDataBaseHandler().then((dataBaseInstance){
       db = dataBaseInstance;
@@ -31,6 +31,27 @@ class EventDAO{
       });
       return event;
     });
+  }*/
+
+  int addEvent( Event event ) {
+    Database db = null;
+    getDataBaseHandler ( ).then ( ( dataBaseInstance ) async{
+      db = dataBaseInstance;
+      int futureId = await db.insert (
+        eventTable ,
+        event.toJson ( ) ,
+        conflictAlgorithm: ConflictAlgorithm.replace ,
+      );
+
+      /* int examId;
+      futureId.then<int> ( ( id ) {
+        examId = id;
+        exam.lid = examId;
+        print("Exam Add sucessfully");
+      } );*/
+
+      return futureId;
+    } );
   }
 
   batchAddEvent(List<Event> eventList){
@@ -80,5 +101,20 @@ class EventDAO{
     });
     print("Event List size : ${test.length}");
     return test;
+  }
+
+  updateEvent(Event event) {
+    Database db = null;
+    getDataBaseHandler ( ).then ( ( dataBaseInstance ) async{
+      db = dataBaseInstance;
+
+      int futureId = await db.update (
+        eventTable ,
+        event.toJson ( ) ,
+        where: "id= ?",
+        whereArgs: [event.id],
+      );
+      return futureId;
+    });
   }
 }

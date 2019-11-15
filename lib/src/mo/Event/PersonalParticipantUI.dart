@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/HeaderContainer.dart';
+import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
+import 'package:flutter_app/src/mo/Person/Person.dart';
 import 'package:flutter_app/src/mo/teacher/Teacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherActivity.dart';
+import 'package:provider/provider.dart';
 
 import '../../../AppTheme.dart';
 import 'Event.dart';
+import 'ParticipantSelectModel.dart';
 
 class PersonalParticipantUI extends StatefulWidget {
   @override
@@ -13,8 +17,18 @@ class PersonalParticipantUI extends StatefulWidget {
 
 }
 
-class _ListTileViewUVState extends State<PersonalParticipantUI> {
+class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTickerProviderStateMixin {
   bool boolVal = false;
+  List<Person> _personList = new List();
+
+  @override
+  initState()
+  {
+   // super.initState();
+    //Provider.of<ParticipantSelectModel>(context, listen: false).getTeacher();
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -23,16 +37,26 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
         backgroundColor: AppTheme.background,
         title: Text("Personal Participant"),
       ),
-       body: SingleChildScrollView(
-         child: Column(
-         children: <Widget>[
-           selectParticipant(),
-           serarchParticipant(),
-           getParticipantList(),
-           ButtonUI(),
-         ],
-      ),
-     ),
+       body:MultiProvider(
+         providers: [
+           ChangeNotifierProvider(
+             builder: (_) =>  ParticipantSelectModel(),
+           ),],
+
+         child: Container(
+             child:Column(
+               children: <Widget>[
+                 selectParticipant(),
+                 serarchParticipant(),
+                 Expanded(
+                   child:getParticipantList(),
+                 )
+
+               ],
+             )
+         ),
+       ),
+        bottomNavigationBar:  ButtonUI(),
     );
   }
 
@@ -54,9 +78,8 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
                 style: new TextStyle(
                     fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
             onPressed: ( ) async {
-              //genericModel.status = "DRAFT";
-
-            } ,
+                Provider.of<ParticipantSelectModel>(context, listen: false).getTeacher();
+                } ,
           ) ,
         ) ,
           Material ( //Wrap with Material
@@ -73,7 +96,7 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
                   style: new TextStyle(
                       fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
               onPressed: ( ) async {
-
+                Provider.of<ParticipantSelectModel>(context, listen: false).getParent();
               } ,
             ) ,
           ) ,
@@ -91,7 +114,7 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
                   style: new TextStyle(
                       fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
               onPressed: ( ) {
-
+                Provider.of<ParticipantSelectModel>(context, listen: false).getStudent("Student");
               } ,
             ) ,
           ) ,
@@ -120,49 +143,44 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
         ),
       ),
     );
-    Expanded(
-      child: new Padding(
-        padding: new EdgeInsets.only(top: 8.0),
-        child: Text("wel"),
-      ),
-    );
+
   }
 
   getParticipantList() {
-    return FutureBuilder (
-        future:getParticipant(),
-        builder: ( context , projectSnap ) {
-          return Column (
-            children: <Widget>[_getParticipantUI ( projectSnap )] ,
-          );
-        }
-        );
+    return ChangeNotifierProvider(
+        builder: (context) => ParticipantSelectModel(),
+    child: Consumer<ParticipantSelectModel>(
+      //context, todos, child) => TaskList(tasks: todos.allTasks,
+      builder: (context,_personList,child){
+        List<Person> personList = _personList.allPerson;
+        return _getParticipantUI( personList );
+      },
+    ),);
   }
 
-  _getParticipantUI( AsyncSnapshot snapshot ) {
-     List<Teacher> teacherList = new List();
-    if (snapshot.data != null) {
-      // setSelectedList ( widget.data,flag );
-      teacherList = snapshot.data;
-    }
-    return SingleChildScrollView (
-      child: ListView.builder (
-         physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true ,
-          itemCount: teacherList.length ,
-          itemBuilder: ( context , i ) {
-            return CheckboxListTile (
-                value: boolVal ,
-                title: new Text( teacherList[i].firstName +
-                    "(" +
-                    teacherList[i].lastName +
-                    ")" ) ,
-                controlAffinity: ListTileControlAffinity.leading ,
-                onChanged: ( bool val ) {
-                  ItemChange ( val , i , );
-                } );
-          } ) ,
-    );
+  _getParticipantUI( personList ) {
+
+
+    return SingleChildScrollView(
+         child: ListView.builder (
+             physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true ,
+              itemCount: personList.length ,
+              itemBuilder: ( context , i ) {
+                return CheckboxListTile (
+                    value: boolVal ,
+                    title: new Text( personList[i].firstName +
+                        "(" +
+                        personList[i].lastName +
+                        ")" ) ,
+                    controlAffinity: ListTileControlAffinity.leading ,
+                    onChanged: ( bool val ) {
+                      ItemChange ( val , i , );
+                    } );
+              } ),
+       );
+
+
   }
 
   void ItemChange( bool val , int index ) {
@@ -175,16 +193,15 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
     } );
   }
 
-  Future<List<Teacher>> getParticipant() async {
-    TeacherActivity teacherActivity = new TeacherActivity();
-    List<Teacher> _teachers = await teacherActivity.getAllTeacherList();
-    return _teachers;
+  Future<List<Person>> getParticipant() async {
+   return _personList;
   }
 
   ButtonUI(   ) {
     return Padding (
-      padding: EdgeInsets.only ( bottom: 0 , top: 30 ) ,
-      child: Container(
+      padding: EdgeInsets.only ( bottom: 0 , top: 0 ) ,
+
+      child:Container(
         child:Row (
         children: <Widget>[Material ( //Wrap with Material
           shape: RoundedRectangleBorder (

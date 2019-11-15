@@ -185,8 +185,14 @@ class EventActivity{
     return event;
   }
 
-  addEventToServer(event) {
+ /* addEventToServer(event) {
     Event eventObject = eventService.addOrUpdateEvent(event);
     return eventObject;
+  }*/
+
+  Future<int> addOrUpdateEvent(Event event) async{
+    print("in examactivity");
+    int eventObject = await eventService.addOrUpdateEvent(event);
+     return eventObject;
   }
 }

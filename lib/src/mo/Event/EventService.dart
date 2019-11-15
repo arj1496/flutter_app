@@ -10,7 +10,7 @@ class EventService{
   EventDAO eventDAO = new EventDAO();
   EventWebService _eventWebService = new EventWebService();
   Event addTeacher(Event event){
-    Event _event = eventDAO.addEvent(event);
+    int _event = eventDAO.addEvent(event);
   }
 
   batchAddEvent(List<Event> eventList){
@@ -44,7 +44,7 @@ class EventService{
     return eventList;
   }
 
-   addOrUpdateEvent(event) async{
+  /* addOrUpdateEvent(event) async{
     Map<String, dynamic> eventData = await _eventWebService.addOrUpdateEvent(event);
 
     if(eventData['status']){
@@ -55,5 +55,22 @@ class EventService{
       print('Event Add False');
     }
     return event;
+  }
+*/
+  Future<int> addOrUpdateEvent(Event event) async{
+    Map<String, dynamic> eventData = await _eventWebService.addOrUpdateEvent(event);
+    // if the response is true and the examId is present allredy update that exam otherwise add that exam to local database
+    if(eventData['status']){
+      Event event = Event.fromJson(eventData['event']);
+      if(event.id != null) {
+        await eventDAO.updateEvent (event);
+      }else{
+        await eventDAO.addEvent ( event );
+     }
+      return event.id;
+    }else{
+      print('Event Add False');
+    }
+    return null;
   }
 }

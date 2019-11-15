@@ -17,7 +17,7 @@ class UrlUtils{
     return url;
   }
   String getEventAddUrl(){
-    String url = SchoolUtils().baseUrl + "rest/event/addOrUpdate";
+    String url = SchoolUtils().baseUrl + "rest/event/addOrUpdate_";
     return url;
   }
 
