@@ -5,17 +5,19 @@ import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Event/EventActivity.dart';
 import 'package:flutter_app/src/mo/Event/EventType.dart';
 
+import 'Event.dart';
+
 class EventTypeAutoComplte extends StatefulWidget {
   @override
   _EventTypeAutoComplteState createState() => _EventTypeAutoComplteState();
   GlobalKey<FormState> formKey;
-  GenericModel genericModel;
+  Event event;
   EventTypeAutoComplte.init(formKey, _eventPojo) {
     this.formKey = formKey;
-    this.genericModel = _eventPojo;
+    this.event = _eventPojo;
   }
 
-  EventTypeAutoComplte(this.formKey, this.genericModel);
+  EventTypeAutoComplte(this.formKey, this.event);
 }
 
 class _EventTypeAutoComplteState extends State<EventTypeAutoComplte> {
@@ -84,7 +86,7 @@ class _EventTypeAutoComplteState extends State<EventTypeAutoComplte> {
             setState(() {
               searchTextField.textField.controller.text = item.eventType;
               widget.formKey.currentState.save();
-              widget.genericModel.eventType = item.eventType;
+              widget.event.type = item.eventType;
             });
           },
           itemBuilder: (context, item) {

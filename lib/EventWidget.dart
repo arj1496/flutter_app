@@ -7,19 +7,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/AppTheme.dart';
+import 'package:flutter_app/src/mo/Event/Event.dart';
 
 
 import 'PropertyFile.dart';
 
 class EventWidget extends StatelessWidget {
 
-  var property = new PropertyFile();
-  EventWidget.init(PropertyFile property){
-    this.property = property;
-  }
 
-  EventWidget(){
+  Event event = new Event();
 
+
+  EventWidget(event){
+     this.event = event;
   }
 
   @override
@@ -28,12 +28,7 @@ class EventWidget extends StatelessWidget {
 
   }
 
-  /* List<Widget> _getWidget(){
-    List<Widget> list = [
-      DescriptionCustomView.init(propertyService.getData())
-    ];
-    return list;
-  }*/
+
 
   Widget _getTileViewWidget() {
     return  Column(
@@ -101,8 +96,7 @@ class EventWidget extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.only(bottom:8.0,right:2.0,left:12),
                                         child: Text(
-                                          /*'Gandhi Jayanti ',*/
-                                          property.eventName,
+                                         event.name,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily:
@@ -185,7 +179,7 @@ class EventWidget extends StatelessWidget {
                                             left: 4, bottom: 3),
                                         child: Text(
                                          // 'Festival',
-                                          property.eventType,
+                                        event.type,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily: AppTheme.robotoFontName,
@@ -259,7 +253,7 @@ class EventWidget extends StatelessWidget {
                         bottom: 3),
                     child: Text(
                       //'A T John',
-                      property.eventCreated,
+                     event.owner,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily:

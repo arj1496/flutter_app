@@ -28,11 +28,11 @@ class DescriptionOption extends StatelessWidget {
 
   static PropertyService propertyService = new PropertyService();
   static ExamActivity examActivity = new ExamActivity();
-  static List<Widget> detailWidget = [EventWidget(),];
+  static List<Widget> detailWidget = [EventWidget(null),];
 
   List<Widget> eventWidget = [
   // HeaderContainer.init("Event Detail"),     // For Appbar of evenry page.It constructor contains title which i displayed on header.
-    CardDetail2Oct(EventWidget()),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
+    CardDetail2Oct(EventWidget(null)),            // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
     DateWidget(),                     // It display date in blue container
     //TitleViewDetail.init(propertyService.getPlaceData()),  // It display title of place and description in listview.
     DescriptionCustomView.init("Hello world"),  // All place data is displayed in container
@@ -115,8 +115,7 @@ class DescriptionOption extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => MainDetailPage()),
                 );
-
-              },
+                },
 
             ),
             RaisedButton(

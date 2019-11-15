@@ -6,29 +6,31 @@ import 'package:flutter_app/src/mo/Event/EventActivity.dart';
 import 'package:flutter_app/src/mo/Event/EventTypeAutoComplte.dart';
 import 'package:flutter_app/src/mo/Event/ParticipantUI.dart';
 
+import 'DateWidgetForEvent.dart';
 import 'Event.dart';
 
-class EventAdd extends StatefulWidget {
+class AddEventForm extends StatefulWidget {
   @override
   _EventAddState createState() => _EventAddState();
 }
 
-class _EventAddState extends State<EventAdd> {
+class _EventAddState extends State<AddEventForm> {
   //EventPojo eventPojo = new EventPojo();
-  GenericModel genericModel = new GenericModel();
+ Event event = new Event();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   static EventActivity eventActivity = new EventActivity();
-
+ final GlobalKey<ScaffoldState> scafoldKey = new GlobalKey<ScaffoldState>( );
   @override
   Widget build(BuildContext context) {
     return Container(
       color: AppTheme.background,
       child: Scaffold(
+        key: scafoldKey,
         backgroundColor: AppTheme.background,
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: AppTheme.background,
-          title: Text("Add Evnet form"),
+          title: Text("Add Event form"),
         ),
         //body: _getContainerBody(),
         body: _getSafeAreaBody(),
@@ -54,8 +56,8 @@ class _EventAddState extends State<EventAdd> {
             //Place
             _getTextFormTextField(Icon(Icons.place), 'Enter Place', 'Place','place'),
             //Event Type
-            _getEventTypeAutoCompte(_formKey,genericModel),
-
+            _getEventTypeAutoCompte(_formKey,event),
+            _getDateAndTime(_formKey, event),
             _getParticipantUI(),
             _submitButton(),
           ],
@@ -67,8 +69,8 @@ class _EventAddState extends State<EventAdd> {
   _getTextFormTextField(Icon icon , hintText, labelText,paramenter) {
     return TextFormField(
       onSaved: (val) => paramenter == 'title'
-          ? genericModel.title = val : paramenter == 'description'
-          ? genericModel.description = val :  genericModel.place = val ,
+          ? event.name = val : paramenter == 'description'
+          ? event.description = val :  event.place = val ,
       autovalidate: true,
       decoration: InputDecoration(
           icon: icon,
@@ -95,33 +97,68 @@ class _EventAddState extends State<EventAdd> {
   }
 
   _submitButton() {
-    return MaterialButton(
-      minWidth: 200.0,
-      height: 35,
+    return Padding (
+      padding: EdgeInsets.only ( bottom: 0 , top: 30 ) ,
+        child:Container(
+          child:Row (
+            children: <Widget>[Material ( //Wrap with Material
+              shape: RoundedRectangleBorder (
+                  borderRadius: new BorderRadius.circular( 0.0 ) ,
+                  side: BorderSide ( color: AppTheme.nearlyBlue )
+              ) ,
+              //elevation: 16.0,
+              clipBehavior: Clip.antiAlias , // Add This
+              child: MaterialButton (
+                minWidth: 160.0 ,
+                height: 35 ,
+                child: new Text( "ADD" ,
+                    style: new TextStyle(
+                        fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
+                onPressed: ( ) async {
+                   EventActivity eventActivity = new EventActivity();
+                   Future<int> eventObject = eventActivity.addOrUpdateEvent(event);
+                   if(eventObject != null){
+                     final snackBar = SnackBar(content: Text('Event added sucessfully!'));
+                     scafoldKey.currentState.showSnackBar(snackBar);
+                   }
+                  } ,
+              ) ,
+            ) ,
+              Material ( //Wrap with Material
+                shape: RoundedRectangleBorder (
+                    borderRadius: new BorderRadius.circular( 0.0 ) ,
+                    side: BorderSide ( color: AppTheme.nearlyBlue )
+                ) ,
+                //elevation: 16.0,
+                clipBehavior: Clip.antiAlias , // Add This
+                child: MaterialButton (
+                  minWidth: 160.0 ,
+                  height: 35 ,
+                  child: new Text( "CANCEL" ,
+                      style: new TextStyle(
+                          fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
+                   onPressed: ( ) async {
+                    Navigator.pop(context);
+                  } ,
+                ) ,
+              ) ,
 
-      child: new Text("Add Event",
-          style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
-      onPressed: (){
-       // Event eventObject = eventActivity.addEventToServer(event);
-        if(_formKey.currentState.validate()){
-          _formKey.currentState.save();
-        }
-
-        print("Titile : ${genericModel.title}");
-        print("Description : ${genericModel.description}");
-        print("Place : ${genericModel.place}");
-        print("Event Type : ${genericModel.eventType}");
-
-      },
-    );
+            ] ,
+          ) ,
+        ),);
   }
 
-  _getEventTypeAutoCompte(GlobalKey<FormState> formKey, GenericModel genericModel) {
-    return EventTypeAutoComplte(_formKey,genericModel);
+  _getEventTypeAutoCompte(GlobalKey<FormState> formKey, Event event) {
+    return EventTypeAutoComplte(_formKey,event);
   }
 
   _getParticipantUI() {
      return ParticipantUI();
    }
+
+ // Date and time textfield
+ _getDateAndTime( GlobalKey<FormState> formKey , Event event ) {
+   return DateWidgetForEvent.init ( _formKey , event );
+ }
 }
 

@@ -13,7 +13,7 @@ class HeaderContainer extends StatelessWidget {
     this.title = title;
     this.subtitle = subtitle;
   }
-  HeaderContainer(Exam exam){
+  HeaderContainer(Exam exam, String s){
     this.exam = exam;
 
   }

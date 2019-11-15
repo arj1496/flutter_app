@@ -25,30 +25,32 @@ class EventWebService{
     }
   }
 
-  Future<dynamic> addOrUpdateEvent (Event event) async {
+  Future<Map<String, dynamic>> addOrUpdateEvent (Event event) async {
     print("in webservice");
     String authToken = await urlUtils.getAuthToken();
-
+    print("authToken : ${authToken}");
     Map<String, String> headers = new Map<String, String>();
     headers['authT'] = authToken;
 
-    Map<String, String> eventMap = getEventFrom(event);
 
+    Map<String, String> eventMap = getEventFrom(event);
     final finalurl =  urlUtils.getEventAddUrl();
     Response response = await post(finalurl, headers: headers, body: eventMap);
+    var data;
+
     if(response.statusCode == 200){
-      var str = response.body;
-      print(str);
-      final data = json.decode(response.body);
-      return data;
+      data = json.decode(response.body);
+      print(data);
     }
-    int statusCode = response.statusCode;
-    print(statusCode);
+    return data;
   }
 
   Map<String, String> getEventFrom(Event event) {
     Map<String,String> eventObjectmap = new HashMap();
 
+    if(event.id != null){
+      eventObjectmap["id"] = event.id.toString();
+    }
     if (event.name != null) {
       eventObjectmap["name"] = event.name;
     }
