@@ -54,14 +54,15 @@ class StudentDao{
     print("getAllStudentDataFromLocalDB Starts ");
     Database db = await getDataBaseHandler();
 
-    String seletedField =  's.id as studId, s.firstName as studFirstName, s.lastName as studLastName , s.parentIds';
+    String selectedField =  's.id as studServerId, s.firstName as studFirstName, s.lastName as studLastName , s.parentIds as studParentIds';
 
-    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT ${seletedField} FROM  ${studentTable} s");
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT $selectedField FROM  $studentTable s");
 
     String str = json.encode(maps);
-    print("student left join data: ${str} ");
+    print("student left join data: $str ");
     var test = List.generate(maps.length, ( i ) {
-      return Student.fromJson_local(maps[i]);
+      Student student = Student.fromJsonLocal(maps[i]);
+      return student;
     });
     print("Student List size : ${test.length}");
     return test;
@@ -76,6 +77,27 @@ class StudentDao{
     print("StandardMapping List size : ${standardMappingList.length}");
     return standardMappingList;
   }
+
+  Future<List<Student>> getAllStudentsByClassIdFromLocalDB(int classId) async{
+
+    Database db = await getDataBaseHandler();
+    String selectedField = 's.id as studServerId, s.firstName as studFirstName, s.lastName as studLastName, s.studentId as studentId, '
+        's.gender as studGender, sm.rollNo as studRollNo, s.personId as studPersonId, s.email as studEmailId, s.mobileNumber as studMobileNo, '
+        's.parentIds as studParentIds, s.isWritable as studIsWritable, s.cardId as studCardId, s.isCardActive as studIsCardActive, s.birthDate as studBirthDate, '
+        'std.id as studStandardId, std.name as studStandardName ';
+
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT $selectedField FROM  $studentTable s "
+        "left join StandardMappingTable sm on s.id = sm.studentId "
+        "left join Standard std on s.standardId = std.id "
+        "where sm.standardId = $classId");
+    List<Student> studentList = List.generate(maps.length, ( i ) {
+      return Student.fromJsonLocal(maps[i]);
+    });
+    print("Student List size : ${studentList.length}");
+    return studentList;
+  }
+
+
 
 
 

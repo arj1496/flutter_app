@@ -7,14 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class WebViewActivity {
+
   UrlUtils urlUtils = new UrlUtils();
-  Future<dynamic> getData_(HashMap<String, String> requestData, var url) async {
+
+  Future<dynamic> getData(HashMap<String, String> requestData, var url) async {
     Map<String, String> headers = new Map<String, String>();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     print(sharedPreferences.getString("token"));
     headers['authT'] = sharedPreferences.getString("token");
 
-    final finalurl = SchoolUtils().baseUrl + url;
     var response = await http.get(url , headers: headers);
     if(response.statusCode == 200){
       var str = response.body;

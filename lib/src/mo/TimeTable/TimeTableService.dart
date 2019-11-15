@@ -39,4 +39,8 @@ class TimeTableService{
     }
   }
 
+  Future<List<TimeTable>> getTimetableListFromLocalDb() async{
+    return await timeTableDao.getTimetableListFromLocalDb();
+  }
+
 }

@@ -65,21 +65,22 @@ class TimeTable{
   );
 
   factory TimeTable.fromJsonLocal(Map<String, dynamic> jsonObject) => TimeTable(
-      id : jsonObject["id"],
+      id : jsonObject["timeTableId"],
       lid : jsonObject["lid"],
-      title: jsonObject["title"],
-      date: jsonObject[""],
-      day: jsonObject[""],
-      standardId: jsonObject[""],
-      subjectId: jsonObject[""],
-      isWritable: jsonObject[""],
-      personId: jsonObject[""],
-      owner: jsonObject[""],
-      operation: jsonObject[""],
-      infraStructure: jsonObject[""],
-      standard: jsonObject[""],
-      subject: jsonObject[""],
-      startHour: jsonObject[""],
+      title: jsonObject["timeTableTitle"],
+      date: jsonObject["timeTableDate"],
+      day: jsonObject["timeTableDay"],
+      time: jsonObject["timeTableTime"],
+      standardId: jsonObject["standardId"],
+      subjectId: jsonObject["subjectId"],
+      isWritable: jsonObject["timeTableisWritable"],
+      personId: jsonObject["timeTablePersonId"],
+      owner: jsonObject["timeTableOwner"],
+      operation: jsonObject["timeTableOperation"],
+      infraStructure: jsonObject["timeTableInfraStructure"],
+      standard: jsonObject["standardId"] != null ? Standard(id: jsonObject["standardId"], name: jsonObject["standardName"]) : null,
+      subject: jsonObject["subjectId"] != null ? Subject(id: jsonObject["subjectId"], name: jsonObject["subjectName"]) : null,
+     /*startHour: jsonObject[""],
       startMinute: jsonObject[""],
       endHour: jsonObject[""],
       endMinute: jsonObject[""],
@@ -87,7 +88,7 @@ class TimeTable{
       endTime: jsonObject[""],
       startMeridian: jsonObject[""],
       endMeridian: jsonObject[""],
-      teacher: jsonObject[""]
+      teacher: jsonObject[""]*/
   );
 
   Map<String, dynamic> toJson() => {

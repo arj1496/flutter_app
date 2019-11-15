@@ -20,6 +20,8 @@ class AppTheme{
   static const String robotoFontName = 'Roboto';
   static const String workSansFontName = 'WorkSans-Regular';
 
+
+
 }
 
 class HexColor extends Color {

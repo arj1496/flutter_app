@@ -165,7 +165,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
                   blurRadius: 10.0),
             ],
           ),
-          child: _listtile(student),
+          child: listTile(student),
         ),
       ),
     );
@@ -330,7 +330,7 @@ class _StudentDetailWithDialogState extends State<StudentDetailWithDialog> {
     );
   }
 
-  Widget _listtile(Student student) {
+  Widget listTile(Student student) {
     return ListTile(
       leading: GestureDetector(
         onTap: () {},

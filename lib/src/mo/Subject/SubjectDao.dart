@@ -98,4 +98,14 @@ class SubjectDao {
     print("Subject List size : ${test.length}");
     return test;
   }
+
+  Future<Subject> getSubjectBySubjectId(int subjectId) async{
+    Database db = await getDataBaseHandler();
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Subject where id = $subjectId");
+    List<Subject> subjectList =  List.generate(maps.length, (i) {
+      return Subject.fromJsonLocal(maps[i]);
+    });
+    return subjectList[0];
+  }
+
 }

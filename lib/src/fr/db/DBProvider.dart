@@ -93,7 +93,6 @@ class  DBProvider {
   }
 
   String createStudentTable() {
-
     return " CREATE TABLE Student ("
         "lid INTEGER ,"
         "id INTEGER PRIMARY KEY,"
@@ -107,19 +106,14 @@ class  DBProvider {
         "isWritable INTEGER,"
         "email TEXT,"
         "mobileNumber TEXT,"
-        "standardIds TEXT,"
+        "standardId INTEGER,"
         "cardId TEXT,"
         "parentIds TEXT,"
         "isCardActive TEXT,"
-        "birthDate INTEGER"
-        "userId TEXT "
+        "birthDate INTEGER,"
+        "userId TEXT, "
         "academicType TEXT"
-
         ")" ;
-
-
-
-
   }
 
   String createEventTable(){

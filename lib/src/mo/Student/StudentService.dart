@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Parent/ParentService.dart';
@@ -17,7 +19,7 @@ class StudentService {
     Map<String, dynamic> responseData = await studentWebService.addStudent(genericModel);
 
     if (responseData['status']) {
-      Student student = Student.fromJson_server(responseData['student']);
+      Student student = Student.fromJsonServer(responseData['student']);
       print(student);
       List<Student> studentList = [];
       studentList.add(student);
@@ -56,7 +58,7 @@ class StudentService {
       print(studentDataFromServer);
       List<dynamic> studentsDynamic = studentDataFromServer['students'];
       studentList = List.generate(studentsDynamic.length, (i) {
-        Student student = Student.fromJson_server(studentsDynamic[i]);
+        Student student = Student.fromJsonServer(studentsDynamic[i]);
         return student;
       });
       await batchAddStudents(studentList);
@@ -95,27 +97,28 @@ class StudentService {
     if (studentsDynamic != null && studentsDynamic.length > 0) {
       List<StandardMapping> standardMappingList = new List();
       List<Student> studentList = List.generate(studentsDynamic.length, (i) {
-        Student student = Student.fromJson_server(studentsDynamic[i]);
+        Student student = Student.fromJsonServer(studentsDynamic[i]);
         List<StandardMapping> standardMappings = getStandardMappingListFromStudentDynmaicList(studentsDynamic[i]);
         standardMappingList.addAll(standardMappings);
         return student;
       });
       await batchAddStudents(studentList);
       await batchAddStudentStandardMapping(standardMappingList);
-
     }
   }
 
   List<StandardMapping> getStandardMappingListFromStudentDynmaicList(Map<String, dynamic> studentsDynamic){
     List<StandardMapping> standardMappingList;
+    List<int> alreadyIds = new List();
     List<dynamic> standardMappingDynamics = studentsDynamic['standardMappings'];
     if(standardMappingDynamics != null && standardMappingDynamics.length > 0){
       standardMappingList = new List();
       for(int i = 0; i < standardMappingDynamics.length; i++){
-        standardMappingList = List.generate(standardMappingDynamics.length, (i) {
-          StandardMapping standardMapping = StandardMapping.fromJsonServer(standardMappingDynamics[i]);
-          return standardMapping;
-        });
+        StandardMapping standardMapping = StandardMapping.fromJsonServer(standardMappingDynamics[i]);
+        if(!alreadyIds.contains(standardMapping.id)){
+          alreadyIds.add(standardMapping.id);
+          standardMappingList.add(standardMapping);
+        }
       }
     }
     return standardMappingList;
@@ -124,7 +127,7 @@ class StudentService {
   updateParentDetailOfStudent(GenericModel genericmodel) async {
     Map<String, dynamic> responseData = await studentWebService.updateParentDetailOfStudent(genericmodel);
     if (responseData['status']) {
-      Student student = Student.fromJson_server(responseData['student']);
+      Student student = Student.fromJsonServer(responseData['student']);
       print(student);
     }
   }
@@ -133,6 +136,13 @@ class StudentService {
 
 
   }
+
+  Future<List<Student>> getAllStudentsByClassIdFromLocalDB(int classId) async{
+    List<Student> studentList =  await _studentDao.getAllStudentsByClassIdFromLocalDB(classId);
+    return studentList;
+  }
+
+
 
 
 

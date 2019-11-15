@@ -10,7 +10,6 @@ class StudentActivity{
   StudentService studentService = new StudentService();
 
   Future<List<Student>> getAllStudent() async{
-
     List<Student> studentList =  await studentService.getStudentListFromLocalDB();
     return studentList;
   }
@@ -37,6 +36,11 @@ class StudentActivity{
     Future.delayed(Duration(seconds: 15),(){
       callBack();
     });
+  }
+
+  Future<List<Student>> getAllStudentsByClassIdFromLocalDB(int classId) async{
+    List<Student> studentList =  await studentService.getAllStudentsByClassIdFromLocalDB(classId);
+    return studentList;
   }
 
 }

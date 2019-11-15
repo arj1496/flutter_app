@@ -11,7 +11,7 @@ class Student {
   String studentId;
   String schoolName;
   String gender;
-  Standard standard;
+  int standardId;
   String rollNo;
   int personId;
   String email;
@@ -23,6 +23,7 @@ class Student {
   int isCardActive = 0; // 0 = inactive, 1 = active
   int birthDate;
 
+  Standard standard;
   List<StandardMapping> standardMappings;
   List<Parent> parentList;
 
@@ -34,7 +35,7 @@ class Student {
       this.studentId,
       this.schoolName,
       this.gender,
-      this.standard,
+      this.standardId,
       this.rollNo,
       this.personId,
       this.email,
@@ -45,11 +46,12 @@ class Student {
       this.cardId,
       this.isCardActive,
       this.birthDate,
+      this.standard,
       this.standardMappings,
       this.parentList});
 
   // ignore: non_constant_identifier_names
-  factory Student.fromJson_server(Map<String, dynamic> jsonObject) => Student(
+  factory Student.fromJsonServer(Map<String, dynamic> jsonObject) => Student(
         lid: jsonObject['lid'],
         id: jsonObject['id'],  // Data from Json
         firstName: jsonObject['firstName'],
@@ -57,7 +59,7 @@ class Student {
         studentId: jsonObject['studentId'],
         schoolName: jsonObject['schoolName'],
         gender: jsonObject['gender'],
-        standard: jsonObject['standard'],
+        standardId: jsonObject['standard_id'],
         rollNo: jsonObject['rollNo'],
         personId: jsonObject['personId'],
         email: jsonObject['email'],
@@ -70,27 +72,27 @@ class Student {
         birthDate: jsonObject['birthDate'],
       );
 
-  factory Student.fromJson_local(Map<String, dynamic> jsonObject) => Student(
+  factory Student.fromJsonLocal(Map<String, dynamic> jsonObject) => Student(
     lid: jsonObject['lid'],
-    id: jsonObject['studId'],  // Data from Json
+    id: jsonObject['studServerId'],  // Data from Json
     firstName: jsonObject['studFirstName'],
     lastName: jsonObject['studLastName'],
     studentId: jsonObject['studentId'],
     schoolName: jsonObject['schoolName'],
-    gender: jsonObject['gender'],
-    standard: jsonObject['standard'],
-    rollNo: jsonObject['rollNo'],
-    personId: jsonObject['personId'],
-    email: jsonObject['email'],
-    mobileNumber: jsonObject['mobileNumber'],
-    parentIds: jsonObject['parentIds'],
-    isWritable: jsonObject['isWritable'] == true ? 1 : 0,
+    gender: jsonObject['studGender'],
+    standardId: jsonObject['studStandardId'],
+    rollNo: jsonObject['studRollNo'],
+    personId: jsonObject['studPersonId'],
+    email: jsonObject['studEmailId'],
+    mobileNumber: jsonObject['studMobileNo'],
+    parentIds: jsonObject['studParentIds'],
+    isWritable: jsonObject['studIsWritable'],
     userId: jsonObject['userId'],
-    cardId: jsonObject['cardId'],
-    isCardActive: jsonObject['isCardActive'],
-    birthDate: jsonObject['birthDate'],
-    //standardMappings: StandardMapping.getStandardMappingsList(jsonObject['standardMappings']),
+    cardId: jsonObject['studCardId'],
+    isCardActive: jsonObject['studIsCardActive'] != null ? int.parse(jsonObject['studIsCardActive']) : null,
+    birthDate: jsonObject['studBirthDate'],
     parentList: jsonObject['parentList'],
+    standard: jsonObject["studStandardId"] != null ? Standard(id: jsonObject["studStandardId"], name: jsonObject["studStandardName"]) : null
   );
 
 
@@ -110,7 +112,8 @@ class Student {
         'isWritable': isWritable,
         'cardId': cardId,
         'isCardActive': isCardActive,
-        'birthDate': birthDate
+        'birthDate': birthDate,
+        'standardId': standardId
       };
 
 

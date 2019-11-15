@@ -112,7 +112,7 @@ class UserProfileDao{
     List<Student> studentList;
     if(studentGrowableList != null && studentGrowableList.length > 0){
       studentList = List.generate(studentGrowableList.length, (i){
-        Student student = Student.fromJson_server(studentGrowableList[i]);
+        Student student = Student.fromJsonServer(studentGrowableList[i]);
         return student;
       });
     }

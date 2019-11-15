@@ -104,4 +104,8 @@ class SubjectService {
     return subjectList;*/
   }
 
+  Future<Subject> getSubjectBySubjectId(int subjectId) async{
+    return await subjectDao.getSubjectBySubjectId(subjectId);
+  }
+
 }

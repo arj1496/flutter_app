@@ -240,8 +240,6 @@ class DivisionGrade extends StatelessWidget {
           widgetList.add(widget);
         }
       }
-
-
     });
     widgetList.add(horizontalLine(Colors.grey));
     return widgetList;

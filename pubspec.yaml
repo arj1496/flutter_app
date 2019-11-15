@@ -69,6 +69,8 @@ flutter:
 
   assets:
   - assets/images/
+  - assets/jquery-3.2.1.min.js
+  - assets/images/test.js
 
 fonts:
   - family: WorkSans

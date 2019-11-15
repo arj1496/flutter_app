@@ -9,6 +9,7 @@ import 'package:flutter_app/ListViewUV.dart';
 import 'package:flutter_app/StudentDetailsWithDialog.dart';
 import 'package:flutter_app/src/mo/Analytics/Analytics.dart';
 import 'package:flutter_app/src/mo/Analytics/AnalyticsActivity.dart';
+import 'package:flutter_app/src/mo/TimeTable/TimeTableListPage.dart';
 import 'package:flutter_app/urvesh.dart';
 
 import 'AppTheme.dart';
@@ -110,6 +111,15 @@ class _UrveshNewState extends State<UrveshNew> {
                   );
                 },
                 child: Text('Subject List'),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( builder: (context) => TimeTableListPage()),
+                  );
+                },
+                child: Text('Time Table List'),
               ),
             ],
           ),

@@ -82,4 +82,13 @@ class StandardDao{
     print("Standard List size : ${test.length}");
     return test;
   }
+
+  Future<Standard> getStandardByClassId(int classId) async{
+    Database db = await getDataBaseHandler();
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Standard ");
+    List<Standard> classList =  List.generate(maps.length, (i) {
+      return Standard.fromJsonLocal(maps[i]);
+    });
+    return classList[0];
+  }
 }

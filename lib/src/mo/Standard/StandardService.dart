@@ -17,15 +17,6 @@ class StandardService{
     standardDao.batchAddStandard(standardList);
   }
 
-  List<Standard> getStandardList_() {
-    List<Standard> standardsList = null;
-    Future<List<Standard>> standardListFromFuture = standardDao.getAllStandardData();
-    standardListFromFuture.then((standards){
-      standardsList =  standards;
-    });
-    return standardsList;
-  }
-
   Future<List<Standard>> getStandardListDataFromServer() async {
     StandardWebService _standardWebService = new StandardWebService();
 
@@ -62,23 +53,10 @@ class StandardService{
       });
       await batchAddStandard(standardList);
     }
-
   }
 
-
-  List<Standard> getAllStandard(){
-    List<Standard> standardList = new List();
-    for(var i = 1 ; i < 3; i++){
-      Standard standard = new Standard();
-      standard.id = i;
-      standard.name = 'Matematics' + i.toString();
-      standard.startDate = 1572021449+i ;
-      standard.endDate = 1572021449+i;
-      standard.startTime = "2" + i.toString();
-      standard.endTime = "2" + i.toString();
-      standardList.add(standard);
-    }
-    return standardList;
+  Future<Standard> getStandardByClassId(int classId) async{
+    return await standardDao.getStandardByClassId(classId);
   }
 
 

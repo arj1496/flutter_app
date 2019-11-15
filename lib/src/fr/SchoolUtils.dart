@@ -1,10 +1,6 @@
 
 import 'package:date_format/date_format.dart';
 import 'package:flutter_app/src/fr/User.dart';
-import 'package:flutter_app/src/mo/Standard/Standard.dart';
-import 'package:flutter_app/src/mo/Standard/StandardService.dart';
-import 'package:flutter_app/src/mo/Subject/Subject.dart';
-import 'package:flutter_app/src/mo/Subject/SubjectService.dart';
 
 import 'SchoolDs.dart';
 
@@ -17,10 +13,10 @@ class SchoolUtils {
   }
 
   //String baseUrl = "https://educloud.in";
-  //String baseUrl = "http://192.168.0.100:8080/soms/";
-  String baseUrl = "http://192.168.0.103:8080/soms/";
+  String baseUrl = "http://192.168.0.111:8080/soms/";
+  //String baseUrl = "http://192.168.43.14:8080/soms/";
 
-  SchoolUtils._internal(){}
+  SchoolUtils._internal();
 
   Future<int> initApp() async{
    final result = await Future.delayed(const Duration(milliseconds: 5000), (){
@@ -92,18 +88,6 @@ class SchoolUtils {
     var  todayDate = DateTime.fromMillisecondsSinceEpoch(dateLong,isUtc: false);
     String dateSring = formatDate(todayDate, [dd, ' ', M ]);
     return dateSring;
-  }
-
-  List<Standard> getAccessibleClass(){
-    StandardService standardService =  new StandardService();
-    List<Standard> accessibleStandard = standardService.getAllStandard();
-    return accessibleStandard;
-  }
-
-  List<Subject> getAccessibleSubject(){
-    SubjectService subjectService =  new SubjectService();
-    List<Subject> accessibleSubject = subjectService.getAllSubject();
-    return accessibleSubject;
   }
 
   String getUserRole(){

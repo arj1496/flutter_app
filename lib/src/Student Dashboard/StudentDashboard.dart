@@ -18,7 +18,17 @@ class StudentDashboard extends StatelessWidget {
     var futureBuilder = new FutureBuilder(
         future: analyticsList,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return _getContainerBasedTile(context, snapshot);
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return new Text('Input a URL to start');
+            case ConnectionState.waiting:
+              return new Center(child: new CircularProgressIndicator());
+            default:
+              if (snapshot.hasError)
+                return new Text('Error: ${snapshot.error}');
+              else
+                return _getContainerBasedTile(context, snapshot);
+          }
         });
 
     return Scaffold(
