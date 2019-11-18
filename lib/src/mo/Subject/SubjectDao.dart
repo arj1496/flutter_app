@@ -69,7 +69,6 @@ class SubjectDao {
   }
 
   getAllSubjectData() async{
-
     print("getAllSubjectData Starts ");
     Database db = await getDataBaseHandler();
 
@@ -83,10 +82,25 @@ class SubjectDao {
     print("Subject List size : ${test.length}");
     return test;
   }
+  /*getAllSubjectData() async{
+    print("getAllSubjectData Starts ");
+    Database db = await getDataBaseHandler();
+
+    String selectedField = 's.teacherIds as subTeacherIds';
+    //List<Map<String, dynamic>> maps = await db.query('Subject');
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT $selectedField FROM  $subjectTable s");
+
+    String str = json.encode(maps);
+    print("subject left join data: $str ");
+    var test =  List.generate(maps.length, (i) {
+      Subject subject = Subject.fromJsonLocal(maps[i]);
+      return subject;
+    });
+    print("Subject List size : ${test.length}");
+    return test;
+  }*/
 
   getSubjectByStandardId(int standardId) async{
-
-
     Database db = await getDataBaseHandler();
 
     //List<Map<String, dynamic>> maps = await db.query('Subject');

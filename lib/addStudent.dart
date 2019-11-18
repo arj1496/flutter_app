@@ -5,32 +5,28 @@ import 'package:flutter_app/src/mo/Parent/Parent.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Student/StudentActivity.dart';
+
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:sqflite/utils/utils.dart';
 import 'onlyDate.dart';
 import 'standardDropDown.dart';
-import 'Gender.dart';
-
-import 'StudentDetailsWithDialog.dart';
 
 class AddStudent extends StatefulWidget {
   //AddStudent({Key key}) : super(key: key);
 
   VoidCallback onCallBack;
-  Student  student = new Student();
+  Student student = new Student();
   bool isUpdateFlag;
 
-  AddStudent( {@required Student object, @required onCallBack, this.isUpdateFlag}) :
-      assert (object != null),
-      assert (onCallBack != null),
+  AddStudent(
+      {@required Student object, @required onCallBack, this.isUpdateFlag})
+      : assert(object != null),
+        assert(onCallBack != null),
         this.student = object,
-      this.onCallBack = onCallBack;
-
+        this.onCallBack = onCallBack;
 
   @override
   _addStudentState createState() => _addStudentState();
-
 }
 
 class _addStudentState extends State<AddStudent> {
@@ -70,7 +66,7 @@ class _addStudentState extends State<AddStudent> {
       });
 
       StudentActivity studentActivity = new StudentActivity();
-      studentActivity.addStudent(genericModel, (){
+      studentActivity.addStudent(genericModel, () {
         print("Student Added Successfully!");
         setState(() {
           _isAdd = true;
@@ -85,22 +81,17 @@ class _addStudentState extends State<AddStudent> {
 
   @override
   Widget build(BuildContext context) {
-
     List<Parent> parentList = widget.student.parentList;
-    if(parentList != null){
-      for(int i=0;i<parentList.length;i++){
+    if (parentList != null) {
+      for (int i = 0; i < parentList.length; i++) {
         Parent parent = parentList[i];
-        if(parent.relation == "FATHER"){
+        if (parent.relation == "FATHER") {
           this.father = parent;
-        }else if(parent.relation == "MOTHER"){
+        } else if (parent.relation == "MOTHER") {
           this.mother = parent;
         }
       }
     }
-
-
-
-
 
     // TODO: implement build
     return Scaffold(
@@ -114,19 +105,21 @@ class _addStudentState extends State<AddStudent> {
         ),
       ),
       body: ModalProgressHUD(
-       inAsyncCall: _isInAsyncCall,
-       color: Colors.white,
+        inAsyncCall: _isInAsyncCall,
+        color: Colors.white,
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             autovalidate: _autoValidate,
             child: Padding(
-              padding: const EdgeInsets.only(left:8.0,right: 8.0),
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
               child: Column(
                 children: <Widget>[
                   //Student First Name
                   TextFormField(
-                    initialValue: widget.student.firstName != "" ? widget.student.firstName : '',
+                    initialValue: widget.student.firstName != ""
+                        ? widget.student.firstName
+                        : '',
                     //validator: validateFirstName,
                     onSaved: (String val) {
                       genericModel.firstName = val;
@@ -134,7 +127,7 @@ class _addStudentState extends State<AddStudent> {
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _studentFN,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _studentFN, _studentMN);
                     },
                     decoration: InputDecoration(
@@ -144,14 +137,13 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Student Middle Name
                   TextFormField(
-
                     onSaved: (String val) {
                       genericModel.studMiddleName = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _studentMN,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _studentMN, _studentLN);
                     },
                     decoration: InputDecoration(
@@ -161,7 +153,9 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Student Last Name
                   TextFormField(
-                    initialValue: widget.student.lastName != "" ? widget.student.lastName : '',
+                    initialValue: widget.student.lastName != ""
+                        ? widget.student.lastName
+                        : '',
                     //validator: validateLastName,
                     onSaved: (String val) {
                       genericModel.lastName = val;
@@ -169,7 +163,7 @@ class _addStudentState extends State<AddStudent> {
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _studentLN,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _studentLN, _studID);
                     },
                     decoration: InputDecoration(
@@ -178,7 +172,7 @@ class _addStudentState extends State<AddStudent> {
                         labelText: 'Enter Last Name'),
                   ),
                   //Student BirthDate
-             /*     FlatButton(
+                  /*     FlatButton(
                       onPressed: () {
                         DatePicker.showDatePicker(context,
                             showTitleActions: true,
@@ -195,26 +189,27 @@ class _addStudentState extends State<AddStudent> {
                         style: TextStyle(color: Colors.blue),
                       )
                   ),*/
-                DatePicker(Icon(Icons.cake),"BirthDate"),
+                  DatePicker(Icon(Icons.cake), "BirthDate"),
                   //Class of Student
                   //StandardDropDown(, , widget.student),
                   StandardDropDown(
-                    formKey: _formKey,
-                    genericModel: genericModel,
-                    student: widget.student
-                  ),
+                      formKey: _formKey,
+                      genericModel: genericModel,
+                      student: widget.student),
                   // Joining Date of Student
-                  DatePicker(Icon(Icons.calendar_today),"Joining Date"),
+                  DatePicker(Icon(Icons.calendar_today), "Joining Date"),
                   //StudentId(School Student Id)
                   TextFormField(
-                    initialValue: widget.student.studentId != "" ? widget.student.studentId : '',
+                    initialValue: widget.student.studentId != ""
+                        ? widget.student.studentId
+                        : '',
                     onSaved: (String val) {
                       genericModel.studId = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _studID,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _studID, _rollNO);
                     },
                     decoration: InputDecoration(
@@ -224,14 +219,16 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Roll No
                   TextFormField(
-                    initialValue: widget.student.rollNo != "" ? widget.student.rollNo : '',
+                    initialValue: widget.student.rollNo != ""
+                        ? widget.student.rollNo
+                        : '',
                     onSaved: (String val) {
                       genericModel.studRollNO = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _rollNO,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _rollNO, _studentCONTACT);
                     },
                     decoration: InputDecoration(
@@ -241,15 +238,18 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Student Contact
                   TextFormField(
-                    initialValue: widget.student.mobileNumber != "" ? widget.student.mobileNumber : '',
+                    initialValue: widget.student.mobileNumber != ""
+                        ? widget.student.mobileNumber
+                        : '',
                     onSaved: (String val) {
                       genericModel.contactNo = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _studentCONTACT,
-                    onFieldSubmitted: (term){
-                      _fieldFocusChange(context, _studentCONTACT, _studentEMAIL);
+                    onFieldSubmitted: (term) {
+                      _fieldFocusChange(
+                          context, _studentCONTACT, _studentEMAIL);
                     },
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
@@ -259,7 +259,8 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mail Id
                   TextFormField(
-                    initialValue: widget.student.email != "" ? widget.student.email : '',
+                    initialValue:
+                        widget.student.email != "" ? widget.student.email : '',
                     //validator: validateEmail,
                     onSaved: (String val) {
                       genericModel.email = val;
@@ -268,7 +269,7 @@ class _addStudentState extends State<AddStudent> {
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _studentEMAIL,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _studentEMAIL, _FFN);
                     },
                     decoration: InputDecoration(
@@ -283,28 +284,32 @@ class _addStudentState extends State<AddStudent> {
                   ),*/
                   //Father Details
                   Padding(
-                    padding: const EdgeInsets.only(bottom:5.0, top:10.0),
+                    padding: const EdgeInsets.only(bottom: 5.0, top: 10.0),
                     child: Container(
                         width: 400.0,
                         height: 30.0,
                         alignment: Alignment.topLeft,
-                        child: Text("Father Details",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.bold
-                        ),)),
+                        child: Text(
+                          "Father Details",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.bold),
+                        )),
                   ),
                   //Father First Name
                   TextFormField(
-                    initialValue: this.father != null && this.father.firstName != "" ? this.father.firstName : '',
+                    initialValue:
+                        this.father != null && this.father.firstName != ""
+                            ? this.father.firstName
+                            : '',
                     onSaved: (String val) {
                       genericModel.fatherFirstName = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _FFN,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _FFN, _FLN);
                     },
                     decoration: InputDecoration(
@@ -314,14 +319,17 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Father Last Name
                   TextFormField(
-                    initialValue: this.father != null && this.father.lastName != "" ? this.father.lastName : '',
+                    initialValue:
+                        this.father != null && this.father.lastName != ""
+                            ? this.father.lastName
+                            : '',
                     onSaved: (String val) {
                       genericModel.fatherLastName = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _FLN,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _FLN, _FCONTACT);
                     },
                     decoration: InputDecoration(
@@ -332,14 +340,17 @@ class _addStudentState extends State<AddStudent> {
                   //Father Contact
                   TextFormField(
                     keyboardType: TextInputType.phone,
-                    initialValue: this.father != null && this.father.mobileNumber != "" ? this.father.mobileNumber : '',
+                    initialValue:
+                        this.father != null && this.father.mobileNumber != ""
+                            ? this.father.mobileNumber
+                            : '',
                     onSaved: (String val) {
                       genericModel.fatherContact = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _FCONTACT,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _FCONTACT, _FEMAIL);
                     },
                     decoration: InputDecoration(
@@ -349,7 +360,9 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Father Email Id
                   TextFormField(
-                    initialValue: this.father != null && this.father.email != "" ? this.father.email : '',
+                    initialValue: this.father != null && this.father.email != ""
+                        ? this.father.email
+                        : '',
                     //validator: validateEmail,
                     onSaved: (String val) {
                       genericModel.fatherEmail = val;
@@ -358,7 +371,7 @@ class _addStudentState extends State<AddStudent> {
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _FEMAIL,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _FEMAIL, _MFN);
                     },
                     decoration: InputDecoration(
@@ -368,28 +381,32 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother Details
                   Padding(
-                    padding: const EdgeInsets.only(bottom:2.0, top:25.0),
+                    padding: const EdgeInsets.only(bottom: 2.0, top: 25.0),
                     child: Container(
                         width: 370.0,
                         height: 30.0,
                         alignment: Alignment.topLeft,
-                        child: Text("Mother Details",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.bold
-                        ),)),
+                        child: Text(
+                          "Mother Details",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.bold),
+                        )),
                   ),
                   //Mother First Name
                   TextFormField(
-                    initialValue: this.mother != null && this.mother.firstName != "" ? this.mother.firstName : '',
+                    initialValue:
+                        this.mother != null && this.mother.firstName != ""
+                            ? this.mother.firstName
+                            : '',
                     onSaved: (String val) {
                       genericModel.moherFirstName = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _MFN,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _MFN, _MLN);
                     },
                     decoration: InputDecoration(
@@ -399,14 +416,17 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother Last Name
                   TextFormField(
-                    initialValue: this.mother != null && this.mother.lastName != "" ? this.mother.lastName : '',
+                    initialValue:
+                        this.mother != null && this.mother.lastName != ""
+                            ? this.mother.lastName
+                            : '',
                     onSaved: (String val) {
                       genericModel.motherLastName = val;
                     },
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _MLN,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _MLN, _MCONTACT);
                     },
                     decoration: InputDecoration(
@@ -416,7 +436,10 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother Contact
                   TextFormField(
-                    initialValue: this.mother != null && this.mother.mobileNumber != "" ? this.mother.mobileNumber : '',
+                    initialValue:
+                        this.mother != null && this.mother.mobileNumber != ""
+                            ? this.mother.mobileNumber
+                            : '',
                     keyboardType: TextInputType.phone,
                     onSaved: (String val) {
                       genericModel.motherContact = val;
@@ -424,7 +447,7 @@ class _addStudentState extends State<AddStudent> {
                     autocorrect: true,
                     textInputAction: TextInputAction.next,
                     focusNode: _MCONTACT,
-                    onFieldSubmitted: (term){
+                    onFieldSubmitted: (term) {
                       _fieldFocusChange(context, _MCONTACT, _MEMAIL);
                     },
                     decoration: InputDecoration(
@@ -434,7 +457,9 @@ class _addStudentState extends State<AddStudent> {
                   ),
                   //Mother Email Id
                   TextFormField(
-                    initialValue: this.mother != null && this.mother.email != "" ? this.mother.email : '',
+                    initialValue: this.mother != null && this.mother.email != ""
+                        ? this.mother.email
+                        : '',
                     //validator: validateEmail,
                     onSaved: (String val) {
                       genericModel.motherEmail = val;
@@ -443,9 +468,9 @@ class _addStudentState extends State<AddStudent> {
                     autocorrect: true,
                     textInputAction: TextInputAction.done,
                     focusNode: _MEMAIL,
-                    onFieldSubmitted: (value){
+                    onFieldSubmitted: (value) {
                       _MEMAIL.unfocus();
-                     // _submit();
+                      // _submit();
                     },
                     decoration: InputDecoration(
                         icon: Icon(Icons.alternate_email),
@@ -455,22 +480,24 @@ class _addStudentState extends State<AddStudent> {
                   Row(
                     children: <Widget>[
                       Expanded(
-                        child:  Padding(
+                        child: Padding(
                           padding: const EdgeInsets.only(
                               top: 40.0, left: 30.0, right: 30.0, bottom: 30.0),
-                          child: widget.isUpdateFlag ?  MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(30.0)),
-                              color: Colors.lightBlueAccent,
-                              child: Text(
-                                "Update",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              onPressed: () {
-                                _submit();
-                               /* _formKey.currentState.save();
+                          child: widget.isUpdateFlag
+                              ? MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0)),
+                                  color: Colors.lightBlueAccent,
+                                  child: Text(
+                                    "Update",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    _submit();
+                                    /* _formKey.currentState.save();
                                 StudentActivity studentActivity = new StudentActivity();
                                 studentActivity.addStudent(genericModel, (){
                                   print("Student Added Successfully!");
@@ -478,21 +505,21 @@ class _addStudentState extends State<AddStudent> {
                                     _validateInputs();
                                   });
                                 });*/
-                              }
-                              ) : MaterialButton(
-                              shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)),
-                              color: Colors.lightBlueAccent,
-                              child: Text(
-                                "Add Student",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              onPressed: () {
-                                _submit();
-                              }
-                              ),
+                                  })
+                              : MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0)),
+                                  color: Colors.lightBlueAccent,
+                                  child: Text(
+                                    "Add Student",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    _submit();
+                                  }),
                         ),
                       ),
                       Expanded(
@@ -501,7 +528,8 @@ class _addStudentState extends State<AddStudent> {
                               top: 40.0, left: 30.0, right: 30.0, bottom: 30.0),
                           child: MaterialButton(
                               shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(30.0)),
+                                  borderRadius:
+                                      new BorderRadius.circular(30.0)),
                               color: Colors.lightBlueAccent,
                               child: Text(
                                 "Cancel",
@@ -537,7 +565,8 @@ class _addStudentState extends State<AddStudent> {
     }
   }
 
-  _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
+  _fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }

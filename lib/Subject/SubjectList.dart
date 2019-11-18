@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/mo/Student/Student.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectActivity.dart';
-import 'package:flutter_app/src/mo/teacher/Teacher.dart';
-
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../AppTheme.dart';
 import 'AddSubject.dart';
 
@@ -14,6 +12,9 @@ class SubjectList extends StatefulWidget {
 
 class _SubjectListState extends State<SubjectList> {
 
+  bool _isUpdateBtn = true;
+  bool _isEditBtn = true;
+  bool _isInAsyncCall = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class _SubjectListState extends State<SubjectList> {
                       onCallBack: () {
                         print('hey done on add Subject');
                       },
-                      isAddFlag: false,
+                      isUpdateFlag: false,
                     )
                 ),
               );
@@ -159,7 +160,7 @@ class _SubjectListState extends State<SubjectList> {
 
   Widget _icon(Subject subject) {
     return Padding(
-        padding: const EdgeInsets.only(right: 2.0),
+        padding: const EdgeInsets.only(right: 1.0),
         child: Container(
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -169,7 +170,7 @@ class _SubjectListState extends State<SubjectList> {
                   print("Optional");
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(right: 2.0),
+                  padding: EdgeInsets.only(right: 30.0),
                   child: Center(
                     child: subject.isOptional != 0
                           ? Icon(Icons.person)
@@ -248,47 +249,85 @@ class _SubjectListState extends State<SubjectList> {
   }
 
   Future<String> createAlertDialogBox(BuildContext context, Subject subject) {
+    setState(() {
+      _isEditBtn = true;
+    });
     String subjectName = subject.name;
 
     return showDialog(
         context: context,
-        builder: (context) {
-          return AlertDialog(
+        builder: (BuildContext context) {
+         return AlertDialog(
             title: Text(" ${subjectName}"),
-            /* content: Container(
-              child: getDisplayForm(student),
+             content: Container(
+              child: getDisplayForm(subject),
             ),
             actions: <Widget>[
-              _isEditBtn
-                  ? MaterialButton(
+             _isEditBtn
+                 ? MaterialButton(
                   child: Text("Edit"),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => AddStudent(
-                              object: student,
+                          builder: (BuildContext context) => AddSubject(
+                              object: subject,
                               onCallBack: () {
                                 print('hey done');
                               },
-                              isUpdateFlag: true)
-                        */ /*getStudentEditForm(
-                              object: student,
-                              onCustCallBack: (){
-                                print('hey done');
-                              }
-                          )*/ /*
-                      ),
+                              isUpdateFlag: true
+                              )
+                     ),
                     );
-                  })
-                  : null,*/
-            /* MaterialButton(
+                  }
+                  )
+                  : null,
+             MaterialButton(
                   child: Text("Close"),
                   onPressed: () {
                     Navigator.of(context).pop();
-                  }),
-            ],*/
+                  })
+            ],
           );
         });
+  }
+
+  getDisplayForm(Subject subject) {
+    return ModalProgressHUD(
+      inAsyncCall: _isInAsyncCall,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(1.0),
+        child: Container(
+                  height: 100,
+                  width: 250,
+                  padding: EdgeInsets.only(
+                      top: 10.0, right: 2.0, left: 20.0),
+                  alignment: Alignment.topLeft,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index){
+                      return RichText(
+                        textAlign: TextAlign.start,
+                        text: TextSpan(
+                          text: "Teacher Name",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.black,
+                          ),
+                          /*children: [
+                        TextSpan(
+                          text: father != null && father.firstName != ""
+                              ? father.firstName
+                              : '',
+                        )
+                      ],*/
+                        ),
+                      );
+                    },
+                  ),
+                ),
+      ),
+    );
   }
 }
