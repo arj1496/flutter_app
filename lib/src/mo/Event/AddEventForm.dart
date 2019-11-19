@@ -58,7 +58,7 @@ class _EventAddState extends State<AddEventForm> {
             //Event Type
             _getEventTypeAutoCompte(_formKey,event),
             _getDateAndTime(_formKey, event),
-            _getParticipantUI(),
+            _getParticipantUI(_formKey,event),
             _submitButton(),
           ],
         ),
@@ -152,8 +152,8 @@ class _EventAddState extends State<AddEventForm> {
     return EventTypeAutoComplte(_formKey,event);
   }
 
-  _getParticipantUI() {
-     return ParticipantUI();
+  _getParticipantUI(_formKey,event) {
+     return ParticipantUI(_formKey,event);
    }
 
  // Date and time textfield

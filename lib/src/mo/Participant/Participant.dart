@@ -1,16 +1,17 @@
+import 'package:flutter_app/src/mo/Event/ParticipantType.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 
 class Participant{
 
   int id;
-  int participantType;
+  String participantType;
   int participantId;
   int participantRole;
   String text;
   /*
 	 * Transient
 	 */
-  Standard standard;
+  Standard standard = new Standard();
 
   Participant({
    this.id,
@@ -35,6 +36,12 @@ class Participant{
     "participantId" : participantId,
     "participantRole" : participantRole,
     "text" : text,
+    "standard" :standard
+  };
+
+  Map<String, dynamic> toJson_() => {
+
+    "participantType" : participantType,
     "standard" :standard
   };
 }

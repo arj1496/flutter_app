@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_app/UrlUtils.dart';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/Event/Event.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -60,7 +61,7 @@ class EventWebService{
     }
     //  String  place;
     if(event.place != null) {
-      eventObjectmap["place"] = event.place.toString();
+      eventObjectmap["place"] = event.place;
     }
     //  int  startDate;
     if(event.startDate != null) {
@@ -94,8 +95,66 @@ class EventWebService{
     if (event.isWritable != null) {
       eventObjectmap["isWritable"] = event.isWritable.toString();
     }
-
+    if(event.eventParticipant !=  null){
+      List<Map<String,String>> test = prepareParticipantmap(event.eventParticipant);
+      Map<String,List<Map<String,String>>> testMap = new Map();
+     testMap["list"]= test;
+      eventObjectmap["participants"] = testMap.toString();
+    }
+    if(event.personalParticipant != null){
+      List<Map<String,List<int>>> test = preparePersonalParticipantmap(event.personalParticipant);
+       Map<String,List<Map<String,List<int>>>> testMap = new Map();
+       testMap["list"]= test;
+       eventObjectmap["perparticipants"] = testMap.toString();
+    }
     return eventObjectmap;
+}
+
+   prepareParticipantmap(List<Participant> particpantList){
+    List<Map<String,String>> mapParticipant = new List();
+     for(Participant participant in particpantList){
+       Map<String,String> map = new Map();
+       map["standard"] = participant.standard.id.toString();
+       map["participantType"] = participant.participantType;
+       mapParticipant.add(map);
+     }
+     return mapParticipant;
+   }
+
+  preparePersonalParticipantmap(List<Participant> particpantList){
+    List<Map<String,List<int>>> mapParticipant = new List();
+    Map<String,List<int>> map = new Map();
+    for(Participant participant in particpantList){
+
+      if(participant.participantType == "INDIVIDUAL_TEACHER"){
+        List<int> selectedList = map["INDIVIDUAL_TEACHER"];
+        if(selectedList == null){
+          selectedList = new List();
+          map["INDIVIDUAL_TEACHER"] = selectedList;
+        }
+        selectedList.add(participant.id);
+
+      }else if(participant.participantType == "INDIVIDUAL_PARENT"){
+        List<int> selectedList = map["INDIVIDUAL_PARENT"];
+        if(selectedList == null){
+          selectedList = new List();
+          map["INDIVIDUAL_PARENT"] = selectedList;
+        }
+        selectedList.add(participant.id);
+      }else if(participant.participantType == "INDIVIDUAL_STUDENT"){
+        List<int> selectedList = map["INDIVIDUAL_STUDENT"];
+        if(selectedList == null){
+          selectedList = new List();
+          map["INDIVIDUAL_STUDENT"] = selectedList;
+        }
+        selectedList.add(participant.id);
+      }
+
+    }
+    mapParticipant.add(map);
+    return mapParticipant;
   }
+
+
 
 }

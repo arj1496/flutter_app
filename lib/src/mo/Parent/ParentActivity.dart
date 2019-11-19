@@ -17,6 +17,20 @@ class ParentActivity{
     return examListFromFuture;
   }
 
-
+ List<Parent> getAllTeacherList(){
+   List<Parent> teacherList = new List();
+   for(int i = 10; i < 15; i++){
+     Parent teacher = new Parent();
+     teacher.id =  i;
+     teacher.firstName = "FirstName" + i.toString();
+     teacher.lastName = "LastName" + i.toString();
+     teacher.isWritable =  0;
+     teacher.gender = "gender" + i.toString();
+     teacher.email = "email" + i.toString();
+     teacher.mobileNumber ="987654321"+ i.toString();
+     teacherList.add(teacher);
+   }
+   return teacherList;
+ }
 }
 

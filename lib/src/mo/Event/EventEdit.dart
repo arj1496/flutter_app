@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/AppTheme.dart';
-import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/Event/EventActivity.dart';
-
 import 'package:flutter_app/src/mo/Event/EventTypeAutoComplte.dart';
 import 'package:flutter_app/src/mo/Event/ParticipantUI.dart';
-
 import 'DateWidgetForEvent.dart';
 import 'Event.dart';
 
@@ -157,11 +154,15 @@ class _EventAddState extends State<EventEdit> {
             child: MaterialButton (
               minWidth: 160.0 ,
               height: 35 ,
-              child: new Text( "ADD" ,
+              child: new Text( "UPDATE" ,
                   style: new TextStyle(
                       fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
               onPressed: ( ) async {
+                if(_formKey.currentState.validate()){
+                  _formKey.currentState.save();
+                }
                 EventActivity eventActivity = new EventActivity();
+                event.description ="test";
                 Future<int> eventObject = eventActivity.addOrUpdateEvent(event);
                 if(eventObject != null){
                   final snackBar = SnackBar(content: Text('Event added sucessfully!'));
@@ -184,6 +185,7 @@ class _EventAddState extends State<EventEdit> {
                     style: new TextStyle(
                         fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
                 onPressed: ( ) async {
+
                   Navigator.pop(context);
                 } ,
               ) ,
@@ -198,9 +200,9 @@ class _EventAddState extends State<EventEdit> {
     return EventTypeAutoComplte(_formKey,event);
   }
 
-  _getParticipantUI() {
-    return ParticipantUI();
-  }
+/*  _getParticipantUI(_formKey,event) {
+    return ParticipantUI(_formKey,event);
+  }*/
 
   // Date and time textfield
   _getDateAndTime( GlobalKey<FormState> formKey , Event event ) {

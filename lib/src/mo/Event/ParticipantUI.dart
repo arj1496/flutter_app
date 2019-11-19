@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/Event/PersonalParticipantUI.dart';
 import 'package:flutter_app/src/mo/Exam/ClassPopup.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 
 import '../../../AppTheme.dart';
@@ -9,10 +10,14 @@ import 'Event.dart';
 
 class ParticipantUI extends StatefulWidget {
 
+  Event event = new Event();
   @override
   _ListTileViewUVState createState() => _ListTileViewUVState();
-
+  ParticipantUI(_formKey,event){
+    this.event = event;
+   }
   }
+
 
   class _ListTileViewUVState extends State<ParticipantUI> {
     List<String> schoolPaticipant = ["School","School Students","School Teachers","School Parents"];
@@ -128,7 +133,16 @@ class ParticipantUI extends StatefulWidget {
                                Navigator.push (
                                  context ,
                                  MaterialPageRoute (
-                                     builder: ( context ) => PersonalParticipantUI() ) ,
+                                     builder: ( context ) => PersonalParticipantUI(
+                                         callback: (List<Participant> value){
+                                           widget.event.personalParticipant.clear();
+                                           for(int i=0;i<value.length;i++){
+                                             widget.event.personalParticipant.add(value[i]);
+                                           }
+                                           print("callBack Return ${value.length}");
+                                         }
+                                     )
+                                   ) ,
                                );
                              },
 
@@ -214,6 +228,18 @@ class ParticipantUI extends StatefulWidget {
                               onTap: ( ) {
                                 setState ( ( ) {
                                   _showAlert();
+                               /*   Navigator.push (
+                                    context ,
+                                    MaterialPageRoute (
+                                        builder: ( context ) => ClassPopup(
+                                            callback: (List<Participant> value){
+                                              for(int i=0;i<value.length;i++){
+                                                  widget.event.eventParticipant.add(value[i]);
+                                              }
+                                              print("callBack Return ${value.length}");
+                                            }
+                                            ) ) ,
+                                  );*/
                                 } );
                               } ,
                               child: Container(
@@ -313,29 +339,39 @@ class ParticipantUI extends StatefulWidget {
         builder: ( context ) {
           return AlertDialog (
             title: new Text( "Particpant" ) ,
-            content: ListView.builder (
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true ,
-                itemCount: schoolPaticipant.length ,
-                itemBuilder: ( context , i ) {
-                  return CheckboxListTile (
-                      value: boolVal ,
-                      title: new Text( schoolPaticipant[i] ) ,
-                      controlAffinity: ListTileControlAffinity.leading ,
-                      onChanged: ( bool val ) {
-                        setState(() {
-                          ItemChange ( val , i , );
-                        });
-                      } );
-                } ) ,
+            content:  Container(
+                child: Column (
+                  mainAxisSize: MainAxisSize.min ,
+                  children: <Widget>[
+                    ListView.builder (
+                        //physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true ,
+                        itemCount: schoolPaticipant.length ,
+                        itemBuilder: ( context , i ) {
+                          return CheckboxListTile (
+                              value: boolVal ,
+                              title: new Text( schoolPaticipant[i] ) ,
+                              controlAffinity: ListTileControlAffinity.leading ,
+                              onChanged: ( bool val ) {
+                                setState(() {
+                                  ItemChange ( val , i , );
+                                });
+                              } );
+                        } ),
+                  ] ,
+                ),
+              ),
+
+
+
             actions: <Widget>[
               MaterialButton (
                   child: Text ( "DONE" ) ,
                   onPressed: ( ) {
                     // widget.callback ( selectedsSubjectList );
-                     Navigator.pop ( context );
+                    Navigator.pop ( context );
                   } ) ,
-            ] ,
+            ]
           );
         }
     );
@@ -352,11 +388,15 @@ class ParticipantUI extends StatefulWidget {
     }
 
     _showClassAlert(BuildContext context) {
-      return showDialog(
+     return showDialog(
           context: context,
           builder: (context) {
             return ClassPopup(
-                callback: (List<Standard> value){
+                callback: (List<Participant> value){
+                  widget.event.eventParticipant.clear();
+                  for(int i=0;i<value.length;i++){
+                    widget.event.eventParticipant.add(value[i]);
+                  }
                   print("callBack Return ${value.length}");
                 }
             );

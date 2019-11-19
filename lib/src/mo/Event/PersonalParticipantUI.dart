@@ -1,33 +1,55 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/HeaderContainer.dart';
-import 'package:flutter_app/src/mo/Exam/StandardSelectModel.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:flutter_app/src/mo/Person/Person.dart';
-import 'package:flutter_app/src/mo/teacher/Teacher.dart';
-import 'package:flutter_app/src/mo/teacher/TeacherActivity.dart';
-import 'package:provider/provider.dart';
-
 import '../../../AppTheme.dart';
-import 'Event.dart';
+import 'ParticipantBloc.dart';
 import 'ParticipantSelectModel.dart';
 
 class PersonalParticipantUI extends StatefulWidget {
   @override
   _ListTileViewUVState createState() => _ListTileViewUVState();
 
+  final Function callback;
+  final List<int> data;
+  const PersonalParticipantUI(
+      {this.callback,this.data});
 }
 
-class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTickerProviderStateMixin {
+class _ListTileViewUVState extends State<PersonalParticipantUI>  {
+
+
   bool boolVal = false;
-  List<Person> _personList = new List();
+   List<Person> _personList = new List();
+   List<Participant> selectedParticipant = new List();
+   static int flag = 1;
+  Map<int,bool> partInputs = new Map();
+   final bloc = ParticipantBloc(flag);
 
+
+
+  Future<List<Person>> getParticipant(int flag) async{
+      ParticipantSelectModel participantSelectModel = new ParticipantSelectModel();
+
+    if(flag == 1){
+      _personList = await participantSelectModel.getTeacher();
+    }else if(flag ==2){
+      _personList = await participantSelectModel.getStudent();
+    }else{
+      _personList = await participantSelectModel.getParent();
+    }
+
+    return _personList;
+  }
   @override
-  initState()
-  {
-   // super.initState();
-    //Provider.of<ParticipantSelectModel>(context, listen: false).getTeacher();
-
-
+  void initState(){
+    setState(() {
+      for(Person person  in _personList){
+        if(!partInputs.containsKey(person.id)) {
+          partInputs[person.id] = false;
+        }
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -37,25 +59,19 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTicke
         backgroundColor: AppTheme.background,
         title: Text("Personal Participant"),
       ),
-       body:MultiProvider(
-         providers: [
-           ChangeNotifierProvider(
-             builder: (_) =>  ParticipantSelectModel(),
-           ),],
-
-         child: Container(
+       body: Container(
              child:Column(
                children: <Widget>[
                  selectParticipant(),
                  serarchParticipant(),
                  Expanded(
-                   child:getParticipantList(),
+                   child:getParticipantList_(),
                  )
 
                ],
              )
          ),
-       ),
+
         bottomNavigationBar:  ButtonUI(),
     );
   }
@@ -78,8 +94,10 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTicke
                 style: new TextStyle(
                     fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
             onPressed: ( ) async {
-                Provider.of<ParticipantSelectModel>(context, listen: false).getTeacher();
-                } ,
+                //Provider.of<ParticipantSelectModel>(context, listen: false).getTeacher();
+              bloc.submitQuery(1);
+                //getParticipantList();
+            } ,
           ) ,
         ) ,
           Material ( //Wrap with Material
@@ -96,7 +114,10 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTicke
                   style: new TextStyle(
                       fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
               onPressed: ( ) async {
-                Provider.of<ParticipantSelectModel>(context, listen: false).getParent();
+                //getParticipant(2);
+                bloc.submitQuery(2);
+                //getParticipantList();
+                //  Provider.of<ParticipantSelectModel>(context, listen: false).getParent();
               } ,
             ) ,
           ) ,
@@ -114,7 +135,10 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTicke
                   style: new TextStyle(
                       fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
               onPressed: ( ) {
-                Provider.of<ParticipantSelectModel>(context, listen: false).getStudent("Student");
+
+                bloc.submitQuery(3);
+                //getParticipantList();
+                // Provider.of<ParticipantSelectModel>(context, listen: false).getStudent("Student");
               } ,
             ) ,
           ) ,
@@ -129,73 +153,94 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTicke
   serarchParticipant() {
     return Padding(
       padding: new EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-      child: new TextField(
+      child: new TextFormField(
         style: new TextStyle(fontSize: 18.0, color: Colors.black),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Type name",
           suffixIcon: new IconButton(
             icon: new Icon(Icons.search),
-            onPressed: () async{
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
           ),
         ),
+        onChanged: (text) {
+          bloc.searchParticipant(text);
+        },
       ),
     );
 
   }
 
   getParticipantList() {
-    return ChangeNotifierProvider(
-        builder: (context) => ParticipantSelectModel(),
-    child: Consumer<ParticipantSelectModel>(
-      //context, todos, child) => TaskList(tasks: todos.allTasks,
-      builder: (context,_personList,child){
-        List<Person> personList = _personList.allPerson;
-        return _getParticipantUI( personList );
-      },
-    ),);
+    return Column (
+      mainAxisSize: MainAxisSize.min ,
+      children: <Widget>[
+        FutureBuilder (
+            future: getParticipant(flag) ,
+            builder: ( context , projectSnap ) {
+              return Column (
+                children: _getParticipantUI ( projectSnap ) ,
+              );
+            } ) ,
+      ] ,
+
+    );
   }
 
-  _getParticipantUI( personList ) {
+
+  getParticipantList_(){
+    return StreamBuilder(
+       stream:  this.bloc.allPersons,
+        builder: (context, snapshot) {
+          final results = snapshot.data;
+
+         /* if (results.isEmpty) {
+            return Center(child: Text('No Results'));
+          }*/
+
+          return _getParticipantUI(results);
+        },
+      );
+    }
 
 
-    return SingleChildScrollView(
-         child: ListView.builder (
+ _getParticipantUI( personList ) {
+   for(Person person  in personList){
+     if(!partInputs.containsKey(person.id)) {
+       partInputs[person.id] = false;
+     }
+   }
+     return ListView.builder (
              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true ,
               itemCount: personList.length ,
               itemBuilder: ( context , i ) {
                 return CheckboxListTile (
-                    value: boolVal ,
+                    value: partInputs[personList[i].id] ,
                     title: new Text( personList[i].firstName +
                         "(" +
                         personList[i].lastName +
                         ")" ) ,
                     controlAffinity: ListTileControlAffinity.leading ,
                     onChanged: ( bool val ) {
-                      ItemChange ( val , i , );
+                      ItemChange ( val , personList[i] );
                     } );
-              } ),
-       );
+              } );
 
-
+      /* widgetList.add(widget);
+       return widgetList;*/
   }
 
-  void ItemChange( bool val , int index ) {
+  void ItemChange( bool val , Person person ) {
     setState ( ( ) {
+      partInputs[person.id] = val;
       if (val) {
-        boolVal = true;
-      } else {
-        boolVal = false;
+        if (!selectedParticipant.contains(person.id)) {
+            selectedParticipant.add (prepareParticipantObject(person));
+        }
       }
     } );
   }
 
-  Future<List<Person>> getParticipant() async {
-   return _personList;
-  }
 
   ButtonUI(   ) {
     return Padding (
@@ -217,8 +262,8 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTicke
                 style: new TextStyle(
                     fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
             onPressed: ( ) async {
-              //genericModel.status = "DRAFT";
-
+              widget.callback ( selectedParticipant );
+              Navigator.pop ( context );
             } ,
           ) ,
         ) ,
@@ -244,5 +289,18 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> with SingleTicke
         ] ,
       ) ,
     ),);
+  }
+
+  Participant prepareParticipantObject(Person person){
+    Participant participant = new Participant();
+    participant.id = person.id;
+    if( person.role == "Parent") {
+      participant.participantType = "INDIVIDUAL_PARENT";
+    }else if( person.role == "Teacher"){
+      participant.participantType = "INDIVIDUAL_TEACHER";
+    }else{
+      participant.participantType = "INDIVIDUAL_STUDENT";
+    }
+    return participant;
   }
 }

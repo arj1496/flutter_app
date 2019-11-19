@@ -21,22 +21,22 @@ class ParticipantSelectModel extends ChangeNotifier{
   UnmodifiableListView<Student> get allStudent => UnmodifiableListView(_studentList);*/
   UnmodifiableListView<Person> get allPerson => UnmodifiableListView(_personList);
 
-  getTeacher() async{
+  Future<List<Person>> getTeacher() async{
     TeacherActivity teacherActivity = new TeacherActivity();
-    List<Teacher> _teachers = await teacherActivity.getAllTeacherList();
+    List<Teacher> _teachers = await teacherActivity.getJoinDbTeacher();
     _teacherList.addAll(_teachers);
     getPersonFromTeacher(_teacherList);
-    notifyListeners();
-  //  return _personList;
+   // notifyListeners();
+    return _personList;
   }
 
-  void getStudent(String student) async{
+   getStudent() async{
     StudentActivity studentActivity = new StudentActivity();
     List<Student> _students = await studentActivity.getAllStudent();
     _studentList.addAll(_students);
     getPersonFromStudent(_studentList);
-    notifyListeners();
-   // return _personList;
+   // notifyListeners();
+     return _personList;
   }
 
   getParent() async{
@@ -44,8 +44,8 @@ class ParticipantSelectModel extends ChangeNotifier{
     List<Parent> _parents = await parentActivity.getAllParents();
     _parentList.addAll(_parents);
     getPersonFromParent(_parentList);
-    notifyListeners();
-   // return _personList;
+   // notifyListeners();
+    return _personList;
   }
 
 

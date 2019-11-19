@@ -18,8 +18,9 @@ class Event {
   int allDay = 0;
   int isWritable = 0;
   String attachment;
-  //List<Participant> eventParticipant = new List<Participant>();
-  //Map<Integer, Set<Long>> personalParticipant = new Map<Integer, Set<Long>>(1);
+  List<Participant> eventParticipant = new List<Participant>();
+ // Map<String, Set<int>> personalParticipant = new Map<String, Set<int>>();
+  List<Participant> personalParticipant = new List<Participant>();
   String attechmentJson;
   //List<Attachment> attachments;
 
