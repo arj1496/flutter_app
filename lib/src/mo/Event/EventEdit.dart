@@ -10,7 +10,7 @@ class EventEdit extends StatefulWidget {
 
   Event event = new Event();
   @override
-  _EventAddState createState() => _EventAddState(event);
+  _EventAddState createState() => _EventAddState();
   EventEdit(event){
     this.event = event;
   }
@@ -18,13 +18,13 @@ class EventEdit extends StatefulWidget {
 
 class _EventAddState extends State<EventEdit> {
 
-  Event event = new Event();
+//  Event event = new Event();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  static EventActivity eventActivity = new EventActivity();
+   EventActivity eventActivity = new EventActivity();
   final GlobalKey<ScaffoldState> scafoldKey = new GlobalKey<ScaffoldState>( );
 
-  _EventAddState(event){
-    this.event = event;
+  _EventAddState(){
+   // this.event = event;
   }
 
   @override
@@ -64,55 +64,60 @@ class _EventAddState extends State<EventEdit> {
   getWidgetList( ) {
     List<Widget> widgetList = new List();
 
-    Widget widget;
-    widget =  _getTextFormTextField(Icon(Icons.event), 'Enter Event Title', 'Title',event.name);
-    widgetList.add(widget);
+    Widget widgetLocal;
+    widgetLocal =  _getTextFormTextField(Icon(Icons.event), 'Enter Event Title', 'Title',widget.event.name);
+    widgetList.add(widgetLocal);
 
 
-    if(event.type != null){
-      widget= _getTextFormTextField(Icon(Icons.event), 'Enter Event type', 'Type',event.type);
-          widgetList.add(widget);
+    if(widget.event.type != null){
+      widgetLocal= _getTextFormTextField(Icon(Icons.event), 'Enter Event type', 'Type',widget.event.type);
+          widgetList.add(widgetLocal);
 
     } else{
-      _getTextFormTextField(Icon(Icons.merge_type), 'Enter Event type', 'Type',null);
-      widgetList.add((widget));
+      widgetLocal= _getTextFormTextField(Icon(Icons.merge_type), 'Enter Event type', 'Type',null);
+      widgetList.add((widgetLocal));
     }
 
 
-    if(event.description != null) {
-     widget =  _getTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description',event.description);
-      widgetList.add(widget);
+    if(widget.event.description != null) {
+      widgetLocal =  _getTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description',widget.event.description);
+      widgetList.add(widgetLocal);
     }else{
-      widget = _getTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description',null);
-      widgetList.add(widget);
+      widgetLocal = _getTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description',null);
+      widgetList.add(widgetLocal);
     }
 
-    if(event.description != null) {
-      widget =_getTextFormTextField(Icon(Icons.place), 'Enter place', 'place',event.place);
-      widgetList.add(widget);
+    if(widget.event.description != null) {
+      widgetLocal =_getTextFormTextField(Icon(Icons.place), 'Enter place', 'place',widget.event.place);
+      widgetList.add(widgetLocal);
     }else{
-      widget =_getTextFormTextField(Icon(Icons.place), 'Enter Place', 'Place',null);
-      widgetList.add(widget);
+      widgetLocal =_getTextFormTextField(Icon(Icons.place), 'Enter Place', 'Place',null);
+      widgetList.add(widgetLocal);
     }
 
-    if(event.startDate != null && event.endDate != null) {
-      widget =  _getDateAndTime ( _formKey , event );
-      widgetList.add(widget);
+    if(widget.event.startDate != null && widget.event.endDate != null) {
+      widgetLocal =  _getDateAndTime ( _formKey , widget.event );
+      widgetList.add(widgetLocal);
     }else{
-      widget =  _getDateAndTime ( _formKey , event );
-      widgetList.add(widget);
+      widgetLocal =  _getDateAndTime ( _formKey , widget.event );
+      widgetList.add(widgetLocal);
     }
+
+   // if(event.eventParticipant != null){
+    widgetLocal =  _getParticipantUI ( _formKey , widget.event );
+    widgetList.add(widgetLocal);
+   // }
     //  _getEndDateAndTime ( _formKey , homework ) ,
-    widget =   _submitButton();
-    widgetList.add(widget);
+    widgetLocal =   _submitButton();
+    widgetList.add(widgetLocal);
     return widgetList;
   }
 
   _getTextFormTextField(Icon icon , hintText, labelText,paramenter) {
     return TextFormField(
       onSaved: (val) => paramenter == 'title'
-          ? event.name = val : paramenter == 'description'
-          ? event.description = val :  event.place = val ,
+          ? widget.event.name = val : paramenter == 'description'
+          ? widget.event.description = val :  widget.event.place = val ,
       autovalidate: true,
       initialValue: paramenter,
       decoration: InputDecoration(
@@ -162,8 +167,8 @@ class _EventAddState extends State<EventEdit> {
                   _formKey.currentState.save();
                 }
                 EventActivity eventActivity = new EventActivity();
-                event.description ="test";
-                Future<int> eventObject = eventActivity.addOrUpdateEvent(event);
+                //widget.event.description ="test";
+                Future<int> eventObject = eventActivity.addOrUpdateEvent(widget.event);
                 if(eventObject != null){
                   final snackBar = SnackBar(content: Text('Event added sucessfully!'));
                   scafoldKey.currentState.showSnackBar(snackBar);
@@ -200,9 +205,9 @@ class _EventAddState extends State<EventEdit> {
     return EventTypeAutoComplte(_formKey,event);
   }
 
-/*  _getParticipantUI(_formKey,event) {
+  _getParticipantUI(_formKey,event) {
     return ParticipantUI(_formKey,event);
-  }*/
+  }
 
   // Date and time textfield
   _getDateAndTime( GlobalKey<FormState> formKey , Event event ) {

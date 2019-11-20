@@ -121,6 +121,7 @@ class _EventAddState extends State<AddEventForm> {
                      final snackBar = SnackBar(content: Text('Event added sucessfully!'));
                      scafoldKey.currentState.showSnackBar(snackBar);
                    }
+                   Navigator.pop(context);
                   } ,
               ) ,
             ) ,

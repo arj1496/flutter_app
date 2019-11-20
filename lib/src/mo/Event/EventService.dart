@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:flutter_app/src/mo/Event/EventDAO.dart';
 import 'package:flutter_app/src/mo/Event/EventWebService.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 
 import 'Event.dart';
 
@@ -62,7 +63,7 @@ class EventService{
     // if the response is true and the examId is present allredy update that exam otherwise add that exam to local database
     if(eventData['status']){
       Event event = Event.fromJson(eventData['event']);
-      if(event.id != null) {
+      if(event.lid != null) {
         await eventDAO.updateEvent (event);
       }else{
         await eventDAO.addEvent ( event );
@@ -72,5 +73,21 @@ class EventService{
       print('Event Add False');
     }
     return null;
+  }
+
+  Future<List<Participant>> getParticipant(Event event) async{
+    Map<String, dynamic> participantDataFromServer = await _eventWebService.getParticipants(event);
+    List<Participant> participantList = null;
+    if(participantDataFromServer['status']){
+      print(participantDataFromServer);
+      List<dynamic> participantDynamic = participantDataFromServer['participants'];
+      participantList = List.generate(participantDynamic.length, (i){
+        Participant participant = Participant.fromJson(participantDynamic[i]);
+        return participant;
+      });
+         }else{
+      print('Event Sync is false');
+    }
+    return participantList;
   }
 }

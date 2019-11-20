@@ -17,8 +17,8 @@ class ExamAddPage extends StatefulWidget {
   @override
   _ExamAddState createState() => _ExamAddState();
   ExamAddPage({@required Exam object, @required onCallBack}) :
-        assert (object != null),
-        assert (onCallBack != null),
+        //assert (object != null),
+        //assert (onCallBack != null),
         this.exam = object,
         this.onCallBack = onCallBack;
 }

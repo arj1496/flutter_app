@@ -4,17 +4,20 @@ import 'package:flutter_app/CustomAppbar.dart';
 import 'package:flutter_app/DateWidget2.dart';
 import 'package:flutter_app/EventWidget.dart';
 import 'package:flutter_app/HeaderContainer.dart';
+import 'package:flutter_app/src/mo/Event/EventActivity.dart';
 import 'package:flutter_app/src/mo/Event/HWWidget.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
 import 'package:flutter_app/src/mo/HomeWork/ApprovalUI.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
 import 'package:flutter_app/src/mo/HomeWork/SubmissionPageUI.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../ButtonUI.dart';
 import '../../../CardDetail2Oct.dart';
 import '../../../DescriptionCustomView.dart';
+import '../../../ParticipantCardModel.dart';
 import '../../../TitleViewDetail.dart';
 import 'Event.dart';
 import 'EventEdit.dart';
@@ -40,12 +43,15 @@ class DetailViewUVState extends State<EventDetail> {
 
   List<Widget> customWidget = new List( );
   String title = null;
+  EventActivity eventActivity = new EventActivity();
   @override
   Widget build( BuildContext context ) {
+
     return _getContainerWidget ( );
   }
 
   Widget _getContainerWidget( ) {
+
     return Container (
       color: AppTheme.background ,
       child: _getNormalScaffold ( ) ,
@@ -58,27 +64,29 @@ class DetailViewUVState extends State<EventDetail> {
       //backgroundColor: Colors.transparent,
       body: SingleChildScrollView (
         child: Column (
-          children: _getWidget ( widget.event ) ,
+          children: _getWidget() ,
         ) ,
       ) ,
     );
   }
 
-  List<Widget> _getWidget( Event event ) {
+  List<Widget> _getWidget(  ) {
+
     ExamActivity examActivity = new ExamActivity( );
     List<Widget> examWidget2 = [
-      HeaderContainer.init ( event.name , "" ) ,
+      HeaderContainer.init ( widget.event.name , "" ) ,
       // For Appbar of evenry page.It constructor contains title which i displayed on header.
-      CardDetail2Oct ( EventWidget(event) ) ,
+      CardDetail2Oct ( EventWidget(widget.event) ) ,
       // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
-      DateWidget2 ( event ) ,
+      DateWidget2 ( widget.event ) ,
       TitleViewDetail.init ( "Description" , FontAwesomeIcons.bookOpen ) ,
-      DescriptionCustomView.init ( event.description ) ,
+      DescriptionCustomView.init ( widget.event.description ) ,
       TitleViewDetail.init ( "Place" , FontAwesomeIcons.mapMarker ) ,
-      DescriptionCustomView.init ( event.place ) ,
+      DescriptionCustomView.init ( widget.event.place ) ,
+      ParticipantCardModel(widget.event.eventParticipant),
     /*  getSubmisionContainer ( ) ,
       getSubmissionButton( )*/
-       submitButton(event),
+       submitButton(widget.event),
     ];
     return examWidget2;
   }
@@ -383,5 +391,10 @@ class DetailViewUVState extends State<EventDetail> {
         ] ,
       ) ,
     );
+  }
+
+  getParticipants() async {
+    List<Participant> participants = await eventActivity.getParticipant(widget.event);
+    widget.event.eventParticipant = participants;
   }
 }

@@ -301,6 +301,8 @@ class _MyPageState extends State<ClassPopup> {
       }
       if (val) {
         selectedsStandardList.add(prepareParticipantObject(standard));
+      }else{
+        selectedsStandardList.remove(prepareParticipantObject(standard));
       }
     } );
   }
@@ -335,7 +337,7 @@ class _MyPageState extends State<ClassPopup> {
 
   Participant prepareParticipantObject(Standard standard){
     Participant participant = new Participant();
-    participant.standard = standard;
+    participant.participantId = standard.id;
     participant.participantType ="STANDARD";
     return participant;
   }
@@ -344,7 +346,7 @@ class _MyPageState extends State<ClassPopup> {
     Participant participant = new Participant();
     List<String> str = eventKeyPojo.id.split("_");
     //participant.standard = standard;
-    participant.standard.id = int.parse(str[0]);
+    participant.participantId = int.parse(str[0]);
     participant.participantType ="STANDARD_"+str[1];
     return participant;
   }

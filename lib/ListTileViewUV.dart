@@ -12,6 +12,7 @@ import 'package:flutter_app/src/mo/Event/Event.dart';
 import 'package:flutter_app/src/mo/Event/EventDetail.dart';
 import 'package:flutter_app/src/mo/Event/EventService.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeWork.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 
 import 'AppTheme.dart';
 import 'src/mo/Event/EventActivity.dart';
@@ -203,12 +204,8 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
   Widget _listTileViewUV( data ) {
     return GestureDetector (
       onTap: ( ) {
-        Navigator.push (
-          context ,
-          //DetailView2Oct is a main page with scaffold which render all details widgets.
-          MaterialPageRoute ( builder: ( context ) => EventDetail ( data ) ) ,
-        );
-      } ,
+        getParticipants(data);
+        } ,
       child: Padding (
         padding: const EdgeInsets.only(
             left: 10 , right: 10 , top: 3 , bottom: 3
@@ -425,5 +422,14 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
     return schoolUtils.getDateStringFromLongWithSchoolTimeZone ( dateLong );
   }
 
-
+  getParticipants(event) async {
+    List<Participant> participants = await eventActivity.getParticipant(event);
+    //widget.event.eventParticipant = participants;
+    event.eventParticipant = participants;
+    Navigator.push (
+      context ,
+      //DetailView2Oct is a main page with scaffold which render all details widgets.
+      MaterialPageRoute ( builder: ( context ) => EventDetail ( event ) ) ,
+    );
+  }
 }

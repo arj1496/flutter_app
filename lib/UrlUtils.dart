@@ -46,4 +46,10 @@ class UrlUtils{
     return url;
 
   }
+
+  String getParticpantUrl(){
+    String url = SchoolUtils().baseUrl + "rest/event/getParticipants";
+    return url;
+
+  }
 }

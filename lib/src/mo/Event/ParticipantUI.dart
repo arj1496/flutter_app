@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/Event/PersonalParticipantUI.dart';
+import 'package:flutter_app/src/mo/Event/SubjectPopup.dart';
 import 'package:flutter_app/src/mo/Exam/ClassPopup.dart';
 import 'package:flutter_app/src/mo/Participant/Participant.dart';
+import 'package:flutter_app/src/mo/Person/Person.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 
 import '../../../AppTheme.dart';
@@ -11,20 +13,33 @@ import 'Event.dart';
 class ParticipantUI extends StatefulWidget {
 
   Event event = new Event();
+
+
   @override
   _ListTileViewUVState createState() => _ListTileViewUVState();
   ParticipantUI(_formKey,event){
     this.event = event;
+
    }
-  }
+}
 
 
   class _ListTileViewUVState extends State<ParticipantUI> {
-    List<String> schoolPaticipant = ["School","School Students","School Teachers","School Parents"];
-    bool boolVal = false;
+    List<String> schoolPaticipant = ["SCHOOL","SCHOOL STUDENTS","SCHOOL TEACHERS","SCHOOL PARENTS"];
+    Map<int,bool> partInputs = new Map();
+    List<Participant> selectedSchoolParticipant = new List();
 
+/*    @override
+    void initState(){
+      setState(() {
+        for(int t=0;t<4;t++){
+          partInputs[t] = false;
+        }
+      });
+    }*/
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.only(top:10.0),
       child: Container(
@@ -204,7 +219,7 @@ class ParticipantUI extends StatefulWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("0",
+                              child: Text( widget.event.personalParticipant.length.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: AppTheme.robotoFontName,
@@ -226,21 +241,16 @@ class ParticipantUI extends StatefulWidget {
                             padding: const EdgeInsets.only(left:8.0),
                             child: GestureDetector(
                               onTap: ( ) {
-                                setState ( ( ) {
-                                  _showAlert();
-                               /*   Navigator.push (
-                                    context ,
-                                    MaterialPageRoute (
-                                        builder: ( context ) => ClassPopup(
-                                            callback: (List<Participant> value){
-                                              for(int i=0;i<value.length;i++){
-                                                  widget.event.eventParticipant.add(value[i]);
-                                              }
-                                              print("callBack Return ${value.length}");
-                                            }
-                                            ) ) ,
-                                  );*/
-                                } );
+                               /* setState ( ( ) {
+                                  _showAlert((val){
+                                    widget.event.eventParticipant = val;
+                                    print(val);
+                                  } );
+
+                                } );*/
+                               setState(() {
+                                 _showAlert();
+                               });
                               } ,
                               child: Container(
                                 height: 40,
@@ -333,8 +343,16 @@ class ParticipantUI extends StatefulWidget {
     );
   }
 
-  _showAlert(  ) {
-    return showDialog (
+  _showAlert() {
+  /*  for(int val in  partInputs.keys){
+      if(partInputs[val]){
+        partInputs[val] = true;
+      }else{
+        partInputs[val] = false;
+      }
+
+    }
+      return showDialog (
         context: context ,
         builder: ( context ) {
           return AlertDialog (
@@ -349,7 +367,7 @@ class ParticipantUI extends StatefulWidget {
                         itemCount: schoolPaticipant.length ,
                         itemBuilder: ( context , i ) {
                           return CheckboxListTile (
-                              value: boolVal ,
+                              value: partInputs.length > 0 ? partInputs[i]:false,
                               title: new Text( schoolPaticipant[i] ) ,
                               controlAffinity: ListTileControlAffinity.leading ,
                               onChanged: ( bool val ) {
@@ -368,10 +386,25 @@ class ParticipantUI extends StatefulWidget {
               MaterialButton (
                   child: Text ( "DONE" ) ,
                   onPressed: ( ) {
-                    // widget.callback ( selectedsSubjectList );
-                    Navigator.pop ( context );
+                     callback (selectedSchoolParticipant );
+                     Navigator.pop ( context );
                   } ) ,
             ]
+          );
+        }
+    );*/
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SubjectPopup(
+              callback: (List<Participant> value){
+                widget.event.eventParticipant.clear();
+                for(int i=0;i<value.length;i++){
+                  widget.event.eventParticipant.add(value[i]);
+                }
+                print("callBack Return ${value.length}");
+              }
           );
         }
     );
@@ -379,10 +412,10 @@ class ParticipantUI extends StatefulWidget {
 
     void ItemChange( bool val , int index ) {
       setState ( ( ) {
+        partInputs[index] = val;
         if (val) {
-          boolVal = true;
-        } else {
-          boolVal = false;
+            selectedSchoolParticipant.add (
+              prepareParticipantObject ( schoolPaticipant[index] ) );
         }
       } );
     }
@@ -402,6 +435,18 @@ class ParticipantUI extends StatefulWidget {
             );
           }
       );
+    }
+
+
+    Participant prepareParticipantObject(String type){
+      Participant participant = new Participant();
+      participant.participantType = type;
+      participant.participantRole = "VIEWER";
+      return participant;
+    }
+
+    getChipUI(){
+
     }
 
   }

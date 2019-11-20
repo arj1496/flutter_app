@@ -114,7 +114,11 @@ class EventWebService{
     List<Map<String,String>> mapParticipant = new List();
      for(Participant participant in particpantList){
        Map<String,String> map = new Map();
-       map["standard"] = participant.standard.id.toString();
+       if(participant.participantRole != null){
+         map["VIEWER"] = participant.participantRole;
+       }else {
+         map["standard"] = participant.participantId.toString ( );
+       }
        map["participantType"] = participant.participantType;
        mapParticipant.add(map);
      }
@@ -155,6 +159,21 @@ class EventWebService{
     return mapParticipant;
   }
 
+  Future<dynamic> getParticipants(Event event)  async {
+
+     Map<String, String> headers = new Map<String, String>();
+     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+     print(sharedPreferences.getString("token"));
+     headers['authT'] = sharedPreferences.getString("token");
+
+     final finalurl =  urlUtils.getParticpantUrl() + "?eventId=" +event.id.toString();
+     var response = await http.get(finalurl , headers: headers);
+     if(response.statusCode == 200){
+       var str = response.body;
+       final data = json.decode(response.body);
+       return data;
+     }
+}
 
 
 }

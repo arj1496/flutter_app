@@ -23,7 +23,7 @@ class _ListTileViewUVState extends State<PersonalParticipantUI>  {
    List<Person> _personList = new List();
    List<Participant> selectedParticipant = new List();
    static int flag = 1;
-  Map<int,bool> partInputs = new Map();
+   Map<int,bool> partInputs = new Map();
    final bloc = ParticipantBloc(flag);
 
 
@@ -237,6 +237,8 @@ class _ListTileViewUVState extends State<PersonalParticipantUI>  {
         if (!selectedParticipant.contains(person.id)) {
             selectedParticipant.add (prepareParticipantObject(person));
         }
+      }else{
+        selectedParticipant.remove(prepareParticipantObject(person));
       }
     } );
   }

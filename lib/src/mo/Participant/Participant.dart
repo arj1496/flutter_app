@@ -6,7 +6,7 @@ class Participant{
   int id;
   String participantType;
   int participantId;
-  int participantRole;
+  String participantRole;
   String text;
   /*
 	 * Transient

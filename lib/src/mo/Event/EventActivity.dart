@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/Event/EventService.dart';
 import 'package:flutter_app/src/mo/Event/EventType.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../CardDetail2Oct.dart';
@@ -194,5 +195,10 @@ class EventActivity{
     print("in examactivity");
     int eventObject = await eventService.addOrUpdateEvent(event);
      return eventObject;
+  }
+
+  Future<List<Participant>> getParticipant(Event event) async{
+    List<Participant> participants =  await eventService.getParticipant(event);
+    return participants;
   }
 }
