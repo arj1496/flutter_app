@@ -59,7 +59,12 @@ class AddSubjectState extends State<AddSubject> {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: widget.isUpdateFlag
+              ? Text(
+            "Update Subject",
+            textAlign: TextAlign.center,
+          )
+          : Text(
             "Add Subject",
             textAlign: TextAlign.center,
           ),
@@ -165,7 +170,7 @@ class AddSubjectState extends State<AddSubject> {
                       borderRadius: new BorderRadius.circular(30.0)),
                   color: Colors.lightBlueAccent,
                   child: Text(
-                    "Update Subject",
+                    "Update",
                     style: TextStyle(
                       color: Colors.black,
                     ),
@@ -178,7 +183,7 @@ class AddSubjectState extends State<AddSubject> {
                       borderRadius: new BorderRadius.circular(30.0)),
                   color: Colors.lightBlueAccent,
                   child: Text(
-                    "Add Subject",
+                    "Add",
                     style: TextStyle(
                       color: Colors.black,
                     ),

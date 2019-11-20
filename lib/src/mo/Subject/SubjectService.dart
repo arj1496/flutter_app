@@ -2,6 +2,8 @@ import 'dart:collection';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectDao.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectWebservice.dart';
+import 'package:flutter_app/src/mo/teacher/Teacher.dart';
+import 'package:flutter_app/src/mo/teacher/TeacherDAO.dart';
 
 class SubjectService {
   SubjectWebService subjectWebService = new SubjectWebService();
@@ -30,10 +32,11 @@ class SubjectService {
     subjectDao.batchAddSubject(subjectList);
   }
 
+
+
   List<Subject> getSubjectList_() {
     List<Subject> subjectList = null;
-    Future<List<Subject>> subjectListFromFuture = subjectDao
-        .getAllSubjectData();
+    Future<List<Subject>> subjectListFromFuture = subjectDao.getAllSubjectData();
     subjectListFromFuture.then((subjects) {
       subjectList = subjects;
     });

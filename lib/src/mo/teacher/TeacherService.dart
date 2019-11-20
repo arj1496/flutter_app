@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:flutter_app/src/fr/SchoolUtils.dart';
 import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/teacher/StandardTeacher.dart';
 import 'package:flutter_app/src/mo/teacher/TeacherDAO.dart';
@@ -130,7 +131,11 @@ class TeacherServcie{
     teacherDAO.getAllStandardTeacherMappingsFromLocalDB();
   }
 
+  getSubjectTeacherMapping(){
+   return teacherDAO.getSubjectTeacherMapping();
+  }
 
-
-
+  Future<List<Teacher>> getTeachersById(List<int> teacherIds) async{
+    return teacherDAO.getTeachersById(SchoolUtils.getCommaSeparated(teacherIds));
+  }
 }

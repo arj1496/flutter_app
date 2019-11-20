@@ -33,6 +33,17 @@ class StandardTeacher{
     sharePercentage: jsonObject['sharePercentage']
   );
 
+  factory StandardTeacher.fromJsonLocal(Map<String, dynamic> jsonObject) => StandardTeacher(
+      id: jsonObject['Id'],
+      standardId: jsonObject['standardId'],
+      teacherId: jsonObject['teacherId'],
+      schoolDs: jsonObject['schoolDs'],
+      subjectId: jsonObject['subjectId'],
+      association: jsonObject['association'],
+      tracker: jsonObject['tracker'],
+      sharePercentage: jsonObject['sharePercentage']
+  );
+
   Map<String, dynamic> toJson() => {
     "id": id,
     "standardId": standardId,

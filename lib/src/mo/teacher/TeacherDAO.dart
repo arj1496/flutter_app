@@ -122,4 +122,26 @@ class TeacherDAO{
     print("StandardTeacher Saved Successfully in to Local DB : " + standardTeacherMappingList.length.toString());
   }
 
+  getSubjectTeacherMapping() async{
+    Database db = await getDataBaseHandler();
+    String selectedField = 'stMap.id, stMap.teacherId, stMap.subjectId';
+    //Where subject.id = subjectId;
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT $selectedField FROM  $standardTeacherTable stMap ");
+    var subjectTeacherMappingList = List.generate(maps.length, ( i ) {
+      return StandardTeacher.fromJsonLocal(maps[i]);
+    });
+    print("Standard Teacher List size : $subjectTeacherMappingList.length}");
+    return subjectTeacherMappingList;
+  }
+
+  Future<List<Teacher>> getTeachersById(String teacherIds) async{
+    Database db = await getDataBaseHandler();
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM  $teacherTable t where t.id in ( $teacherIds )");
+    var teacherList =  List.generate(maps.length, (i) {
+      return Teacher.fromJsonLocal(maps[i]);
+    });
+    return teacherList;
+  }
+
+
 }
