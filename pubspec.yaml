@@ -42,6 +42,8 @@ dependencies:
   flutter_speed_dial: ^1.2.3
   flutter_datetime_picker: 1.2.5
   image_picker: any
+  rxdart: ^0.22.0
+  bloc: ^2.0.0
 
 dev_dependencies:
   flutter_test:
