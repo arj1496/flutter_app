@@ -48,6 +48,7 @@ class  DBProvider {
       await db.execute(createStandardMappingTable());
       await db.execute(createHWTable());
       await db.execute(createTimeTableTable());
+      await db.execute(createHolydayTable());
     });
   }
 
@@ -299,5 +300,14 @@ class  DBProvider {
         "isWritable NUMERIC NOT NULL, " +
         "infraStructure TEXT)";
   }
-
+  String createHolydayTable(){
+    return "CREATE TABLE Holiday( "
+        " lid INTEGER ,"
+        " id INTEGER PRIMARY KEY,"
+        " name TEXT ,"
+        " startDate INTEGER ,"
+        " endDate INTEGER, "
+        " type TEXT"
+        ")";
+  }
 }

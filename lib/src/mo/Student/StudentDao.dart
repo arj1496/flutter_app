@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:flutter_app/src/fr/db/DBProvider.dart';
 import 'package:flutter_app/src/mo/Student/StandardMapping.dart';
 import 'package:flutter_app/src/mo/Student/Student.dart';
+import 'package:flutter_app/src/mo/teacher/StandardTeacher.dart';
 import 'package:sqflite/sqflite.dart';
 
 class StudentDao{
 
   static final studentTable = "Student";
   static final standardMappingTable = "StandardMappingTable";
+  static final StandardTeacherTable = "StandardTeacherTable";
 
   Future<Database> getDataBaseHandler()  async {
     final dbHelper = DBProvider.single_instance;
@@ -96,9 +98,4 @@ class StudentDao{
     print("Student List size : ${studentList.length}");
     return studentList;
   }
-
-
-
-
-
 }

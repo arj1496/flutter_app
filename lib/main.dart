@@ -8,6 +8,9 @@ import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/src/MenuFile.dart';
 import 'package:flutter_app/src/fr/Login.dart';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
+import 'package:flutter_app/src/mo/Holiday/HolidayDemoPage.dart';
+import 'package:flutter_app/src/mo/Holiday/HolidayPage.dart';
+import 'package:flutter_app/src/mo/Holiday/HolidayPageUI.dart';
 
 import 'PropertyService.dart';
 import 'src/mo/Student/StudentHomepage.dart';
@@ -315,6 +318,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    final madhuriWork = Material(
+      color: Colors.indigo,
+      /* borderRadius: BorderRadius.circular(30.0),*/
+      child: MaterialButton(
+
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HolidayPage()));
+        },
+        child: Text("Madhuri Work",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -339,6 +359,7 @@ class _MyHomePageState extends State<MyHomePage> {
             heenaWork,
             bhagyashriWork,
             jyotiWork,
+            madhuriWork
 
 
           ],
