@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/TeacherDropDown.dart';
+import 'package:flutter_app/src/mo/HomeWork/SubjectPopup.dart';
 import 'package:flutter_app/src/mo/Student/StudentDao.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'package:flutter_app/src/mo/Subject/SubjectActivity.dart';
@@ -17,12 +19,21 @@ class _SubjectListState extends State<SubjectList> {
   bool _isUpdateBtn = true;
   bool _isEditBtn = true;
   bool _isInAsyncCall = false;
+  bool sort;
+  Future<List<Subject>> subjectList;
+
+
+  @override
+  void initState() {
+    sort = false;
+    SubjectActivity subjectActivity = new SubjectActivity();
+    subjectList = subjectActivity.getSubjectListFromLocalDB();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    SubjectActivity subjectActivity = new SubjectActivity();
-    Future<List<Subject>> subjectList =
-    subjectActivity.getSubjectListFromLocalDB();
+
     var futureBuilder = new FutureBuilder(
         future: subjectList,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -43,8 +54,7 @@ class _SubjectListState extends State<SubjectList> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        AddSubject(
+                    builder: (BuildContext context) => AddSubject(
                           object: new Subject(),
                           onCallBack: () {
                             print('hey done on add Subject');
@@ -86,7 +96,7 @@ class _SubjectListState extends State<SubjectList> {
       },
       child: Padding(
         padding:
-        const EdgeInsets.only(left: 5.0, right: 5.0, top: 3, bottom: 3),
+            const EdgeInsets.only(left: 5.0, right: 5.0, top: 3, bottom: 3),
         // This is the Main Table Container
         child: Container(
           // given Box Shadow to the Container
@@ -119,40 +129,46 @@ class _SubjectListState extends State<SubjectList> {
       //subtitle: _className(subject),
       trailing: _icon(subject),
       children: <Widget>[
-    Column(
-    children: <Widget>[
-      SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-          columns: <DataColumn>[
-            DataColumn(label: Text('Teacher Name')),
-            /*DataColumn(label: Text('Subject Name')),*/
-            DataColumn(label: Text('Teaching Hours')),
-          ],
-          rows: teacherList != null
-              ? getDataRow(teacherList, /*subjectName*/)
-              : DataRow(),
-    /*<DataRow>[
-              DataRow(
-                data(),
-                cells: <DataCell>[
-                  DataCell(
-                    Text('teacherName')
-                  ),
-                  DataCell(
-                      Text(" ${subjectName}")
-                  ),
-                  DataCell(
-                      Text('First')
-                  )
-                ]
+        Column(
+          children: <Widget>[
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: teacherList != null
+              ? DataTable(
+                sortAscending: sort,
+                sortColumnIndex: 0,
+                columns: <DataColumn>[
+                  DataColumn(
+                      label: Text('Teacher Name'),
+                      onSort: (columnIndex, ascending) {
+                        setState(() {
+                          sort = !sort;
+                        });
+                        onSortColumn(columnIndex, ascending, teacherList);
+                      }),
+                  /*DataColumn(label: Text('Subject Name')),*/
+                  DataColumn(
+                      label: Text('Teaching Hours'),
+                    onSort:(columnIndex, ascending) {
+                        setState(() {
+                      sort = !sort;
+                    });
+                        onSortHours(columnIndex, ascending);
+                    }),
+                ],
+                rows:getDataRow(teacherList,),
               )
-            ],*/
-    ),
-    )
-    ],
-    )
-    ],
+              : Container(
+                height: 30.0,
+                  child: Text("Assign Teacher Not Available",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold
+                  ),),
+              ),
+            )
+          ],
+        )
+      ],
     );
   }
 
@@ -311,20 +327,19 @@ class _SubjectListState extends State<SubjectList> {
             actions: <Widget>[
               _isEditBtn
                   ? MaterialButton(
-                  child: Text("Edit"),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              AddSubject(
+                      child: Text("Edit"),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => AddSubject(
                                   object: subject,
                                   onCallBack: () {
                                     print('hey done');
                                   },
                                   isUpdateFlag: true)),
-                    );
-                  })
+                        );
+                      })
                   : null,
               MaterialButton(
                   child: Text("Close"),
@@ -350,37 +365,39 @@ class _SubjectListState extends State<SubjectList> {
           alignment: Alignment.topLeft,
           child: teacherList != null
               ? ListView.builder(
-            shrinkWrap: true,
-            itemCount: teacherList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                leading: Icon(Icons.person),
-                title: RichText(
-                  textAlign: TextAlign.start,
-                  text: TextSpan(
-                    text: teacherList[index].firstName != " " &&
-                        teacherList[index].lastName != " "
-                        ? teacherList[index].firstName +
-                        ' ' +
-                        teacherList[index].lastName
-                        : " ",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              );
-            },
-          )
+                  shrinkWrap: true,
+                  itemCount: teacherList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: Icon(Icons.person),
+                      title: RichText(
+                        textAlign: TextAlign.start,
+                        text: TextSpan(
+                          text: teacherList[index].firstName != " " &&
+                                  teacherList[index].lastName != " "
+                              ? teacherList[index].firstName +
+                                  ' ' +
+                                  teacherList[index].lastName
+                              : " ",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                )
               : Text("Assign Teachers Not Available"),
         ),
       ),
     );
   }
 
-
-  List<DataRow> getDataRow(List<Teacher> teacherList, /*String subjectName*/) {
+  List<DataRow> getDataRow(
+    List<Teacher> teacherList,
+    /*String subjectName*/
+  ) {
     List<DataRow> data = new List<DataRow>();
     for (int i = 0; i < teacherList.length; i++) {
       var teacherlist = teacherList[i];
@@ -388,15 +405,14 @@ class _SubjectListState extends State<SubjectList> {
         cells: <DataCell>[
           DataCell(
             Text(teacherList[i].firstName + ' ' + teacherList[i].lastName),
-            showEditIcon: true,
             /*onTap: ,
               placeholder: ,*/
           ),
-         /* DataCell(
+          /* DataCell(
             Text(subjectName),
-            *//*onTap: ,
+            */ /*onTap: ,
               placeholder: ,
-              showEditIcon: ,*//*
+              showEditIcon: ,*/ /*
           ),*/
           DataCell(
             Text("20hrs"),
@@ -410,4 +426,34 @@ class _SubjectListState extends State<SubjectList> {
     }
     return data;
   }
+
+  onSortColumn(int columnIndex, bool ascending, List<Teacher> teacherList1) {
+    try{
+      if (columnIndex == 0) {
+        if (ascending) {
+          teacherList1.sort((a, b){
+            return '${a.firstName} ${a.lastName}'.compareTo('${b.firstName} ${b.lastName}');
+          });
+          //teacherList.sort((a, b) => '${a.firstName} ${a.lastName}'.compareTo('${b.firstName} ${b.lastName}'));
+        } else {
+          teacherList1.sort((a, b){
+            return '${b.firstName} ${b.lastName}'.compareTo('${a.firstName} ${a.lastName}');
+          });
+          //teacherList.sort((a, b) => '${b.firstName} ${b.lastName}'.compareTo('${a.firstName} ${a.lastName}'));
+        }
+      }
+    }catch(e){
+      e.toString();
+    }
+  }
+
+   onSortHours(int columnIndex, bool ascending) {
+    if(columnIndex == 0){
+      if(ascending){
+
+      }else{
+
+      }
+    }
+   }
 }
