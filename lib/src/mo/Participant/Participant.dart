@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_app/src/mo/Event/ParticipantType.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 
-class Participant{
+class Participant extends Equatable {
 
   int id;
   String participantType;
@@ -35,8 +36,8 @@ class Participant{
     "participantType" : participantType,
     "participantId" : participantId,
     "participantRole" : participantRole,
-    "text" : text,
-    "standard" :standard
+    //"text" : text,
+   // "standard" :standard
   };
 
   Map<String, dynamic> toJson_() => {
@@ -44,4 +45,8 @@ class Participant{
     "participantType" : participantType,
     "standard" :standard
   };
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [participantId];
 }

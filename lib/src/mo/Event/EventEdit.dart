@@ -104,7 +104,7 @@ class _EventAddState extends State<EventEdit> {
     }
 
    // if(event.eventParticipant != null){
-    widgetLocal =  _getParticipantUI ( _formKey , widget.event );
+    widgetLocal =  _getParticipantUI ( _formKey);
     widgetList.add(widgetLocal);
    // }
     //  _getEndDateAndTime ( _formKey , homework ) ,
@@ -205,8 +205,8 @@ class _EventAddState extends State<EventEdit> {
     return EventTypeAutoComplte(_formKey,event);
   }
 
-  _getParticipantUI(_formKey,event) {
-    return ParticipantUI(_formKey,event);
+  _getParticipantUI(_formKey) {
+    return ParticipantUI(_formKey);
   }
 
   // Date and time textfield

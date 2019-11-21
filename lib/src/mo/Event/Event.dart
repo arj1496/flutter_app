@@ -42,6 +42,7 @@ class Event {
    // this.eventParticipant,
     //this.personalParticipant,
     this.attechmentJson,
+    this.eventParticipant,
    // this.attachments
 });
 
@@ -60,7 +61,7 @@ class Event {
     allDay : json["allDay"] == true ? 1 : 0,
     isWritable : json["isWritable"] == true ? 1 : 0,
     attachment : json["attachment"],
-   // eventParticipant : json["eventParticipant"],
+   // eventParticipant : Participant.fromJson(json["eventPrticipantds"]),
    // personalParticipant : json["personalParticipant"],
     attechmentJson : json["attechmentJson"],
    // attachments : json["attachments"],

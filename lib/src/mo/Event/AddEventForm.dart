@@ -8,6 +8,7 @@ import 'package:flutter_app/src/mo/Event/ParticipantUI.dart';
 
 import 'DateWidgetForEvent.dart';
 import 'Event.dart';
+import 'EventType.dart';
 
 class AddEventForm extends StatefulWidget {
   @override
@@ -16,10 +17,12 @@ class AddEventForm extends StatefulWidget {
 
 class _EventAddState extends State<AddEventForm> {
   //EventPojo eventPojo = new EventPojo();
- Event event = new Event();
+  Event event = new Event();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   static EventActivity eventActivity = new EventActivity();
  final GlobalKey<ScaffoldState> scafoldKey = new GlobalKey<ScaffoldState>( );
+ final FocusNode _ageFocus = FocusNode();
+ final FocusNode _heightFocus = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,13 +55,14 @@ class _EventAddState extends State<AddEventForm> {
             //Title
             _getTextFormTextField(Icon(Icons.event), 'Enter Event Title', 'Title','title'),
             //Description
-            _getTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description','description'),
+            _getMultilineTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description','description'),
             //Place
-            _getTextFormTextField(Icon(Icons.place), 'Enter Place', 'Place','place'),
+            //_getMultilineTextFormTextField(Icon(Icons.place), 'Enter Place', 'Place','place'),
             //Event Type
-            _getEventTypeAutoCompte(_formKey,event),
-            _getDateAndTime(_formKey, event),
-            _getParticipantUI(_formKey,event),
+           // _getEventTypeAutoCompte(_formKey,event),
+            _getDropDownFormField(Icon(Icons.merge_type), 'Select Type', 'Select Type'),
+            _getDateAndTime(_formKey,event),
+            _getParticipantUI(_formKey),
             _submitButton(),
           ],
         ),
@@ -67,12 +71,19 @@ class _EventAddState extends State<AddEventForm> {
   }
 
   _getTextFormTextField(Icon icon , hintText, labelText,paramenter) {
+
     return TextFormField(
       onSaved: (val) => paramenter == 'title'
           ? event.name = val : paramenter == 'description'
           ? event.description = val :  event.place = val ,
       autovalidate: true,
+      textInputAction: TextInputAction.next,
+      focusNode: _ageFocus,
+      onFieldSubmitted: (term){
+        _fieldFocusChange(context, _ageFocus, _heightFocus);
+      },
       decoration: InputDecoration(
+
           icon: icon,
           hintText: hintText,
           labelText: labelText
@@ -95,6 +106,46 @@ class _EventAddState extends State<AddEventForm> {
       },
     );
   }
+
+ _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
+   currentFocus.unfocus();
+   FocusScope.of(context).requestFocus(nextFocus);
+ }
+
+
+ _getMultilineTextFormTextField(Icon icon , hintText, labelText,paramenter) {
+   return TextFormField(
+     onSaved: (val) => paramenter == 'title'
+         ? event.name = val : paramenter == 'description'
+         ? event.description = val :  event.place = val ,
+     autovalidate: true,
+     maxLines: null,
+    // textInputAction: TextInputAction.next,
+     focusNode: _heightFocus,
+     keyboardType:  TextInputType.multiline,
+     decoration: InputDecoration(
+         icon: icon,
+         hintText: hintText,
+         labelText: labelText
+     ),
+     validator: (String value){
+       if(paramenter == 'title'){
+         if(value.isEmpty){
+           return 'Please Enter ${paramenter}';
+         }
+       }else if(paramenter == 'description'){
+         if(value.length < 3 ){
+           return 'Please Enter 3 charater in ${paramenter}';
+         }
+       }else if(paramenter == 'place'){
+         if(value.length < 5){
+           return 'Please Enter 5 charater in  ${paramenter}';
+         }
+       }
+       return null;
+     },
+   );
+ }
 
   _submitButton() {
     return Padding (
@@ -153,13 +204,48 @@ class _EventAddState extends State<AddEventForm> {
     return EventTypeAutoComplte(_formKey,event);
   }
 
-  _getParticipantUI(_formKey,event) {
-     return ParticipantUI(_formKey,event);
+  _getParticipantUI(_formKey) {
+     return ParticipantUI(_formKey);
    }
 
  // Date and time textfield
  _getDateAndTime( GlobalKey<FormState> formKey , Event event ) {
    return DateWidgetForEvent.init ( _formKey , event );
+ }
+
+ _getDropDownFormField(Icon icon, String hintText, String labelText) {
+   EventActivity eventActivity = new EventActivity();
+   List<EventType>  _eventTypes = eventActivity.getEventTypeList();
+  // List<String> _eventTypes = <String>['','Event', 'Teacher Meeting', 'Parent Meeting', 'StudentMeeting', 'On on One Meeting'];
+   EventType _eventType = new EventType();
+   return FormField(
+       builder: (FormFieldState state){
+         return InputDecorator(
+           decoration: InputDecoration(
+               icon: icon,
+               labelText: labelText,
+               hintText: hintText,
+           ),
+           child: DropdownButtonHideUnderline(
+               child: DropdownButton(
+                 isDense: true,
+                 onChanged: (EventType newValue){
+                   setState(() {
+                     labelText = newValue.eventType;
+                     state.didChange(newValue);
+                   });
+                 },
+                 items: _eventTypes.map((EventType value) {
+                   return new DropdownMenuItem(
+                     value: value,
+                     child: new Text(value.eventType),
+                   );
+                 }).toList(),
+               )
+           ),
+         );
+       }
+   );
  }
 }
 

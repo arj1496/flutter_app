@@ -13,9 +13,9 @@ class  DBProvider {
   static final _databaseVersion = 1;
 
   // make this a singleton class
-  DBProvider._();
+  DBProvider._( );
 
-  static final DBProvider single_instance = DBProvider._();
+  static final DBProvider single_instance = DBProvider._ ( );
 
   Database _database;
 
@@ -24,56 +24,56 @@ class  DBProvider {
       return _database;
 
     // if _database is null we instantiate it
-    _database = await initDB();
+    _database = await initDB ( );
     // _database = await _initDatabase();
     return _database;
   }
 
-  initDB() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "TestDB.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {
-    }, onCreate: (Database db, int version) async {
-      await db.execute(createTeacherTable());
-      await db.execute(createEventTable());
-      await db.execute(createSharedPreferenceTable());
-      await db.execute(createPersonTable());
-      await db.execute(createStandardTable());
-      await db.execute(createStudentTable());
-      await db.execute(createSubjectTable());
-      await db.execute(createExamTable());
-      await db.execute(createParentTable());
-      await db.execute(createDumpTable());
-      await db.execute(createStandardTeacherTable());
-      await db.execute(createStandardMappingTable());
-      await db.execute(createHWTable());
-      await db.execute(createTimeTableTable());
-      await db.execute(createHolydayTable());
-    });
+  initDB( ) async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory ( );
+    String path = join ( documentsDirectory.path , "TestDB.db" );
+    return await openDatabase ( path , version: 1 ,
+        onOpen: ( db ) {} ,
+        onCreate: ( Database db , int version ) async {
+          await db.execute ( createTeacherTable ( ) );
+          await db.execute ( createEventTable ( ) );
+          await db.execute ( createSharedPreferenceTable ( ) );
+          await db.execute ( createPersonTable ( ) );
+          await db.execute ( createStandardTable ( ) );
+          await db.execute ( createStudentTable ( ) );
+          await db.execute ( createSubjectTable ( ) );
+          await db.execute ( createExamTable ( ) );
+          await db.execute ( createParentTable ( ) );
+          await db.execute ( createDumpTable ( ) );
+          await db.execute ( createStandardTeacherTable ( ) );
+          await db.execute ( createStandardMappingTable ( ) );
+          await db.execute ( createHWTable ( ) );
+          await db.execute ( createTimeTableTable ( ) );
+          await db.execute ( createHolydayTable ( ) );
+          await db.execute ( createParticipantTable ( ) );
+          await db.execute ( createEventParticipantTable() );
+        } );
   }
 
   // this opens the database (and creates it if it doesn't exist)
-  _initDatabase() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, _databaseName);
+  _initDatabase( ) async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory ( );
+    String path = join ( documentsDirectory.path , _databaseName );
 
-    return await openDatabase(path,
-        version: _databaseVersion,
-        onCreate: _onCreate);
+    return await openDatabase ( path ,
+        version: _databaseVersion ,
+        onCreate: _onCreate );
   }
 
   // SQL code to create the database table
-  Future _onCreate(Database db, int version) async {
-
-    await db.execute(
-        createStudentTable()
-            + createStudentTable()
+  Future _onCreate( Database db , int version ) async {
+    await db.execute (
+        createStudentTable ( )
+            + createStudentTable ( )
     );
-
   }
 
-  String createTeacherTable() {
-
+  String createTeacherTable( ) {
     return " CREATE TABLE Teacher ("
         "lid INTEGER,"
         "id INTEGER PRIMARY KEY,"
@@ -90,10 +90,10 @@ class  DBProvider {
         "mobileNumber TEXT,"
         "invitation TEXT,"
         "birthDate TEXT"
-        ")" ;
+        ")";
   }
 
-  String createStudentTable() {
+  String createStudentTable( ) {
     return " CREATE TABLE Student ("
         "lid INTEGER ,"
         "id INTEGER PRIMARY KEY,"
@@ -114,28 +114,28 @@ class  DBProvider {
         "birthDate INTEGER,"
         "userId TEXT, "
         "academicType TEXT"
-        ")" ;
+        ")";
   }
 
-  String createEventTable(){
+  String createEventTable( ) {
     return "CREATE TABLE Event ( "
-    " lid INTEGER , "
-    " id INTEGER PRIMARY KEY, "
-    " name  TEXT, "
-    " description TEXT,"
-    " place TEXT,"
-    " startDate INTEGER, "
-    " endDate INTEGER,"
-    " status INTEGER, "
-    " type TEXT, "
-    " owner TEXT, "
-    " person INTEGER, "
-    " allDay INTEGER,"
-    " isWritable INTEGER,"
-    " attachment TEXT,"
-    "attechmentJson TEXT "
-    ")";
-     /*
+        " lid INTEGER , "
+        " id INTEGER PRIMARY KEY, "
+        " name  TEXT, "
+        " description TEXT,"
+        " place TEXT,"
+        " startDate INTEGER, "
+        " endDate INTEGER,"
+        " status INTEGER, "
+        " type TEXT, "
+        " owner TEXT, "
+        " person INTEGER, "
+        " allDay INTEGER,"
+        " isWritable INTEGER,"
+        " attachment TEXT,"
+        "attechmentJson TEXT "
+        ")";
+    /*
   List<Participant> eventParticipant = new List<Participant>();
   //Map<Integer, Set<Long>> personalParticipant = new Map<Integer, Set<Long>>(1);
   List<Attachment> attachments;
@@ -143,24 +143,23 @@ class  DBProvider {
 
   }
 
-  String createStandardTable() {
-
+  String createStandardTable( ) {
     return "CREATE TABLE Standard( "
-      " lid INTEGER ,"
-      " id INTEGER PRIMARY KEY,"
-      " name TEXT ,"
-      " startDate Integer, "
-      " endDate Integer, "
-      " startTime TEXT, "
-      " endTime TEXT, "
-      " teacherIds INTEGER, "
-      " divisionId Integer, "
-      " divisionName TEXT,"
-      "isAccess INTEGER "
-      " )";
+        " lid INTEGER ,"
+        " id INTEGER PRIMARY KEY,"
+        " name TEXT ,"
+        " startDate Integer, "
+        " endDate Integer, "
+        " startTime TEXT, "
+        " endTime TEXT, "
+        " teacherIds INTEGER, "
+        " divisionId Integer, "
+        " divisionName TEXT,"
+        "isAccess INTEGER "
+        " )";
   }
 
-  String createPersonTable() {
+  String createPersonTable( ) {
     return "CREATE TABLE Person( "
         " lid INTEGER ,"
         " id INTEGER PRIMARY KEY,"
@@ -178,7 +177,7 @@ class  DBProvider {
         ")";
   }
 
-  String createSubjectTable() {
+  String createSubjectTable( ) {
     return "CREATE TABLE Subject( "
         " lid INTEGER ,"
         " id INTEGER PRIMARY KEY,"
@@ -192,7 +191,7 @@ class  DBProvider {
         ")";
   }
 
-  String createExamTable(){
+  String createExamTable( ) {
     return "CREATE TABLE Exam( "
         " lid INTEGER ,"
         " id INTEGER PRIMARY KEY,"
@@ -210,13 +209,13 @@ class  DBProvider {
         ")";
   }
 
-  String createSharedPreferenceTable(){
+  String createSharedPreferenceTable( ) {
     return "CREATE TABLE SharedPreference ("
         " key TEXT, "
         " value TEXT )";
   }
 
-  String createParentTable(){
+  String createParentTable( ) {
     return "CREATE TABLE Parent ( "
         "id INTEGER PRIMARY KEY, "
         "firstName TEXT NOT NULL,"
@@ -229,7 +228,7 @@ class  DBProvider {
         "isWritable INTEGER )";
   }
 
-  String createDumpTable(){
+  String createDumpTable( ) {
     return "CREATE TABLE Dump( "
         " id INTEGER PRIMARY KEY,"
         " timeStamp INTEGER ,"
@@ -240,7 +239,7 @@ class  DBProvider {
         ")";
   }
 
-  String createStandardTeacherTable() {
+  String createStandardTeacherTable( ) {
     return "CREATE TABLE StandardTeacherTable( "
         " id INTEGER PRIMARY KEY,"
         " standardId INTEGER ,"
@@ -253,7 +252,7 @@ class  DBProvider {
         ")";
   }
 
-  String createStandardMappingTable() {
+  String createStandardMappingTable( ) {
     return "CREATE TABLE StandardMappingTable( "
         " smId INTEGER PRIMARY KEY,"
         " studentId INTEGER ,"
@@ -267,7 +266,7 @@ class  DBProvider {
         ")";
   }
 
-  String createHWTable(){
+  String createHWTable( ) {
     return "CREATE TABLE Homework( "
         " lid INTEGER ,"
         " id INTEGER PRIMARY KEY,"
@@ -284,10 +283,10 @@ class  DBProvider {
         ")";
   }
 
-  String createTimeTableTable() {
-    return "create table TimeTable ( "+
-        "id INTEGER PRIMARY KEY, "+
-        "lid INTEGER, "+
+  String createTimeTableTable( ) {
+    return "create table TimeTable ( " +
+        "id INTEGER PRIMARY KEY, " +
+        "lid INTEGER, " +
         "title TEXT," +
         "day TEXT NOT NULL," +
         "time TEXT NOT NULL," +
@@ -296,11 +295,12 @@ class  DBProvider {
         "date INTEGER," +
         "personId INTEGER," +
         "owner TEXT," +
-        "operation TEXT,"+
+        "operation TEXT," +
         "isWritable NUMERIC NOT NULL, " +
         "infraStructure TEXT)";
   }
-  String createHolydayTable(){
+
+  String createHolydayTable( ) {
     return "CREATE TABLE Holiday( "
         " lid INTEGER ,"
         " id INTEGER PRIMARY KEY,"
@@ -308,6 +308,24 @@ class  DBProvider {
         " startDate INTEGER ,"
         " endDate INTEGER, "
         " type TEXT"
+        ")";
+  }
+
+
+  String createParticipantTable( ) {
+    return "CREATE TABLE Participant( "
+        "lid INTEGER , "
+        "id INTEGER PRIMARY KEY,"
+        "participantType name TEXT,"
+        "participantId INTEGER,"
+        " participantRole TEXT"
+        ")";
+  }
+
+  String createEventParticipantTable( ) {
+    return "CREATE TABLE EventParticipant( "
+        "eventId INTEGER PRIMARY KEY,"
+        "participantId INTEGER"
         ")";
   }
 }

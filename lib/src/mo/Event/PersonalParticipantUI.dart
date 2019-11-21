@@ -11,15 +11,14 @@ class PersonalParticipantUI extends StatefulWidget {
   _ListTileViewUVState createState() => _ListTileViewUVState();
 
   final Function callback;
-  final List<int> data;
+  final List<Participant> data;
   const PersonalParticipantUI(
       {this.callback,this.data});
 }
 
 class _ListTileViewUVState extends State<PersonalParticipantUI>  {
 
-
-  bool boolVal = false;
+   bool boolVal = false;
    List<Person> _personList = new List();
    List<Participant> selectedParticipant = new List();
    static int flag = 1;
@@ -44,11 +43,21 @@ class _ListTileViewUVState extends State<PersonalParticipantUI>  {
   @override
   void initState(){
     setState(() {
-      for(Person person  in _personList){
+     /* for(Person person  in _personList){
         if(!partInputs.containsKey(person.id)) {
           partInputs[person.id] = false;
         }
+      }*/
+     if(widget.data != null){
+      for(Participant participant in widget.data){
+         partInputs[participant.id] = true;
       }
+     }
+     else {
+       for (Person person in _personList) {
+         partInputs[person.id] = true;
+       }
+     }
     });
   }
   @override
@@ -204,18 +213,26 @@ class _ListTileViewUVState extends State<PersonalParticipantUI>  {
 
 
  _getParticipantUI( personList ) {
-   for(Person person  in personList){
+  /* for(Person person  in personList){
      if(!partInputs.containsKey(person.id)) {
        partInputs[person.id] = false;
      }
-   }
+   }*/
+
+  /* for(Person person  in personList){
+     if(widget.data.contains(person)) {
+        partInputs[person.id] = true;
+     }else{
+       partInputs[person.id] = false;
+     }
+   }*/
      return ListView.builder (
              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true ,
               itemCount: personList.length ,
               itemBuilder: ( context , i ) {
                 return CheckboxListTile (
-                    value: partInputs[personList[i].id] ,
+                    value: partInputs.containsKey(personList[i].id) ,
                     title: new Text( personList[i].firstName +
                         "(" +
                         personList[i].lastName +
@@ -279,11 +296,11 @@ class _ListTileViewUVState extends State<PersonalParticipantUI>  {
             child: MaterialButton (
               minWidth: 180.0 ,
               height: 35 ,
-              child: new Text( "SAVE" ,
+              child: new Text( "CANCEL" ,
                   style: new TextStyle(
                       fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
               onPressed: ( ) async {
-
+                  Navigator.pop(context);
               } ,
             ) ,
           ) ,

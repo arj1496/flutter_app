@@ -17,9 +17,8 @@ class ParticipantUI extends StatefulWidget {
 
   @override
   _ListTileViewUVState createState() => _ListTileViewUVState();
-  ParticipantUI(_formKey,event){
-    this.event = event;
-
+   ParticipantUI(_formKey){
+   // this.event = event;
    }
 }
 
@@ -149,6 +148,7 @@ class ParticipantUI extends StatefulWidget {
                                  context ,
                                  MaterialPageRoute (
                                      builder: ( context ) => PersonalParticipantUI(
+                                         data: widget.event.personalParticipant,
                                          callback: (List<Participant> value){
                                            widget.event.personalParticipant.clear();
                                            for(int i=0;i<value.length;i++){
@@ -425,11 +425,17 @@ class ParticipantUI extends StatefulWidget {
           context: context,
           builder: (context) {
             return ClassPopup(
+              data: widget.event.eventParticipant,
                 callback: (List<Participant> value){
-                  widget.event.eventParticipant.clear();
+                  print("callBack Return ${value.length}");
+
+                  List<Participant> party = new List();
+               //   widget.event.eventParticipant.clear();
                   for(int i=0;i<value.length;i++){
-                    widget.event.eventParticipant.add(value[i]);
+                    party.add(value[i]);
+
                   }
+                  widget.event.eventParticipant = party;
                   print("callBack Return ${value.length}");
                 }
             );

@@ -1,4 +1,5 @@
 
+import 'package:flutter_app/EventService.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 import 'package:flutter_app/src/mo/Holiday/HolidayService.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeworkService.dart';
@@ -25,6 +26,7 @@ class SyncService{
   HomeworkService homeworkService = new HomeworkService();
   TimeTableService timeTableService = new TimeTableService();
  HolidayService holidayService = new HolidayService();
+ EventService eventService = new EventService();
 
   List<String> getSyncParameters(){
 
@@ -40,6 +42,7 @@ class SyncService{
     parameters.add("homework_sync_time");
     parameters.add("timetable_sync_time");
     parameters.add("holiday_sync_time");
+    parameters.add("event_sync_time");
     return parameters;
   }
 
@@ -171,6 +174,20 @@ class SyncService{
       if(syncDataResponse['isHolidaySync']){
         await holidayService.syncCallBackHandle(syncDataResponse);
         sharedPreferences.setString("holiday_sync_time", todayDate.toString());
+      }
+    }
+
+    if(syncDataResponse.containsKey('isEventSync')){
+      if(syncDataResponse['isEventSync']){
+        await eventService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("event_sync_time", todayDate.toString());
+      }
+    }
+
+    if(syncDataResponse.containsKey('isParentSync')){
+      if(syncDataResponse['isParentSync']){
+        await parentService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("parent_sync_time", todayDate.toString());
       }
     }
   }
