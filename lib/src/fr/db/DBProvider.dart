@@ -52,6 +52,8 @@ class  DBProvider {
           await db.execute ( createHolydayTable ( ) );
           await db.execute ( createParticipantTable ( ) );
           await db.execute ( createEventParticipantTable() );
+          await db.execute ( createHolidayParticipantTable() );
+          await db.execute(createAttendanceTable());
         } );
   }
 
@@ -328,4 +330,31 @@ class  DBProvider {
         "participantId INTEGER"
         ")";
   }
+
+  String createHolidayParticipantTable( ) {
+    return "CREATE TABLE HolidayParticipant( "
+        "holydayId INTEGER PRIMARY KEY,"
+        "participantId INTEGER"
+        ")";
+  }
+
+  String createAttendanceTable( ) {
+    return "CREATE TABLE Attendance( "
+        " lid INTEGER ,"
+        " id INTEGER PRIMARY KEY,"
+        " type TEXT ,"
+        " standard INTEGER ,"
+        " subject INTEGER, "
+        " date INTEGER, "
+        " owner TEXT, "
+        " isWritable NUMERIC NOT NULL, "
+        " coma_seperated_absent TEXT, "
+        " status INTEGER, "
+        " message TEXT, "
+        " recordid INTEGER, "
+        " synctime INTEGER, "
+        " timetablereference INTEGER"
+        ")";
+  }
+
 }

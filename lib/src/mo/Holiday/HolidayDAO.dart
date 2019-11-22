@@ -44,6 +44,7 @@ class HolidayDAO {
     return test;
   }
 
+
   batchAddHoliday(List<Holiday> holidayList) {
     Database db = null;
     getDataBaseHandler().then((dataBaseInstance) async{

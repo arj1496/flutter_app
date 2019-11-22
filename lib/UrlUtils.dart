@@ -52,4 +52,8 @@ class UrlUtils{
     return url;
 
   }
+  String getAddHolidayUrl(){
+    String url = SchoolUtils().baseUrl + "rest/holiday/addOrUpdate";
+    return url;
+  }
 }

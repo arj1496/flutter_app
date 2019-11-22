@@ -1,33 +1,18 @@
 
-
-
-
 import 'package:flutter_app/src/mo/Holiday/Holiday.dart';
 import 'package:flutter_app/src/mo/Holiday/HolidayDAO.dart';
+import 'package:flutter_app/src/mo/Holiday/HolidayWebService.dart';
 
 class HolidayService {
 
   HolidayDAO holidayDAO = new HolidayDAO();
+  HolidayWebService holidayWebService=new HolidayWebService();
 
   Future<List<Holiday>> getDbHolyday() async{
     List<Holiday> holidayListFromFuture = await holidayDAO.getDbHoliday();
     return holidayListFromFuture;
   }
 
-  /*static List<Holiday> getAllHoliday() {
-    List<Holiday> holidayList = new List();
-    for (var i = 1; i < 3; i++) {
-      Holiday holiday = new Holiday();
-      holiday.id = i;
-      holiday.name = 'sunday' + i.toString();
-      holiday.startDate = 1572021449 + i;
-      holiday.endDate = 1572021449 + i;
-      //standard.startTime = "2" + i.toString();
-      // standard.endTime = "2" + i.toString();
-      holidayList.add(holiday);
-    }
-    return holidayList;
-  }*/
 
   syncCallBackHandle(Map<String, dynamic> syncDataResponse) async {
     List<dynamic> holidaysDynamic = syncDataResponse['holidays'];
@@ -39,4 +24,25 @@ class HolidayService {
       await holidayDAO.batchAddHoliday(holidayList);
     }
   }
+
+
+  Future<int> addHD(Holiday holiday) async{
+    Map<String, dynamic> HDData = await holidayWebService.addOrUpdateHoliday(holiday);
+    // if the response is true and the examId is present allredy update that exam otherwise add that exam to local database
+    if(HDData['status']){
+      Holiday holiday = Holiday.fromJson(HDData['holiday']);
+      if(holiday != null){
+         addHD(holiday);
+      }
+    }else{
+      print('Holiday Add False');
+    }
+    return null;
+  }
+
+
+/*  batchAddHD(List<Holiday> HDList) {
+    holidayDAO.batchAddHoliday( HDList );
+  }*/
+
 }
