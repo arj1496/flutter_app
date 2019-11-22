@@ -8,10 +8,7 @@ import 'package:flutter_app/nayan.dart';
 import 'package:flutter_app/src/MenuFile.dart';
 import 'package:flutter_app/src/fr/Login.dart';
 import 'package:flutter_app/src/fr/SchoolUtils.dart';
-import 'package:flutter_app/src/mo/Holiday/HolidayDemoPage.dart';
 import 'package:flutter_app/src/mo/Holiday/HolidayPage.dart';
-import 'package:flutter_app/src/mo/Holiday/HolidayPageUI.dart';
-
 import 'PropertyService.dart';
 import 'src/mo/Student/StudentHomepage.dart';
 

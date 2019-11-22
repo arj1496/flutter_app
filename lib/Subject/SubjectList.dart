@@ -22,13 +22,14 @@ class _SubjectListState extends State<SubjectList> {
   bool sort;
   Future<List<Subject>> subjectList;
 
-
   @override
   void initState() {
     sort = false;
     SubjectActivity subjectActivity = new SubjectActivity();
     subjectList = subjectActivity.getSubjectListFromLocalDB();
+
     super.initState();
+
   }
 
   @override
@@ -123,6 +124,13 @@ class _SubjectListState extends State<SubjectList> {
   Widget _expansiontile(Subject subject) {
     String subjectName = subject.name;
     List<Teacher> teacherList = subject.teacherList;
+    if(teacherList != null){
+      teacherList.sort((a, b) {
+        return '${a.firstName} ${a.lastName}'
+            .compareTo('${b.firstName} ${b.lastName}');
+      });
+    }
+
     return ExpansionTile(
       //ListTile(
       title: _subjectName(subject),
@@ -134,38 +142,90 @@ class _SubjectListState extends State<SubjectList> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: teacherList != null
-              ? DataTable(
-                sortAscending: sort,
-                sortColumnIndex: 0,
-                columns: <DataColumn>[
-                  DataColumn(
-                      label: Text('Teacher Name'),
-                      onSort: (columnIndex, ascending) {
-                        setState(() {
-                          sort = !sort;
-                        });
-                        onSortColumn(columnIndex, ascending, teacherList);
-                      }),
-                  /*DataColumn(label: Text('Subject Name')),*/
-                  DataColumn(
-                      label: Text('Teaching Hours'),
-                    onSort:(columnIndex, ascending) {
-                        setState(() {
-                      sort = !sort;
-                    });
-                        onSortHours(columnIndex, ascending);
-                    }),
-                ],
-                rows:getDataRow(teacherList,),
-              )
-              : Container(
-                height: 30.0,
-                  child: Text("Assign Teacher Not Available",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  ),),
-              ),
-            )
+                  ? DataTable(
+                      sortAscending: sort,
+                      sortColumnIndex: 0,
+                      columns: <DataColumn>[
+                        DataColumn(
+                            label: Text(
+                              'Teacher Name',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  color: Colors.black),
+                            ),
+                            onSort: (columnIndex, ascending) {
+                              setState(() {
+                                sort = !sort;
+                              });
+                              onSortColumn(columnIndex, ascending, teacherList);
+                            }),
+                        /*DataColumn(label: Text('Subject Name')),*/
+                        DataColumn(
+                            label: Text(
+                              'Teaching Hours',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  color: Colors.black),
+                            ),
+                            onSort: (columnIndex, ascending) {
+                              setState(() {
+                                sort = !sort;
+                              });
+                              onSortHours(columnIndex, ascending);
+                            }),
+                      ],
+                      rows: getDataRow(
+                        teacherList,
+                      ),
+                    )
+                  : Container(
+                      height: 30.0,
+                      child: Text(
+                        "Assign Teacher Not Available",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+            ),
+            teacherList != null
+            ? Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: OutlineButton(
+                    child: Text(
+                      'Edit'
+                    ),
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => AddSubject(
+                                object: subject,
+                                onCallBack: () {
+                                  print('hey done');
+                                },
+                                isUpdateFlag: true)),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: OutlineButton(
+                    child: Text(
+                        'Cancel'
+                    ),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                )
+              ],
+            ): Container()
           ],
         )
       ],
@@ -404,10 +464,17 @@ class _SubjectListState extends State<SubjectList> {
       DataRow dr = new DataRow(
         cells: <DataCell>[
           DataCell(
-            Text(teacherList[i].firstName + ' ' + teacherList[i].lastName),
-            /*onTap: ,
-              placeholder: ,*/
-          ),
+              Center(
+                child: Text(
+                  teacherList[i].firstName + ' ' + teacherList[i].lastName,
+                  style: TextStyle(
+                      fontSize: 13.0,
+                      color: Colors.black,
+                  ),
+                ),
+              ), onTap: () {
+            print('Select Teacher');
+          }),
           /* DataCell(
             Text(subjectName),
             */ /*onTap: ,
@@ -415,7 +482,15 @@ class _SubjectListState extends State<SubjectList> {
               showEditIcon: ,*/ /*
           ),*/
           DataCell(
-            Text("20hrs"),
+            Center(
+              child: Text(
+                "20hrs",
+                style: TextStyle(
+                    fontSize: 13.0,
+                    color: Colors.black,
+                ),
+              ),
+            ),
             /*onTap: ,
               placeholder: ,
               showEditIcon: ,*/
@@ -428,32 +503,32 @@ class _SubjectListState extends State<SubjectList> {
   }
 
   onSortColumn(int columnIndex, bool ascending, List<Teacher> teacherList1) {
-    try{
+    try {
       if (columnIndex == 0) {
         if (ascending) {
-          teacherList1.sort((a, b){
-            return '${a.firstName} ${a.lastName}'.compareTo('${b.firstName} ${b.lastName}');
+          teacherList1.sort((a, b) {
+            return '${a.firstName} ${a.lastName}'
+                .compareTo('${b.firstName} ${b.lastName}');
           });
           //teacherList.sort((a, b) => '${a.firstName} ${a.lastName}'.compareTo('${b.firstName} ${b.lastName}'));
         } else {
-          teacherList1.sort((a, b){
-            return '${b.firstName} ${b.lastName}'.compareTo('${a.firstName} ${a.lastName}');
+          teacherList1.sort((a, b) {
+            return '${b.firstName} ${b.lastName}'
+                .compareTo('${a.firstName} ${a.lastName}');
           });
           //teacherList.sort((a, b) => '${b.firstName} ${b.lastName}'.compareTo('${a.firstName} ${a.lastName}'));
         }
       }
-    }catch(e){
+    } catch (e) {
       e.toString();
     }
   }
 
-   onSortHours(int columnIndex, bool ascending) {
-    if(columnIndex == 0){
-      if(ascending){
-
-      }else{
+  onSortHours(int columnIndex, bool ascending) {
+    if (columnIndex == 0) {
+      if (ascending) {} else {
 
       }
     }
+  }
    }
-}

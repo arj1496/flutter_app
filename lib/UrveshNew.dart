@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/AddFormUI.dart';
 import 'package:flutter_app/AlertDialogBoxTypes.dart';
 import 'package:flutter_app/DetailViewUV.dart';
+import 'package:flutter_app/src/mo/Assessments/AssessmentPage.dart';
 import 'package:flutter_app/src/mo/FileDownloadAndUpload/DonloadUploadWidget.dart';
 import 'package:flutter_app/src/mo/FileDownloadAndUpload/DownloadUpload.dart';
 import 'package:flutter_app/ListTileViewUV.dart';
@@ -120,6 +121,15 @@ class _UrveshNewState extends State<UrveshNew> {
                   );
                 },
                 child: Text('Time Table List'),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( builder: (context) =>AssessmentPage()),
+                  );
+                },
+                child: Text('Assessments'),
               ),
             ],
           ),
