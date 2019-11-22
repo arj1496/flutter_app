@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/src/mo/Event/PersonalParticipantUI.dart';
 import 'package:flutter_app/src/mo/Event/SubjectPopup.dart';
 import 'package:flutter_app/src/mo/Exam/ClassPopup.dart';
+import 'package:flutter_app/src/mo/Participant/EventKeyPojo.dart';
 import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:flutter_app/src/mo/Person/Person.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
+import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
 
 import '../../../AppTheme.dart';
 import 'Event.dart';
@@ -13,13 +15,21 @@ import 'Event.dart';
 class ParticipantUI extends StatefulWidget {
 
   Event event = new Event();
-
+  final callback;
+  final formKey;
 
   @override
   _ListTileViewUVState createState() => _ListTileViewUVState();
-   ParticipantUI(_formKey){
-   // this.event = event;
-   }
+/*   ParticipantUI(_formKey,event, callback){
+    this.event = event;
+   }*/
+  ParticipantUI({
+    this.formKey,
+    this.event,
+    this.callback
+});
+
+
 }
 
 
@@ -27,7 +37,7 @@ class ParticipantUI extends StatefulWidget {
     List<String> schoolPaticipant = ["SCHOOL","SCHOOL STUDENTS","SCHOOL TEACHERS","SCHOOL PARENTS"];
     Map<int,bool> partInputs = new Map();
     List<Participant> selectedSchoolParticipant = new List();
-
+    List<Participant> party = new List();
 /*    @override
     void initState(){
       setState(() {
@@ -150,10 +160,13 @@ class ParticipantUI extends StatefulWidget {
                                      builder: ( context ) => PersonalParticipantUI(
                                          data: widget.event.personalParticipant,
                                          callback: (List<Participant> value){
-                                           widget.event.personalParticipant.clear();
+
+                                           //widget.event.personalParticipant.clear();
                                            for(int i=0;i<value.length;i++){
+                                             party.add(value[i]);
                                              widget.event.personalParticipant.add(value[i]);
                                            }
+                                         //  widget.event.personalParticipant = party;
                                            print("callBack Return ${value.length}");
                                          }
                                      )
@@ -330,6 +343,8 @@ class ParticipantUI extends StatefulWidget {
                               ),
                             ),
                           ),
+
+
                         ],
                       ),
                     ),
@@ -420,15 +435,16 @@ class ParticipantUI extends StatefulWidget {
       } );
     }
 
-    _showClassAlert(BuildContext context) {
-     return showDialog(
+    _showClassAlert(BuildContext context)  async {
+      Map<Standard,List<EventKeyPojo>> standardsMap =  await getStandards();
+      return showDialog(
           context: context,
           builder: (context) {
             return ClassPopup(
+                standardsMap:standardsMap ,
               data: widget.event.eventParticipant,
                 callback: (List<Participant> value){
                   print("callBack Return ${value.length}");
-
                   List<Participant> party = new List();
                //   widget.event.eventParticipant.clear();
                   for(int i=0;i<value.length;i++){
@@ -436,6 +452,8 @@ class ParticipantUI extends StatefulWidget {
 
                   }
                   widget.event.eventParticipant = party;
+                  widget.callback(party);
+
                   print("callBack Return ${value.length}");
                 }
             );
@@ -451,8 +469,54 @@ class ParticipantUI extends StatefulWidget {
       return participant;
     }
 
-    getChipUI(){
 
+    getParticipantChip(participantList) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+            child:ListView.builder(
+            shrinkWrap: true,
+            itemCount: participantList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return new Column(
+                children: <Widget>[
+                  new   ChoiceChip(
+                      label: participantList[index].standardName,
+                      selected: true,
+                      /*onSelected: (selected) {
+                  setState(() {
+                    isSelected = selected;
+                  });
+                },*/
+                      avatar: Icon(
+                        Icons.cancel,
+                        color: Colors.red,
+                      )
+                  ),
+                ],
+              );
+            }),),
+      );
+    }
+
+
+    Future< Map<Standard,List<EventKeyPojo>>> getStandards() async {
+      StandardActivity standardActivity = new StandardActivity();
+      List<Standard>_standardList = await standardActivity.getStandardListFromLocalDB();
+      Map<Standard,List<EventKeyPojo>> _standards = prePareMap(_standardList);
+      return _standards;
+    }
+
+    Map<Standard, List<EventKeyPojo>> prePareMap(List<Standard> standardList) {
+
+
+      Map<Standard,List<EventKeyPojo>> standardMap = new Map();
+
+      for(Standard standard in standardList){
+        List<EventKeyPojo> eventKeyPojoList = getEventPojo(standard);
+        standardMap[standard] = eventKeyPojoList;
+      }
+      return standardMap;
     }
 
   }

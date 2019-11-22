@@ -4,7 +4,6 @@ import 'package:flutter_app/src/mo/CommanCode/GenericModel.dart';
 import 'package:flutter_app/src/mo/HomeWork/SubjectPopup.dart';
 import 'package:flutter_app/src/mo/Subject/Subject.dart';
 import 'DateWidgetForHomework.dart';
-//import 'EndDateWidget.dart';
 import 'HomeWork.dart';
 import 'HomeworkActivity.dart';
 
@@ -156,8 +155,6 @@ class _HomeworkAddState extends State<HomeworkAdd> {
     ),
         ),
     );
-
-
   }
 
   // For description and syllabus require multiline textfields

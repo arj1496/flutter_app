@@ -34,7 +34,6 @@ class StandardDropdownWidget extends StatefulWidget {
 Future<List<Standard>> getStandards() async{
   StandardActivity standardActivity = new StandardActivity();
   List<Standard> _standard = await standardActivity.getStandardListFromLocalDB();
-
   return _standard;
 }
 

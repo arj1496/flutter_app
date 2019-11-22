@@ -104,8 +104,8 @@ class _EventAddState extends State<EventEdit> {
     }
 
    // if(event.eventParticipant != null){
-    widgetLocal =  _getParticipantUI ( _formKey);
-    widgetList.add(widgetLocal);
+  /*  widgetLocal =  _getParticipantUI ( _formKey,widget.event);
+    widgetList.add(widgetLocal);*/
    // }
     //  _getEndDateAndTime ( _formKey , homework ) ,
     widgetLocal =   _submitButton();
@@ -168,11 +168,11 @@ class _EventAddState extends State<EventEdit> {
                 }
                 EventActivity eventActivity = new EventActivity();
                 //widget.event.description ="test";
-                Future<int> eventObject = eventActivity.addOrUpdateEvent(widget.event);
+               /* Future<int> eventObject = eventActivity.addOrUpdateEvent(widget.event);
                 if(eventObject != null){
                   final snackBar = SnackBar(content: Text('Event added sucessfully!'));
                   scafoldKey.currentState.showSnackBar(snackBar);
-                }
+                }*/
               } ,
             ) ,
           ) ,
@@ -205,9 +205,9 @@ class _EventAddState extends State<EventEdit> {
     return EventTypeAutoComplte(_formKey,event);
   }
 
-  _getParticipantUI(_formKey) {
-    return ParticipantUI(_formKey);
-  }
+ /* _getParticipantUI(_formKey,event) {
+    return ParticipantUI(_formKey,event);
+  }*/
 
   // Date and time textfield
   _getDateAndTime( GlobalKey<FormState> formKey , Event event ) {

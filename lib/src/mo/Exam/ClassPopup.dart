@@ -12,8 +12,9 @@ class ClassPopup extends StatefulWidget {
 
   final Function callback;
   final List<Participant> data;
+  final Map<Standard,List<EventKeyPojo>> standardsMap;
   const ClassPopup(
-      {this.callback,this.data});
+      {this.callback,this.data,this.standardsMap});
 
   @override
   State<StatefulWidget> createState() => _MyPageState();
@@ -43,20 +44,21 @@ List<EventKeyPojo> getEventPojo(Standard standard){
     EventKeyPojo eventKeyPojo = new EventKeyPojo();
     eventKeyPojo.id = standard.id.toString() + "_TEACHER";
     eventKeyPojo.name = "TEACHER";
-    eventKeyPojo.select =false;
+    eventKeyPojo.standardName = standard.name;
     eventKeyPojoList.add(eventKeyPojo);
     EventKeyPojo eventKeyPojo1 = new EventKeyPojo();
     eventKeyPojo1.id = standard.id.toString() + "_PARENT";
     eventKeyPojo1.name = "PARENT";
-  eventKeyPojo1.select =false;
+  eventKeyPojo1.standardName = standard.name;
     eventKeyPojoList.add(eventKeyPojo1);
     EventKeyPojo eventKeyPojo2 = new EventKeyPojo();
     eventKeyPojo2.id = standard.id.toString() + "_STUDENT";
     eventKeyPojo2.name = "STUDENT";
-  eventKeyPojo2.select =false;
+  eventKeyPojo2.standardName = standard.name;
     eventKeyPojoList.add(eventKeyPojo2);
     return eventKeyPojoList;
   }
+
 
 
 class _MyPageState extends State<ClassPopup> {
@@ -73,14 +75,57 @@ class _MyPageState extends State<ClassPopup> {
   void initState(){
     super.initState();
     setState(() {
-      /*for (Standard standard in standardMap.keys) {
-        for(int t=0;t<standardMap[standard].length;t++){
-          EventKeyPojo eventKeyPojo = standardMap[standard][t];
-          partInputs[eventKeyPojo.id] = false;
-        }
-        }*/
+      int i=0;
+      if(widget.data != null){
+        for (Standard standard in widget.standardsMap.keys){
+          if (!widget.data.contains ( prepareParticipantObject ( standard ) )) {
+            stdInputs[standard.id] = false;
+          }else  if (widget.data[i].participantType == "STANDARD"){
+            stdInputs[standard.id] = true;
+            selectedsStandardList.add(prepareParticipantObject(standard));
+            List<EventKeyPojo> selectedClassPart = widget.standardsMap[standard];
+            for (EventKeyPojo selectedClass in selectedClassPart) {
+              partInputs[selectedClass.id] = true;
+            }
+          }else {
+            if (widget.data[i].participantType == "STANDARD_TEACHER") {
+              String s = standard.id.toString ( ) + "_TEACHER";
 
-      setRange ( );
+              partInputs[s] = true;
+              stdInputs[standard.id] = false;
+            } else if (widget.data[i].participantType == "STANDARD_PARENT") {
+              String s = standard.id.toString ( ) + "_PARENT";
+
+              partInputs[s] = true;
+              stdInputs[standard.id] = false;
+            } else if (widget.data[i].participantType == "STANDARD_STUDENT") {
+              String s = standard.id.toString ( ) + "_STUDENT";
+              partInputs[s] = true;
+              stdInputs[standard.id] = false;
+            }
+            selectedsStandardList.add ((widget.data[i]));
+          }
+          i++;
+        }
+      }
+      else {
+        for (Standard standard in widget.standardsMap.keys) {
+          stdInputs[standard.id] = false;
+        }
+      }
+
+
+      for(Standard standard in widget.standardsMap.keys) {
+        List<EventKeyPojo> eventKeyPojo = widget.standardsMap[standard];
+        for (EventKeyPojo selectedClass in eventKeyPojo) {
+          if (!partInputs.containsKey ( selectedClass.id )) {
+            partInputs[selectedClass.id] = false;
+          }
+
+        }
+      }
+
+
     });
   }
 
@@ -156,37 +201,37 @@ class _MyPageState extends State<ClassPopup> {
     return Column (
       mainAxisSize: MainAxisSize.min ,
       children: <Widget>[
-        FutureBuilder (
-            future: getStandards ( ) ,
-            builder: ( context , projectSnap ) {
-              return Column (
-                children: _getStandardList ( projectSnap ) ,
-              );
-            } ) ,
+        Column (
+            //future: widget.standardsMap,
+          //  builder: ( context , projectSnap ) {
+            //  return Column (
+                children: _getStandardList ( widget.standardsMap ) ,
+             // );
+           // }
+         ) ,
       ] ,
 
     );
   }
 
-  List<Widget> _getStandardList( AsyncSnapshot snapshot ) {
-    standardMap = snapshot.data;
-    //  print ( standardMap.length );
-    if (snapshot.data != null) {
+  List<Widget> _getStandardList( standardsMap ) {
+
+    if (standardsMap != null) {
       // setSelectedList ( widget.data,flag );
-      standardMap = snapshot.data;
-      //setRange ( );
+      standardMap = standardsMap;
+     // setRange ( );
     }
     List<Widget> widgetList = new List( );
     int i = 0;
     if (standardMap != null) {
       for (Standard standard in standardMap.keys) {
         Widget widget = getWidget ( standard , standardMap[standard] , i );
-        for (int t = 0; t < standardMap[standard].length; t++) {
+        /*for (int t = 0; t < standardMap[standard].length; t++) {
           EventKeyPojo eventKeyPojo = standardMap[standard][t];
           if (!partInputs.containsKey ( eventKeyPojo.id )) {
             partInputs[eventKeyPojo.id] = false;
           }
-        }
+        }*/
         i++;
         widgetList.add ( widget );
       }
@@ -195,6 +240,7 @@ class _MyPageState extends State<ClassPopup> {
   }
 
   Widget getWidget( Standard standard , standardList , index ) {
+
     standardList = standardList;
     return Column (
       //mainAxisAlignment: MainAxisAlignment.center,
@@ -205,7 +251,7 @@ class _MyPageState extends State<ClassPopup> {
           child: Row (
             children: <Widget>[
               Checkbox (
-                value: stdInputs.length > 0 ? stdInputs[standard.id] : false ,
+                value:stdInputs!=null && stdInputs.length > 0 ? stdInputs[standard.id] : false ,
                 onChanged: ( bool value , ) {
                   setState ( ( ) {
                     ItemStandardChange ( value , standard , );
@@ -315,29 +361,37 @@ class _MyPageState extends State<ClassPopup> {
   }
 
   setRange( ) {
-    /* if (widget.data.length > 0) {
+     if (widget.data!= null && widget.data.length > 0) {
       for (Participant participant in widget.data) {
         stdInputs[participant.participantId] = true;
       }
     } else {
-      for (Standard standard in standardMap.keys) {
+      for (Standard standard in widget.standardsMap.keys) {
         if (!stdInputs.containsKey ( standard.id )) {
           stdInputs[standard.id] = false;
         }
       }
-    }*/
-    int i = 0;
+    }
+   /* int i = 0;
     for (Standard standard in standardMap.keys) {
       if (widget.data != null) {
         if (!widget.data.contains ( prepareParticipantObject ( standard ) )) {
           stdInputs[standard.id] = false;
-        } else if (widget.data[i].participantType == "STANDARD") {
+        } else {
+          stdInputs[standard.id] = true;
+          List<EventKeyPojo> selectedClassPart = standardMap[standard];
+          for (EventKeyPojo selectedClass in selectedClassPart) {
+            partInputs[selectedClass.id] = true;
+          }
+        }*/
+
+        /*else if (widget.data[i].participantType == "STANDARD") {
             stdInputs[standard.id] = true;
             List<EventKeyPojo> selectedClassPart = standardMap[standard];
             for (EventKeyPojo selectedClass in selectedClassPart) {
               partInputs[selectedClass.id] = true;
-            }
-          }/* else {
+            }*/
+       /* else {
             if (widget.data[i].participantType == "STANDARD_TEACHER") {
               String s = standard.id.toString ( ) + "_TEACHER";
               partInputs[s] = true;
@@ -350,19 +404,21 @@ class _MyPageState extends State<ClassPopup> {
             }
           }*/
 
-      } else if (!stdInputs.containsKey ( standard.id )) {
+    }
+    /* else if (!stdInputs.containsKey ( standard.id )) {
         stdInputs[standard.id] == false;
       }
 
-      i++;
-    }
-  }
+    i++;
+  }*/
+
 
 
   Participant prepareParticipantObject( Standard standard ) {
     Participant participant = new Participant( );
     participant.participantId = standard.id;
     participant.participantType = "STANDARD";
+    participant.standardName = standard.name;
     return participant;
   }
 
@@ -372,8 +428,7 @@ class _MyPageState extends State<ClassPopup> {
     //participant.standard = standard;
     participant.participantId = int.parse ( str[0] );
     participant.participantType = "STANDARD_" + str[1];
+    participant.standardName = eventKeyPojo.standardName;
     return participant;
   }
-
-
 }

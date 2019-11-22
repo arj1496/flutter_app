@@ -191,10 +191,10 @@ class EventActivity{
     return eventObject;
   }*/
 
-  Future<int> addOrUpdateEvent(Event event) async{
+  Future<int> addOrUpdateEvent(Event event,callBack) async{
     print("in examactivity");
     int eventObject = await eventService.addOrUpdateEvent(event);
-     return eventObject;
+     callBack(eventObject);
   }
 
   Future<List<Participant>> getParticipant(Event event) async{

@@ -9,6 +9,7 @@ class Participant extends Equatable {
   int participantId;
   String participantRole;
   String text;
+  String standardName;
   /*
 	 * Transient
 	 */
@@ -20,6 +21,7 @@ class Participant extends Equatable {
    this.participantId,
    this.participantRole,
    this.text,
+    this.standardName,
    this.standard
 });
 

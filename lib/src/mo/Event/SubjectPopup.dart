@@ -6,6 +6,8 @@ import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:flutter_app/src/mo/Standard/Standard.dart';
 import 'package:flutter_app/src/mo/Standard/StandardActivity.dart';
 import '../../../AppTheme.dart';
+import 'EventActivity.dart';
+import 'EventType.dart';
 
 
 class SubjectPopup extends StatefulWidget {
@@ -26,11 +28,15 @@ class SubjectPopup extends StatefulWidget {
 
 class _MyPageState extends State<SubjectPopup> {
 
-  List<String> schoolPaticipant = ["SCHOOL","SCHOOL STUDENTS","SCHOOL TEACHERS","SCHOOL PARENTS"];
-  Map<int,bool> partInputs = new Map();
+ /* List<String> schoolPaticipant = ["SCHOOL","SCHOOL STUDENTS","SCHOOL TEACHERS","SCHOOL PARENTS"];
+  Map<int,bool> partInputs = new Map();*/
   List<Participant> selectedSchoolParticipant = new List();
+  EventActivity eventActivity = new EventActivity();
+  List<EventType>  _eventTypes = new List();
 
-
+  getEvents(){
+    _eventTypes = eventActivity.getEventTypeList();
+  }
 
   @override
   Widget build( BuildContext context ) {
@@ -114,17 +120,14 @@ class _MyPageState extends State<SubjectPopup> {
                     ListView.builder (
                       //physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true ,
-                        itemCount: schoolPaticipant.length ,
+                        itemCount: _eventTypes.length ,
                         itemBuilder: ( context , i ) {
-                          return CheckboxListTile (
-                              value: partInputs.length > 0 ? partInputs[i]:false,
-                              title: new Text( schoolPaticipant[i] ) ,
-                              controlAffinity: ListTileControlAffinity.leading ,
-                              onChanged: ( bool val ) {
-                                setState(() {
-                                  ItemChange ( val , i , );
-                                });
-                              } );
+                          return  ListTile(
+                              title: new Text(
+                               _eventTypes[i].eventType,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          );
                         } ),
                   ] ,
                 ),
@@ -151,7 +154,7 @@ class _MyPageState extends State<SubjectPopup> {
 
 
 
-  void ItemChange( bool val , int index ) {
+ /* void ItemChange( bool val , int index ) {
     setState ( ( ) {
       partInputs[index] = val;
       if (val) {
@@ -159,7 +162,7 @@ class _MyPageState extends State<SubjectPopup> {
             prepareParticipantObject ( schoolPaticipant[index] ) );
       }
     } );
-  }
+  }*/
 
 
 

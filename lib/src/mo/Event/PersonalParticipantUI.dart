@@ -43,11 +43,7 @@ class _ListTileViewUVState extends State<PersonalParticipantUI>  {
   @override
   void initState(){
     setState(() {
-     /* for(Person person  in _personList){
-        if(!partInputs.containsKey(person.id)) {
-          partInputs[person.id] = false;
-        }
-      }*/
+
      if(widget.data != null){
       for(Participant participant in widget.data){
          partInputs[participant.id] = true;
