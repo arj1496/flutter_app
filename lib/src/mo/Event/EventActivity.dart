@@ -24,6 +24,11 @@ class EventActivity{
    return events;
   }
 
+  Future<Map<int, Event>> getEventParticipantList() async{
+    Map<int, Event> eventListFromFuture = await eventService.getEventParticipantList();
+    return eventListFromFuture;
+  }
+
   String getDateFromLong(int startDate){
    return schoolUtils.getDateStringFromLongWithSchoolTimeZone(startDate);
   }

@@ -51,7 +51,6 @@ class  DBProvider {
           await db.execute ( createTimeTableTable ( ) );
           await db.execute ( createHolydayTable ( ) );
           await db.execute ( createParticipantTable ( ) );
-          await db.execute ( createEventParticipantTable() );
           await db.execute ( createHolidayParticipantTable() );
           await db.execute(createAttendanceTable());
         } );
@@ -320,16 +319,13 @@ class  DBProvider {
         "id INTEGER PRIMARY KEY,"
         "participantType name TEXT,"
         "participantId INTEGER,"
-        " participantRole TEXT"
+        "participantRole TEXT,"
+        "entityID INTEGER,"                    // enttityID for eventId,hoildayId,announcementid etc
+        "reference INTEGER"                    // refernce differentiate entity model like event, annnouncement and holiay.
         ")";
   }
 
-  String createEventParticipantTable( ) {
-    return "CREATE TABLE EventParticipant( "
-        "eventId INTEGER PRIMARY KEY,"
-        "participantId INTEGER"
-        ")";
-  }
+
 
   String createHolidayParticipantTable( ) {
     return "CREATE TABLE HolidayParticipant( "

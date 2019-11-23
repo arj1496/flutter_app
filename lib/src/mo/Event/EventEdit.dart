@@ -3,6 +3,7 @@ import 'package:flutter_app/AppTheme.dart';
 import 'package:flutter_app/src/mo/Event/EventActivity.dart';
 import 'package:flutter_app/src/mo/Event/EventTypeAutoComplte.dart';
 import 'package:flutter_app/src/mo/Event/ParticipantUI.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'DateWidgetForEvent.dart';
 import 'Event.dart';
 
@@ -103,11 +104,22 @@ class _EventAddState extends State<EventEdit> {
       widgetList.add(widgetLocal);
     }
 
-   // if(event.eventParticipant != null){
-  /*  widgetLocal =  _getParticipantUI ( _formKey,widget.event);
-    widgetList.add(widgetLocal);*/
-   // }
-    //  _getEndDateAndTime ( _formKey , homework ) ,
+    widgetLocal =  _getParticipantUI(_formKey,widget.event);
+    widgetList.add(widgetLocal);
+    if(widget.event.eventParticipant != null ) {
+      List<Participant> finalParticipant = new List();
+      for (Participant participant in widget.event.eventParticipant) {
+        if (participant.participantType == "STANDARD_TEACHER" ||
+            participant.participantType == "STANDARD_STUDENT" ||
+            participant.participantType == "STANDARD_PARENT" ||
+            participant.participantType == "STANDARD") {
+          finalParticipant.add((participant));
+        }
+
+      }
+      widgetLocal = getParticipantChip(finalParticipant);
+      widgetList.add ( widgetLocal );
+    }
     widgetLocal =   _submitButton();
     widgetList.add(widgetLocal);
     return widgetList;
@@ -205,13 +217,43 @@ class _EventAddState extends State<EventEdit> {
     return EventTypeAutoComplte(_formKey,event);
   }
 
- /* _getParticipantUI(_formKey,event) {
-    return ParticipantUI(_formKey,event);
-  }*/
+  _getParticipantUI(_formKey,event) {
+    return ParticipantUI(
+        formKey: _formKey ,
+        event: event,
+        callback:(participantList){
+          getParticipantChip(participantList);
+
+        }
+    );
+  }
 
   // Date and time textfield
   _getDateAndTime( GlobalKey<FormState> formKey , Event event ) {
     return DateWidgetForEvent.init ( _formKey , event );
   }
+  getParticipantChip(participantList) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: participantList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new Column(
+            children: <Widget>[
+              new   ChoiceChip(
+                  label: participantList[index].standardName!=null && participantList[index].participantType!=null ? Text( participantList[index].standardName +"(" + participantList[index].participantType+")" ):Text("") ,
+                  selected: false,
+                  /*onSelected: (selected) {
+                setState(() {
+                  isSelected = selected;
+                });
+              },*/
+                  avatar: Icon(
+                    Icons.cancel,
+                    color: Colors.red,
+                  )
+              ),
+            ],
+          );
+        });
+  }
 }
-

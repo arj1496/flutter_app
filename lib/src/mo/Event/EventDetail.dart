@@ -35,7 +35,6 @@ class EventDetail extends StatefulWidget {
 
   EventDetail(Event event ){
     this.event = event;
-
   }
 }
 
@@ -79,11 +78,11 @@ class DetailViewUVState extends State<EventDetail> {
       CardDetail2Oct ( EventWidget(widget.event) ) ,
       // It display all data in card view with curve corner.the detailwidget is a object of dart file for all details page
       DateWidget2 ( widget.event ) ,
-      TitleViewDetail.init ( "Description" , FontAwesomeIcons.bookOpen ) ,
+      TitleViewDetail.init ( "Description" , FontAwesomeIcons.bookOpen ),
       DescriptionCustomView.init ( widget.event.description ) ,
       TitleViewDetail.init ( "Place" , FontAwesomeIcons.mapMarker ) ,
       DescriptionCustomView.init ( widget.event.place ) ,
-      ParticipantCardModel(widget.event.eventParticipant),
+     // ParticipantCardModel(widget.event.eventParticipant),
     /*  getSubmisionContainer ( ) ,
       getSubmissionButton( )*/
        submitButton(widget.event),

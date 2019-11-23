@@ -26,40 +26,31 @@ class EventService {
     List<dynamic> eventsDynamic = syncDataResponse['events'];
 
     List<Participant> allParticipants = new List();
-    List<Event_Participant> allEventParticpants = new List();
     if (eventsDynamic != null && eventsDynamic.length > 0) {
       List<Event> eventList = List.generate ( eventsDynamic.length , ( i ) {
         List<dynamic> participantsDynamic = eventsDynamic[i]['eventPrticipantds'];
-        List<Participant> participantList = getParticipant(participantsDynamic );
-
         Event event = Event.fromJson ( eventsDynamic[i] );
+        List<Participant> participantList = getParticipant(participantsDynamic,event );
         if(participantList != null) {
-          for(Participant participant in participantList){
-            Event_Participant event_participant = new Event_Participant(event.id, participant.id);
-            allEventParticpants.add(event_participant);
-          }
           allParticipants.addAll ( participantList );
         }
-
         return event;
       } );
       await eventDAO.batchAddEvent (eventList);
       await participantDao.batchAddParticipant(allParticipants);
-      await participantDao.batchAddEventParticipant(allEventParticpants);
     }
   }
 
-  List<Participant> getParticipant( List participantsDynamic )  {
+  List<Participant> getParticipant( List participantsDynamic ,Event event)  {
     if (participantsDynamic != null && participantsDynamic.length > 0) {
       List<Participant> participanttList = List.generate (
           participantsDynamic.length , ( i ) {
         Participant participant = Participant.fromJson(participantsDynamic[i]);
+        participant.entityId = event.id;
+        participant.reference = 0;
         return participant;
       } );
-     // await participantDao.batchAddParticipant ( participanttList );
       return participanttList;
     }
-
-
   }
 }

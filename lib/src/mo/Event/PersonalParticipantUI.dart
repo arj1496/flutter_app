@@ -12,147 +12,161 @@ class PersonalParticipantUI extends StatefulWidget {
 
   final Function callback;
   final List<Participant> data;
-  const PersonalParticipantUI(
-      {this.callback,this.data});
+  const PersonalParticipantUI({this.callback, this.data,});
 }
 
-class _ListTileViewUVState extends State<PersonalParticipantUI>  {
+class _ListTileViewUVState extends State<PersonalParticipantUI> {
+  bool boolVal = false;
+  List<Person> _personList = new List();
+  List<Participant> selectedParticipant = new List();
+  static int flag = 1;
+  Map<int, bool> partInputs = new Map();
+  final bloc = ParticipantBloc(flag);
 
-   bool boolVal = false;
-   List<Person> _personList = new List();
-   List<Participant> selectedParticipant = new List();
-   static int flag = 1;
-   Map<int,bool> partInputs = new Map();
-   final bloc = ParticipantBloc(flag);
+  Future<List<Person>> getParticipant(int flag) async {
+    ParticipantSelectModel participantSelectModel =
+        new ParticipantSelectModel();
 
-
-
-  Future<List<Person>> getParticipant(int flag) async{
-      ParticipantSelectModel participantSelectModel = new ParticipantSelectModel();
-
-    if(flag == 1){
+    if (flag == 1) {
       _personList = await participantSelectModel.getTeacher();
-    }else if(flag ==2){
+    } else if (flag == 2) {
       _personList = await participantSelectModel.getStudent();
-    }else{
+    } else {
       _personList = await participantSelectModel.getParent();
     }
 
     return _personList;
   }
+
+ /* @override
+  void initState() {
+    setState(() {
+      if (widget.data != null) {
+        for (Participant participant in widget.data) {
+          partInputs[participant.id] = true;
+        }
+      } else {
+        for (Person person in _personList) {
+          partInputs[person.id] = true;
+        }
+      }
+    });
+  }*/
+
   @override
   void initState(){
+    super.initState();
     setState(() {
-
-     if(widget.data != null){
-      for(Participant participant in widget.data){
-         partInputs[participant.id] = true;
+      int i = 0;
+      if (widget.data != null) {
+        for (Person person in _personList) {
+          if (!widget.data.contains ( prepareParticipantObject ( person ) )) {
+            partInputs[person.id] = false;
+          } else {
+            partInputs[person.id] = true;
+          }
+        }
+      }else {
+        for (Person person in _personList) {
+           partInputs[person.id] = false;
+        }
       }
-     }
-     else {
-       for (Person person in _personList) {
-         partInputs[person.id] = true;
-       }
-     }
-    });
+         });
   }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: AppTheme.background,
         title: Text("Personal Participant"),
       ),
-       body: Container(
-             child:Column(
-               children: <Widget>[
-                 selectParticipant(),
-                 serarchParticipant(),
-                 Expanded(
-                   child:getParticipantList_(),
-                 )
-
-               ],
-             )
-         ),
-
-        bottomNavigationBar:  ButtonUI(),
+      body: Container(
+          child: Column(
+        children: <Widget>[
+          selectParticipant(),
+          serarchParticipant(),
+          Expanded(
+            child: getParticipantList_(),
+          )
+        ],
+      )),
+      bottomNavigationBar: ButtonUI(),
     );
   }
 
   selectParticipant() {
-    return Padding (
-      padding: EdgeInsets.only ( bottom: 5 , top: 5 ) ,
-      child: Row (
-        children: <Widget>[Material ( //Wrap with Material
-          shape: RoundedRectangleBorder (
-              borderRadius: new BorderRadius.circular( 0.0 ) ,
-              side: BorderSide ( color: AppTheme.nearlyBlue )
-          ) ,
-          //elevation: 16.0,
-          clipBehavior: Clip.antiAlias , // Add This
-          child: MaterialButton (
-            minWidth: 120.0 ,
-            height: 35 ,
-            child: new Text( "TEACHER" ,
-                style: new TextStyle(
-                    fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
-            onPressed: ( ) async {
-                //Provider.of<ParticipantSelectModel>(context, listen: false).getTeacher();
-              bloc.submitQuery(1);
-                //getParticipantList();
-            } ,
-          ) ,
-        ) ,
-          Material ( //Wrap with Material
-            shape: RoundedRectangleBorder (
-                borderRadius: new BorderRadius.circular( 0.0 ) ,
-                side: BorderSide ( color: AppTheme.nearlyBlue )
-            ) ,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 5, top: 5),
+      child: Row(
+        children: <Widget>[
+          Material(
+            //Wrap with Material
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(0.0),
+                side: BorderSide(color: AppTheme.nearlyBlue)),
             //elevation: 16.0,
-            clipBehavior: Clip.antiAlias , // Add This
-            child: MaterialButton (
-              minWidth: 120.0 ,
-              height: 35 ,
-              child: new Text( "PARENT" ,
+            clipBehavior: Clip.antiAlias, // Add This
+            child: MaterialButton(
+              minWidth: 120.0,
+              height: 35,
+              child: new Text("TEACHER",
                   style: new TextStyle(
-                      fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
-              onPressed: ( ) async {
+                      fontSize: 12.0, color: AppTheme.nearlyBlue)),
+              onPressed: () async {
+                //Provider.of<ParticipantSelectModel>(context, listen: false).getTeacher();
+                bloc.submitQuery(1);
+                //getParticipantList();
+              },
+            ),
+          ),
+          Material(
+            //Wrap with Material
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(0.0),
+                side: BorderSide(color: AppTheme.nearlyBlue)),
+            //elevation: 16.0,
+            clipBehavior: Clip.antiAlias, // Add This
+            child: MaterialButton(
+              minWidth: 120.0,
+              height: 35,
+              child: new Text("PARENT",
+                  style: new TextStyle(
+                      fontSize: 12.0, color: AppTheme.nearlyBlue)),
+              onPressed: () async {
                 //getParticipant(2);
                 bloc.submitQuery(2);
                 //getParticipantList();
                 //  Provider.of<ParticipantSelectModel>(context, listen: false).getParent();
-              } ,
-            ) ,
-          ) ,
-          Material ( //Wrap with Material
-            shape: RoundedRectangleBorder (
-                borderRadius: new BorderRadius.circular( 0.0 ) ,
-                side: BorderSide ( color: AppTheme.nearlyBlue )
-            ) ,
+              },
+            ),
+          ),
+          Material(
+            //Wrap with Material
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(0.0),
+                side: BorderSide(color: AppTheme.nearlyBlue)),
             //elevation: 16.0,
-            clipBehavior: Clip.antiAlias , // Add This
-            child: MaterialButton (
-              minWidth: 120.0 ,
-              height: 35 ,
-              child: new Text( "STUDENT" ,
+            clipBehavior: Clip.antiAlias, // Add This
+            child: MaterialButton(
+              minWidth: 120.0,
+              height: 35,
+              child: new Text("STUDENT",
                   style: new TextStyle(
-                      fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
-              onPressed: ( ) {
-
+                      fontSize: 12.0, color: AppTheme.nearlyBlue)),
+              onPressed: () {
                 bloc.submitQuery(3);
                 //getParticipantList();
                 // Provider.of<ParticipantSelectModel>(context, listen: false).getStudent("Student");
-              } ,
-            ) ,
-          ) ,
-        ] ,
-      ) ,
+              },
+            ),
+          ),
+        ],
+      ),
     );
 
     //return ButtonUI2.init(_formKey, genericModel,'DRAFT','PUBLISH','CLOSE',exam);
-
   }
 
   serarchParticipant() {
@@ -172,148 +186,151 @@ class _ListTileViewUVState extends State<PersonalParticipantUI>  {
         },
       ),
     );
-
   }
 
   getParticipantList() {
-    return Column (
-      mainAxisSize: MainAxisSize.min ,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        FutureBuilder (
-            future: getParticipant(flag) ,
-            builder: ( context , projectSnap ) {
-              return Column (
-                children: _getParticipantUI ( projectSnap ) ,
-              );
-            } ) ,
-      ] ,
-
+        FutureBuilder(
+            future: getParticipant(flag),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return new Text('Input a URL to start');
+                case ConnectionState.waiting:
+                  return new Center(child: new CircularProgressIndicator());
+                default:
+                  if (snapshot.hasError)
+                    return new Text('Error: ${snapshot.error}');
+                  else
+                    return Column(
+                      children: _getParticipantUI(snapshot),
+                    );
+              }
+            }),
+      ],
     );
   }
 
-
-  getParticipantList_(){
+  getParticipantList_() {
     return StreamBuilder(
-       stream:  this.bloc.allPersons,
-        builder: (context, snapshot) {
-          final results = snapshot.data;
+      stream: this.bloc.allPersons,
+      builder: (context, snapshot) {
+        final results = snapshot.data;
 
-         /* if (results.isEmpty) {
+        /* if (results.isEmpty) {
             return Center(child: Text('No Results'));
           }*/
 
-          return _getParticipantUI(results);
-        },
-      );
-    }
+        return _getParticipantUI(results);
+      },
+    );
+  }
 
-
- _getParticipantUI( personList ) {
-  /* for(Person person  in personList){
+  _getParticipantUI(personList) {
+    /* for(Person person  in personList){
      if(!partInputs.containsKey(person.id)) {
        partInputs[person.id] = false;
      }
    }*/
 
-  /* for(Person person  in personList){
+    /* for(Person person  in personList){
      if(widget.data.contains(person)) {
         partInputs[person.id] = true;
      }else{
        partInputs[person.id] = false;
      }
    }*/
-     return ListView.builder (
-             physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true ,
-              itemCount: personList.length ,
-              itemBuilder: ( context , i ) {
-                return CheckboxListTile (
-                    value: partInputs.containsKey(personList[i].id) ,
-                    title: new Text( personList[i].firstName +
-                        "(" +
-                        personList[i].lastName +
-                        ")" ) ,
-                    controlAffinity: ListTileControlAffinity.leading ,
-                    onChanged: ( bool val ) {
-                      ItemChange ( val , personList[i] );
-                    } );
-              } );
+    return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: personList.length,
+        itemBuilder: (context, i) {
+          return CheckboxListTile(
+              value: partInputs.containsKey(personList[i].id),
+              title: new Text(
+                  personList[i].firstName + "(" + personList[i].lastName + ")"),
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: (bool val) {
+                ItemChange(val, personList[i]);
+              });
+        });
 
-      /* widgetList.add(widget);
+    /* widgetList.add(widget);
        return widgetList;*/
   }
 
-  void ItemChange( bool val , Person person ) {
-    setState ( ( ) {
+  void ItemChange(bool val, Person person) {
+    setState(() {
       partInputs[person.id] = val;
       if (val) {
         if (!selectedParticipant.contains(person.id)) {
-            selectedParticipant.add (prepareParticipantObject(person));
+          selectedParticipant.add(prepareParticipantObject(person));
         }
-      }else{
+      } else {
         selectedParticipant.remove(prepareParticipantObject(person));
       }
-    } );
+    });
   }
 
-
-  ButtonUI(   ) {
-    return Padding (
-      padding: EdgeInsets.only ( bottom: 0 , top: 0 ) ,
-
-      child:Container(
-        child:Row (
-        children: <Widget>[Material ( //Wrap with Material
-          shape: RoundedRectangleBorder (
-              borderRadius: new BorderRadius.circular( 0.0 ) ,
-              side: BorderSide ( color: AppTheme.nearlyBlue )
-          ) ,
-          //elevation: 16.0,
-          clipBehavior: Clip.antiAlias , // Add This
-          child: MaterialButton (
-            minWidth: 180.0 ,
-            height: 35 ,
-            child: new Text( "DONE" ,
-                style: new TextStyle(
-                    fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
-            onPressed: ( ) async {
-              widget.callback ( selectedParticipant );
-              Navigator.pop ( context );
-            } ,
-          ) ,
-        ) ,
-          Material ( //Wrap with Material
-            shape: RoundedRectangleBorder (
-                borderRadius: new BorderRadius.circular( 0.0 ) ,
-                side: BorderSide ( color: AppTheme.nearlyBlue )
-            ) ,
-            //elevation: 16.0,
-            clipBehavior: Clip.antiAlias , // Add This
-            child: MaterialButton (
-              minWidth: 180.0 ,
-              height: 35 ,
-              child: new Text( "CANCEL" ,
-                  style: new TextStyle(
-                      fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
-              onPressed: ( ) async {
+  ButtonUI() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 0, top: 0),
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Material(
+              //Wrap with Material
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(0.0),
+                  side: BorderSide(color: AppTheme.nearlyBlue)),
+              //elevation: 16.0,
+              clipBehavior: Clip.antiAlias, // Add This
+              child: MaterialButton(
+                minWidth: 180.0,
+                height: 35,
+                child: new Text("DONE",
+                    style: new TextStyle(
+                        fontSize: 12.0, color: AppTheme.nearlyBlue)),
+                onPressed: () async {
+                  widget.callback(selectedParticipant);
                   Navigator.pop(context);
-              } ,
-            ) ,
-          ) ,
-
-        ] ,
-      ) ,
-    ),);
+                },
+              ),
+            ),
+            Material(
+              //Wrap with Material
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(0.0),
+                  side: BorderSide(color: AppTheme.nearlyBlue)),
+              //elevation: 16.0,
+              clipBehavior: Clip.antiAlias, // Add This
+              child: MaterialButton(
+                minWidth: 180.0,
+                height: 35,
+                child: new Text("CANCEL",
+                    style: new TextStyle(
+                        fontSize: 12.0, color: AppTheme.nearlyBlue)),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  Participant prepareParticipantObject(Person person){
+  Participant prepareParticipantObject(Person person) {
     Participant participant = new Participant();
     participant.id = person.id;
-    if( person.role == "Parent") {
+    if (person.role == "Parent") {
       participant.participantType = "INDIVIDUAL_PARENT";
-    }else if( person.role == "Teacher"){
+    } else if (person.role == "Teacher") {
       participant.participantType = "INDIVIDUAL_TEACHER";
-    }else{
+    } else {
       participant.participantType = "INDIVIDUAL_STUDENT";
     }
     return participant;

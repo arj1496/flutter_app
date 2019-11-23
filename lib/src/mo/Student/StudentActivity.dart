@@ -9,6 +9,24 @@ class StudentActivity{
 
   StudentService studentService = new StudentService();
 
+  List<Student> getAllTeacherList(){
+    List<Student> teacherList = new List();
+    for(int i = 6; i < 10; i++){
+      Student teacher = new Student();
+      teacher.lid = i;
+      teacher.id =  i;
+      teacher.firstName = "FirstName" + i.toString();
+      teacher.lastName = "LastName" + i.toString();
+      teacher.isWritable =  0;
+      teacher.gender = "gender" + i.toString();
+      teacher.email = "email" + i.toString();
+      teacher.mobileNumber ="987654321"+ i.toString();
+      teacher.userId = i;
+      teacherList.add(teacher);
+    }
+    return teacherList;
+  }
+
   Future<List<Student>> getAllStudent() async{
     List<Student> studentList =  await studentService.getStudentListFromLocalDB();
     return studentList;

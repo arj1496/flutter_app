@@ -153,6 +153,7 @@ class ParticipantUI extends StatefulWidget {
                          Padding(
                            padding: const EdgeInsets.only(left:8.0),
                            child: GestureDetector(
+
                              onTap:() {
                                Navigator.push (
                                  context ,
@@ -359,56 +360,6 @@ class ParticipantUI extends StatefulWidget {
   }
 
   _showAlert() {
-  /*  for(int val in  partInputs.keys){
-      if(partInputs[val]){
-        partInputs[val] = true;
-      }else{
-        partInputs[val] = false;
-      }
-
-    }
-      return showDialog (
-        context: context ,
-        builder: ( context ) {
-          return AlertDialog (
-            title: new Text( "Particpant" ) ,
-            content:  Container(
-                child: Column (
-                  mainAxisSize: MainAxisSize.min ,
-                  children: <Widget>[
-                    ListView.builder (
-                        //physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true ,
-                        itemCount: schoolPaticipant.length ,
-                        itemBuilder: ( context , i ) {
-                          return CheckboxListTile (
-                              value: partInputs.length > 0 ? partInputs[i]:false,
-                              title: new Text( schoolPaticipant[i] ) ,
-                              controlAffinity: ListTileControlAffinity.leading ,
-                              onChanged: ( bool val ) {
-                                setState(() {
-                                  ItemChange ( val , i , );
-                                });
-                              } );
-                        } ),
-                  ] ,
-                ),
-              ),
-
-
-
-            actions: <Widget>[
-              MaterialButton (
-                  child: Text ( "DONE" ) ,
-                  onPressed: ( ) {
-                     callback (selectedSchoolParticipant );
-                     Navigator.pop ( context );
-                  } ) ,
-            ]
-          );
-        }
-    );*/
-
     return showDialog(
         context: context,
         builder: (context) {
@@ -446,7 +397,6 @@ class ParticipantUI extends StatefulWidget {
                 callback: (List<Participant> value){
                   print("callBack Return ${value.length}");
                   List<Participant> party = new List();
-               //   widget.event.eventParticipant.clear();
                   for(int i=0;i<value.length;i++){
                     party.add(value[i]);
 

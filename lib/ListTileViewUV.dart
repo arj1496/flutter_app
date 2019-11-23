@@ -27,11 +27,12 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
 
   List<HomeWork> list = null;
   EventActivity eventActivity = new EventActivity( );
+  bool _isInAsyncCall = false;
+  bool _isAdd = false;
 
 
-
-  Future<List<Event>>  getData() async{
-    List<Event> eventList = await eventActivity.getAllEvent ( );
+  Future<Map<int, Event>>  getData() async{
+    Map<int, Event> eventList = await eventActivity.getEventParticipantList();
     return eventList;
   }
   @override
@@ -40,7 +41,16 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
     var futureBuilder = new FutureBuilder(
         future: getData(),
         builder: ( BuildContext context , AsyncSnapshot snapshot ) {
-          return _getListViewWithBuilder ( context , snapshot );
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return new Text( 'Input a URL to start' );
+            case ConnectionState.waiting:
+              return new Center( child: new CircularProgressIndicator( ) );
+            default:
+              if (snapshot.hasError)
+                return new Text( 'Error: ${snapshot.error}');
+              return _getListViewWithBuilder ( context , snapshot );
+          }
         }
     );
     return Scaffold (
@@ -81,43 +91,24 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
 
   Widget _getListViewWithBuilder( BuildContext context ,
       AsyncSnapshot snapshot ) {
-    List<Event> eventList = snapshot.data;
-    return Container (
-      color: AppTheme.background ,
-      child: ListView.builder (
-          itemCount: eventList != null ? eventList.length : 0 ,
-          itemBuilder: ( BuildContext ctxt , int Index ) {
-            return eventList != null && eventList.length > 0 ? _listTileViewUV (
-                eventList[Index] ) : _listNotFound ( );
-          }
-      ) ,
-      /*child: Scaffold(
-        */ /*appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: AppTheme.background,
-          title: Text("Events"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: synEvents,
-            ),
-            IconButton(
-              icon: Icon(Icons.get_app),
-              onPressed: getEvent,
-            ),
-          ],
-        ),*/ /*
-        backgroundColor: Colors.transparent,
-        body: ListView.builder(
-           itemCount: list.length,
-           // itemCount: eventList.length,
-            itemBuilder: (BuildContext ctxt, int Index){
-              return _listTileViewUV(evList[Index]);
-              //return _listTileViewUV(eventList[Index]);
+    Map<int , Event> eventListFromMap = snapshot.data;
+    List<Event> eventList = new List();
+    for(int eventId in eventListFromMap.keys){
+      Event event = eventListFromMap[eventId];
+      eventList.add(event);
+    }
+      return Container (
+        color: AppTheme.background ,
+        child: ListView.builder (
+            itemCount: eventList != null ? eventList.length : 0 ,
+            itemBuilder: ( BuildContext ctxt , int Index ) {
+              return eventList != null && eventList.length > 0
+                  ? _listTileViewUV (
+                  eventList[Index] )
+                  : _listNotFound ( );
             }
-        ),
-      ),*/
-    );
+        ) ,
+      );
   }
 
   Widget _listNotFound( ) {
@@ -423,12 +414,9 @@ class _ListTileViewUVState extends State<ListTileViewUV> {
   }
 
   getParticipants(event) async {
-    List<Participant> participants = await eventActivity.getParticipant(event);
-    //widget.event.eventParticipant = participants;
-    event.eventParticipant = participants;
+
     Navigator.push (
       context ,
-      //DetailView2Oct is a main page with scaffold which render all details widgets.
       MaterialPageRoute ( builder: ( context ) => EventDetail ( event ) ) ,
     );
   }

@@ -10,6 +10,8 @@ class Participant extends Equatable {
   String participantRole;
   String text;
   String standardName;
+  int reference;
+  int entityId;
   /*
 	 * Transient
 	 */
@@ -22,24 +24,28 @@ class Participant extends Equatable {
    this.participantRole,
    this.text,
     this.standardName,
-   this.standard
+   this.standard,
+    this.entityId,
+    this.reference,
 });
 
   factory Participant.fromJson(Map<String, dynamic> json) => Participant(
     id: json["id"],
-    participantType: json["participantType"],
+    participantType: json["type"],
     participantId: json["participantId"],
     participantRole: json["participantRole"],
     text: json["text"],
-    standard: json["standard"]
+    standard: json["standard"],
+    reference: json["reference"],
+    entityId: json["entityId"],
   );
   Map<String, dynamic> toJson() => {
     "id" :id,
     "participantType" : participantType,
     "participantId" : participantId,
     "participantRole" : participantRole,
-    //"text" : text,
-   // "standard" :standard
+    "entityId":entityId,
+    "reference":reference,
   };
 
   Map<String, dynamic> toJson_() => {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/Event/EventDAO.dart';
 import 'package:flutter_app/src/mo/Exam/Exam.dart';
 import 'package:flutter_app/src/mo/Exam/ExamActivity.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
@@ -102,9 +103,11 @@ class YourPageState extends State<ExamAddPage2> {
               child: new Text("get exam",
                   style: new TextStyle(fontSize: 12.0, color: AppTheme.nearlyBlue)),
               onPressed: ()async {
-                SubjectService subjectService = new SubjectService();
+               /* SubjectService subjectService = new SubjectService();
                 List<Subject> subjectList = await subjectService.getAccesibleSubjectList();
-                print(subjectList.length);
+                print(subjectList.length);*/
+               EventDAO eventDao = new EventDAO();
+               eventDao.getEventWithParticipant();
               },
             ),
 

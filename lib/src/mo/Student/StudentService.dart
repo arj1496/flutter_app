@@ -98,8 +98,8 @@ class StudentService {
       List<StandardMapping> standardMappingList = new List();
       List<Student> studentList = List.generate(studentsDynamic.length, (i) {
         Student student = Student.fromJsonServer(studentsDynamic[i]);
-        List<StandardMapping> standardMappings = getStandardMappingListFromStudentDynmaicList(studentsDynamic[i]);
-        standardMappingList.addAll(standardMappings);
+        //List<StandardMapping> standardMappings = getStandardMappingListFromStudentDynmaicList(studentsDynamic[i]);
+       // standardMappingList.addAll(standardMappings);
         return student;
       });
       await batchAddStudents(studentList);

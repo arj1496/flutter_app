@@ -5,6 +5,7 @@ import 'package:flutter_app/src/mo/Event/EventActivity.dart';
 
 import 'package:flutter_app/src/mo/Event/EventTypeAutoComplte.dart';
 import 'package:flutter_app/src/mo/Event/ParticipantUI.dart';
+import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'DateWidgetForEvent.dart';
@@ -58,36 +59,54 @@ class _EventAddState extends State<AddEventForm> {
           autovalidate: true,
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            children: <Widget>[
-              //Title
-              _getTextFormTextField(Icon(Icons.event), 'Enter Event Title', 'Title','title'),
-              //Description
-              _getMultilineTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description','description'),
-              _getMultilineTextFormTextField(Icon(Icons.description), 'Enter Place', 'Place','place'),
-              _getDropDownFormField(Icon(Icons.merge_type), 'Select Type', 'Select Type'),
-             // _getPopup(Icon(Icons.merge_type), 'Enter Type', 'Type','Type'),
-              _getDateAndTime(_formKey,event),
-              _getParticipantUI(_formKey,event),
-             // getParticipantChip(event.eventParticipant),
-              _submitButton(),
-            ],
+            children: getWidgetList(),
           ),
         ),
       ),
     );
   }
 
+  List<Widget> getWidgetList( ) {
+    List<Widget> widgetList = new List();
+
+    Widget widgetLocal;
+
+    widgetLocal=   _getTextFormTextField(Icon(Icons.event), 'Enter Event Title', 'Title','title');
+    widgetList.add(widgetLocal);
+    //Description
+    widgetLocal=_getMultilineTextFormTextField(Icon(Icons.description), 'Enter Description', 'Description','description');
+    widgetList.add(widgetLocal);
+    widgetLocal=_getMultilineTextFormTextField(Icon(Icons.description), 'Enter Place', 'Place','place');
+    widgetList.add(widgetLocal);
+    widgetLocal=_getDropDownFormField(Icon(Icons.merge_type), 'Select Type', 'Select Type');
+    widgetList.add(widgetLocal);
+    // _getPopup(Icon(Icons.merge_type), 'Enter Type', 'Type','Type');
+    widgetLocal=_getDateAndTime(_formKey,event);
+    widgetList.add(widgetLocal);
+    widgetLocal=_getParticipantUI(_formKey,event);
+    widgetList.add(widgetLocal);
+    if(event.eventParticipant != null ) {
+      List<Participant> party = prepaeListOfParticpant();
+      widgetLocal =  getParticipantChip(party);
+      widgetList.add(widgetLocal);
+    }
+    widgetLocal= _submitButton();
+    widgetList.add(widgetLocal);
+
+    return widgetList;
+  }
+
+
   _getTextFormTextField(Icon icon , hintText, labelText,paramenter) {
 
     return TextFormField(
-      onSaved: (val) =>
-           event.name =val,
+      onSaved: (val) => event.name =val,
       autovalidate: true,
-      textInputAction: TextInputAction.next,
-      focusNode: _ageFocus,
-      onFieldSubmitted: (term){
-        _fieldFocusChange(context, _ageFocus, _heightFocus);
-      },
+    //  textInputAction: TextInputAction.next,
+      //focusNode: _ageFocus,
+     /* onFieldSubmitted: (term){
+        //_fieldFocusChange(context, _ageFocus, _heightFocus);
+      },*/
       decoration: InputDecoration(
           icon: icon,
           hintText: hintText,
@@ -122,11 +141,11 @@ class _EventAddState extends State<AddEventForm> {
    return TextFormField(
      onSaved: (val) => paramenter == 'place'
          ? event.place = val : paramenter == 'description'
-         ? event.description = val :  event.place = val ,
+         ? event.description = val : null ,
      autovalidate: true,
      maxLines: null,
     // textInputAction: TextInputAction.next,
-     focusNode: _heightFocus,
+    // focusNode: _heightFocus,
      keyboardType:  TextInputType.multiline,
      decoration: InputDecoration(
          icon: icon,
@@ -171,9 +190,11 @@ class _EventAddState extends State<AddEventForm> {
                     style: new TextStyle(
                         fontSize: 12.0 , color: AppTheme.nearlyBlue ) ) ,
                 onPressed: ( ) async {
+                  _formKey.currentState.save();
                   setState(() {
                     _isInAsyncCall = true;
                   });
+
                    EventActivity eventActivity = new EventActivity();
                    eventActivity.addOrUpdateEvent(event, (eventObject){
                      setState(() {
@@ -189,8 +210,7 @@ class _EventAddState extends State<AddEventForm> {
                      }
                     // Navigator.of(context).pop();
                    });
-
-                  } ,
+                   } ,
               ) ,
             ) ,
               Material ( //Wrap with Material
@@ -226,7 +246,10 @@ class _EventAddState extends State<AddEventForm> {
          formKey: _formKey ,
          event: event,
        callback:(participantList){
-           getParticipantChip(participantList);
+           setState(() {
+             getParticipantChip(participantList);
+           });
+
 
        }
      );
@@ -248,16 +271,16 @@ class _EventAddState extends State<AddEventForm> {
          return InputDecorator(
            decoration: InputDecoration(
                icon: icon,
-              prefixText: typeof,
+               prefixText: typeof,
            ),
            child: DropdownButtonHideUnderline(
                child: DropdownButton(
                  isDense: true,
                  onChanged: (dynamic newValue){
                    setState(() {
-                     labelText = newValue.eventType;
+                     //labelText = newValue.eventType;
                      typeof = newValue.eventType;
-                     event.type = labelText;
+                     event.type = newValue.eventType;
                      state.didChange(newValue);
                    });
                  },
@@ -295,8 +318,6 @@ class _EventAddState extends State<AddEventForm> {
         ),
       ),
     );
-
-
   }
 
   EventActivity eventActivity = new EventActivity();
@@ -348,30 +369,64 @@ class _EventAddState extends State<AddEventForm> {
   }
 
   getParticipantChip(participantList) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: participantList.length,
-        itemBuilder: (BuildContext context, int index) {
+    if(participantList!=null) {
+      return ListView.builder (
+          shrinkWrap: true ,
+          itemCount: participantList.length ,
+          itemBuilder: ( BuildContext context , int index ) {
+            return new Column(
+              children: <Widget>[
+                new ChoiceChip(
+                    label: Text (participantList[index].standardName +"(" + participantList[index].participantType+")" ) ,
+                    selected: false ,
+                    avatar: GestureDetector(
+
+                      child: Icon (
+                        Icons.cancel ,
+                        color: Colors.red ,
+                      ),
+                    )
+                ) ,
+              ] ,
+            );
+          } );
+    }
+  }
+
+   prepaeListOfParticpant() {
+    List<Participant> partList = new List();
+    for (Participant participant in event.eventParticipant){
+      if(participant.participantType == "STANDARD"){
+        partList.addAll(preparePartObject(participant));
+      }else{
+        partList.add(participant);
+      }
+    }
+    return partList;
+   }
 
 
-          return new Column(
-            children: <Widget>[
-              new   ChoiceChip(
-                  label: Text("Class-1"),
-                  selected: false,
-                  /*onSelected: (selected) {
-                setState(() {
-                  isSelected = selected;
-                });
-              },*/
-                  avatar: Icon(
-                    Icons.cancel,
-                    color: Colors.red,
-                  )
-              ),
-            ],
-          );
-        });
+  List<Participant> preparePartObject(Participant participantNew){
+    List<Participant> partyList = new List();
+    Participant participant = new Participant();
+    participant.id = participantNew.id;
+    participant.standardName = participantNew.standardName;
+    participant.participantType = "TEACHER";
+    participant.participantId = participantNew.participantId;
+    partyList.add(participant);
+    Participant participant1 = new Participant();
+    participant1.id = participantNew.id;
+    participant1.standardName = participantNew.standardName;
+    participant1.participantType = "STUDENT";
+    participant1.participantId = participantNew.participantId;
+    partyList.add(participant1);
+    Participant participant2 = new Participant();
+    participant2.id = participantNew.id;
+    participant2.standardName = participantNew.standardName;
+    participant2.participantType = "PARENT";
+    participant2.participantId = participantNew.participantId;
+    partyList.add(participant2);
+    return partyList;
   }
 }
 

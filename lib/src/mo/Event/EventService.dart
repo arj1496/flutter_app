@@ -22,6 +22,11 @@ class EventService{
     List<Event> eventListFromFuture = await eventDAO.getAllEventData();
     return eventListFromFuture;
   }
+
+  Future<Map<int, Event>> getEventParticipantList() async{
+    Map<int, Event> eventListFromFuture = await eventDAO.getEventWithParticipant();
+    return eventListFromFuture;
+  }
   Future<List<Event>> getEventListDataFromServer() async {
     EventWebService _eventWebService = new EventWebService();
 

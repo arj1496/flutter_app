@@ -24,6 +24,13 @@ class Event {
   String attechmentJson;
   //List<Attachment> attachments;
 
+  // transient field for participant.
+
+  int participantId;
+  int pdbId;
+  String participantType;
+  String participantRole;
+
   Event({
     this.lid,
     this.id,
@@ -44,6 +51,13 @@ class Event {
     this.attechmentJson,
     this.eventParticipant,
    // this.attachments
+
+
+    // field require for participant json
+    this.pdbId,
+    this.participantId,
+    this.participantType,
+    this.participantRole,
 });
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
@@ -61,8 +75,7 @@ class Event {
     allDay : json["allDay"] == true ? 1 : 0,
     isWritable : json["isWritable"] == true ? 1 : 0,
     attachment : json["attachment"],
-   // eventParticipant : Participant.fromJson(json["eventPrticipantds"]),
-   // personalParticipant : json["personalParticipant"],
+
     attechmentJson : json["attechmentJson"],
    // attachments : json["attachments"],
   );
@@ -82,10 +95,23 @@ class Event {
     "allDay" : allDay,
     "isWritable" : isWritable,
     "attachment" : attachment,
-    //"eventParticipant" : eventParticipant,
-    //"personalParticipant" : personalParticipant,
     "attechmentJson" : attechmentJson,
-    //"attachments" : attachments
   };
+
+  factory Event.fromJsonForParticpant(Map<String, dynamic> json) => Event(
+    lid: json["lid"],
+    id : json["eId"],
+    name : json["name"],
+    description : json["description"],
+    place : json["place"],
+    startDate : json["startDate"],
+    endDate : json["endDate"],
+    type : json["type"],
+    owner : json["owner"],
+    pdbId:  json["pdbId"],
+    participantId:  json["partId"],
+    participantRole: json["participantRole"],
+    participantType: json["participantType"],
+  );
 
 }
