@@ -126,7 +126,7 @@ class HomeworkWebService {
     Map<String , String> headers = new Map<String , String>( );
     headers['authT'] = authToken;
     final finalurl = SchoolUtils ( ).baseUrl +
-        "rest/homework/getAttachmentFolderIdForStudentHomework_";
+        "rest/homework/getAttachmentFolderIdForStudentHomework";
     Map<String , String> HWMap = new Map();
     HWMap["homeWorkId"] = 44.toString();
     HWMap["studentId"] = 111.toString();
