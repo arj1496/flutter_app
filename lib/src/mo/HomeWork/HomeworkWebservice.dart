@@ -10,20 +10,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 
-class HomeworkWebService{
-  UrlUtils urlUtils = new UrlUtils();
+class HomeworkWebService {
+  UrlUtils urlUtils = new UrlUtils( );
 
-  Future<dynamic> getData_ (HashMap<String, String> requestData, var url) async {
-    Map<String, String> headers = new Map<String, String>();
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(sharedPreferences.getString("token"));
-    headers['authT'] = sharedPreferences.getString("token");
+  Future<dynamic> getData_( HashMap<String , String> requestData ,
+      var url ) async {
+    Map<String , String> headers = new Map<String , String>( );
+    SharedPreferences sharedPreferences = await SharedPreferences
+        .getInstance ( );
+    print ( sharedPreferences.getString ( "token" ) );
+    headers['authT'] = sharedPreferences.getString ( "token" );
 
-    final finalurl = SchoolUtils().baseUrl + url + "?homework_sync_time=0";
-    var response = await http.get(finalurl , headers: headers);
-    if(response.statusCode == 200){
+    final finalurl = SchoolUtils ( ).baseUrl + url + "?homework_sync_time=0";
+    var response = await http.get ( finalurl , headers: headers );
+    if (response.statusCode == 200) {
       var str = response.body;
-      final data = json.decode(response.body);
+      final data = json.decode ( response.body );
       return data;
     }
   }
@@ -33,21 +35,22 @@ class HomeworkWebService{
    * webservice to add homework to server
    * Generic model is class which contain generic fields of exam
    */
-  Future<Map<String, dynamic>> addOrUpdateHomework (HomeWork homeWork) async {
-    print("in webservice");
-    String authToken = await urlUtils.getAuthToken();
+  Future<Map<String , dynamic>> addOrUpdateHomework( HomeWork homeWork ) async {
+    print ( "in webservice" );
+    String authToken = await urlUtils.getAuthToken ( );
 
-    Map<String, String> headers = new Map<String, String>();
+    Map<String , String> headers = new Map<String , String>( );
     headers['authT'] = authToken;
 
-    Map<String, String> HWMap = getHWFrom(homeWork);
-    final finalurl =  urlUtils.getAddHWUrl();
-    Response response = await post(finalurl, headers: headers, body: HWMap);
+    Map<String , String> HWMap = getHWFrom ( homeWork );
+    final finalurl = urlUtils.getAddHWUrl ( );
+    Response response = await post (
+        finalurl , headers: headers , body: HWMap );
     var data;
 
-    if(response.statusCode == 200){
-      data = json.decode(response.body);
-      print(data);
+    if (response.statusCode == 200) {
+      data = json.decode ( response.body );
+      print ( data );
     }
     return data;
   }
@@ -56,31 +59,32 @@ class HomeworkWebService{
    * webservice to add homework to server
    * Generic model is class which contain generic fields of exam
    */
-  Future<Map<String, dynamic>> updateHomework (HomeWork homeWork) async {
-    print("in webservice");
-    String authToken = await urlUtils.getAuthToken();
+  Future<Map<String , dynamic>> updateHomework( HomeWork homeWork ) async {
+    print ( "in webservice" );
+    String authToken = await urlUtils.getAuthToken ( );
 
-    Map<String, String> headers = new Map<String, String>();
+    Map<String , String> headers = new Map<String , String>( );
     headers['authT'] = authToken;
 
-    Map<String, String> HWMap = getHWFrom(homeWork);
-    final finalurl =  urlUtils.getAddHWUrl();
-    Response response = await post(finalurl, headers: headers, body: HWMap);
+    Map<String , String> HWMap = getHWFrom ( homeWork );
+    final finalurl = urlUtils.getAddHWUrl ( );
+    Response response = await post (
+        finalurl , headers: headers , body: HWMap );
     var data;
 
-    if(response.statusCode == 200){
-      data = json.decode(response.body);
-      print(data);
+    if (response.statusCode == 200) {
+      data = json.decode ( response.body );
+      print ( data );
     }
     return data;
   }
 
   // Prepare exam map from generic model
-  Map<String, String> getHWFrom(HomeWork homework) {
-    Map<String,String> HWObjectmap = new HashMap();
+  Map<String , String> getHWFrom( HomeWork homework ) {
+    Map<String , String> HWObjectmap = new HashMap( );
 
     if (homework.serverId != null) {
-      HWObjectmap["id"] = homework.serverId.toString();
+      HWObjectmap["id"] = homework.serverId.toString ( );
     }
     if (homework.title != null) {
       HWObjectmap["name"] = homework.title;
@@ -89,46 +93,69 @@ class HomeworkWebService{
       HWObjectmap["type"] = homework.type;
     }
 
-    if(homework.mark != null) {
-    HWObjectmap["mark"] = homework.mark.toString();
+    if (homework.mark != null) {
+      HWObjectmap["mark"] = homework.mark.toString ( );
     }
-   /* if(homework.classId != null) {
+    /* if(homework.classId != null) {
       HWObjectmap["standard"] = homework.classId.toString ( );
      // HWObjectmap["standard"] = 1.toString ( );
     }*/
-    if(homework.subIds != null) {
-      String commaSeperate = SchoolUtils.getCommaSeparated(homework.subIds);
+    if (homework.subIds != null) {
+      String commaSeperate = SchoolUtils.getCommaSeparated ( homework.subIds );
       HWObjectmap["subject"] = commaSeperate;
     }
-    if(homework.startDate != null) {
-      HWObjectmap["startDate"] = homework.startDate.toString();
+    if (homework.startDate != null) {
+      HWObjectmap["startDate"] = homework.startDate.toString ( );
     }
-    if(homework.endDate != null) {
-      HWObjectmap["submitDate"] = homework.endDate.toString();
+    if (homework.endDate != null) {
+      HWObjectmap["submitDate"] = homework.endDate.toString ( );
     }
-    if(homework.owner != null) {
-      HWObjectmap["owner"] = homework.owner.toString();
+    if (homework.owner != null) {
+      HWObjectmap["owner"] = homework.owner.toString ( );
     }
-    if(homework.description != null) {
+    if (homework.description != null) {
       HWObjectmap["description"] = homework.description;
     }
     return HWObjectmap;
   }
 
 
-   getAccessToken () async {
-    print("in webservice");
-    String authToken = await urlUtils.getAuthToken();
-    Map<String, String> headers = new Map<String, String>();
+  getFolderId( ) async {
+    print ( "in webservice" );
+    String authToken = await urlUtils.getAuthToken ( );
+    Map<String , String> headers = new Map<String , String>( );
     headers['authT'] = authToken;
-    final finalurl =  SchoolUtils().baseUrl + "rest/homework/getAccessToken";
-    Response response = await get(finalurl, headers: headers);
+    final finalurl = SchoolUtils ( ).baseUrl +
+        "rest/homework/getAttachmentFolderIdForStudentHomework_";
+    Map<String , String> HWMap = new Map();
+    HWMap["homeWorkId"] = 44.toString();
+    HWMap["studentId"] = 111.toString();
+    HWMap["studentHWId"] = 44.toString();
+    Response response = await post (
+        finalurl , headers: headers , body: HWMap );
     var data;
-    if(response.statusCode == 200){
-      data = json.decode(response.body);
-      print(data);
+
+
+    if (response.statusCode == 200) {
+      data = json.decode ( response.body );
+      print ( data );
     }
     return data;
   }
 
+
+  getAccessToken( ) async {
+    print ( "in webservice" );
+    String authToken = await urlUtils.getAuthToken ( );
+    Map<String , String> headers = new Map<String , String>( );
+    headers['authT'] = authToken;
+    final finalurl = SchoolUtils ( ).baseUrl + "rest/homework/getAccessToken";
+    Response response = await get ( finalurl , headers: headers );
+    var data;
+    if (response.statusCode == 200) {
+      data = json.decode ( response.body );
+      print ( data );
+    }
+    return data;
+  }
 }

@@ -28,12 +28,10 @@ class ParticipantBloc implements Bloc {
   }
 
   getInitialList()async{
-
    // final results = await teacherActivity.getAllTeacherList ( );
-    final results = await teacherActivity.getJoinDbTeacher();
-    List<Person> personTeacher = getPersonFromTeacher ( results );
-
+   submitQuery(1);
   }
+
   TeacherActivity teacherActivity = new TeacherActivity();
   StudentActivity studentActivity = new StudentActivity();
   ParentActivity parentActivity = new ParentActivity();
@@ -43,8 +41,8 @@ class ParticipantBloc implements Bloc {
     if(flag==1) {
      // final results = await teacherActivity.getAllTeacherList ( );
       final results = await teacherActivity.getJoinDbTeacher();
-      List<Person> personTeacher = getPersonFromTeacher ( results );
-      _controller.sink.add ( personTeacher );
+       getPersonFromTeacher ( results );
+       print(_personList.length);
     }else  if(flag==2) {
       final results = await parentActivity.getAllParents();
       List<Person> personTeacher = getPersonFromParent( results );
@@ -96,7 +94,8 @@ class ParticipantBloc implements Bloc {
       perList.add(person);
     }
     _schools.addAll(perList);
-      _personList.add(perList);
+    _personList.add(perList);
+
   }
 
   List<Person> getPersonFromStudent(List<Student> students){

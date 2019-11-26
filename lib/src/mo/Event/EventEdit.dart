@@ -106,6 +106,7 @@ class _EventAddState extends State<EventEdit> {
 
     widgetLocal =  _getParticipantUI(_formKey,widget.event);
     widgetList.add(widgetLocal);
+    int flag =0;
     if(widget.event.eventParticipant != null ) {
       List<Participant> finalParticipant = new List();
       for (Participant participant in widget.event.eventParticipant) {
@@ -115,7 +116,6 @@ class _EventAddState extends State<EventEdit> {
             participant.participantType == "STANDARD") {
           finalParticipant.add((participant));
         }
-
       }
       widgetLocal = getParticipantChip(finalParticipant);
       widgetList.add ( widgetLocal );

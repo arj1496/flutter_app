@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/mo/Event/ParticipantBloc.dart';
 import 'package:flutter_app/src/mo/Event/PersonalParticipantUI.dart';
 import 'package:flutter_app/src/mo/Event/SubjectPopup.dart';
 import 'package:flutter_app/src/mo/Exam/ClassPopup.dart';
@@ -38,14 +39,20 @@ class ParticipantUI extends StatefulWidget {
     Map<int,bool> partInputs = new Map();
     List<Participant> selectedSchoolParticipant = new List();
     List<Participant> party = new List();
-/*    @override
+   @override
     void initState(){
       setState(() {
-        for(int t=0;t<4;t++){
-          partInputs[t] = false;
+        if (widget.event != null && widget.event.eventParticipant != null) {
+          for (Participant participant in widget.event.eventParticipant) {
+            if (participant.participantType == "INDIVIDUAL_PARENT" ||
+                participant.participantType == "INDIVIDUAL_TEACHER" ||
+                participant.participantType == "INDIVIDUAL_STUDENT") {
+               widget.event.personalParticipant.add(participant);
+            }
+          }
         }
       });
-    }*/
+    }
   @override
   Widget build(BuildContext context) {
 
@@ -155,10 +162,12 @@ class ParticipantUI extends StatefulWidget {
                            child: GestureDetector(
 
                              onTap:() {
-                               Navigator.push (
+                              _callPersonalParticipant();
+                           /*    Navigator.push (
                                  context ,
                                  MaterialPageRoute (
                                      builder: ( context ) => PersonalParticipantUI(
+
                                          data: widget.event.personalParticipant,
                                          callback: (List<Participant> value){
 
@@ -166,13 +175,14 @@ class ParticipantUI extends StatefulWidget {
                                            for(int i=0;i<value.length;i++){
                                              party.add(value[i]);
                                              widget.event.personalParticipant.add(value[i]);
+                                             widget.event.eventParticipant.add(value[i]);
                                            }
                                          //  widget.event.personalParticipant = party;
                                            print("callBack Return ${value.length}");
                                          }
                                      )
                                    ) ,
-                               );
+                               );*/
                              },
 
                                child: Container(
@@ -233,15 +243,16 @@ class ParticipantUI extends StatefulWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text( widget.event.personalParticipant.length.toString(),
-                                textAlign: TextAlign.center,
+                              child: widget.event.eventParticipant!=null ?
+                              Text( widget.event.eventParticipant.length.toString(),
+                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: AppTheme.robotoFontName,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14,
                                   color: AppTheme.lightText,
                                 ),
-                              ),
+                              ):Text("0"),
                             ),
                           ),
                         ],
@@ -457,6 +468,12 @@ class ParticipantUI extends StatefulWidget {
       return _standards;
     }
 
+    Future<List<Person>> getPersons() async {
+      ParticipantBloc participantBloc = new ParticipantBloc(1);
+      List<Person> _personLit = await participantBloc.getInitialList();
+      return _personLit;
+    }
+
     Map<Standard, List<EventKeyPojo>> prePareMap(List<Standard> standardList) {
 
 
@@ -468,5 +485,29 @@ class ParticipantUI extends StatefulWidget {
       }
       return standardMap;
     }
+
+   _callPersonalParticipant() async {
+    // List<Person> _personLit = await getPersons();
+     Navigator.push (
+       context ,
+       MaterialPageRoute (
+           builder: ( context ) => PersonalParticipantUI(
+              // personList: _personLit,
+               data: widget.event.personalParticipant,
+               callback: (List<Participant> value){
+
+                 //widget.event.personalParticipant.clear();
+                 for(int i=0;i<value.length;i++){
+                   party.add(value[i]);
+                   widget.event.personalParticipant.add(value[i]);
+                   widget.event.eventParticipant.add(value[i]);
+                 }
+                 //  widget.event.personalParticipant = party;
+                 print("callBack Return ${value.length}");
+               }
+           )
+       ) ,
+     );
+   }
 
   }

@@ -4,7 +4,7 @@ import 'package:flutter_app/src/mo/Participant/Participant.dart';
 import 'package:flutter_app/src/mo/Person/Person.dart';
 import '../../../AppTheme.dart';
 import 'ParticipantBloc.dart';
-import 'ParticipantSelectModel.dart';
+
 
 class PersonalParticipantUI extends StatefulWidget {
   @override
@@ -12,7 +12,8 @@ class PersonalParticipantUI extends StatefulWidget {
 
   final Function callback;
   final List<Participant> data;
-  const PersonalParticipantUI({this.callback, this.data,});
+
+  const PersonalParticipantUI({this.callback, this.data});
 }
 
 class _ListTileViewUVState extends State<PersonalParticipantUI> {
@@ -23,10 +24,10 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
   Map<int, bool> partInputs = new Map();
   final bloc = ParticipantBloc(flag);
 
-  Future<List<Person>> getParticipant(int flag) async {
+
+ /* Future<List<Person>> getParticipant(int flag) async {
     ParticipantSelectModel participantSelectModel =
         new ParticipantSelectModel();
-
     if (flag == 1) {
       _personList = await participantSelectModel.getTeacher();
     } else if (flag == 2) {
@@ -34,9 +35,8 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
     } else {
       _personList = await participantSelectModel.getParent();
     }
-
     return _personList;
-  }
+  }*/
 
  /* @override
   void initState() {
@@ -55,11 +55,12 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
 
   @override
   void initState(){
+   getPerson();
     super.initState();
     setState(() {
       int i = 0;
       if (widget.data != null) {
-        for (Person person in _personList) {
+        for (Person person in _personList ) {
           if (!widget.data.contains ( prepareParticipantObject ( person ) )) {
             partInputs[person.id] = false;
           } else {
@@ -73,6 +74,10 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
       }
          });
   }
+
+getPerson() async {
+    _personList = bloc.allPersons as List<Person>;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +193,7 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
     );
   }
 
-  getParticipantList() {
+/*  getParticipantList() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -211,7 +216,7 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
             }),
       ],
     );
-  }
+  }*/
 
   getParticipantList_() {
     return StreamBuilder(
@@ -242,6 +247,27 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
        partInputs[person.id] = false;
      }
    }*/
+    int i = 0;
+    if (widget.data != null) {
+      for (Person person in personList) {
+        for (Participant participant in widget.data) {
+          if (participant.participantId != person.id) {
+            if(!partInputs.containsKey(person.id)) {
+              partInputs[person.id] = false;
+            }
+          } else {
+            partInputs[person.id] = true;
+          }
+        }
+      }
+    }else {
+      for (Person person in _personList) {
+        if(!partInputs.containsKey(person.id)) {
+          partInputs[person.id] = false;
+        }
+      }
+      }
+
     return ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -326,6 +352,7 @@ class _ListTileViewUVState extends State<PersonalParticipantUI> {
   Participant prepareParticipantObject(Person person) {
     Participant participant = new Participant();
     participant.id = person.id;
+    participant.participantId = person.id;
     if (person.role == "Parent") {
       participant.participantType = "INDIVIDUAL_PARENT";
     } else if (person.role == "Teacher") {

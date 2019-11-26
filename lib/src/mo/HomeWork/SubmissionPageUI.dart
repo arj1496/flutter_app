@@ -430,8 +430,10 @@ class DetailViewUVState extends State<SubmissionPageUI> {
                 // margin: EdgeInsets.only(left: 85),
 
 
-                  child: Icon(
-                      Icons.cancel
+                  child: GestureDetector(
+                    child: Icon(
+                        Icons.cancel,
+                    ),
                   ),
                 ),
               ),
