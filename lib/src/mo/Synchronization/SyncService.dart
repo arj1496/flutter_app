@@ -1,6 +1,5 @@
 
-import 'package:flutter_app/EventService.dart';
-import 'package:flutter_app/src/mo/Attendance/AttendanceService.dart';
+import 'package:flutter_app/src/mo/Assessments/AssessmentService.dart';
 import 'package:flutter_app/src/mo/Exam/ExamService.dart';
 import 'package:flutter_app/src/mo/Holiday/HolidayService.dart';
 import 'package:flutter_app/src/mo/HomeWork/HomeworkService.dart';
@@ -26,9 +25,8 @@ class SyncService{
   PermissionService permissionService = new PermissionService();
   HomeworkService homeworkService = new HomeworkService();
   TimeTableService timeTableService = new TimeTableService();
- HolidayService holidayService = new HolidayService();
- EventService eventService = new EventService();
- AttendanceService attendanceService=new AttendanceService();
+  HolidayService holidayService = new HolidayService();
+  AssessmentService assessmentService = new AssessmentService();
 
   List<String> getSyncParameters(){
 
@@ -44,8 +42,7 @@ class SyncService{
     parameters.add("homework_sync_time");
     parameters.add("timetable_sync_time");
     parameters.add("holiday_sync_time");
-    parameters.add("event_sync_time");
-    parameters.add("attendance_sync_time");
+    parameters.add("skill_sync_time");
     return parameters;
   }
 
@@ -180,33 +177,11 @@ class SyncService{
       }
     }
 
-    if(syncDataResponse.containsKey('isEventSync')){
-      if(syncDataResponse['isEventSync']){
-        await eventService.syncCallBackHandle(syncDataResponse);
-        sharedPreferences.setString("event_sync_time", todayDate.toString());
-      }
-    }
-
-    if(syncDataResponse.containsKey('isParentSync')){
-      if(syncDataResponse['isParentSync']){
-        await parentService.syncCallBackHandle(syncDataResponse);
-        sharedPreferences.setString("parent_sync_time", todayDate.toString());
-      }
-    }
-    if(syncDataResponse.containsKey('isAttendanceSync')){
-      if(syncDataResponse['isAttendanceSync']){
-        await attendanceService.syncCallBackHandle(syncDataResponse);
-        sharedPreferences.setString("Attendance_sync_time", todayDate.toString());
+    if(syncDataResponse.containsKey('isSkillSync')){
+      if(syncDataResponse['isSkillSync']){
+        await assessmentService.syncCallBackHandle(syncDataResponse);
+        sharedPreferences.setString("skill_sync_time", todayDate.toString());
       }
     }
   }
-
-
-
-
-
-
-
-
-
 }

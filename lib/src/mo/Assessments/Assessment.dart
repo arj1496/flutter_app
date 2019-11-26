@@ -4,11 +4,11 @@ class Assessment{
   //POJO
   int skillId;
   int serverSkillId;
-  String skillTitle;
-  int skillSubjectId;
-  String skillSubjectName;
+  String title;
+  int subjectId;
+  String subjectName;
   int parentSkillId;
-  String parentSkillName; // check not required
+  String parentSkillTitle; // check not required
   int standardId;
   String standardName;
   int groupId;
@@ -17,7 +17,7 @@ class Assessment{
   String gradeName;
   int termId;
   String termName;
-  int schoolIdS;
+  int schoolDS;
   String evaluationCount = "1";
   int ownerId;
   String ownerName;
@@ -39,39 +39,39 @@ class Assessment{
 
   Assessment({
     this.skillId,
-      this.serverSkillId,
-      this.skillTitle,
-      this.skillSubjectId,
-      this.skillSubjectName,
-      this.parentSkillId,
-      this.parentSkillName,
-      this.standardId,
-      this.standardName,
-      this.groupId,
-      this.groupName,
-      this.gradeId,
-      this.gradeName,
-      this.termId,
-      this.termName,
-      this.schoolIdS,
-      this.evaluationCount,
-      this.ownerId,
-      this.ownerName,
-      this.skillDataDump,
-      this.syllabusRef,
-      this.assessmentType,
-      this.studentId,
-      this.childSkills,
-      this.referenceDetails});
+    this.serverSkillId,
+    this.title,
+    this.subjectId,
+    this.subjectName,
+    this.parentSkillId,
+    this.parentSkillTitle,
+    this.standardId,
+    this.standardName,
+    this.groupId,
+    this.groupName,
+    this.gradeId,
+    this.gradeName,
+    this.termId,
+    this.termName,
+    this.schoolDS,
+    this.evaluationCount,
+    this.ownerId,
+    this.ownerName,
+    this.skillDataDump,
+    this.syllabusRef,
+    this.assessmentType,
+    this.studentId,
+    this.childSkills,
+    this.referenceDetails});
 
   factory Assessment.fromJsonServer(Map<String, dynamic> jsonObject) => Assessment(
       skillId: jsonObject['skillId'],
       serverSkillId: jsonObject['serverSkillId'],
-      skillTitle: jsonObject['skillTitle'],
-      skillSubjectId: jsonObject['skillSubjectId'],
-      skillSubjectName: jsonObject['skillSubjectName'],
+      title: jsonObject['title'],
+      subjectId: jsonObject['subjectId'],
+      subjectName: jsonObject['subjectName'],
       parentSkillId: jsonObject['parentSkillId'],
-      parentSkillName: jsonObject['parentSkillName'],
+      parentSkillTitle: jsonObject['parentSkillTitle'],
       standardId: jsonObject['standardId'],
       standardName: jsonObject['standardName'],
       groupId: jsonObject['groupId'],
@@ -80,14 +80,14 @@ class Assessment{
       gradeName: jsonObject['gradeName'],
       termId: jsonObject['termId'],
       termName: jsonObject['termName'],
-      schoolIdS: jsonObject['schoolIdS'],
+      schoolDS: jsonObject['schoolDS'],
       evaluationCount: jsonObject['evaluationCount'],
       ownerId: jsonObject['ownerId'],
       ownerName: jsonObject['ownerName'],
       skillDataDump: jsonObject['skillDataDump'],
       syllabusRef: jsonObject['syllabusRef'],
       assessmentType: jsonObject['assessmentType'],
-     // studentId: jsonObject['studentId'],
+      // studentId: jsonObject['studentId'],
       childSkills: jsonObject['childSkills'],
       referenceDetails: jsonObject['referenceDetails']
   );
@@ -95,11 +95,11 @@ class Assessment{
   factory Assessment.fromJsonLocal(Map<String, dynamic> jsonObject) => Assessment(
       skillId: jsonObject['skillId'],
       serverSkillId: jsonObject['serverSkillId'],
-      skillTitle: jsonObject['skillTitle'],
-      skillSubjectId: jsonObject['skillSubjectId'],
-      skillSubjectName: jsonObject['skillSubjectName'],
+      title: jsonObject['title'],
+      subjectId: jsonObject['subjectId'],
+      subjectName: jsonObject['subjectName'],
       parentSkillId: jsonObject['parentSkillId'],
-      parentSkillName: jsonObject['parentSkillName'],
+      parentSkillTitle: jsonObject['parentSkillTitle'],
       standardId: jsonObject['standardId'],
       standardName: jsonObject['standardName'],
       groupId: jsonObject['groupId'],
@@ -108,42 +108,42 @@ class Assessment{
       gradeName: jsonObject['gradeName'],
       termId: jsonObject['termId'],
       termName: jsonObject['termName'],
-      schoolIdS: jsonObject['schoolIdS'],
+      schoolDS: jsonObject['schoolDS'],
       evaluationCount: jsonObject['evaluationCount'],
       ownerId: jsonObject['ownerId'],
       ownerName: jsonObject['ownerName'],
       skillDataDump: jsonObject['skillDataDump'],
       syllabusRef: jsonObject['syllabusRef'],
       assessmentType: jsonObject['assessmentType'],
-     // studentId: jsonObject['studentId'],
+      // studentId: jsonObject['studentId'],
       childSkills: jsonObject['childSkills'],
       referenceDetails: jsonObject['referenceDetails']
   );
 
   Map<String, dynamic> toJson() => {
-   'skillId': skillId,
-   'serverSkillId': serverSkillId,
-   'skillTitle': skillTitle,
-   'skillSubjectId': skillSubjectId,
-   'skillSubjectName': skillSubjectName,
-   'parentSkillId': parentSkillId,
-   'parentSkillName': parentSkillName,
-   'standardId': standardId,
-   'standardName': standardName,
-   'groupId': groupId,
-  'groupName': groupName,
-   'gradeId': gradeId,
-   'gradeName': gradeName,
-   'termId': termId,
-   'termName': termName,
-   'schoolIdS': schoolIdS,
-   'evaluationCount': evaluationCount,
-   'ownerId': ownerId,
-   'ownerName': ownerName,
-   'skillDataDump': skillDataDump,
-   'syllabusRef': syllabusRef,
-   'assessmentType': assessmentType,
-  // 'childSkills': childSkills,
-   'referenceDetails': referenceDetails
+    'skillId': skillId,
+    'serverSkillId': serverSkillId,
+    'title': title,
+    'subjectId': subjectId,
+    'subjectName': subjectName,
+    'parentSkillId': parentSkillId,
+    'parentSkillTitle': parentSkillTitle,
+    'standardId': standardId,
+    'standardName': standardName,
+    'groupId': groupId,
+    'groupName': groupName,
+    'gradeId': gradeId,
+    'gradeName': gradeName,
+    'termId': termId,
+    'termName': termName,
+    'schoolDS': schoolDS,
+    'evaluationCount': evaluationCount,
+    'ownerId': ownerId,
+    'ownerName': ownerName,
+    'skillDataDump': skillDataDump,
+    'syllabusRef': syllabusRef,
+    'assessmentType': assessmentType,
+    // 'childSkills': childSkills,
+    'referenceDetails': referenceDetails
   };
 }

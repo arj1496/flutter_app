@@ -19,10 +19,10 @@ class AssessmentService{
   }
 
   batchAddAssessment(List<Assessment> assessmentList) async{
-   await assessmentDao.batchAddAssessment(assessmentList);
+    await assessmentDao.batchAddAssessment(assessmentList);
   }
 
- Future<List<Assessment>> getAssessmentListFromLocalDB() async{
+  Future<List<Assessment>> getAssessmentListFromLocalDB() async{
     List<Assessment> assessmentList = await assessmentDao.getAllAssessmentData();
     return assessmentList;
 
